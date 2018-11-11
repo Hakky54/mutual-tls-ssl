@@ -5,16 +5,16 @@ This tutorial will walk you through the process of protecting your application w
 This sample project is a basic setup of a server and a client. The communication between the server and client happens through HTTP, so there is no encryption at all. The goal is to ensure all communication happens in a secure way.
 
 These are the following steps:
-0. Starting the server
-1. Saying hello to the server (without encryption)
-2. Enabling HTTPS on the server (one-way TLS)
-3. Require the client to identify itself (two way TLS)
+1. Starting the server
+2. Saying hello to the server (without encryption)
+3. Enabling HTTPS on the server (one-way TLS)
+4. Require the client to identify itself (two way TLS)
 
 ## Starting the server
 **Required to have:**
-0. Java 11
-1. Maven
-2. Eclipse or Intellij IDEA
+1. Java 11
+2. Maven
+3. Eclipse or Intellij IDEA
 
 Start the server by running the main method of the App class in the server project.
 
