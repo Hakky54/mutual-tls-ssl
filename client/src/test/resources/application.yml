@@ -1,0 +1,7 @@
+spring:
+  main:
+    banner-mode: "off"
+
+client:
+  ssl:
+    enabled: false
