@@ -35,12 +35,12 @@ public class SSLTrustManagerHelper {
 
             return getSSLContext(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers());
         } catch (UnrecoverableKeyException | NoSuchAlgorithmException | CertificateException | KeyStoreException | IOException | KeyManagementException e) {
-            throw new RuntimeException(e);
+            throw new ClientException(e);
         }
     }
 
     private static SSLContext getSSLContext(KeyManager[] keyManagers, TrustManager[] trustManagers) throws NoSuchAlgorithmException, KeyManagementException {
-        SSLContext sslContext = SSLContext.getInstance("TLSv1.3");
+        SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
         sslContext.init(keyManagers, trustManagers, null);
         return sslContext;
     }
@@ -61,7 +61,7 @@ public class SSLTrustManagerHelper {
 
         trustStore.load(SSLTrustManagerHelper.class.getClassLoader().getResourceAsStream(truststorePath), truststorePassword.toCharArray());
 
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()); // PKIX
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(trustStore);
         return trustManagerFactory;
     }
