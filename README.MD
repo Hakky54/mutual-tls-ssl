@@ -155,4 +155,4 @@ server:
     client-auth: need
 ```
 
-If you run the client again, you will see that the test passed and that the client received the hello message from the server in a secured way. Congratulations! You finished this installing two-way TLS!
+If you run the client again, you will see that the test passed and that the client received the hello message from the server in a secured way. Congratulations! You finished installing two-way TLS!
