@@ -5,10 +5,10 @@ This tutorial will walk you through the process of protecting your application w
 This sample project demonstrates a basic setup of a server and a client. The communication between the server and client happens through HTTP, so there is no encryption at all. The goal is to ensure that all communication happens in a secure way.
 
 These are the following steps:
-1. Starting the server
-2. Saying hello to the server (without encryption)
-3. Enabling HTTPS on the server (one-way TLS)
-4. Require the client to identify itself (two way TLS)
+1. [Starting the server](#starting-the-server)
+2. [Saying hello to the server (without encryption)](#saying-hello-to-the-server-without-encryption)
+3. [Enabling HTTPS on the server (one-way TLS)](#enabling-https-on-the-server-one-way-tls)
+4. [Require the client to identify itself (two way TLS)](#require-the-client-to-identify-itself-two-way-tls)
 
 ## Starting the server
 **Required to have:**
