@@ -36,8 +36,6 @@
                 <configuration>
                     <mainClass>nl.altindag.server.App</mainClass>
                     <layout>ZIP</layout>
-                    <fork>true</fork>
-                    <skip>false</skip>
                 </configuration>
                 <executions>
                     <execution>
