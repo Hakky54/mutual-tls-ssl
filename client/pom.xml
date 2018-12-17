@@ -86,6 +86,9 @@
                         <goals>
                             <goal>start</goal>
                         </goals>
+                        <configuration>
+                            <classesDirectory>../server/target/classes</classesDirectory>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>integration-test</id>
