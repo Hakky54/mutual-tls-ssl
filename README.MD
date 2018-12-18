@@ -71,7 +71,7 @@ server:
   port: 8443
   ssl:
     enabled: true
-    key-store: server/src/main/resources/identity.jks
+    key-store: classpath:identity.jks
     key-password: secret
     key-store-password: secret
 ```
@@ -98,7 +98,7 @@ server:
   port: 8443
   ssl:
     enabled: true
-    key-store: server/src/main/resources/identity.jks
+    key-store: classpath:identity.jks
     key-password: secret
     key-store-password: secret
     client-auth: need
@@ -147,10 +147,10 @@ server:
   port: 8443
   ssl:
     enabled: true
-    key-store: server/src/main/resources/identity.jks
+    key-store: classpath:identity.jks
     key-password: secret
     key-store-password: secret
-    trust-store: server/src/main/resources/truststore.jks
+    trust-store: classpath:truststore.jks
     trust-store-password: secret
     client-auth: need
 ```
