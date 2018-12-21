@@ -106,7 +106,7 @@ server:
 
 If you run the client, it will fail with the following error message: `javax.net.ssl.SSLHandshakeException: Received fatal alert: bad_certificate`. This indicates that the certificate of the client is not valid because there is no certificate at all. So, let's create one with the following command
 ```bash
-keytool -genkeypair -keyalg RSA -keysize 2048 -alias suleyman -dname "CN=Suleyman,OU=Altindag,O=Altindag,C=NL" -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -validity 3650 -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
+keytool -genkeypair -keyalg RSA -keysize 2048 -alias suleyman -dname "CN=Suleyman,OU=Altindag,O=Altindag,C=NL" -validity 3650 -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
 ```
 You also need to create a truststore. A truststore is a suitcase containing trusted certificates. The client or server will compare the certificate, which it will receive during the SSL Handshake process with the content of its truststore. If there is a match, then the SSL Handshake process will continue. Before creating the truststores, you need to have the certificates of the client and server. You can get it with the following command:
 
