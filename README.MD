@@ -243,7 +243,7 @@ keytool -importkeystore -srckeystore server/src/main/resources/server-signed.p12
 ```
 
 #### Trusting the Certificate Authority
-Now you need to configure your client and server to only trust the Certificate Authority and everyone which is trusted by the Certificate Authority. You can do that by importing the certificate of the Certificate Authority into the truststores of the client and server. You can do that with the following two commands:
+Now you need to configure your client and server to only trust the Certificate Authority. You can do that by importing the certificate of the Certificate Authority into the truststores of the client and server. You can do that with the following two commands:
 
 ##### Client
 ```bash
