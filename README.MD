@@ -9,6 +9,7 @@ These are the following steps:
 2. [Saying hello to the server (without encryption)](#saying-hello-to-the-server-without-encryption)
 3. [Enabling HTTPS on the server (one-way TLS)](#enabling-https-on-the-server-one-way-tls)
 4. [Require the client to identify itself (two way TLS)](#require-the-client-to-identify-itself-two-way-tls)
+5. [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
 
 ## Starting the server
 **Required to have:**
@@ -156,3 +157,102 @@ server:
 ```
 
 If you run the client again, you will see that the test passed and that the client received the hello message from the server in a secured way. Congratulations! You finished installing two-way TLS!
+
+## Two way TLS based on trusting the Certificate Authority
+There is another way to have mutual authentication and that is based on trusting the Certificate Authority. It has pros and cons. 
+
+##### Pros
+- Client's do not need to add the certificate of the server
+- Server does not need to add all the certificates of the clients
+- Maintenance will be less because only the Certificate Authority's certificate validity can expire
+##### Cons
+- You don't have control anymore for which applications are allowed to call your application. You give permission to any application who has a signed certificate by the Certificate Authority
+
+#### Creating a Certificate Authority
+Normally there is already a Certificate Authority and you need to provide your certificate to have it signed. Here you will create your own Certificate Authority and sign the Client and Server certificate with it. To create one you can execute the following command: 
+
+```bash
+keytool -genkeypair -keyalg RSA -keysize 2048 -alias root-ca -dname "CN=Root-CA,OU=Certificate Authority,O=Luminis,C=NL" -validity 3650 -keystore root-ca/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
+```
+
+Or you can use the one which is already provided in the repository, see [identity.jks](root-ca/identity.jks)
+
+#### Creating a Certificate Signing Request
+To get your certificate signed you need to provide a Certificate Signing Request (.csr) file. This can be created with the following command:
+
+##### Certificate Signing Request for the server
+```bash
+keytool -certreq -keystore server/src/main/resources/identity.jks -alias hakan -keypass secret -storepass secret -keyalg rsa -file server/src/main/resources/server.csr
+```
+
+##### Certificate Signing Request for the client
+```bash
+keytool -certreq -keystore client/src/test/resources/identity.jks -alias suleyman -keypass secret -storepass secret -keyalg rsa -file client/src/test/resources/client.csr
+```
+
+The Certificate Authority need these csr files to be able to sign it. The next step will be signing the requests.
+
+#### Signing the certificate with the Certificate Signing Request
+Up till now you only used the keytool, but for the signing procedure you need openssl. A csr file can be signed with a pem file and the private key of the Certificate Authority. A pem file is a container format that may include just the public certificate and CA certificate files or may include an entire certificate chain including public key, private key, and root certificates. In this example it will only contain the public certificate. You will extract the pem and key file from the identity.jks with the following commands:
+
+##### Convert java keystore to a p12 file 
+```bash
+keytool -importkeystore -srckeystore root-ca/identity.jks -destkeystore root-ca/root-ca.p12 -srcstoretype jks -deststoretype pkcs12 -srcstorepass secret -deststorepass secret
+```
+
+##### Create pem file from a p12 file
+```bash
+openssl pkcs12 -in root-ca/root-ca.p12 -out root-ca/root-ca.pem -nokeys -passin pass:secret -passout pass:secret
+```
+
+##### Create a key file from a p12 file
+```bash
+openssl pkey -in root-ca/root-ca.pem -out root-ca/root-ca.key -passin pass:secret
+```
+
+The next step will be signing the certificates. You can sign it with the following commands:
+##### Signing the client certificate 
+```bash
+openssl x509 -req -in client/src/test/resources/client.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out client/src/test/resources/client-signed.cer -days 1825
+```
+
+##### Signing the server certificate 
+```bash
+openssl x509 -req -in server/src/main/resources/server.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out server/src/main/resources/server-signed.cer -sha256 -extfile server/src/main/resources/extensions/v3.ext -days 1825
+```
+
+#### Replace unsigned certificate with a signed one
+The identity keystore of the server and client still have the unsigned certificate. Now you can replaced it with the signed one. It won't be that easy, because the signed certificate does not have the private key so it won't be a valid identity without it. What you need to do is extract the key file from the identity and then merge it back to the identity with the signed certificate. You can do that with the following commands:
+
+##### Client
+```bash
+keytool -importkeystore -srckeystore client/src/test/resources/identity.jks -destkeystore client/src/test/resources/client.p12 -srcstoretype jks -deststoretype pkcs12 -srcstorepass secret -deststorepass secret
+openssl pkcs12 -in client/src/test/resources/client.p12 -nodes -out client/src/test/resources/client-private.key -nocerts -passin pass:secret
+openssl pkcs12 -export -in client/src/test/resources/client-signed.cer -inkey client/src/test/resources/client-private.key -out client/src/test/resources/client-signed.p12 -name suleyman -passout pass:secret
+keytool -delete -alias suleyman -keystore client/src/test/resources/identity.jks -storepass secret
+keytool -importkeystore -srckeystore client/src/test/resources/client-signed.p12 -srcstoretype PKCS12 -destkeystore client/src/test/resources/identity.jks -srcstorepass secret -deststorepass secret
+```
+
+##### Server
+```bash
+keytool -importkeystore -srckeystore server/src/main/resources/identity.jks -destkeystore server/src/main/resources/server.p12 -srcstoretype jks -deststoretype pkcs12 -srcstorepass secret -deststorepass secret
+openssl pkcs12 -in server/src/main/resources/server.p12 -nodes -out server/src/main/resources/server-private.key -nocerts -passin pass:secret
+openssl pkcs12 -export -in server/src/main/resources/server-signed.cer -inkey server/src/main/resources/server-private.key -out server/src/main/resources/server-signed.p12 -name hakan -passout pass:secret
+keytool -delete -alias hakan  -keystore server/src/main/resources/identity.jks -storepass secret
+keytool -importkeystore -srckeystore server/src/main/resources/server-signed.p12 -srcstoretype PKCS12 -destkeystore server/src/main/resources/identity.jks -srcstorepass secret -deststorepass secret
+```
+
+#### Trusting the Certificate Authority
+Now you need to configure your client and server to only trust the Certificate Authority and everyone which is trusted by the Certificate Authority. You can do that by importing the certificate of the Certificate Authority into the truststores of the client and server. You can do that with the following two commands:
+
+##### Client
+```bash
+keytool -keystore client/src/test/resources/truststore.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret
+```
+
+##### Server
+```bash
+keytool -keystore server/src/main/resources/truststore.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret
+```
+
+If you run the client again, you will see that the test passed and that the client received the hello message from the server while based on a certificate which is signed by the Certificate Authority.
