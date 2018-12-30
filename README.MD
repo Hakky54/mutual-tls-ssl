@@ -166,7 +166,14 @@ There is another way to have mutual authentication and that is based on trusting
 - Server does not need to add all the certificates of the clients
 - Maintenance will be less because only the Certificate Authority's certificate validity can expire
 ##### Cons
-- You don't have control anymore for which applications are allowed to call your application. You give permission to any application who has a signed certificate by the Certificate Authority
+- You don't have control anymore for which applications are allowed to call your application. You give permission to any application who has a signed certificate by the Certificate Authority.
+
+These are the following steps:
+1. [Creating a Certificate Authority](#creating-a-certificate-authority)
+2. [Creating a Certificate Signing Request](#creating-a-certificate-signing-request)
+3. [Signing the certificate with the Certificate Signing Request](#signing-the-certificate-with-the-certificate-signing-request)
+4. [Replace unsigned certificate with a signed one](#replace-unsigned-certificate-with-a-signed-one)
+5. [Trusting the Certificate Authority](#trusting-the-certificate-authority)
 
 #### Creating a Certificate Authority
 Normally there is already a Certificate Authority and you need to provide your certificate to have it signed. Here you will create your own Certificate Authority and sign the Client and Server certificate with it. To create one you can execute the following command: 
