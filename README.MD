@@ -173,7 +173,7 @@ These are the following steps:
 2. [Creating a Certificate Signing Request](#creating-a-certificate-signing-request)
 3. [Signing the certificate with the Certificate Signing Request](#signing-the-certificate-with-the-certificate-signing-request)
 4. [Replace unsigned certificate with a signed one](#replace-unsigned-certificate-with-a-signed-one)
-5. [Trusting the Certificate Authority](#trusting-the-certificate-authority)
+5. [Trusting the Certificate Authority only](#trusting-the-certificate-authority-only)
 
 #### Creating a Certificate Authority
 Normally there is already a Certificate Authority and you need to provide your certificate to have it signed. Here you will create your own Certificate Authority and sign the Client and Server certificate with it. To create one you can execute the following command: 
@@ -214,18 +214,18 @@ openssl pkcs12 -in root-ca/root-ca.p12 -out root-ca/root-ca.pem -nokeys -passin 
 
 ##### Create a key file from a p12 file
 ```bash
-openssl pkey -in root-ca/root-ca.pem -out root-ca/root-ca.key -passin pass:secret
+openssl pkcs12 -in root-ca/root-ca.p12 -out root-ca/root-ca.key -nocerts -passin pass:secret -passout pass:secret
 ```
 
 The next step will be signing the certificates. You can sign it with the following commands:
 ##### Signing the client certificate 
 ```bash
-openssl x509 -req -in client/src/test/resources/client.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out client/src/test/resources/client-signed.cer -days 1825
+openssl x509 -req -in client/src/test/resources/client.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out client/src/test/resources/client-signed.cer -days 1825 -passin pass:secret
 ```
 
 ##### Signing the server certificate 
 ```bash
-openssl x509 -req -in server/src/main/resources/server.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out server/src/main/resources/server-signed.cer -sha256 -extfile server/src/main/resources/extensions/v3.ext -days 1825
+openssl x509 -req -in server/src/main/resources/server.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out server/src/main/resources/server-signed.cer -sha256 -extfile server/src/main/resources/extensions/v3.ext -days 1825  -passin pass:secret
 ```
 
 #### Replace unsigned certificate with a signed one
@@ -249,7 +249,7 @@ keytool -delete -alias hakan  -keystore server/src/main/resources/identity.jks -
 keytool -importkeystore -srckeystore server/src/main/resources/server-signed.p12 -srcstoretype PKCS12 -destkeystore server/src/main/resources/identity.jks -srcstorepass secret -deststorepass secret
 ```
 
-#### Trusting the Certificate Authority
+#### Trusting the Certificate Authority only
 Now you need to configure your client and server to only trust the Certificate Authority. You can do that by importing the certificate of the Certificate Authority into the truststores of the client and server. You can do that with the following two commands:
 
 ##### Client
@@ -260,6 +260,17 @@ keytool -keystore client/src/test/resources/truststore.jks -importcert -file roo
 ##### Server
 ```bash
 keytool -keystore server/src/main/resources/truststore.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret
+```
+
+The truststores still contain the client and server specific certificates and that needs to be removed. You can do that with the following command:
+##### Client
+```bash
+keytool -keystore client/src/test/resources/truststore.jks -delete -noprompt -alias hakan -storepass secret
+```
+
+##### Server
+```bash
+keytool -keystore server/src/main/resources/truststore.jks -delete -noprompt -alias suleyman -storepass secret
 ```
 
 If you run the client again, you will see that the test passed and that the client received the hello message from the server while based on a certificate which is signed by the Certificate Authority.
