@@ -262,7 +262,7 @@ keytool -keystore client/src/test/resources/truststore.jks -importcert -file roo
 keytool -keystore server/src/main/resources/truststore.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret
 ```
 
-The truststores still contain the client and server specific certificates and that needs to be removed. You can do that with the following command:
+The truststores still contains the client and server specific certificates and that needs to be removed. You can do that with the following command:
 ##### Client
 ```bash
 keytool -keystore client/src/test/resources/truststore.jks -delete -noprompt -alias hakan -storepass secret
