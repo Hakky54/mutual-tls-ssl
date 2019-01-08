@@ -12,12 +12,16 @@ These are the following steps:
 5. [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
 
 ## Starting the server
-**Required to have:**
-1. Java 11
-2. Maven
-3. Eclipse or Intellij IDEA
+**Minimum requirements:**
+1. Java 8
+2. Maven 3.5.0
+3. Eclipse, Intellij IDEA (or any other text editor like VIM)
+4. A terminal
 
-Start the server by running the main method of the app class in the server project.
+Start the server by running the main method of the [App Class](server/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
+```bash
+(cd server/ && mvn spring-boot:run)
+```
 
 ## Saying hello to the server (without encryption)
 
