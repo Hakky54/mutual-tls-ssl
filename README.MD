@@ -32,8 +32,9 @@ It should give you the following response:
 ```bash
 HTTP/1.1 200
 Content-Type: text/plain;charset=UTF-8
-Content-Length: 7
+Content-Length: 5
 Date: Sun, 11 Nov 2018 14:21:50 GMT
+
 Hello
 ```
 
