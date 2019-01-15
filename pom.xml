@@ -23,6 +23,7 @@
         <maven-fail-safe.version>2.22.1</maven-fail-safe.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <aspectjweaver.version>1.9.2</aspectjweaver.version>
+        <maven-cucumber-reporting.version>4.3.0</maven-cucumber-reporting.version>
     </properties>
 
     <dependencyManagement>
@@ -86,6 +87,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven-fail-safe.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>${maven-cucumber-reporting.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
