@@ -1,7 +1,7 @@
 Feature: Securing the connection between you and the world
 
   @Demo
-  Scenario: By saying Hello to the Server
+  Scenario: Saying hello to the Server
     Given Server is alive
     When I say hello
     Then I expect to receive status code 200
