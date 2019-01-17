@@ -67,7 +67,7 @@ There are two ways to have mutual authentication and that is based on trusting t
 #### Exercise 4
 Now you will try to connect to the server which is running on the Raspberry Pi. The Pi has two way TLS enabled so only clients with a valid certificate, which is signed by the Certificate Authority, can communicate with it. The url of the server is" `https://raspberrypi.local:8443` 
 
-Create a certificate for the client and ensure the client is using that by changing the application properties file of the client.
+Create a certificate for the client, in the same way you created in the previous exercise, and ensure the client is using that by changing the application properties file of the client. Make sure that the client certificate has a private key and a public key (certificate) and that the output file is a jks (Java Keystore). After that you need the create a Certificate Signing Request based on the newly created client certificate.
 
 Normally there is already a Certificate Authority and you need to provide your certificate signing request to have it signed. It could take couple of hours to get a signed certificate. To have it faster you will be signing your own certificate with a custom Certificate Authority provided in the root-ca directory of this project.
 
@@ -97,5 +97,6 @@ The next step will be signing the certificates. You can sign it with the followi
 ```bash
 openssl x509 -req -in client/src/test/resources/client.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out client/src/test/resources/client-signed.cer -days 1825 -passin pass:secret
 ```
+Now you have a signed certificate. Your keystore file has a unsigned certificate with the private key. What you need to do is replace the unsigned certificate in the keystore with your signed one. It is required the preserve the private key. 
 
 Run the client en make sure it is getting the Hello message from the Pi. If you are getting a Hello message from the pi you successfully finished this hands-on session and learned how to setup two-way tls authentication, Congratulations!
