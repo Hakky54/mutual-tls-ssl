@@ -1,29 +1,48 @@
 package nl.altindag.client;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.net.ssl.*;
-import java.io.IOException;
-import java.security.*;
-import java.security.cert.CertificateException;
-
 @Configuration
 public class SSLTrustManagerHelper {
 
-    @Value("${client.ssl.key-store}")
     private String keyStore;
-
-    @Value("${client.ssl.key-store-password}")
     private String keyStorePassword;
-
-    @Value("${client.ssl.trust-store}")
     private String trustStore;
-
-    @Value("${client.ssl.trust-store-password}")
     private String trustStorePassword;
+
+    public SSLTrustManagerHelper(@Value("${client.ssl.enabled:false}") boolean sslEnabled,
+                                 @Value("${client.ssl.key-store:}") String keyStore,
+                                 @Value("${client.ssl.key-store-password:}") String keyStorePassword,
+                                 @Value("${client.ssl.trust-store:}") String trustStore,
+                                 @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
+        if (sslEnabled && (isBlank(keyStore) || isBlank(keyStorePassword) || isBlank(trustStore) || isBlank(trustStorePassword))) {
+            throw new ClientException("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
+        }
+
+        this.keyStore = keyStore;
+        this.keyStorePassword = keyStorePassword;
+        this.trustStore = trustStore;
+        this.trustStorePassword = trustStorePassword;
+    }
 
     @Bean
     @ConditionalOnProperty(name = "client.ssl.enabled")
