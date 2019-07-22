@@ -15,17 +15,17 @@
     </modules>
 
     <properties>
-        <java.version>1.8</java.version>
-        <spring.version>2.1.2.RELEASE</spring.version>
-        <apache.version>4.5.6</apache.version>
-        <cucumber.version>4.1.0</cucumber.version>
-        <junit.version>4.12</junit.version>
-        <maven-fail-safe.version>2.22.1</maven-fail-safe.version>
+        <version.java>1.8</version.java>
+        <version.spring>2.1.6.RELEASE</version.spring>
+        <version.apache.httpclient>4.5.9</version.apache.httpclient>
+        <version.cucumber>4.7.0</version.cucumber>
+        <version.junit>4.12</version.junit>
+        <version.maven-fail-safe>2.22.1</version.maven-fail-safe>
+        <version.aspectjweaver>1.9.4</version.aspectjweaver>
+        <version.maven-cucumber-reporting>4.8.0</version.maven-cucumber-reporting>
+        <version.commons-lang3>3.9</version.commons-lang3>
+        <version.commons-beanutils>1.9.3</version.commons-beanutils>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <aspectjweaver.version>1.9.2</aspectjweaver.version>
-        <maven-cucumber-reporting.version>4.3.0</maven-cucumber-reporting.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
     </properties>
 
     <dependencyManagement>
@@ -33,86 +33,80 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring.version}</version>
+                <version>${version.spring}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot</artifactId>
-                <version>${spring.version}</version>
+                <version>${version.spring}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring.version}</version>
+                <version>${version.spring}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring.version}</version>
-                <scope>test</scope>
+                <version>${version.spring}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
-                <version>${aspectjweaver.version}</version>
+                <version>${version.aspectjweaver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
-                <version>${apache.version}</version>
+                <version>${version.apache.httpclient}</version>
             </dependency>
 
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-java</artifactId>
-                <version>${cucumber.version}</version>
+                <version>${version.cucumber}</version>
             </dependency>
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-junit</artifactId>
-                <version>${cucumber.version}</version>
+                <version>${version.cucumber}</version>
             </dependency>
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-spring</artifactId>
-                <version>${cucumber.version}</version>
+                <version>${version.cucumber}</version>
             </dependency>
 
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
+                <version>${version.junit}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${maven-fail-safe.version}</version>
+                <version>${version.maven-fail-safe}</version>
             </dependency>
 
             <dependency>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
-                <version>${maven-cucumber-reporting.version}</version>
+                <version>${version.maven-cucumber-reporting}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
+                <version>${version.commons-lang3}</version>
             </dependency>
 
             <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
-                <version>${commons-beanutils.version}</version>
+                <version>${version.commons-beanutils}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -124,8 +118,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>${version.java}</source>
+                    <target>${version.java}</target>
                 </configuration>
             </plugin>
         </plugins>
