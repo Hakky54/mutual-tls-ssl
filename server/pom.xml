@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.version}</version>
+                <version>${version.spring}</version>
                 <configuration>
                     <mainClass>nl.altindag.server.App</mainClass>
                 </configuration>

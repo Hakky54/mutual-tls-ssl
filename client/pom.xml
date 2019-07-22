@@ -60,7 +60,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${maven-fail-safe.version}</version>
+                <version>${version.maven-fail-safe}</version>
                 <executions>
                     <execution>
                         <id>integration-test</id>
@@ -80,7 +80,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.version}</version>
+                <version>${version.spring}</version>
                 <configuration>
                     <mainClass>${mainClassServer}</mainClass>
                 </configuration>
@@ -111,7 +111,7 @@
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
-                <version>${maven-cucumber-reporting.version}</version>
+                <version>${version.maven-cucumber-reporting}</version>
                 <executions>
                     <execution>
                         <id>execution</id>
