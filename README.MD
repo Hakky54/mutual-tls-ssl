@@ -69,7 +69,7 @@ To solve this issue, you are going to create a keystore with a public and privat
 
 To create a keystore with a public and private key, execute the following command in your terminal:
 ```bash
-keytool -genkeypair -keyalg RSA -keysize 2048 -alias hakan -dname "CN=Hakan,OU=Amsterdam,O=Luminis,C=NL" -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -validity 3650 -keystore server/src/main/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
+keytool -genkeypair -keyalg RSA -keysize 2048 -alias server -dname "CN=Hakan,OU=Amsterdam,O=Luminis,C=NL" -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -validity 3650 -keystore server/src/main/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
 ```
 
 Now, you need to tell your server where the location of the keystore is and provide the passwords. Paste the following in your  `application.yml` file:
@@ -113,27 +113,27 @@ server:
 
 If you run the client, it will fail with the following error message: `javax.net.ssl.SSLHandshakeException: Received fatal alert: bad_certificate`. This indicates that the certificate of the client is not valid because there is no certificate at all. So, let's create one with the following command
 ```bash
-keytool -genkeypair -keyalg RSA -keysize 2048 -alias suleyman -dname "CN=Suleyman,OU=Altindag,O=Altindag,C=NL" -validity 3650 -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
+keytool -genkeypair -keyalg RSA -keysize 2048 -alias client -dname "CN=Suleyman,OU=Altindag,O=Altindag,C=NL" -validity 3650 -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
 ```
 You also need to create a truststore. A truststore is a suitcase containing trusted certificates. The client or server will compare the certificate, which it will receive during the SSL Handshake process with the content of its truststore. If there is a match, then the SSL Handshake process will continue. Before creating the truststores, you need to have the certificates of the client and server. You can get it with the following command:
 
 **Export certificate of the client**
 ```bash
-keytool -exportcert -keystore client/src/test/resources/identity.jks -storepass secret -alias suleyman -rfc -file client/src/test/resources/client.cer
+keytool -exportcert -keystore client/src/test/resources/identity.jks -storepass secret -alias client -rfc -file client/src/test/resources/client.cer
 ```
 
 **Export certificate of the server**
 ```bash
-keytool -exportcert -keystore server/src/main/resources/identity.jks -storepass secret -alias hakan -rfc -file server/src/main/resources/server.cer
+keytool -exportcert -keystore server/src/main/resources/identity.jks -storepass secret -alias server -rfc -file server/src/main/resources/server.cer
 ```
 
 Now, you can create the truststore for the client and import the certificate of the server with the following command:
 ```bash
-keytool -keystore client/src/test/resources/truststore.jks -importcert -file server/src/main/resources/server.cer -alias hakan -storepass secret
+keytool -keystore client/src/test/resources/truststore.jks -importcert -file server/src/main/resources/server.cer -alias server -storepass secret
 ```
 The next step is to do the same for the truststore of the server:
 ```bash
-keytool -keystore server/src/main/resources/truststore.jks -importcert -file client/src/test/resources/client.cer -alias suleyman -storepass secret
+keytool -keystore server/src/main/resources/truststore.jks -importcert -file client/src/test/resources/client.cer -alias client -storepass secret
 ```
 
 You created the two keystores for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it needs to use the keystores with the correct location and password. You also need to tell the client that ssl is enabled. Provide the following property in the `application.yml` file of the client:
@@ -195,12 +195,12 @@ To get your certificate signed you need to provide a Certificate Signing Request
 
 ##### Certificate Signing Request for the server
 ```bash
-keytool -certreq -keystore server/src/main/resources/identity.jks -alias hakan -keypass secret -storepass secret -keyalg rsa -file server/src/main/resources/server.csr
+keytool -certreq -keystore server/src/main/resources/identity.jks -alias server -keypass secret -storepass secret -keyalg rsa -file server/src/main/resources/server.csr
 ```
 
 ##### Certificate Signing Request for the client
 ```bash
-keytool -certreq -keystore client/src/test/resources/identity.jks -alias suleyman -keypass secret -storepass secret -keyalg rsa -file client/src/test/resources/client.csr
+keytool -certreq -keystore client/src/test/resources/identity.jks -alias client -keypass secret -storepass secret -keyalg rsa -file client/src/test/resources/client.csr
 ```
 
 The Certificate Authority need these csr files to be able to sign it. The next step will be signing the requests.
@@ -231,7 +231,7 @@ openssl x509 -req -in client/src/test/resources/client.csr -CA root-ca/root-ca.p
 
 ##### Signing the server certificate 
 ```bash
-openssl x509 -req -in server/src/main/resources/server.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out server/src/main/resources/server-signed.cer -sha256 -extfile server/src/main/resources/extensions/v3.ext -days 1825  -passin pass:secret
+openssl x509 -req -in server/src/main/resources/server.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out server/src/main/resources/server-signed.cer -sha256 -extfile server/src/main/resources/extensions/v3.ext -days 1825 -passin pass:secret
 ```
 
 #### Replace unsigned certificate with a signed one
@@ -241,8 +241,8 @@ The identity keystore of the server and client still have the unsigned certifica
 ```bash
 keytool -importkeystore -srckeystore client/src/test/resources/identity.jks -destkeystore client/src/test/resources/client.p12 -srcstoretype jks -deststoretype pkcs12 -srcstorepass secret -deststorepass secret
 openssl pkcs12 -in client/src/test/resources/client.p12 -nodes -out client/src/test/resources/client-private.key -nocerts -passin pass:secret
-openssl pkcs12 -export -in client/src/test/resources/client-signed.cer -inkey client/src/test/resources/client-private.key -out client/src/test/resources/client-signed.p12 -name suleyman -passout pass:secret
-keytool -delete -alias suleyman -keystore client/src/test/resources/identity.jks -storepass secret
+openssl pkcs12 -export -in client/src/test/resources/client-signed.cer -inkey client/src/test/resources/client-private.key -out client/src/test/resources/client-signed.p12 -name client -passout pass:secret
+keytool -delete -alias client -keystore client/src/test/resources/identity.jks -storepass secret
 keytool -importkeystore -srckeystore client/src/test/resources/client-signed.p12 -srcstoretype PKCS12 -destkeystore client/src/test/resources/identity.jks -srcstorepass secret -deststorepass secret
 ```
 
@@ -250,8 +250,8 @@ keytool -importkeystore -srckeystore client/src/test/resources/client-signed.p12
 ```bash
 keytool -importkeystore -srckeystore server/src/main/resources/identity.jks -destkeystore server/src/main/resources/server.p12 -srcstoretype jks -deststoretype pkcs12 -srcstorepass secret -deststorepass secret
 openssl pkcs12 -in server/src/main/resources/server.p12 -nodes -out server/src/main/resources/server-private.key -nocerts -passin pass:secret
-openssl pkcs12 -export -in server/src/main/resources/server-signed.cer -inkey server/src/main/resources/server-private.key -out server/src/main/resources/server-signed.p12 -name hakan -passout pass:secret
-keytool -delete -alias hakan  -keystore server/src/main/resources/identity.jks -storepass secret
+openssl pkcs12 -export -in server/src/main/resources/server-signed.cer -inkey server/src/main/resources/server-private.key -out server/src/main/resources/server-signed.p12 -name server -passout pass:secret
+keytool -delete -alias server -keystore server/src/main/resources/identity.jks -storepass secret
 keytool -importkeystore -srckeystore server/src/main/resources/server-signed.p12 -srcstoretype PKCS12 -destkeystore server/src/main/resources/identity.jks -srcstorepass secret -deststorepass secret
 ```
 
@@ -271,12 +271,12 @@ keytool -keystore server/src/main/resources/truststore.jks -importcert -file roo
 The truststores still contains the client and server specific certificates and that needs to be removed. You can do that with the following command:
 ##### Client
 ```bash
-keytool -keystore client/src/test/resources/truststore.jks -delete -noprompt -alias hakan -storepass secret
+keytool -keystore client/src/test/resources/truststore.jks -delete -alias server -storepass secret
 ```
 
 ##### Server
 ```bash
-keytool -keystore server/src/main/resources/truststore.jks -delete -noprompt -alias suleyman -storepass secret
+keytool -keystore server/src/main/resources/truststore.jks -delete -alias client -storepass secret
 ```
 
 If you run the client again, you will see that the test passed and that the client received the hello message from the server while based on a certificate which is signed by the Certificate Authority.
