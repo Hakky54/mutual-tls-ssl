@@ -10,6 +10,7 @@ These are the following steps:
 3. [Enabling HTTPS on the server (one-way TLS)](#enabling-https-on-the-server-one-way-tls)
 4. [Require the client to identify itself (two way TLS)](#require-the-client-to-identify-itself-two-way-tls)
 5. [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
+6. [Automated script for two way TLS based on trusting the Certificate Authority](#automated-script-for-two-way-tls-based-on-trusting-the-certificate-authority)
 
 ## Starting the server
 **Minimum requirements:**
@@ -280,3 +281,8 @@ keytool -keystore server/src/main/resources/truststore.jks -delete -alias client
 ```
 
 If you run the client again, you will see that the test passed and that the client received the hello message from the server while based on a certificate which is signed by the Certificate Authority.
+
+## Automated script for two way TLS based on trusting the Certificate Authority
+
+You can also automate the creation of the client and server certificates including the signing process with the provided script at the root directory. Run it with the following command: `./create-certificates my-company-name`
+The provided argument is the CN (Company Name) field in the client certificate.
