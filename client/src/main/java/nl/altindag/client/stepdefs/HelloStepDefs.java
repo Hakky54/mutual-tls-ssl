@@ -1,7 +1,6 @@
 package nl.altindag.client.stepdefs;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 
@@ -34,13 +33,13 @@ public class HelloStepDefs extends BaseStepDefs {
                 .getStatusLine()
                 .getStatusCode();
 
-        assertThat(actualStatusCode, equalTo(statusCode));
+        assertThat(actualStatusCode).isEqualTo(statusCode);
     }
 
     @Then("^I expect to receive (.*) message$")
     public void iExpectToReceiveMessage(String message) throws IOException {
         String parsedResponse = EntityUtils.toString(testScenario.getResponse().getEntity());
-        assertThat(parsedResponse, equalTo(message));
+        assertThat(parsedResponse).isEqualTo(message);
     }
 
 }

@@ -1,7 +1,6 @@
 package nl.altindag.server.controller;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,14 +19,14 @@ public class HelloWorldControllerTest {
     public void shouldReturnHelloMessage() {
         ResponseEntity response = victim.hello();
 
-        assertThat(response.getBody(), equalTo("Hello"));
+        assertThat(response.getBody()).isEqualTo("Hello");
     }
 
     @Test
     public void shouldReturnStatusCode200() {
         ResponseEntity response = victim.hello();
 
-        assertThat(response.getStatusCode().value(), equalTo(200));
+        assertThat(response.getStatusCode().value()).isEqualTo(200);
     }
 
 }
