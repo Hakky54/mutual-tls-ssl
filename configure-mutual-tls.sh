@@ -51,3 +51,15 @@ keytool -keystore client/src/test/resources/truststore.jks -importcert -file roo
 keytool -keystore server/src/main/resources/truststore.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret -noprompt
 keytool -keystore client/src/test/resources/truststore.jks -delete -noprompt -alias server -storepass secret
 keytool -keystore server/src/main/resources/truststore.jks -delete -noprompt -alias client -storepass secret
+
+echo
+echo 'Configuring application properties of the server'
+rm server/src/main/resources/application.yml
+echo -e 'spring:\n  banner:\n    location: classpath:banner.txt\n\nserver:\n  port: 8443\n  ssl:\n    enabled: true\n    key-store: classpath:identity.jks\n    key-password: secret\n    key-store-password: secret\n    trust-store: classpath:truststore.jks\n    trust-store-password: secret\n    client-auth: need'  >> server/src/main/resources/application.yml
+
+echo 'Configuring application properties of the server'
+rm client/src/test/resources/application.yml
+echo -e 'spring:\n  main:\n    banner-mode: "off"\n\nclient:\n  ssl:\n    enabled: true\n    key-store: identity.jks\n    key-password: secret\n    key-store-password: secret\n    trust-store: truststore.jks\n    trust-store-password: secret'  >> client/src/test/resources/application.yml
+
+echo 'Configuring client to send request to HTTPS'
+sed -i '' 's/http:\/\/localhost:8080/https:\/\/localhost:8443/g' client/src/main/java/nl/altindag/client/stepdefs/HelloStepDefs.java
