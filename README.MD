@@ -284,5 +284,5 @@ If you run the client again, you will see that the test passed and that the clie
 
 ## Automated script for two way TLS based on trusting the Certificate Authority
 
-You can also automate the creation of the client and server certificates including the signing process with the provided script at the root directory. Run it with the following command: `./create-certificates my-company-name`
-The provided argument is the CN (Company Name) field in the client certificate.
+You can also automate the creation of the client and server certificates including the signing process, updating the application properties and the client configuration with the provided script at the root directory. Run it with the following command: `./configure-mutual-tls my-company-name`
+The provided argument will be used as CN (Common Name) when creating the client certificate. 
