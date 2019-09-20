@@ -17,6 +17,6 @@ jobs:
       run: mvn clean install
 
     - uses: actions/upload-artifact@master
-        with:
-          name: publish server artifact
-          path: server/target/server-1.0-SNAPSHOT.jar
+      with:
+        name: publish server artifact
+        path: server/target/server-1.0-SNAPSHOT.jar
