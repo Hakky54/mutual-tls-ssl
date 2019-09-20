@@ -16,7 +16,7 @@ jobs:
     - name: Build with Maven
       run: mvn clean install
 
+    - name: Publish artifact of the Server
     - uses: actions/upload-artifact@master
-      with:
-        name: publish server artifact
+      with: server
         path: server/target/server-1.0-SNAPSHOT.jar
