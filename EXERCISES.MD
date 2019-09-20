@@ -98,6 +98,6 @@ The next step will be signing the certificates. You can sign it with the followi
 ```bash
 openssl x509 -req -in client/src/test/resources/client.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out client/src/test/resources/client-signed.cer -days 1825 -passin pass:secret
 ```
-Now you have a signed certificate. Your keystore file has a unsigned certificate with the private key. What you need to do is replace the unsigned certificate in the keystore with your signed one. It is required the preserve the private key. 
+Now you have a signed certificate. Your keystore file has an unsigned certificate with the private key. What you need to do is replace the unsigned certificate in the keystore with your signed one. It is required the preserve the private key. 
 
 Run the client en make sure it is getting the Hello message from the Pi. If you are getting a Hello message from the pi you successfully finished this hands-on session and learned how to setup two-way tls authentication, Congratulations!
