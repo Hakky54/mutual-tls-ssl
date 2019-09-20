@@ -16,7 +16,6 @@ jobs:
     - name: Build with Maven
       run: mvn clean install
 
-    - name: Publish artifact of the Server
     - uses: actions/upload-artifact@master
       with:
         name: server
