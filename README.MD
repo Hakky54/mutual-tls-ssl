@@ -46,7 +46,7 @@ Hello
 
 You can also call the server with the provided client in the client directory. The client is an integration test based on Cucumber, and you can start it by running the ClientRunnerIT class. There is a Hello.feature file that describes the steps for the integration test. You can find it in the test resources of the client project.
 
-There is another way to run the server and client and that is with the following command: `mvn clean install`
+There is another way to run the server and client and that is with the following command: `mvn clean verify`
 
 ## Enabling HTTPS on the server (one-way TLS)
 
