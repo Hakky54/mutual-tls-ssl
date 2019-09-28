@@ -48,7 +48,7 @@ Run the Client to validate if it is also able to call the server. The client is 
 #### Exercise 3
 Now, you will learn how to secure your server by enabling TLS. You need to add some properties to the application properties of the server named `application.yml` and validate if the test still passes.
 
-Here you can find which properties are available and which you can add: [link1](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html) and [link2](https://docs.spring.io/spring-cloud-dataflow/docs/1.1.0.M1/reference/html/getting-started-security.html). Here you can also find the documentation regarding creating a certificate and how to use the keytool: [link3](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html)
+Here you can find which properties are available and which you can add: [Spring - General application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html) and [Spring - Security properties](https://docs.spring.io/spring-cloud-dataflow/docs/1.1.0.M1/reference/html/getting-started-security.html). Here you can also find the documentation regarding creating a certificate and how to use the keytool: [Keytool documentation](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html) and [Keytool cheat sheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
 
 Restart the server so that it can apply the changes you made and rerun the client. Make sure that the client is executing the request with the https protocol.
 
