@@ -20,8 +20,11 @@ import org.springframework.context.annotation.Import;
 @Import({SSLTrustManagerHelper.class})
 public class ClientConfig {
 
-    @Autowired(required = false)
     private SSLContext sslContext;
+
+    public ClientConfig(@Autowired(required = false) SSLContext sslContext) {
+        this.sslContext = sslContext;
+    }
 
     @Bean("httpClient")
     @ConditionalOnProperty(name = "client.ssl.mutual-authentication-enabled", havingValue = "true")
