@@ -141,7 +141,7 @@ You created the two keystores for the client. Unfortunately, the client is not a
 ```yaml
 client:
   ssl:
-    enabled: true
+    mutual-authentication-enabled: true
     key-store: identity.jks
     key-password: secret
     key-store-password: secret

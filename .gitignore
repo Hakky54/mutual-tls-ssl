@@ -1,2 +1,5 @@
 *.iml
 .idea
+
+client/target/
+server/target/
