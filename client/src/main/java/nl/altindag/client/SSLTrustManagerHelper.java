@@ -51,7 +51,6 @@ public class SSLTrustManagerHelper {
     public SSLContext clientSSLContext() {
         try {
             TrustManagerFactory trustManagerFactory = getTrustManagerFactory(trustStore, trustStorePassword);
-
             KeyManagerFactory keyManagerFactory = getKeyManagerFactory(keyStore, keyStorePassword);
 
             return getSSLContext(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers());
@@ -80,14 +79,14 @@ public class SSLTrustManagerHelper {
         return trustManagerFactory;
     }
 
-    private static KeyStore loadKeyStore(String keystorePath, String truststorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+    private static KeyStore loadKeyStore(String keystorePath, String keystorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
         try(InputStream keystoreInputStream = SSLTrustManagerHelper.class.getClassLoader().getResourceAsStream(keystorePath)) {
             if (isNull(keystoreInputStream)) {
                 throw new ClientException(String.format("Could not find the keystore file with the given location %s", keystorePath));
             }
 
             KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-            keystore.load(keystoreInputStream, truststorePassword.toCharArray());
+            keystore.load(keystoreInputStream, keystorePassword.toCharArray());
             return keystore;
         }
     }
