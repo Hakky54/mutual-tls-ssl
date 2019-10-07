@@ -25,6 +25,7 @@
         <version.maven-cucumber-reporting>4.8.0</version.maven-cucumber-reporting>
         <version.commons-lang3>3.9</version.commons-lang3>
         <version.commons-beanutils>1.9.3</version.commons-beanutils>
+        <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -124,5 +125,45 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>with-mutual-authentication</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>${version.exec-maven-plugin}</version>
+                        <inherited>false</inherited>
+                        <executions>
+                            <execution>
+                                <id>save-local-changes</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>git</executable>
+                                    <commandlineArgs>stash save --keep-index --include-untracked "current progress"</commandlineArgs>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>enabling-mutual-authentication</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${basedir}/configure-mutual-tls.sh</executable>
+                                    <arguments>black-hole-client</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
