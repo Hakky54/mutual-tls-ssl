@@ -12,6 +12,11 @@ These are the following steps:
 5. [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
 6. [Automated script for two way TLS based on trusting the Certificate Authority](#automated-script-for-two-way-tls-based-on-trusting-the-certificate-authority)
 
+### Usefull links
+- [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
+- [Openssl Cheatsheet](https://gist.github.com/webtobesocial/5313b0d7abc25e06c2d78f8b767d4bc3)
+- [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
+
 ## Starting the server
 **Minimum requirements:**
 1. Java 8
@@ -62,7 +67,7 @@ server:
 
 You will probably ask yourself why the port is set to 8443. The port convention for a tomcat server with https is 8443, and for http, it is 8080. So, we could use port 8080 for https connections, but it is a bad practice. See [Wikipedia](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) for more information about port conventions.
 
-Restart the server so that it can apply the changes you made. You will probably get the following exception: `IllegalArgumentException: Resource location must not be null`. 
+Restart the server so that it can apply the changes you made. You will probably get the following exception: `IllegalArgumentException: Resource location must not be null`.
 
 You are getting this message because the server requires a keystore with the certificate of the server to ensure that there is a secure connection with the outside world. The server can provide you more information if you provide the following VM argument: `-Djavax.net.debug=SSL,keymanager,trustmanager,ssl:handshake`
 
@@ -84,9 +89,9 @@ server:
     key-store-password: secret
 ```
 
-Congratulations! You enabled a TLS-encrypted connection between the server and the client! Now, you can try to call the server with the following curl command: `curl -i --insecure -v -XGET https://localhost:8443/api/hello` 
+Congratulations! You enabled a TLS-encrypted connection between the server and the client! Now, you can try to call the server with the following curl command: `curl -i --insecure -v -XGET https://localhost:8443/api/hello`
 
-Let's also run the client in the ClientRunnerIT class. 
+Let's also run the client in the ClientRunnerIT class.
 
 You will see the following error message: `java.net.ConnectException: Connection refused (Connection refused)`. It looks like the client is trying to say hello to the server but the server is not there. The problem is that the client it trying to say hello to the server on port 8080 while it is active on the port 8443. Apply the following changes to the HelloStepDefs class:
 
@@ -97,7 +102,7 @@ private static final String SERVER_URL = "http://localhost:8080";
 **To**:
 ```java
 private static final String SERVER_URL = "https://localhost:8443";
-``` 
+```
 
 ## Require the client to identify itself (two way TLS)
 The next step is to require the authentication of the client. This will force the client to identify itself, and in that way, the server can also validate the identity of the client and whether or not it is a trusted one. You can enable this by telling the server that you also want to validate the client with the property client-auth. Put the following properties in the `application.yml` of the server:
@@ -166,7 +171,7 @@ server:
 If you run the client again, you will see that the test passed and that the client received the hello message from the server in a secured way. Congratulations! You finished installing two-way TLS!
 
 ## Two way TLS based on trusting the Certificate Authority
-There is another way to have mutual authentication and that is based on trusting the Certificate Authority. It has pros and cons. 
+There is another way to have mutual authentication and that is based on trusting the Certificate Authority. It has pros and cons.
 
 ##### Pros
 - Client's do not need to add the certificate of the server
@@ -183,7 +188,7 @@ These are the following steps:
 5. [Trusting the Certificate Authority only](#trusting-the-certificate-authority-only)
 
 #### Creating a Certificate Authority
-Normally there is already a Certificate Authority and you need to provide your certificate to have it signed. Here you will create your own Certificate Authority and sign the Client and Server certificate with it. To create one you can execute the following command: 
+Normally there is already a Certificate Authority and you need to provide your certificate to have it signed. Here you will create your own Certificate Authority and sign the Client and Server certificate with it. To create one you can execute the following command:
 
 ```bash
 keytool -genkeypair -keyalg RSA -keysize 2048 -alias root-ca -dname "CN=Root-CA,OU=Certificate Authority,O=Luminis,C=NL" -validity 3650 -keystore root-ca/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
@@ -209,7 +214,7 @@ The Certificate Authority need these csr files to be able to sign it. The next s
 #### Signing the certificate with the Certificate Signing Request
 Up till now you only used the keytool, but for the signing procedure you need openssl. A csr file can be signed with a pem file and the private key of the Certificate Authority. A pem file is a container format that may include just the public certificate and CA certificate files or may include an entire certificate chain including public key, private key, and root certificates. In this example it will only contain the public certificate. You will extract the pem and key file from the identity.jks with the following commands:
 
-##### Convert java keystore to a p12 file 
+##### Convert java keystore to a p12 file
 ```bash
 keytool -importkeystore -srckeystore root-ca/identity.jks -destkeystore root-ca/root-ca.p12 -srcstoretype jks -deststoretype pkcs12 -srcstorepass secret -deststorepass secret
 ```
@@ -225,12 +230,12 @@ openssl pkcs12 -in root-ca/root-ca.p12 -out root-ca/root-ca.key -nocerts -passin
 ```
 
 The next step will be signing the certificates. You can sign it with the following commands:
-##### Signing the client certificate 
+##### Signing the client certificate
 ```bash
 openssl x509 -req -in client/src/test/resources/client.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out client/src/test/resources/client-signed.cer -days 1825 -passin pass:secret
 ```
 
-##### Signing the server certificate 
+##### Signing the server certificate
 ```bash
 openssl x509 -req -in server/src/main/resources/server.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out server/src/main/resources/server-signed.cer -sha256 -extfile server/src/main/resources/extensions/v3.ext -days 1825 -passin pass:secret
 ```
@@ -285,4 +290,4 @@ If you run the client again, you will see that the test passed and that the clie
 ## Automated script for two way TLS based on trusting the Certificate Authority
 
 You can also automate the creation of the client and server certificates including the signing process, updating the application properties and the client configuration with the provided script at the root directory. Run it with the following command: `./configure-mutual-tls my-company-name`
-The provided argument will be used as CN (Common Name) when creating the client certificate. 
+The provided argument will be used as CN (Common Name) when creating the client certificate.
