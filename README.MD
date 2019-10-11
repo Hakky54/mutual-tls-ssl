@@ -12,7 +12,7 @@ These are the following steps:
 5. [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
 6. [Automated script for two way TLS based on trusting the Certificate Authority](#automated-script-for-two-way-tls-based-on-trusting-the-certificate-authority)
 
-### Usefull links
+Usefull links
 - [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
 - [Openssl Cheatsheet](https://gist.github.com/webtobesocial/5313b0d7abc25e06c2d78f8b767d4bc3)
 - [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
