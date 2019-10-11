@@ -11,7 +11,7 @@ public class HelloWorldController {
 
     @GetMapping("/api/hello")
     @LogCertificate(detailed = true)
-    public ResponseEntity hello() {
+    public ResponseEntity<String> hello() {
         return ResponseEntity.ok("Hello");
     }
 

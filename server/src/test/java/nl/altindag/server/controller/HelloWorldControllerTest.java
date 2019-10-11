@@ -17,14 +17,14 @@ public class HelloWorldControllerTest {
 
     @Test
     public void shouldReturnHelloMessage() {
-        ResponseEntity response = victim.hello();
+        ResponseEntity<String> response = victim.hello();
 
         assertThat(response.getBody()).isEqualTo("Hello");
     }
 
     @Test
     public void shouldReturnStatusCode200() {
-        ResponseEntity response = victim.hello();
+        ResponseEntity<String> response = victim.hello();
 
         assertThat(response.getStatusCode().value()).isEqualTo(200);
     }
