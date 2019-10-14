@@ -18,7 +18,7 @@ jobs:
 
     - uses: actions/upload-artifact@master
       with:
-        name: server
+        name: server-with-mutual-authentication
         path: server/target/server-1.0-SNAPSHOT.jar
 
   without-encryption:
@@ -33,3 +33,8 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: server-without-encryption
+          path: server/target/server-1.0-SNAPSHOT.jar
