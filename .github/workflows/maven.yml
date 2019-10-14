@@ -19,7 +19,7 @@ jobs:
     - uses: actions/upload-artifact@master
       with:
         name: server-with-mutual-authentication
-        path: server/target/server-1.0-SNAPSHOT.jar
+        path: server/target/server.jar
 
   without-encryption:
     runs-on: ubuntu-latest
@@ -37,4 +37,4 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: server-without-encryption
-          path: server/target/server-1.0-SNAPSHOT.jar
+          path: server/target/server.jar

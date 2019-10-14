@@ -43,6 +43,7 @@
                 <version>${version.spring}</version>
                 <configuration>
                     <mainClass>nl.altindag.server.App</mainClass>
+                    <finalName>server</finalName>
                 </configuration>
                 <executions>
                     <execution>
