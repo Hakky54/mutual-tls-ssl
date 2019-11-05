@@ -1,20 +1,16 @@
 package nl.altindag.client;
 
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
+import java.net.http.HttpClient;
 
 import javax.net.ssl.SSLContext;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.ssl.SSLContexts;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @Import({SSLTrustManagerHelper.class})
@@ -22,26 +18,29 @@ public class ClientConfig {
 
     private SSLContext sslContext;
 
-    public ClientConfig(@Autowired(required = false) SSLContext sslContext) {
+    public ClientConfig(SSLContext sslContext) {
         this.sslContext = sslContext;
     }
 
-    @Bean("httpClient")
-    @ConditionalOnProperty(name = "client.ssl.mutual-authentication-enabled", havingValue = "true")
-    public HttpClient httpClientWithMutualAuthentication() {
+    @Bean
+    public CloseableHttpClient apacheHttpClient() {
         return HttpClients.custom()
-                .setSSLContext(sslContext)
-                .build();
+                          .setSSLContext(sslContext)
+                          .build();
     }
 
-    @Bean("httpClient")
-    @ConditionalOnProperty(name = "client.ssl.mutual-authentication-enabled", havingValue = "false")
-    public HttpClient httpClientWithoutMutualAuthentication() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
-        return HttpClients.custom()
-                .setSSLContext(SSLContexts.custom()
-                        .loadTrustMaterial(null, new TrustSelfSignedStrategy())
-                        .build())
-                .build();
+    @Bean
+    public HttpClient jdkHttpClient() {
+        return HttpClient.newBuilder()
+                         .sslContext(sslContext)
+                         .build();
+    }
+
+    @Bean
+    public RestTemplate restTemplate(CloseableHttpClient httpClient) {
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setHttpClient(httpClient);
+        return new RestTemplate(requestFactory);
     }
 
 }
