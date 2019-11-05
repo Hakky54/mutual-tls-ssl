@@ -16,15 +16,15 @@
 
     <properties>
         <version.java>1.8</version.java>
-        <version.spring>2.1.6.RELEASE</version.spring>
-        <version.apache.httpclient>4.5.9</version.apache.httpclient>
+        <version.spring>2.2.0.RELEASE</version.spring>
+        <version.apache.httpclient>4.5.10</version.apache.httpclient>
         <version.cucumber>4.7.0</version.cucumber>
         <version.junit>4.12</version.junit>
         <version.maven-fail-safe>2.22.1</version.maven-fail-safe>
         <version.aspectjweaver>1.9.4</version.aspectjweaver>
-        <version.maven-cucumber-reporting>4.8.0</version.maven-cucumber-reporting>
+        <version.maven-cucumber-reporting>4.11.2</version.maven-cucumber-reporting>
         <version.commons-lang3>3.9</version.commons-lang3>
-        <version.commons-beanutils>1.9.3</version.commons-beanutils>
+        <version.commons-beanutils>1.9.4</version.commons-beanutils>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
