@@ -2,14 +2,11 @@ package nl.altindag.client.stepdefs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
-
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
-
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import nl.altindag.client.ClientException;
+import nl.altindag.client.model.ClientResponse;
 
 public class HelloStepDefs extends BaseStepDefs {
 
@@ -21,25 +18,32 @@ public class HelloStepDefs extends BaseStepDefs {
         // Assuming the server is up and running
     }
 
-    @When("^I say hello$")
-    public void iSayHello() throws IOException {
-        HttpGet request = new HttpGet(SERVER_URL + HELLO_ENDPOINT);
-        testScenario.setResponse(httpClient.execute(request));
+    @When("I say hello with (.*)")
+    public void iSayHelloWithClient(String client) throws Exception {
+        String url = SERVER_URL + HELLO_ENDPOINT;
+        ClientResponse clientResponse;
+
+        if (APACHE_HTTP_CLIENT.equalsIgnoreCase(client)) {
+            clientResponse = apacheHttpClientWrapper.executeRequest(url);
+        } else if (JDK_HTTP_CLIENT.equalsIgnoreCase(client)) {
+            clientResponse = jdkHttpClientWrapper.executeRequest(url);
+        } else if (SPRING_REST_TEMPATE.equalsIgnoreCase(client)) {
+            clientResponse = springRestTemplateWrapper.executeRequest(url);
+        } else {
+            throw new ClientException(String.format("Could not found any %s type of client", client));
+        }
+
+        testScenario.setClientResponse(clientResponse);
     }
 
-    @Then("^I expect to receive status code (\\d+)$")
-    public void iExpectToReceiveStatusCode(int statusCode) {
-        int actualStatusCode = testScenario.getResponse()
-                .getStatusLine()
-                .getStatusCode();
-
-        assertThat(actualStatusCode).isEqualTo(statusCode);
+    @Then("I expect to receive status code (\\d+)")
+    public void iExpectToReceiveStatusCodeStatusCode(int statusCode) {
+        assertThat(testScenario.getClientResponse().getStatusCode()).isEqualTo(statusCode);
     }
 
-    @Then("^I expect to receive (.*) message$")
-    public void iExpectToReceiveMessage(String message) throws IOException {
-        String parsedResponse = EntityUtils.toString(testScenario.getResponse().getEntity());
-        assertThat(parsedResponse).isEqualTo(message);
+    @Then("I expect to receive (.*) message")
+    public void iExpectToReceiveBody(String body) {
+        assertThat(testScenario.getClientResponse().getResponseBody()).isEqualTo(body);
     }
 
 }

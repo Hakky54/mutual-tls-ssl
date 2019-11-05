@@ -18,6 +18,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.ssl.SSLContexts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -47,8 +49,20 @@ public class SSLTrustManagerHelper {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "client.ssl.mutual-authentication-enabled")
-    public SSLContext clientSSLContext() {
+    @ConditionalOnProperty(name = "client.ssl.mutual-authentication-enabled", havingValue = "false")
+    public SSLContext clientSSLContextDisabled() {
+        try {
+            return SSLContexts.custom()
+                              .loadTrustMaterial(null, new TrustSelfSignedStrategy())
+                              .build();
+        } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
+            throw new ClientException(e);
+        }
+    }
+
+    @Bean
+    @ConditionalOnProperty(name = "client.ssl.mutual-authentication-enabled", havingValue = "true")
+    public SSLContext clientSSLContextEnabled() {
         try {
             TrustManagerFactory trustManagerFactory = getTrustManagerFactory(trustStore, trustStorePassword);
             KeyManagerFactory keyManagerFactory = getKeyManagerFactory(keyStore, keyStorePassword);

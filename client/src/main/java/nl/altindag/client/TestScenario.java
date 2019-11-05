@@ -1,19 +1,20 @@
 package nl.altindag.client;
 
-import org.apache.http.HttpResponse;
 import org.springframework.stereotype.Component;
+
+import nl.altindag.client.model.ClientResponse;
 
 @Component
 public class TestScenario {
 
-    private HttpResponse response;
+    private ClientResponse clientResponse;
 
-    public HttpResponse getResponse() {
-        return response;
+    public ClientResponse getClientResponse() {
+        return clientResponse;
     }
 
-    public void setResponse(HttpResponse response) {
-        this.response = response;
+    public void setClientResponse(ClientResponse clientResponse) {
+        this.clientResponse = clientResponse;
     }
 
 }
