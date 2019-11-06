@@ -64,6 +64,8 @@ public class ClientConfig {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
         if (sslTrustManagerHelper.getKeyManagerFactory().isPresent() && sslTrustManagerHelper.getTrustManagerFactory().isPresent()) {
             SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
+                                                                   .startTls(true)
+                                                                   .protocols(sslTrustManagerHelper.getSslContext().getProtocol())
                                                                    .keyManager(sslTrustManagerHelper.getKeyManagerFactory().get())
                                                                    .trustManager(sslTrustManagerHelper.getTrustManagerFactory().get());
 
