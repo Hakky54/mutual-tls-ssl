@@ -11,7 +11,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.util.Optional;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -31,6 +30,7 @@ public class SSLTrustManagerHelper {
     private String keyStorePassword;
     private String trustStore;
     private String trustStorePassword;
+    private boolean securityEnabled;
 
     private SSLContext sslContext;
     private TrustManagerFactory trustManagerFactory;
@@ -49,6 +49,7 @@ public class SSLTrustManagerHelper {
         this.keyStorePassword = keyStorePassword;
         this.trustStore = trustStore;
         this.trustStorePassword = trustStorePassword;
+        this.securityEnabled = mutualAuthenticationEnabled;
 
         if (mutualAuthenticationEnabled) {
             sslContext = createSSLContextWithClientKeyStoreAndTrustStore();
@@ -109,16 +110,20 @@ public class SSLTrustManagerHelper {
         }
     }
 
+    public boolean isSecurityEnabled() {
+        return securityEnabled;
+    }
+
     public SSLContext getSslContext() {
         return sslContext;
     }
 
-    public Optional<TrustManagerFactory> getTrustManagerFactory() {
-        return Optional.ofNullable(trustManagerFactory);
+    public TrustManagerFactory getTrustManagerFactory() {
+        return trustManagerFactory;
     }
 
-    public Optional<KeyManagerFactory> getKeyManagerFactory() {
-        return Optional.ofNullable(keyManagerFactory);
+    public KeyManagerFactory getKeyManagerFactory() {
+        return keyManagerFactory;
     }
 
 }
