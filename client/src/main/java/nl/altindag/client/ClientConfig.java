@@ -50,9 +50,9 @@ public class ClientConfig {
     @Bean
     public OkHttpClient okHttpClient() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        if (sslTrustManagerHelper.getTrustManagerFactory().isPresent()) {
+        if (sslTrustManagerHelper.isSecurityEnabled()) {
             httpClientBuilder.sslSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory(),
-                                               (X509TrustManager) sslTrustManagerHelper.getTrustManagerFactory().get().getTrustManagers()[0]);
+                                               (X509TrustManager) sslTrustManagerHelper.getTrustManagerFactory().getTrustManagers()[0]);
         }
 
         return httpClientBuilder
@@ -62,12 +62,12 @@ public class ClientConfig {
     @Bean
     public WebClient webClientWithNetty() {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
-        if (sslTrustManagerHelper.getKeyManagerFactory().isPresent() && sslTrustManagerHelper.getTrustManagerFactory().isPresent()) {
+        if (sslTrustManagerHelper.isSecurityEnabled()) {
             SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
                                                                    .startTls(true)
                                                                    .protocols(sslTrustManagerHelper.getSslContext().getProtocol())
-                                                                   .keyManager(sslTrustManagerHelper.getKeyManagerFactory().get())
-                                                                   .trustManager(sslTrustManagerHelper.getTrustManagerFactory().get());
+                                                                   .keyManager(sslTrustManagerHelper.getKeyManagerFactory())
+                                                                   .trustManager(sslTrustManagerHelper.getTrustManagerFactory());
 
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContextBuilder));
         }
