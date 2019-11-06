@@ -29,6 +29,8 @@ public class HelloStepDefs extends BaseStepDefs {
             clientResponse = jdkHttpClientWrapper.executeRequest(url);
         } else if (SPRING_REST_TEMPATE.equalsIgnoreCase(client)) {
             clientResponse = springRestTemplateWrapper.executeRequest(url);
+        } else if (SPRING_WEBFLUX_NETTY.equalsIgnoreCase(client)) {
+            clientResponse = springWebFluxNettyWrapper.executeRequest(url);
         } else if (OK_HTTP.equalsIgnoreCase(client)) {
             clientResponse = okHttpClientWrapper.executeRequest(url);
         } else {

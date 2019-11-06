@@ -4,14 +4,16 @@ import java.net.http.HttpClient;
 
 import javax.net.ssl.X509TrustManager;
 
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import io.netty.handler.ssl.SslContextBuilder;
 import okhttp3.OkHttpClient;
 
 @Configuration
@@ -25,7 +27,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public CloseableHttpClient apacheHttpClient() {
+    public org.apache.http.client.HttpClient apacheHttpClient() {
         return HttpClients.custom()
                           .setSSLContext(sslTrustManagerHelper.getSslContext())
                           .build();
@@ -39,7 +41,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public RestTemplate restTemplate(CloseableHttpClient httpClient) {
+    public RestTemplate restTemplate(org.apache.http.client.HttpClient httpClient) {
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
         requestFactory.setHttpClient(httpClient);
         return new RestTemplate(requestFactory);
@@ -56,6 +58,22 @@ public class ClientConfig {
 
         return httpClientBuilder
                 .build();
+    }
+
+    @Bean
+    public WebClient webClientWithNetty() {
+        reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
+        if (sslTrustManagerHelper.getKeyManagerFactory().isPresent() && sslTrustManagerHelper.getTrustManagerFactory().isPresent()) {
+            SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
+                                                                   .keyManager(sslTrustManagerHelper.getKeyManagerFactory().get())
+                                                                   .trustManager(sslTrustManagerHelper.getTrustManagerFactory().get());
+
+            httpClient.secure(sslSpec -> sslSpec.sslContext(sslContextBuilder));
+        }
+
+        return WebClient.builder()
+                 .clientConnector(new ReactorClientHttpConnector(httpClient))
+                 .build();
     }
 
 }
