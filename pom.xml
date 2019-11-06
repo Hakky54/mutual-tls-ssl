@@ -26,6 +26,8 @@
         <version.commons-lang3>3.9</version.commons-lang3>
         <version.commons-beanutils>1.9.4</version.commons-beanutils>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
+        <version.okhttp>4.2.2</version.okhttp>
+        <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -109,6 +111,12 @@
                 <artifactId>commons-beanutils</artifactId>
                 <version>${version.commons-beanutils}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${version.okhttp}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -117,7 +125,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>${version.maven-compiler-plugin}</version>
                 <configuration>
                     <source>${version.java}</source>
                     <target>${version.java}</target>

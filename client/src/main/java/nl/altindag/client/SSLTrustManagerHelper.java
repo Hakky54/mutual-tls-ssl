@@ -11,6 +11,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.Optional;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -21,8 +22,6 @@ import javax.net.ssl.TrustManagerFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.ssl.SSLContexts;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -32,6 +31,10 @@ public class SSLTrustManagerHelper {
     private String keyStorePassword;
     private String trustStore;
     private String trustStorePassword;
+
+    private SSLContext sslContext;
+    private TrustManagerFactory trustManagerFactory;
+    private KeyManagerFactory keyManagerFactory;
 
     public SSLTrustManagerHelper(@Value("${client.ssl.mutual-authentication-enabled:false}") boolean mutualAuthenticationEnabled,
                                  @Value("${client.ssl.key-store:}") String keyStore,
@@ -46,11 +49,15 @@ public class SSLTrustManagerHelper {
         this.keyStorePassword = keyStorePassword;
         this.trustStore = trustStore;
         this.trustStorePassword = trustStorePassword;
+
+        if (mutualAuthenticationEnabled) {
+            sslContext = createSSLContextWithClientKeyStoreAndTrustStore();
+        } else {
+            sslContext = createSSLContextWithoutClientKeyStoreAndTrustStore();
+        }
     }
 
-    @Bean
-    @ConditionalOnProperty(name = "client.ssl.mutual-authentication-enabled", havingValue = "false")
-    public SSLContext clientSSLContextDisabled() {
+    private SSLContext createSSLContextWithoutClientKeyStoreAndTrustStore() {
         try {
             return SSLContexts.custom()
                               .loadTrustMaterial(null, new TrustSelfSignedStrategy())
@@ -60,13 +67,10 @@ public class SSLTrustManagerHelper {
         }
     }
 
-    @Bean
-    @ConditionalOnProperty(name = "client.ssl.mutual-authentication-enabled", havingValue = "true")
-    public SSLContext clientSSLContextEnabled() {
+    private SSLContext createSSLContextWithClientKeyStoreAndTrustStore() {
         try {
-            TrustManagerFactory trustManagerFactory = getTrustManagerFactory(trustStore, trustStorePassword);
-            KeyManagerFactory keyManagerFactory = getKeyManagerFactory(keyStore, keyStorePassword);
-
+            trustManagerFactory = getTrustManagerFactory(trustStore, trustStorePassword);
+            keyManagerFactory = getKeyManagerFactory(keyStore, keyStorePassword);
             return getSSLContext(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers());
         } catch (UnrecoverableKeyException | NoSuchAlgorithmException | CertificateException | KeyStoreException | IOException | KeyManagementException e) {
             throw new ClientException(e);
@@ -86,7 +90,7 @@ public class SSLTrustManagerHelper {
         return keyManagerFactory;
     }
 
-    private static TrustManagerFactory getTrustManagerFactory(String truststorePath, String truststorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+    protected static TrustManagerFactory getTrustManagerFactory(String truststorePath, String truststorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
         KeyStore trustStore = loadKeyStore(truststorePath, truststorePassword);
         TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(trustStore);
@@ -103,6 +107,18 @@ public class SSLTrustManagerHelper {
             keystore.load(keystoreInputStream, keystorePassword.toCharArray());
             return keystore;
         }
+    }
+
+    public SSLContext getSslContext() {
+        return sslContext;
+    }
+
+    public Optional<TrustManagerFactory> getTrustManagerFactory() {
+        return Optional.ofNullable(trustManagerFactory);
+    }
+
+    public Optional<KeyManagerFactory> getKeyManagerFactory() {
+        return Optional.ofNullable(keyManagerFactory);
     }
 
 }
