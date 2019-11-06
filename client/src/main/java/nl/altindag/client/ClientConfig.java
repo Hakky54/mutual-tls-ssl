@@ -50,7 +50,6 @@ public class ClientConfig {
     @Bean
     public OkHttpClient okHttpClient() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-
         if (sslTrustManagerHelper.getTrustManagerFactory().isPresent()) {
             httpClientBuilder.sslSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory(),
                                                (X509TrustManager) sslTrustManagerHelper.getTrustManagerFactory().get().getTrustManagers()[0]);
@@ -68,7 +67,7 @@ public class ClientConfig {
                                                                    .keyManager(sslTrustManagerHelper.getKeyManagerFactory().get())
                                                                    .trustManager(sslTrustManagerHelper.getTrustManagerFactory().get());
 
-            httpClient.secure(sslSpec -> sslSpec.sslContext(sslContextBuilder));
+            httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContextBuilder));
         }
 
         return WebClient.builder()
