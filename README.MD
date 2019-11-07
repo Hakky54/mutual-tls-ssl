@@ -104,7 +104,7 @@ private static final String SERVER_URL = "http://localhost:8080";
 private static final String SERVER_URL = "https://localhost:8443";
 ```
 
-Let's try to run the client again and you will see that the following message will appear:`javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target`.
+Let's try to run the client again and you will see that the following message will appear: `javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target`.
 This means that the client wants to communicate over HTTPS and during the handshake procedure it received the certificate of the server which it doesn't recognizes yet.
 Therefor you also need to create a truststore. A truststore is a suitcase containing trusted certificates. The client will compare the certificate, which it will receive during the SSL Handshake process with the content of its truststore. If there is a match, then the SSL Handshake process will continue. Before creating the truststores, you need to have the certificates of the server. You can get it with the following command:
 
