@@ -10,6 +10,7 @@ import javax.ws.rs.client.ClientBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -31,6 +32,7 @@ public class ClientConfig {
 
     private final SSLTrustManagerHelper sslTrustManagerHelper;
 
+    @Autowired
     public ClientConfig(SSLTrustManagerHelper sslTrustManagerHelper) {
         this.sslTrustManagerHelper = sslTrustManagerHelper;
     }
