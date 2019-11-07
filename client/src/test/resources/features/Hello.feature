@@ -11,6 +11,7 @@ Feature: Securing the connection between you and the world
       | client               |
       | Apache HttpClient    |
       | JDK HttpClient       |
+      | Old JDK HttpClient   |
       | Spring RestTemplate  |
       | Spring Webflux Netty |
       | OkHttp               |
