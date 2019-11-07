@@ -3,26 +3,9 @@
 cleanUpExistingCertificatesAndKeystores() {
     echo 'Cleaning up existing certificates and keystores'
 
-    rm -fv client/src/test/resources/client.cer
-    rm -fv client/src/test/resources/client.csr
-    rm -fv client/src/test/resources/client.p12
-    rm -fv client/src/test/resources/client-private.key
-    rm -fv client/src/test/resources/client-signed.cer
-    rm -fv client/src/test/resources/client-signed.p12
-    rm -fv client/src/test/resources/identity.jks
     rm -fv client/src/test/resources/truststore.jks
-    rm -fv root-ca/root-ca.key
-    rm -fv root-ca/root-ca.p12
-    rm -fv root-ca/root-ca.pem
-    rm -fv root-ca/root-ca.srl
     rm -fv server/src/main/resources/identity.jks
     rm -fv server/src/main/resources/server.cer
-    rm -fv server/src/main/resources/server.csr
-    rm -fv server/src/main/resources/server.p12
-    rm -fv server/src/main/resources/server-private.key
-    rm -fv server/src/main/resources/server-signed.cer
-    rm -fv server/src/main/resources/server-signed.p12
-    rm -fv server/src/main/resources/truststore.jks
 
     echo 'Finished cleanup'
 }
