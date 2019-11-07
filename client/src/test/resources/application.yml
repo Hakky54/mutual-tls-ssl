@@ -4,4 +4,5 @@ spring:
 
 client:
   ssl:
-    mutual-authentication-enabled: false
+    two-way-authentication-enabled: false
+    one-way-authentication-enabled: false

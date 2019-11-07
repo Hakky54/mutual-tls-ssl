@@ -4,6 +4,7 @@ import java.net.http.HttpClient;
 
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,16 +29,20 @@ public class ClientConfig {
 
     @Bean
     public org.apache.http.client.HttpClient apacheHttpClient() {
-        return HttpClients.custom()
-                          .setSSLContext(sslTrustManagerHelper.getSslContext())
-                          .build();
+        HttpClientBuilder httpClientBuilder = HttpClients.custom();
+        if (sslTrustManagerHelper.isSecurityEnabled()) {
+            httpClientBuilder.setSSLContext(sslTrustManagerHelper.getSslContext());
+        }
+        return httpClientBuilder.build();
     }
 
     @Bean
     public HttpClient jdkHttpClient() {
-        return HttpClient.newBuilder()
-                         .sslContext(sslTrustManagerHelper.getSslContext())
-                         .build();
+        HttpClient.Builder httpClientBuilder = HttpClient.newBuilder();
+        if (sslTrustManagerHelper.isSecurityEnabled()) {
+            httpClientBuilder.sslContext(sslTrustManagerHelper.getSslContext());
+        }
+        return httpClientBuilder.build();
     }
 
     @Bean
@@ -65,10 +70,15 @@ public class ClientConfig {
         if (sslTrustManagerHelper.isSecurityEnabled()) {
             SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
                                                                    .startTls(true)
-                                                                   .protocols(sslTrustManagerHelper.getSslContext().getProtocol())
-                                                                   .keyManager(sslTrustManagerHelper.getKeyManagerFactory())
-                                                                   .trustManager(sslTrustManagerHelper.getTrustManagerFactory());
+                                                                   .protocols(sslTrustManagerHelper.getSslContext().getProtocol());
+            if (sslTrustManagerHelper.isOneWayAuthenticationEnabled()) {
+                sslContextBuilder.trustManager(sslTrustManagerHelper.getTrustManagerFactory());
+            }
 
+            if (sslTrustManagerHelper.isTwoWayAuthenticationEnabled()) {
+                sslContextBuilder.keyManager(sslTrustManagerHelper.getKeyManagerFactory())
+                                 .trustManager(sslTrustManagerHelper.getTrustManagerFactory());
+            }
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContextBuilder));
         }
 

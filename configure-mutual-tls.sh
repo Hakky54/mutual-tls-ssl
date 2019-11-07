@@ -67,7 +67,7 @@ configureApplicationProperties() {
 
     echo 'Configuring application properties of the client'
     rm client/src/test/resources/application.yml
-    echo -e 'spring:\n  main:\n    banner-mode: "off"\n\nclient:\n  ssl:\n    mutual-authentication-enabled: true\n    key-store: identity.jks\n    key-password: secret\n    key-store-password: secret\n    trust-store: truststore.jks\n    trust-store-password: secret'  >> client/src/test/resources/application.yml
+    echo -e 'spring:\n  main:\n    banner-mode: "off"\n\nclient:\n  ssl:\n    two-way-authentication-enabled: true\n    key-store: identity.jks\n    key-password: secret\n    key-store-password: secret\n    trust-store: truststore.jks\n    trust-store-password: secret'  >> client/src/test/resources/application.yml
 }
 
 configureClientRequestToUseHttps() {
