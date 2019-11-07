@@ -6,6 +6,7 @@ import nl.altindag.client.SpringBootHelper;
 import nl.altindag.client.TestScenario;
 import nl.altindag.client.service.ApacheHttpClientWrapper;
 import nl.altindag.client.service.JdkHttpClientWrapper;
+import nl.altindag.client.service.JerseyClientWrapper;
 import nl.altindag.client.service.OkHttpClientWrapper;
 import nl.altindag.client.service.OldJdkHttpClientWrapper;
 import nl.altindag.client.service.SpringRestTemplateWrapper;
@@ -21,6 +22,7 @@ public class BaseStepDefs extends SpringBootHelper {
     protected static final String SPRING_WEB_CLIENT_NETTY = "spring webclient netty";
     protected static final String SPRING_WEB_CLIENT_JETTY = "spring webclient jetty";
     protected static final String OK_HTTP = "okhttp";
+    protected static final String JERSEY_CLIENT = "jersey client";
 
     @Autowired
     protected ApacheHttpClientWrapper apacheHttpClientWrapper;
@@ -36,6 +38,8 @@ public class BaseStepDefs extends SpringBootHelper {
     protected SpringWebClientJettyWrapper springWebClientJettyWrapper;
     @Autowired
     protected OkHttpClientWrapper okHttpClientWrapper;
+    @Autowired
+    protected JerseyClientWrapper jerseyClientWrapper;
     @Autowired
     protected TestScenario testScenario;
 

@@ -3,6 +3,8 @@ package nl.altindag.client;
 import java.net.http.HttpClient;
 
 import javax.net.ssl.X509TrustManager;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -112,6 +114,15 @@ public class ClientConfig {
         return WebClient.builder()
                 .clientConnector(new JettyClientHttpConnector(httpClient))
                 .build();
+    }
+
+    @Bean
+    public Client jerseyClient() {
+        ClientBuilder clientBuilder = ClientBuilder.newBuilder();
+        if (sslTrustManagerHelper.isSecurityEnabled()) {
+            clientBuilder.sslContext(sslTrustManagerHelper.getSslContext());
+        }
+        return clientBuilder.build();
     }
 
 }
