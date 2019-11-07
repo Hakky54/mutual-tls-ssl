@@ -6,10 +6,12 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.reactive.JettyClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -85,6 +87,20 @@ public class ClientConfig {
         return WebClient.builder()
                  .clientConnector(new ReactorClientHttpConnector(httpClient))
                  .build();
+    }
+
+    @Bean
+    public WebClient webClientWithJetty() {
+        org.eclipse.jetty.client.HttpClient httpClient = new org.eclipse.jetty.client.HttpClient();
+        if (sslTrustManagerHelper.isSecurityEnabled()) {
+            SslContextFactory sslContextFactory = new SslContextFactory();
+            sslContextFactory.setSslContext(sslContextFactory.getSslContext());
+            httpClient = new org.eclipse.jetty.client.HttpClient();
+        }
+
+        return WebClient.builder()
+                .clientConnector(new JettyClientHttpConnector(httpClient))
+                .build();
     }
 
 }

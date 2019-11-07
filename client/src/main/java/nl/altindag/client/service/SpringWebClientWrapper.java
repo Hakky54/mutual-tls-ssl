@@ -3,22 +3,18 @@ package nl.altindag.client.service;
 import java.time.Duration;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import nl.altindag.client.ClientException;
 import nl.altindag.client.model.ClientResponse;
 
-@Service
-public class SpringWebFluxNettyWrapper extends RequestService {
+public class SpringWebClientWrapper extends RequestService {
 
     private static final int TIMOUT_AMOUNT_OF_SECONDS = 1;
 
     private final WebClient webClient;
 
-    @Autowired
-    public SpringWebFluxNettyWrapper(WebClient webClient) {
+    public SpringWebClientWrapper(WebClient webClient) {
         this.webClient = webClient;
     }
 
