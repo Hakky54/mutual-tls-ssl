@@ -18,8 +18,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
-import org.apache.http.ssl.SSLContexts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,18 +28,26 @@ public class SSLTrustManagerHelper {
     private String keyStorePassword;
     private String trustStore;
     private String trustStorePassword;
+
     private boolean securityEnabled;
+    private boolean oneWayAuthenticationEnabled;
+    private boolean twoWayAuthenticationEnabled;
 
     private SSLContext sslContext;
     private TrustManagerFactory trustManagerFactory;
     private KeyManagerFactory keyManagerFactory;
 
-    public SSLTrustManagerHelper(@Value("${client.ssl.mutual-authentication-enabled:false}") boolean mutualAuthenticationEnabled,
+    public SSLTrustManagerHelper(@Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
+                                 @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
                                  @Value("${client.ssl.key-store:}") String keyStore,
                                  @Value("${client.ssl.key-store-password:}") String keyStorePassword,
                                  @Value("${client.ssl.trust-store:}") String trustStore,
                                  @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
-        if (mutualAuthenticationEnabled && (isBlank(keyStore) || isBlank(keyStorePassword) || isBlank(trustStore) || isBlank(trustStorePassword))) {
+        if (oneWayAuthenticationEnabled && (isBlank(trustStore) || isBlank(trustStorePassword))) {
+            throw new ClientException("TrustStore details are empty, which are required to be present when SSL is enabled");
+        }
+
+        if (twoWayAuthenticationEnabled && (isBlank(keyStore) || isBlank(keyStorePassword) || isBlank(trustStore) || isBlank(trustStorePassword))) {
             throw new ClientException("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
         }
 
@@ -49,21 +55,27 @@ public class SSLTrustManagerHelper {
         this.keyStorePassword = keyStorePassword;
         this.trustStore = trustStore;
         this.trustStorePassword = trustStorePassword;
-        this.securityEnabled = mutualAuthenticationEnabled;
+        this.twoWayAuthenticationEnabled = twoWayAuthenticationEnabled;
+        this.oneWayAuthenticationEnabled = oneWayAuthenticationEnabled;
 
-        if (mutualAuthenticationEnabled) {
+        if (oneWayAuthenticationEnabled || twoWayAuthenticationEnabled) {
+            securityEnabled = true;
+        }
+
+        if (oneWayAuthenticationEnabled) {
+            sslContext = createSSLContextWithClientTrustStore();
+        }
+
+        if (twoWayAuthenticationEnabled) {
             sslContext = createSSLContextWithClientKeyStoreAndTrustStore();
-        } else {
-            sslContext = createSSLContextWithoutClientKeyStoreAndTrustStore();
         }
     }
 
-    private SSLContext createSSLContextWithoutClientKeyStoreAndTrustStore() {
+    private SSLContext createSSLContextWithClientTrustStore() {
         try {
-            return SSLContexts.custom()
-                              .loadTrustMaterial(null, new TrustSelfSignedStrategy())
-                              .build();
-        } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
+            trustManagerFactory = getTrustManagerFactory(trustStore, trustStorePassword);
+            return getSSLContext(null, trustManagerFactory.getTrustManagers());
+        } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException | IOException | CertificateException e) {
             throw new ClientException(e);
         }
     }
@@ -112,6 +124,14 @@ public class SSLTrustManagerHelper {
 
     public boolean isSecurityEnabled() {
         return securityEnabled;
+    }
+
+    public boolean isOneWayAuthenticationEnabled() {
+        return oneWayAuthenticationEnabled;
+    }
+
+    public boolean isTwoWayAuthenticationEnabled() {
+        return twoWayAuthenticationEnabled;
     }
 
     public SSLContext getSslContext() {

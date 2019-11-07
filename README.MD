@@ -104,6 +104,30 @@ private static final String SERVER_URL = "http://localhost:8080";
 private static final String SERVER_URL = "https://localhost:8443";
 ```
 
+Let's try to run the client again and you will see that the following message will appear:`javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target`.
+This means that the client wants to communicate over HTTPS and during the handshake procedure it received the certificate of the server which it doesn't recognizes yet.
+Therefor you also need to create a truststore. A truststore is a suitcase containing trusted certificates. The client will compare the certificate, which it will receive during the SSL Handshake process with the content of its truststore. If there is a match, then the SSL Handshake process will continue. Before creating the truststores, you need to have the certificates of the server. You can get it with the following command:
+
+**Export certificate of the server**
+```bash
+keytool -exportcert -keystore server/src/main/resources/identity.jks -storepass secret -alias server -rfc -file server/src/main/resources/server.cer
+```
+
+Now, you can create the truststore for the client and import the certificate of the server with the following command:
+```bash
+keytool -keystore client/src/test/resources/truststore.jks -importcert -file server/src/main/resources/server.cer -alias server -storepass secret
+```
+
+You created the a truststore for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it needs to use the truststore with the correct location and password. You also need to tell the client that authentication is enabled. Provide the following property in the `application.yml` file of the client:
+```yaml
+client:
+  ssl:
+    one-way-authentication-enabled: false
+    two-way-authentication-enabled: true
+    trust-store: truststore.jks
+    trust-store-password: secret
+```
+
 ## Require the client to identify itself (two way TLS)
 The next step is to require the authentication of the client. This will force the client to identify itself, and in that way, the server can also validate the identity of the client and whether or not it is a trusted one. You can enable this by telling the server that you also want to validate the client with the property client-auth. Put the following properties in the `application.yml` of the server:
 ```yaml
@@ -121,32 +145,23 @@ If you run the client, it will fail with the following error message: `javax.net
 ```bash
 keytool -genkeypair -keyalg RSA -keysize 2048 -alias client -dname "CN=Suleyman,OU=Altindag,O=Altindag,C=NL" -validity 3650 -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
 ```
-You also need to create a truststore. A truststore is a suitcase containing trusted certificates. The client or server will compare the certificate, which it will receive during the SSL Handshake process with the content of its truststore. If there is a match, then the SSL Handshake process will continue. Before creating the truststores, you need to have the certificates of the client and server. You can get it with the following command:
+You also need to create a truststore for the server. Before creating the truststore, you need to have the certificates of the client. You can get it with the following command:
 
 **Export certificate of the client**
 ```bash
 keytool -exportcert -keystore client/src/test/resources/identity.jks -storepass secret -alias client -rfc -file client/src/test/resources/client.cer
 ```
-
-**Export certificate of the server**
-```bash
-keytool -exportcert -keystore server/src/main/resources/identity.jks -storepass secret -alias server -rfc -file server/src/main/resources/server.cer
-```
-
-Now, you can create the truststore for the client and import the certificate of the server with the following command:
-```bash
-keytool -keystore client/src/test/resources/truststore.jks -importcert -file server/src/main/resources/server.cer -alias server -storepass secret
-```
-The next step is to do the same for the truststore of the server:
+**Create server truststore with certificate of the client**
 ```bash
 keytool -keystore server/src/main/resources/truststore.jks -importcert -file client/src/test/resources/client.cer -alias client -storepass secret
 ```
 
-You created the two keystores for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it needs to use the keystores with the correct location and password. You also need to tell the client that ssl is enabled. Provide the following property in the `application.yml` file of the client:
+You created the an extra keystore for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it also needs to use the keystore with the correct location and password. You also need to tell the client that two-way-authentication is enabled. Provide the following property in the `application.yml` file of the client:
 ```yaml
 client:
   ssl:
-    mutual-authentication-enabled: true
+    one-way-authentication-enabled: false
+    two-way-authentication-enabled: true
     key-store: identity.jks
     key-password: secret
     key-store-password: secret
