@@ -2,6 +2,7 @@ package nl.altindag.client;
 
 import java.net.http.HttpClient;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -17,6 +18,9 @@ import org.springframework.http.client.reactive.JettyClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.client.urlconnection.HTTPSProperties;
 
 import io.netty.handler.ssl.SslContextBuilder;
 import okhttp3.OkHttpClient;
@@ -123,6 +127,18 @@ public class ClientConfig {
             clientBuilder.sslContext(sslTrustManagerHelper.getSslContext());
         }
         return clientBuilder.build();
+    }
+
+    @Bean
+    public com.sun.jersey.api.client.Client oldJerseyClient() {
+        com.sun.jersey.api.client.Client client = com.sun.jersey.api.client.Client.create();
+        if (sslTrustManagerHelper.isSecurityEnabled()) {
+            DefaultClientConfig clientConfig = new DefaultClientConfig();
+            clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
+                                             new HTTPSProperties(HttpsURLConnection.getDefaultHostnameVerifier(), sslTrustManagerHelper.getSslContext()));
+            com.sun.jersey.api.client.Client.create(clientConfig);
+        }
+        return client;
     }
 
 }

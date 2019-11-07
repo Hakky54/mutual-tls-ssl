@@ -29,7 +29,8 @@
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <version.okhttp>4.2.2</version.okhttp>
         <version.jetty-reactive-httpclient>1.0.3</version.jetty-reactive-httpclient>
-        <version.jersey-client>2.29.1</version.jersey-client>
+        <version.org.glassfish.jersey.inject>2.29.1</version.org.glassfish.jersey.inject>
+        <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -83,12 +84,17 @@
             <dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
                 <artifactId>jersey-client</artifactId>
-                <version>${version.jersey-client}</version>
+                <version>${version.org.glassfish.jersey.inject}</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.jersey.inject</groupId>
                 <artifactId>jersey-hk2</artifactId>
-                <version>${version.jersey-client}</version>
+                <version>${version.org.glassfish.jersey.inject}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-client</artifactId>
+                <version>${version.com.sun.jersey}</version>
             </dependency>
 
             <dependency>

@@ -17,3 +17,4 @@ Feature: Securing the connection between you and the world
       | Spring WebClient Jetty  |
       | OkHttp                  |
       | Jersey Client           |
+      | Old Jersey Client       |
