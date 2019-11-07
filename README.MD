@@ -17,6 +17,17 @@ Usefull links
 - [Openssl Cheatsheet](https://gist.github.com/webtobesocial/5313b0d7abc25e06c2d78f8b767d4bc3)
 - [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
+Below is a list of supported clients with examples, see in the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java) for detailed configuration
+- Apache HttpClient
+- JDK HttpClient
+- Old JDK HttpClient
+- Spring RestTemplate
+- Spring WebClient Netty
+- Spring WebClient Jetty
+- OkHttp
+- Jersey Client
+- Old Jersey Client
+
 ## Starting the server
 **Minimum requirements:**
 1. Java 11
