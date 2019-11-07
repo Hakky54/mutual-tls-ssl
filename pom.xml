@@ -141,7 +141,7 @@
 
     <profiles>
         <profile>
-            <id>with-mutual-authentication</id>
+            <id>with-one-way-authentication</id>
             <build>
                 <plugins>
                     <plugin>
@@ -162,13 +162,49 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>enabling-mutual-authentication</id>
+                                <id>enabling-one-way-authentication</id>
                                 <phase>generate-sources</phase>
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${basedir}/configure-mutual-tls.sh</executable>
+                                    <executable>${basedir}/configure-two-way-authentication.sh</executable>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>with-two-way-authentication</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>${version.exec-maven-plugin}</version>
+                        <inherited>false</inherited>
+                        <executions>
+                            <execution>
+                                <id>save-local-changes</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>git</executable>
+                                    <commandlineArgs>stash save --keep-index --include-untracked "current progress"</commandlineArgs>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>enabling-two-way-authentication</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${basedir}/configure-two-way-authentication.sh</executable>
                                     <arguments>black-hole-client</arguments>
                                 </configuration>
                             </execution>
