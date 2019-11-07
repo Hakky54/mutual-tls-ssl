@@ -29,6 +29,7 @@
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <version.okhttp>4.2.2</version.okhttp>
         <version.jetty-reactive-httpclient>1.0.3</version.jetty-reactive-httpclient>
+        <version.jersey-client>2.29.1</version.jersey-client>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -77,6 +78,17 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-reactive-httpclient</artifactId>
                 <version>${version.jetty-reactive-httpclient}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-client</artifactId>
+                <version>${version.jersey-client}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.inject</groupId>
+                <artifactId>jersey-hk2</artifactId>
+                <version>${version.jersey-client}</version>
             </dependency>
 
             <dependency>

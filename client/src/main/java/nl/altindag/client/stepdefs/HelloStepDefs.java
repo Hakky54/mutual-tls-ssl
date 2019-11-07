@@ -37,6 +37,8 @@ public class HelloStepDefs extends BaseStepDefs {
             clientResponse = springWebClientJettyWrapper.executeRequest(url);
         } else if (OK_HTTP.equalsIgnoreCase(client)) {
             clientResponse = okHttpClientWrapper.executeRequest(url);
+        } else if (JERSEY_CLIENT.equalsIgnoreCase(client)) {
+            clientResponse = jerseyClientWrapper.executeRequest(url);
         } else {
             throw new ClientException(String.format("Could not found any %s type of client", client));
         }
