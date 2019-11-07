@@ -20,8 +20,8 @@ public class BaseStepDefs extends SpringBootHelper {
     protected static final String JDK_HTTP_CLIENT = "jdk httpclient";
     protected static final String OLD_JDK_HTTP_CLIENT = "old jdk httpclient";
     protected static final String SPRING_REST_TEMPATE = "spring resttemplate";
-    protected static final String SPRING_WEB_CLIENT_NETTY = "spring webclient netty";
-    protected static final String SPRING_WEB_CLIENT_JETTY = "spring webclient jetty";
+    protected static final String SPRING_WEB_CLIENT_NETTY = "spring webflux webclient netty";
+    protected static final String SPRING_WEB_CLIENT_JETTY = "spring webflux webclient jetty";
     protected static final String OK_HTTP = "okhttp";
     protected static final String JERSEY_CLIENT = "jersey client";
     protected static final String OLD_JERSEY_CLIENT = "old jersey client";
