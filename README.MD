@@ -22,8 +22,8 @@ Below is a list of supported clients with examples, see in the [ClientConfig cla
 - JDK HttpClient
 - Old JDK HttpClient
 - Spring RestTemplate
-- Spring WebClient Netty
-- Spring WebClient Jetty
+- Spring WebFlux WebClient Netty
+- Spring WebFlux WebClient Jetty
 - OkHttp
 - Jersey Client
 - Old Jersey Client
