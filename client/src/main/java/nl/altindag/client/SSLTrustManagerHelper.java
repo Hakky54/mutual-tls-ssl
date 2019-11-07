@@ -24,9 +24,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SSLTrustManagerHelper {
 
-    private String keyStore;
+    private KeyStore keyStore;
+    private String keyStorePath;
     private String keyStorePassword;
-    private String trustStore;
+    private KeyStore trustStore;
+    private String trustStorePath;
     private String trustStorePassword;
 
     private boolean securityEnabled;
@@ -39,21 +41,21 @@ public class SSLTrustManagerHelper {
 
     public SSLTrustManagerHelper(@Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
                                  @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
-                                 @Value("${client.ssl.key-store:}") String keyStore,
+                                 @Value("${client.ssl.key-store:}") String keyStorePath,
                                  @Value("${client.ssl.key-store-password:}") String keyStorePassword,
-                                 @Value("${client.ssl.trust-store:}") String trustStore,
+                                 @Value("${client.ssl.trust-store:}") String trustStorePath,
                                  @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
-        if (oneWayAuthenticationEnabled && (isBlank(trustStore) || isBlank(trustStorePassword))) {
+        if (oneWayAuthenticationEnabled && (isBlank(trustStorePath) || isBlank(trustStorePassword))) {
             throw new ClientException("TrustStore details are empty, which are required to be present when SSL is enabled");
         }
 
-        if (twoWayAuthenticationEnabled && (isBlank(keyStore) || isBlank(keyStorePassword) || isBlank(trustStore) || isBlank(trustStorePassword))) {
+        if (twoWayAuthenticationEnabled && (isBlank(keyStorePath) || isBlank(keyStorePassword) || isBlank(trustStorePath) || isBlank(trustStorePassword))) {
             throw new ClientException("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
         }
 
-        this.keyStore = keyStore;
+        this.keyStorePath = keyStorePath;
         this.keyStorePassword = keyStorePassword;
-        this.trustStore = trustStore;
+        this.trustStorePath = trustStorePath;
         this.trustStorePassword = trustStorePassword;
         this.twoWayAuthenticationEnabled = twoWayAuthenticationEnabled;
         this.oneWayAuthenticationEnabled = oneWayAuthenticationEnabled;
@@ -73,8 +75,7 @@ public class SSLTrustManagerHelper {
 
     private SSLContext createSSLContextWithClientTrustStore() {
         try {
-            trustManagerFactory = getTrustManagerFactory(trustStore, trustStorePassword);
-            return getSSLContext(null, trustManagerFactory.getTrustManagers());
+            return getSSLContext(null, getTrustManagerFactory(trustStorePath, trustStorePassword).getTrustManagers());
         } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException | IOException | CertificateException e) {
             throw new ClientException(e);
         }
@@ -82,9 +83,8 @@ public class SSLTrustManagerHelper {
 
     private SSLContext createSSLContextWithClientKeyStoreAndTrustStore() {
         try {
-            trustManagerFactory = getTrustManagerFactory(trustStore, trustStorePassword);
-            keyManagerFactory = getKeyManagerFactory(keyStore, keyStorePassword);
-            return getSSLContext(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers());
+            return getSSLContext(getKeyManagerFactory(keyStorePath, keyStorePassword).getKeyManagers(),
+                                 getTrustManagerFactory(trustStorePath, trustStorePassword).getTrustManagers());
         } catch (UnrecoverableKeyException | NoSuchAlgorithmException | CertificateException | KeyStoreException | IOException | KeyManagementException e) {
             throw new ClientException(e);
         }
@@ -96,16 +96,16 @@ public class SSLTrustManagerHelper {
         return sslContext;
     }
 
-    private static KeyManagerFactory getKeyManagerFactory(String keystorePath, String keystorePassword) throws NoSuchAlgorithmException, KeyStoreException, IOException, CertificateException, UnrecoverableKeyException {
-        KeyStore keyStore = loadKeyStore(keystorePath, keystorePassword);
-        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+    private KeyManagerFactory getKeyManagerFactory(String keystorePath, String keystorePassword) throws NoSuchAlgorithmException, KeyStoreException, IOException, CertificateException, UnrecoverableKeyException {
+        keyStore = loadKeyStore(keystorePath, keystorePassword);
+        keyManagerFactory = KeyManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         keyManagerFactory.init(keyStore, keystorePassword.toCharArray());
         return keyManagerFactory;
     }
 
-    protected static TrustManagerFactory getTrustManagerFactory(String truststorePath, String truststorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
-        KeyStore trustStore = loadKeyStore(truststorePath, truststorePassword);
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+    protected TrustManagerFactory getTrustManagerFactory(String truststorePath, String truststorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+        trustStore = loadKeyStore(truststorePath, truststorePassword);
+        trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(trustStore);
         return trustManagerFactory;
     }
@@ -120,6 +120,22 @@ public class SSLTrustManagerHelper {
             keystore.load(keystoreInputStream, keystorePassword.toCharArray());
             return keystore;
         }
+    }
+
+    public KeyStore getKeyStore() {
+        return keyStore;
+    }
+
+    public String getKeyStorePassword() {
+        return keyStorePassword;
+    }
+
+    public KeyStore getTrustStore() {
+        return trustStore;
+    }
+
+    public String getTrustStorePassword() {
+        return trustStorePassword;
     }
 
     public boolean isSecurityEnabled() {
