@@ -28,6 +28,7 @@
         <version.commons-beanutils>1.9.4</version.commons-beanutils>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <version.okhttp>4.2.2</version.okhttp>
+        <version.jetty-reactive-httpclient>1.0.3</version.jetty-reactive-httpclient>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -70,6 +71,12 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>${version.apache.httpclient}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-reactive-httpclient</artifactId>
+                <version>${version.jetty-reactive-httpclient}</version>
             </dependency>
 
             <dependency>

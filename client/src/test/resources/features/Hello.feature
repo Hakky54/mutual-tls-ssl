@@ -8,10 +8,11 @@ Feature: Securing the connection between you and the world
     And I expect to receive Hello message
 
     Examples:
-      | client               |
-      | Apache HttpClient    |
-      | JDK HttpClient       |
-      | Old JDK HttpClient   |
-      | Spring RestTemplate  |
-      | Spring Webflux Netty |
-      | OkHttp               |
+      | client                  |
+      | Apache HttpClient       |
+      | JDK HttpClient          |
+      | Old JDK HttpClient      |
+      | Spring RestTemplate     |
+      | Spring WebClient Netty  |
+      | Spring WebClient Jetty  |
+      | OkHttp                  |

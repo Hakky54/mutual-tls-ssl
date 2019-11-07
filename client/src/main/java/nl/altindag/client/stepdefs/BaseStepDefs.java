@@ -9,7 +9,8 @@ import nl.altindag.client.service.JdkHttpClientWrapper;
 import nl.altindag.client.service.OkHttpClientWrapper;
 import nl.altindag.client.service.OldJdkHttpClientWrapper;
 import nl.altindag.client.service.SpringRestTemplateWrapper;
-import nl.altindag.client.service.SpringWebFluxNettyWrapper;
+import nl.altindag.client.service.SpringWebClientJettyWrapper;
+import nl.altindag.client.service.SpringWebClientNettyWrapper;
 
 public class BaseStepDefs extends SpringBootHelper {
 
@@ -17,7 +18,8 @@ public class BaseStepDefs extends SpringBootHelper {
     protected static final String JDK_HTTP_CLIENT = "jdk httpclient";
     protected static final String OLD_JDK_HTTP_CLIENT = "old jdk httpclient";
     protected static final String SPRING_REST_TEMPATE = "spring resttemplate";
-    protected static final String SPRING_WEBFLUX_NETTY = "spring webflux netty";
+    protected static final String SPRING_WEB_CLIENT_NETTY = "spring webclient netty";
+    protected static final String SPRING_WEB_CLIENT_JETTY = "spring webclient jetty";
     protected static final String OK_HTTP = "okhttp";
 
     @Autowired
@@ -29,7 +31,9 @@ public class BaseStepDefs extends SpringBootHelper {
     @Autowired
     protected SpringRestTemplateWrapper springRestTemplateWrapper;
     @Autowired
-    protected SpringWebFluxNettyWrapper springWebFluxNettyWrapper;
+    protected SpringWebClientNettyWrapper springWebClientNettyWrapper;
+    @Autowired
+    protected SpringWebClientJettyWrapper springWebClientJettyWrapper;
     @Autowired
     protected OkHttpClientWrapper okHttpClientWrapper;
     @Autowired
