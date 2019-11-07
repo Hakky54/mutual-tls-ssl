@@ -133,9 +133,10 @@ public class ClientConfig {
     public com.sun.jersey.api.client.Client oldJerseyClient() {
         com.sun.jersey.api.client.Client client = com.sun.jersey.api.client.Client.create();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory());
             DefaultClientConfig clientConfig = new DefaultClientConfig();
             clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                                             new HTTPSProperties(HttpsURLConnection.getDefaultHostnameVerifier(), sslTrustManagerHelper.getSslContext()));
+                                             new HTTPSProperties((hostname, session) -> true, sslTrustManagerHelper.getSslContext()));
             com.sun.jersey.api.client.Client.create(clientConfig);
         }
         return client;
