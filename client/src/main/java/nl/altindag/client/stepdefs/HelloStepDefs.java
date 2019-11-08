@@ -1,5 +1,14 @@
 package nl.altindag.client.stepdefs;
 
+import static nl.altindag.client.Constants.APACHE_HTTP_CLIENT;
+import static nl.altindag.client.Constants.JDK_HTTP_CLIENT;
+import static nl.altindag.client.Constants.JERSEY_CLIENT;
+import static nl.altindag.client.Constants.OK_HTTP;
+import static nl.altindag.client.Constants.OLD_JDK_HTTP_CLIENT;
+import static nl.altindag.client.Constants.OLD_JERSEY_CLIENT;
+import static nl.altindag.client.Constants.SPRING_REST_TEMPATE;
+import static nl.altindag.client.Constants.SPRING_WEB_CLIENT_JETTY;
+import static nl.altindag.client.Constants.SPRING_WEB_CLIENT_NETTY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.cucumber.java.en.Given;
