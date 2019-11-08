@@ -1,5 +1,8 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
+import static nl.altindag.client.Constants.OLD_JDK_HTTP_CLIENT;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -40,6 +43,7 @@ public class OldJdkHttpClientWrapper extends RequestService {
         }
 
         connection.setRequestMethod("GET");
+        connection.setRequestProperty(HEADER_KEY_CLIENT_TYPE, OLD_JDK_HTTP_CLIENT);
         String responseBody = IOUtils.toString(connection.getInputStream());
         return new ClientResponse(responseBody, connection.getResponseCode());
     }

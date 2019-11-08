@@ -1,5 +1,8 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.Constants.APACHE_HTTP_CLIENT;
+import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
+
 import java.io.IOException;
 
 import org.apache.http.HttpResponse;
@@ -24,6 +27,7 @@ public class ApacheHttpClientWrapper extends RequestService {
     @Override
     public ClientResponse executeRequest(String url) throws IOException {
         HttpGet request = new HttpGet(url);
+        request.addHeader(HEADER_KEY_CLIENT_TYPE, APACHE_HTTP_CLIENT);
         HttpResponse response = httpClient.execute(request);
 
         String responseBody = EntityUtils.toString(response.getEntity());
