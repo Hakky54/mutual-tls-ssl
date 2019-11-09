@@ -19,8 +19,8 @@ public class LogClientTypeAspect {
     private static final Logger LOGGER = LogManager.getLogger(LogClientTypeAspect.class);
     private static final String HEADER_KEY_CLIENT_TYPE = "client-type";
 
-    @Before("@annotation(logClientType)")
-    public void logHeaderIfPresent(LogClientType logClientType) {
+    @Before("@annotation(nl.altindag.server.aspect.LogClientType)")
+    public void logClientTypeIfPresent() {
         String clientType = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                 .getRequest()
                 .getHeader(HEADER_KEY_CLIENT_TYPE);
