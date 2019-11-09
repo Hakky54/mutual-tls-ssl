@@ -25,7 +25,7 @@ public class LogCertificateAspectShould extends LogTestHelper<LogCertificateAspe
     private LogCertificateAspect logCertificateAspect = new LogCertificateAspect();
 
     @Test
-    public void logDetailClientCertificate() {
+    public void logDetailedClientCertificate() {
         X509Certificate x509Certificate = mock(X509Certificate.class);
         X509Certificate[] x509Certificates = new X509Certificate[]{x509Certificate};
 
@@ -43,7 +43,7 @@ public class LogCertificateAspectShould extends LogTestHelper<LogCertificateAspe
     }
 
     @Test
-    public void logLessDetailClientCertificate() {
+    public void logLessDetailedClientCertificate() {
         X509Certificate x509Certificate = mock(X509Certificate.class);
         X509Certificate[] x509Certificates = new X509Certificate[]{x509Certificate};
         X500Principal x500Principal = mock(X500Principal.class);
