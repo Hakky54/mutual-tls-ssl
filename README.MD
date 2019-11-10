@@ -61,7 +61,7 @@ Date: Sun, 11 Nov 2018 14:21:50 GMT
 Hello
 ```
 
-You can also call the server with the provided client in the client directory. The client is an integration test based on Cucumber, and you can start it by running the ClientRunnerIT class from your IDE. There is a Hello.feature file that describes the steps for the integration test. You can find it in the test resources of the client project. You can also start the client from the command line with the following command: `mvn clean verify -P\!start-server` or `mvn clean verify -P!start-server`.
+You can also call the server with the provided client in the client directory. The client is an integration test based on Cucumber, and you can start it by running the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class from your IDE. There is a [Hello.feature](client/src/test/resources/features/Hello.feature) file that describes the steps for the integration test. You can find it in the test resources of the client project. You can also start the client from the command line with the following command: `mvn clean verify -P\!start-server` or `mvn clean verify -P!start-server`.
 
 There is another way to run the server and client and that is with the following command: `mvn clean verify`
 
@@ -103,7 +103,7 @@ server:
 
 Congratulations! You enabled a TLS-encrypted connection between the server and the client! Now, you can try to call the server with the following curl command: `curl -i --insecure -v -XGET https://localhost:8443/api/hello`
 
-Let's also run the client in the ClientRunnerIT class.
+Let's also run the client in the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class.
 
 You will see the following error message: `java.net.ConnectException: Connection refused (Connection refused)`. It looks like the client is trying to say hello to the server but the server is not there. The problem is that the client it trying to say hello to the server on port 8080 while it is active on the port 8443. Apply the following changes to the HelloStepDefs class:
 
