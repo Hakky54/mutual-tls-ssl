@@ -101,7 +101,7 @@ public class SSLTrustManagerHelperShould {
                                                                                 keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
 
         assertThat(sslTrustManagerHelper.getSslContext()).isNotNull();
-        assertThat(sslTrustManagerHelper.getSslContext().getProtocol()).isEqualTo("TLSv1.2");
+        assertThat(sslTrustManagerHelper.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
     }
 
     @Test

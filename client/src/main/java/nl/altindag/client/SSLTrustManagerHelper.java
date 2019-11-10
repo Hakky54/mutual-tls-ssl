@@ -91,7 +91,7 @@ public class SSLTrustManagerHelper {
     }
 
     private static SSLContext getSSLContext(KeyManager[] keyManagers, TrustManager[] trustManagers) throws NoSuchAlgorithmException, KeyManagementException {
-        SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+        SSLContext sslContext = SSLContext.getInstance("TLSv1.3");
         sslContext.init(keyManagers, trustManagers, null);
         return sslContext;
     }
