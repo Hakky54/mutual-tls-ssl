@@ -2,6 +2,10 @@ spring:
   main:
     banner-mode: "off"
 
+logging:
+  level:
+    nl.altindag.client: INFO
+
 client:
   ssl:
     two-way-authentication-enabled: false

@@ -11,6 +11,9 @@ import static nl.altindag.client.Constants.SPRING_WEB_CLIENT_JETTY;
 import static nl.altindag.client.Constants.SPRING_WEB_CLIENT_NETTY;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -19,12 +22,14 @@ import nl.altindag.client.model.ClientResponse;
 
 public class HelloStepDefs extends BaseStepDefs {
 
+    private static final Logger LOGGER = LogManager.getLogger(HelloStepDefs.class);
+
     private static final String SERVER_URL = "http://localhost:8080";
     private static final String HELLO_ENDPOINT = "/api/hello";
 
     @Given("^Server is alive$")
     public void serverIsAlive() {
-        // Assuming the server is up and running
+        LOGGER.debug("Assuming the server is up and running");
     }
 
     @When("I say hello with (.*)")
@@ -51,7 +56,7 @@ public class HelloStepDefs extends BaseStepDefs {
         } else if (OLD_JERSEY_CLIENT.equalsIgnoreCase(client)) {
             clientResponse = oldJerseyClientWrapper.executeRequest(url);
         } else {
-            throw new ClientException(String.format("Could not found any %s type of client", client));
+            throw new ClientException(String.format("Could not found any [%s] type of client", client));
         }
 
         testScenario.setClientResponse(clientResponse);
