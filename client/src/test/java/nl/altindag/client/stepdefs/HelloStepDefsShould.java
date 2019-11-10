@@ -1,17 +1,22 @@
 package nl.altindag.client.stepdefs;
 
+import static nl.altindag.client.TestConstants.HTTPS_URL;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Set;
 
+import org.assertj.core.api.Condition;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -34,6 +39,9 @@ import nl.altindag.client.util.LogTestHelper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
+
+    private static final Set<String> URLS = Set.of(HTTP_URL, HTTPS_URL);
+    private static final Condition<String> HTTP_OR_HTTPS_SERVER_URL = new Condition<>(URLS::contains, "Validates if url is equal to the http or https url of the server");
 
     @InjectMocks
     private HelloStepDefs victim;
@@ -74,69 +82,98 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
 
     @Test
     public void iSayHelloWithClientApacheHttpClient() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
         victim.iSayHelloWithClient("Apache HttpClient");
 
-        verify(apacheHttpClientWrapper, times(1)).executeRequest(HTTP_URL);
+        verify(apacheHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
     @Test
     public void iSayHelloWithClientJdkHttpClient() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
         victim.iSayHelloWithClient("JDK HttpClient");
 
-        verify(jdkHttpClientWrapper, times(1)).executeRequest(HTTP_URL);
+        verify(jdkHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
     @Test
     public void iSayHelloWithClientOldJdkHttpClient() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
         victim.iSayHelloWithClient("Old JDK HttpClient");
 
-        verify(oldJdkHttpClientWrapper, times(1)).executeRequest(HTTP_URL);
+        verify(oldJdkHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
     @Test
     public void iSayHelloWithClientSpringRestTemplate() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
         victim.iSayHelloWithClient("Spring RestTemplate");
 
-        verify(springRestTemplateWrapper, times(1)).executeRequest(HTTP_URL);
+        verify(springRestTemplateWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
     @Test
     public void iSayHelloWithClientSpringWebFluxWebClientNetty() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
         victim.iSayHelloWithClient("Spring WebFlux WebClient Netty");
 
-        verify(springWebClientNettyWrapper, times(1)).executeRequest(HTTP_URL);
+        verify(springWebClientNettyWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
     @Test
     public void iSayHelloWithClientSpringWebFluxWebClientJetty() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
         victim.iSayHelloWithClient("Spring WebFlux WebClient Jetty");
 
-        verify(springWebClientJettyWrapper, times(1)).executeRequest(HTTP_URL);
+        verify(springWebClientJettyWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
     @Test
     public void iSayHelloWithClientOkHttp() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
         victim.iSayHelloWithClient("OkHttp");
 
-        verify(okHttpClientWrapper, times(1)).executeRequest(HTTP_URL);
+        verify(okHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
     @Test
     public void iSayHelloWithClientJerseyClient() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
         victim.iSayHelloWithClient("Jersey Client");
 
-        verify(jerseyClientWrapper, times(1)).executeRequest(HTTP_URL);
+        verify(jerseyClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
     @Test
     public void iSayHelloWithClientOldJerseyClient() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
         victim.iSayHelloWithClient("Old Jersey Client");
 
-        verify(oldJerseyClientWrapper, times(1)).executeRequest(HTTP_URL);
+        verify(oldJerseyClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
     @Test
     public void throwExceptionWhenISayHelloWithClientUnknownClient() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
         expectedException.expect(ClientException.class);
         expectedException.expectMessage("Could not found any [some dirty client] type of client");
         victim.iSayHelloWithClient("some dirty client");
@@ -166,4 +203,5 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     protected Class<HelloStepDefs> getTargetClass() {
         return HelloStepDefs.class;
     }
+
 }
