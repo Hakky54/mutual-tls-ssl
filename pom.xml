@@ -26,7 +26,6 @@
         <version.maven-cucumber-reporting>4.11.2</version.maven-cucumber-reporting>
         <version.commons-lang3>3.9</version.commons-lang3>
         <version.commons-io>1.3.2</version.commons-io>
-        <version.commons-beanutils>1.9.4</version.commons-beanutils>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <version.okhttp>4.2.2</version.okhttp>
         <version.jetty-reactive-httpclient>1.0.3</version.jetty-reactive-httpclient>
@@ -141,12 +140,6 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${version.commons-io}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>${version.commons-beanutils}</version>
             </dependency>
 
             <dependency>
