@@ -11,13 +11,16 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.Arrays;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 
+import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,6 +41,7 @@ public class SSLTrustManagerHelper {
     private SSLContext sslContext;
     private TrustManagerFactory trustManagerFactory;
     private KeyManagerFactory keyManagerFactory;
+    private DefaultHostnameVerifier defaultHostnameVerifier = new DefaultHostnameVerifier();
 
     public SSLTrustManagerHelper(@Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
                                  @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
@@ -160,6 +164,32 @@ public class SSLTrustManagerHelper {
 
     public KeyManagerFactory getKeyManagerFactory() {
         return keyManagerFactory;
+    }
+
+    public X509TrustManager getX509TrustManager() {
+        ClientException clientException = new ClientException("The TrustManager could not be provided because it is not available");
+        if (isNull(trustManagerFactory)) {
+            throw clientException;
+        }
+
+        return Arrays.stream(trustManagerFactory.getTrustManagers())
+                                                  .filter(trustManager -> trustManager instanceof X509TrustManager)
+                                                  .map(trustManager -> (X509TrustManager) trustManager)
+                                                  .findFirst()
+                                                  .orElseThrow(() -> clientException);
+    }
+
+    public DefaultHostnameVerifier getDefaultHostnameVerifier() {
+        return defaultHostnameVerifier;
+    }
+
+    public SSLTrustManagerHelper createNewInstance() {
+        return new SSLTrustManagerHelper(this.oneWayAuthenticationEnabled,
+                                         this.twoWayAuthenticationEnabled,
+                                         this.keyStorePath,
+                                         this.keyStorePassword,
+                                         this.trustStorePath,
+                                         this.trustStorePassword);
     }
 
 }

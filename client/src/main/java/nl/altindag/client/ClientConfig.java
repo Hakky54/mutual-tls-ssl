@@ -3,7 +3,6 @@ package nl.altindag.client;
 import java.net.http.HttpClient;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
@@ -66,8 +65,9 @@ public class ClientConfig {
     public OkHttpClient okHttpClient() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
-            httpClientBuilder.sslSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory(),
-                                               (X509TrustManager) sslTrustManagerHelper.getTrustManagerFactory().getTrustManagers()[0]);
+            SSLTrustManagerHelper sslTrustManagerHelper = this.sslTrustManagerHelper.createNewInstance();
+            httpClientBuilder.sslSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory(), sslTrustManagerHelper.getX509TrustManager())
+                             .hostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
         }
 
         return httpClientBuilder
@@ -138,7 +138,7 @@ public class ClientConfig {
             HttpsURLConnection.setDefaultSSLSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory());
             DefaultClientConfig clientConfig = new DefaultClientConfig();
             clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                                             new HTTPSProperties((hostname, session) -> true, sslTrustManagerHelper.getSslContext()));
+                                             new HTTPSProperties(sslTrustManagerHelper.getDefaultHostnameVerifier(), sslTrustManagerHelper.getSslContext()));
             com.sun.jersey.api.client.Client.create(clientConfig);
         }
         return client;
