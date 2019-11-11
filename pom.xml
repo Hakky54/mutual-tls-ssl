@@ -209,7 +209,7 @@
             </build>
         </profile>
         <profile>
-            <id>with-two-way-authentication</id>
+            <id>with-two-way-authentication-by-trusting-root-ca</id>
             <build>
                 <plugins>
                     <plugin>
@@ -230,13 +230,50 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>enabling-two-way-authentication</id>
+                                <id>enabling-two-way-authentication-by-trusting-root-ca</id>
                                 <phase>generate-sources</phase>
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${basedir}/configure-two-way-authentication.sh</executable>
+                                    <executable>${basedir}/configure-two-way-authentication-by-trusting-root-ca.sh</executable>
+                                    <arguments>black-hole-client</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>with-two-way-authentication-by-trusting-each-other</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>${version.exec-maven-plugin}</version>
+                        <inherited>false</inherited>
+                        <executions>
+                            <execution>
+                                <id>save-local-changes</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>git</executable>
+                                    <commandlineArgs>stash save --keep-index --include-untracked "current progress"</commandlineArgs>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>enabling-two-way-authentication-by-trusting-each-other</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${basedir}/configure-two-way-authentication-by-trusting-each-other.sh</executable>
                                     <arguments>black-hole-client</arguments>
                                 </configuration>
                             </execution>
