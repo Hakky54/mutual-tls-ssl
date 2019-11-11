@@ -200,7 +200,7 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${basedir}/configure-two-way-authentication.sh</executable>
+                                    <executable>${basedir}/configure-one-way-authentication.sh</executable>
                                 </configuration>
                             </execution>
                         </executions>
