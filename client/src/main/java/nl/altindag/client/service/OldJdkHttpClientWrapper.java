@@ -6,6 +6,7 @@ import static nl.altindag.client.Constants.OLD_JDK_HTTP_CLIENT;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -48,7 +49,7 @@ public class OldJdkHttpClientWrapper extends RequestService {
 
         connection.setRequestMethod("GET");
         connection.setRequestProperty(HEADER_KEY_CLIENT_TYPE, OLD_JDK_HTTP_CLIENT);
-        String responseBody = IOUtils.toString(connection.getInputStream());
+        String responseBody = IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
         return new ClientResponse(responseBody, connection.getResponseCode());
     }
 
