@@ -227,7 +227,7 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${basedir}/configure-one-way-authentication.sh</executable>
+                                    <executable>${basedir}/script/configure-one-way-authentication.sh</executable>
                                 </configuration>
                             </execution>
                         </executions>
@@ -263,7 +263,7 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${basedir}/configure-two-way-authentication-by-trusting-root-ca.sh</executable>
+                                    <executable>${basedir}/script/configure-two-way-authentication-by-trusting-root-ca.sh</executable>
                                     <arguments>black-hole-client</arguments>
                                 </configuration>
                             </execution>
@@ -300,7 +300,7 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${basedir}/configure-two-way-authentication-by-trusting-each-other.sh</executable>
+                                    <executable>${basedir}/script/configure-two-way-authentication-by-trusting-each-other.sh</executable>
                                     <arguments>black-hole-client</arguments>
                                 </configuration>
                             </execution>
