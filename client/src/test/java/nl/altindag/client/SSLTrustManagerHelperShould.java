@@ -65,6 +65,38 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
+    @SuppressWarnings("ConstantConditions")
+    public void createNewInstanceOfSSLTrustManagerHelper() {
+        boolean oneWayAuthenticationEnabled = false;
+        boolean twoWayAuthenticationEnabled = true;
+        String keyStorePath = "keystores-for-unit-tests/identity.jks";
+        String keyStorePassword = "secret";
+        String trustStorePath = "keystores-for-unit-tests/truststore.jks";
+        String trustStorePassword = "secret";
+
+        SSLTrustManagerHelper sslTrustManagerHelper = new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled,
+                                                                                keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+
+        SSLTrustManagerHelper sslTrustManagerHelperSecondInstance = sslTrustManagerHelper.createNewInstance();
+
+        assertThat(sslTrustManagerHelper.hashCode()).isNotEqualTo(sslTrustManagerHelperSecondInstance.hashCode());
+        assertThat(sslTrustManagerHelper.getSslContext()).isNotEqualTo(sslTrustManagerHelperSecondInstance.getSslContext());
+        assertThat(sslTrustManagerHelper.getX509TrustManager()).isNotEqualTo(sslTrustManagerHelperSecondInstance.getX509TrustManager());
+        assertThat(sslTrustManagerHelper.getTrustManagerFactory()).isNotEqualTo(sslTrustManagerHelperSecondInstance.getTrustManagerFactory());
+        assertThat(sslTrustManagerHelper.getKeyManagerFactory()).isNotEqualTo(sslTrustManagerHelperSecondInstance.getKeyManagerFactory());
+        assertThat(sslTrustManagerHelper.getKeyStore()).isNotEqualTo(sslTrustManagerHelperSecondInstance.getKeyStore());
+        assertThat(sslTrustManagerHelper.getTrustStore()).isNotEqualTo(sslTrustManagerHelperSecondInstance.getTrustStore());
+
+        assertThat(sslTrustManagerHelper.isSecurityEnabled()).isTrue();
+        assertThat(sslTrustManagerHelper.isOneWayAuthenticationEnabled()).isFalse();
+        assertThat(sslTrustManagerHelper.isTwoWayAuthenticationEnabled()).isTrue();
+
+        assertThat(sslTrustManagerHelperSecondInstance.isSecurityEnabled()).isTrue();
+        assertThat(sslTrustManagerHelperSecondInstance.isOneWayAuthenticationEnabled()).isFalse();
+        assertThat(sslTrustManagerHelperSecondInstance.isTwoWayAuthenticationEnabled()).isTrue();
+    }
+
+    @Test
     @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions"})
     public void createSSLContextWithClientTrustStore() {
         boolean oneWayAuthenticationEnabled = true;
