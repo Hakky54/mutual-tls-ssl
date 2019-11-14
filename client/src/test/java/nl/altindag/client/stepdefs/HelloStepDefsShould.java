@@ -21,7 +21,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ILoggingEvent;
 import nl.altindag.client.ClientException;
 import nl.altindag.client.TestScenario;
 import nl.altindag.client.model.ClientResponse;
@@ -69,11 +68,10 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     public void serverIsAlive() {
         victim.serverIsAlive();
 
-        List<ILoggingEvent> logs = super.getLogs();
+        List<String> logs = super.getLogs(Level.DEBUG);
 
         assertThat(logs).hasSize(1);
-        assertThat(logs.get(0).getLevel()).isEqualTo(Level.DEBUG);
-        assertThat(logs.get(0).getFormattedMessage()).isEqualTo("Assuming the server is up and running");
+        assertThat(logs).containsExactly("Assuming the server is up and running");
     }
 
     @Test
