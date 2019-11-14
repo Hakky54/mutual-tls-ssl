@@ -3,6 +3,7 @@ package nl.altindag.client.service;
 import static nl.altindag.client.TestConstants.HTTPS_URL;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -17,9 +18,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -32,9 +31,6 @@ public class OldJdkHttpClientWrapperShould {
 
     private OldJdkHttpClientWrapper victim;
     private SSLTrustManagerHelper sslTrustManagerHelper;
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -80,11 +76,10 @@ public class OldJdkHttpClientWrapperShould {
     }
 
     @Test
-    public void throwClientExceptionWhenProvidedUrlDoesNotContainHttpOrHttps() throws Exception {
-        expectedException.expect(ClientException.class);
-        expectedException.expectMessage("Could not create a http client for one of these reasons: invalid url, security is enable while using an url with http or security is disable while using an url with https");
-
-        victim.executeRequest("www.google.com");
+    public void throwClientExceptionWhenProvidedUrlDoesNotContainHttpOrHttps() {
+        assertThatThrownBy(() -> victim.executeRequest("www.google.com"))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("Could not create a http client for one of these reasons: invalid url, security is enable while using an url with http or security is disable while using an url with https");
     }
 
 }
