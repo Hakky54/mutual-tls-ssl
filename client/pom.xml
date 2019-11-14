@@ -154,6 +154,8 @@
                         <version>${version.spring}</version>
                         <configuration>
                             <mainClass>${mainClassServer}</mainClass>
+                            <wait>1000</wait>
+                            <maxAttempts>180</maxAttempts>
                         </configuration>
                         <executions>
                             <execution>
