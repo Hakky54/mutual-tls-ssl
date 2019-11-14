@@ -3,6 +3,7 @@ package nl.altindag.client.stepdefs;
 import static nl.altindag.client.TestConstants.HTTPS_URL;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -12,9 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.assertj.core.api.Condition;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
@@ -65,9 +64,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     private OldJerseyClientWrapper oldJerseyClientWrapper;
     @Mock
     private TestScenario testScenario;
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void serverIsAlive() {
@@ -171,12 +167,10 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     }
 
     @Test
-    public void throwExceptionWhenISayHelloWithClientUnknownClient() throws Exception {
-        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
-
-        expectedException.expect(ClientException.class);
-        expectedException.expectMessage("Could not found any [some dirty client] type of client");
-        victim.iSayHelloWithClient("some dirty client");
+    public void throwExceptionWhenISayHelloWithClientUnknownClient() {
+        assertThatThrownBy(() -> victim.iSayHelloWithClient("some dirty client"))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("Could not found any [some dirty client] type of client");
     }
 
     @Test

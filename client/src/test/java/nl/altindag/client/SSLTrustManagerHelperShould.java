@@ -2,15 +2,11 @@ package nl.altindag.client;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class SSLTrustManagerHelperShould {
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions"})
@@ -139,9 +135,6 @@ public class SSLTrustManagerHelperShould {
     @Test
     @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionWhenKeyStoreFileIsNotFound() {
-        expectedException.expect(ClientException.class);
-        expectedException.expectMessage("Could not find the keystore file with the given location keystores-for-unit-tests/not-existing-truststore.jks");
-
         boolean oneWayAuthenticationEnabled = true;
         boolean twoWayAuthenticationEnabled = false;
         String keyStorePath = EMPTY;
@@ -149,16 +142,14 @@ public class SSLTrustManagerHelperShould {
         String trustStorePath = "keystores-for-unit-tests/not-existing-truststore.jks";
         String trustStorePassword = "secret";
 
-        SSLTrustManagerHelper sslTrustManagerHelper = new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled,
-                                                                                keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+        assertThatThrownBy(() -> new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled, keyStorePath, keyStorePassword, trustStorePath, trustStorePassword))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("Could not find the keystore file with the given location keystores-for-unit-tests/not-existing-truststore.jks");
     }
 
     @Test
     @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionOneWayAuthenticationIsEnabledWhileTrustStorePathIsNotProvided() {
-        expectedException.expect(ClientException.class);
-        expectedException.expectMessage("TrustStore details are empty, which are required to be present when SSL is enabled");
-
         boolean oneWayAuthenticationEnabled = true;
         boolean twoWayAuthenticationEnabled = false;
         String keyStorePath = EMPTY;
@@ -166,16 +157,14 @@ public class SSLTrustManagerHelperShould {
         String trustStorePath = EMPTY;
         String trustStorePassword = "secret";
 
-        SSLTrustManagerHelper sslTrustManagerHelper = new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled,
-                                                                                keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+        assertThatThrownBy(() -> new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled, keyStorePath, keyStorePassword, trustStorePath, trustStorePassword))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("TrustStore details are empty, which are required to be present when SSL is enabled");
     }
 
     @Test
     @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionOneWayAuthenticationIsEnabledWhileTrustStorePasswordIsNotProvided() {
-        expectedException.expect(ClientException.class);
-        expectedException.expectMessage("TrustStore details are empty, which are required to be present when SSL is enabled");
-
         boolean oneWayAuthenticationEnabled = true;
         boolean twoWayAuthenticationEnabled = false;
         String keyStorePath = EMPTY;
@@ -183,16 +172,14 @@ public class SSLTrustManagerHelperShould {
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = EMPTY;
 
-        SSLTrustManagerHelper sslTrustManagerHelper = new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled,
-                                                                                keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+        assertThatThrownBy(() -> new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled, keyStorePath, keyStorePassword, trustStorePath, trustStorePassword))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("TrustStore details are empty, which are required to be present when SSL is enabled");
     }
 
     @Test
     @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionTwoWayAuthenticationEnabledWhileKeyStorePathIsNotProvided() {
-        expectedException.expect(ClientException.class);
-        expectedException.expectMessage("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
-
         boolean oneWayAuthenticationEnabled = false;
         boolean twoWayAuthenticationEnabled = true;
         String keyStorePath = EMPTY;
@@ -200,16 +187,14 @@ public class SSLTrustManagerHelperShould {
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = "secret";
 
-        SSLTrustManagerHelper sslTrustManagerHelper = new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled,
-                                                                                keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+        assertThatThrownBy(() -> new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled, keyStorePath, keyStorePassword, trustStorePath, trustStorePassword))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
     }
 
     @Test
     @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionTwoWayAuthenticationEnabledWhileKeyStorePasswordIsNotProvided() {
-        expectedException.expect(ClientException.class);
-        expectedException.expectMessage("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
-
         boolean oneWayAuthenticationEnabled = false;
         boolean twoWayAuthenticationEnabled = true;
         String keyStorePath = "keystores-for-unit-tests/identity.jks";
@@ -217,16 +202,14 @@ public class SSLTrustManagerHelperShould {
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = "secret";
 
-        SSLTrustManagerHelper sslTrustManagerHelper = new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled,
-                                                                                keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+        assertThatThrownBy(() -> new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled, keyStorePath, keyStorePassword, trustStorePath, trustStorePassword))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
     }
 
     @Test
     @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionTwoWayAuthenticationEnabledWhileTrustStorePathIsNotProvided() {
-        expectedException.expect(ClientException.class);
-        expectedException.expectMessage("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
-
         boolean oneWayAuthenticationEnabled = false;
         boolean twoWayAuthenticationEnabled = true;
         String keyStorePath = "keystores-for-unit-tests/identity.jks";
@@ -234,16 +217,14 @@ public class SSLTrustManagerHelperShould {
         String trustStorePath = EMPTY;
         String trustStorePassword = "secret";
 
-        SSLTrustManagerHelper sslTrustManagerHelper = new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled,
-                                                                                keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+        assertThatThrownBy(() -> new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled, keyStorePath, keyStorePassword, trustStorePath, trustStorePassword))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
     }
 
     @Test
     @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionTwoWayAuthenticationEnabledWhileTrustStorePasswordIsNotProvided() {
-        expectedException.expect(ClientException.class);
-        expectedException.expectMessage("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
-
         boolean oneWayAuthenticationEnabled = false;
         boolean twoWayAuthenticationEnabled = true;
         String keyStorePath = "keystores-for-unit-tests/identity.jks";
@@ -251,8 +232,9 @@ public class SSLTrustManagerHelperShould {
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = EMPTY;
 
-        SSLTrustManagerHelper sslTrustManagerHelper = new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled,
-                                                                                keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+        assertThatThrownBy(() -> new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled, keyStorePath, keyStorePassword, trustStorePath, trustStorePassword))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
     }
 
 }
