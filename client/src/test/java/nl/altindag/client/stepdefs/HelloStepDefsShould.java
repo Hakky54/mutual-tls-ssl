@@ -25,6 +25,7 @@ import nl.altindag.client.ClientException;
 import nl.altindag.client.TestScenario;
 import nl.altindag.client.model.ClientResponse;
 import nl.altindag.client.service.ApacheHttpClientWrapper;
+import nl.altindag.client.service.GoogleHttpClientWrapper;
 import nl.altindag.client.service.JdkHttpClientWrapper;
 import nl.altindag.client.service.JerseyClientWrapper;
 import nl.altindag.client.service.OkHttpClientWrapper;
@@ -61,6 +62,8 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     private JerseyClientWrapper jerseyClientWrapper;
     @Mock
     private OldJerseyClientWrapper oldJerseyClientWrapper;
+    @Mock
+    private GoogleHttpClientWrapper googleHttpClientWrapper;
     @Mock
     private TestScenario testScenario;
 
@@ -161,6 +164,16 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
         victim.iSayHelloWithClient("Old Jersey Client");
 
         verify(oldJerseyClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
+    }
+
+    @Test
+    public void iSayHelloWithClientGoogleHttpTransport() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        victim.iSayHelloWithClient("Google HttpClient");
+
+        verify(googleHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
         assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 

@@ -29,6 +29,7 @@ Below is a list of supported clients with examples, see in the [ClientConfig cla
 - OkHttp
 - Jersey Client
 - Old Jersey Client
+- Google HttpClient
 
 ## Starting the server
 **Minimum requirements:**

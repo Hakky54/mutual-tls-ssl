@@ -1,6 +1,7 @@
 package nl.altindag.client.stepdefs;
 
 import static nl.altindag.client.Constants.APACHE_HTTP_CLIENT;
+import static nl.altindag.client.Constants.GOOGLE_HTTP_CLIENT;
 import static nl.altindag.client.Constants.JDK_HTTP_CLIENT;
 import static nl.altindag.client.Constants.JERSEY_CLIENT;
 import static nl.altindag.client.Constants.OK_HTTP;
@@ -55,6 +56,8 @@ public class HelloStepDefs extends BaseStepDefs {
             clientResponse = jerseyClientWrapper.executeRequest(url);
         } else if (OLD_JERSEY_CLIENT.equalsIgnoreCase(client)) {
             clientResponse = oldJerseyClientWrapper.executeRequest(url);
+        } else if (GOOGLE_HTTP_CLIENT.equalsIgnoreCase(client)) {
+            clientResponse = googleHttpClientWrapper.executeRequest(url);
         } else {
             throw new ClientException(String.format("Could not found any [%s] type of client", client));
         }

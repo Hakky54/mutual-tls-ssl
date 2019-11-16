@@ -19,6 +19,8 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 
@@ -41,6 +43,7 @@ public class ClientConfig {
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
             httpClientBuilder.setSSLContext(sslTrustManagerHelper.getSslContext());
+            httpClientBuilder.setSSLHostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
         }
         return httpClientBuilder.build();
     }
@@ -103,6 +106,7 @@ public class ClientConfig {
         if (sslTrustManagerHelper.isSecurityEnabled()) {
             SslContextFactory sslContextFactory = new SslContextFactory();
             sslContextFactory.setSslContext(sslContextFactory.getSslContext());
+            sslContextFactory.setHostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
             if (sslTrustManagerHelper.isOneWayAuthenticationEnabled()) {
                 sslContextFactory.setTrustStore(sslTrustManagerHelper.getTrustStore());
                 sslContextFactory.setTrustStorePassword(sslTrustManagerHelper.getTrustStorePassword());
@@ -126,7 +130,9 @@ public class ClientConfig {
     public Client jerseyClient() {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
+            SSLTrustManagerHelper sslTrustManagerHelper = this.sslTrustManagerHelper.createNewInstance();
             clientBuilder.sslContext(sslTrustManagerHelper.getSslContext());
+            clientBuilder.hostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
         }
         return clientBuilder.build();
     }
@@ -142,6 +148,18 @@ public class ClientConfig {
             com.sun.jersey.api.client.Client.create(clientConfig);
         }
         return client;
+    }
+
+    @Bean
+    public HttpTransport googleHttpClient() {
+        NetHttpTransport.Builder httpTransportBuilder = new NetHttpTransport.Builder();
+        if (sslTrustManagerHelper.isSecurityEnabled()) {
+            SSLTrustManagerHelper sslTrustManagerHelper = this.sslTrustManagerHelper.createNewInstance();
+            httpTransportBuilder.setSslSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory())
+                                .setHostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
+        }
+        return httpTransportBuilder
+                .build();
     }
 
 }
