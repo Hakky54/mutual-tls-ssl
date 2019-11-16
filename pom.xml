@@ -31,6 +31,7 @@
         <version.jetty-reactive-httpclient>1.0.3</version.jetty-reactive-httpclient>
         <version.org.glassfish.jersey.inject>2.29.1</version.org.glassfish.jersey.inject>
         <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
+        <version.google.http.client>1.33.0</version.google.http.client>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -95,6 +96,11 @@
                 <groupId>com.sun.jersey</groupId>
                 <artifactId>jersey-client</artifactId>
                 <version>${version.com.sun.jersey}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.http-client</groupId>
+                <artifactId>google-http-client</artifactId>
+                <version>${version.google.http.client}</version>
             </dependency>
 
             <dependency>

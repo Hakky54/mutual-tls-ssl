@@ -13,6 +13,7 @@ public final class Constants {
     public static final String OK_HTTP = "okhttp";
     public static final String JERSEY_CLIENT = "jersey client";
     public static final String OLD_JERSEY_CLIENT = "old jersey client";
+    public static final String GOOGLE_HTTP_CLIENT = "google httpclient";
 
     private Constants() {}
 

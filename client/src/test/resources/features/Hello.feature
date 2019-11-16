@@ -18,3 +18,4 @@ Feature: Securing the connection between you and the world
       | OkHttp                          |
       | Jersey Client                   |
       | Old Jersey Client               |
+      | Google HttpClient               |
