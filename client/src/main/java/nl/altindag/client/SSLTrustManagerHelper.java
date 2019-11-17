@@ -24,7 +24,7 @@ import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration("prototype")
 public class SSLTrustManagerHelper {
 
     private KeyStore keyStore;
@@ -181,15 +181,6 @@ public class SSLTrustManagerHelper {
 
     public DefaultHostnameVerifier getDefaultHostnameVerifier() {
         return defaultHostnameVerifier;
-    }
-
-    public SSLTrustManagerHelper createNewInstance() {
-        return new SSLTrustManagerHelper(this.oneWayAuthenticationEnabled,
-                                         this.twoWayAuthenticationEnabled,
-                                         this.keyStorePath,
-                                         this.keyStorePassword,
-                                         this.trustStorePath,
-                                         this.trustStorePassword);
     }
 
 }
