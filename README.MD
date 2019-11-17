@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/Hakky54/mutual-tls-ssl/workflows/Build/badge.svg)](https://github.com/Hakky54/mutual-tls-ssl/actions)
+
 # Mastering two way TLS
 
 This tutorial will walk you through the process of protecting your application with TLS authentication, only allowing access for certain users. This means that you can choose which users are allowed to call your application.
