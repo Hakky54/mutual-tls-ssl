@@ -22,8 +22,8 @@ jobs:
           path: server/target/server.jar
 
       - uses: codecov/codecov-action@v1.0.3
-          with:
-            token: ${{secrets.CODECOV_TOKEN}}
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
 
   one-way-authentication:
     runs-on: ubuntu-latest
