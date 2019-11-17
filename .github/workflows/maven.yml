@@ -14,7 +14,7 @@ jobs:
           java-version: 11
 
       - name: Build with Maven
-        run: mvn clean verify cobertura:cobertura
+        run: mvn clean verify
 
       - uses: actions/upload-artifact@master
         with:
