@@ -1,4 +1,5 @@
 [![Actions Status](https://github.com/Hakky54/mutual-tls-ssl/workflows/Build/badge.svg)](https://github.com/Hakky54/mutual-tls-ssl/actions)
+[![codecov](https://codecov.io/gh/Hakky54/mutual-tls-ssl/branch/feature/include-code-quality-information/graph/badge.svg)](https://codecov.io/gh/Hakky54/mutual-tls-ssl)
 
 # Mastering two way TLS
 
