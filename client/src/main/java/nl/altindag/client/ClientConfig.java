@@ -10,9 +10,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.reactive.JettyClientHttpConnector;
@@ -32,8 +32,23 @@ import kong.unirest.apache.ApacheClient;
 import okhttp3.OkHttpClient;
 
 @Configuration
-@Import({SSLTrustManagerHelper.class})
 public class ClientConfig {
+
+    @Bean
+    @Scope("prototype")
+    public SSLTrustManagerHelper sslTrustManagerHelper(@Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
+                                                       @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
+                                                       @Value("${client.ssl.key-store:}") String keyStorePath,
+                                                       @Value("${client.ssl.key-store-password:}") String keyStorePassword,
+                                                       @Value("${client.ssl.trust-store:}") String trustStorePath,
+                                                       @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
+        return new SSLTrustManagerHelper(oneWayAuthenticationEnabled,
+                                         twoWayAuthenticationEnabled,
+                                         keyStorePath,
+                                         keyStorePassword,
+                                         trustStorePath,
+                                         trustStorePassword);
+    }
 
     @Bean
     @Scope("prototype")

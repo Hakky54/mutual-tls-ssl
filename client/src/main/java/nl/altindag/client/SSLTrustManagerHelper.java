@@ -21,10 +21,7 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
 public class SSLTrustManagerHelper {
 
     private KeyStore keyStore;
@@ -43,12 +40,12 @@ public class SSLTrustManagerHelper {
     private KeyManagerFactory keyManagerFactory;
     private DefaultHostnameVerifier defaultHostnameVerifier = new DefaultHostnameVerifier();
 
-    public SSLTrustManagerHelper(@Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
-                                 @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
-                                 @Value("${client.ssl.key-store:}") String keyStorePath,
-                                 @Value("${client.ssl.key-store-password:}") String keyStorePassword,
-                                 @Value("${client.ssl.trust-store:}") String trustStorePath,
-                                 @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
+    public SSLTrustManagerHelper(boolean oneWayAuthenticationEnabled,
+                                 boolean twoWayAuthenticationEnabled,
+                                 String keyStorePath,
+                                 String keyStorePassword,
+                                 String trustStorePath,
+                                 String trustStorePassword) {
         if (oneWayAuthenticationEnabled && (isBlank(trustStorePath) || isBlank(trustStorePassword))) {
             throw new ClientException("TrustStore details are empty, which are required to be present when SSL is enabled");
         }
