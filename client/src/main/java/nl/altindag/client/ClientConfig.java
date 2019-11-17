@@ -26,7 +26,6 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 
 import io.netty.handler.ssl.SslContextBuilder;
-import kong.unirest.Config;
 import kong.unirest.Unirest;
 import kong.unirest.apache.ApacheClient;
 import okhttp3.OkHttpClient;
@@ -174,10 +173,9 @@ public class ClientConfig {
 
     @Autowired
     public void unirest(org.apache.http.client.HttpClient httpClient) {
-        kong.unirest.Client client = ApacheClient.builder(httpClient)
-                                                  .apply(new Config());
-
-        Unirest.primaryInstance().config().httpClient(config -> client);
+        Unirest.primaryInstance()
+               .config()
+               .httpClient(config -> ApacheClient.builder(httpClient).apply(config));
     }
 
 }
