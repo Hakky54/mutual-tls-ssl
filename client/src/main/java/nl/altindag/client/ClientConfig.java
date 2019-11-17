@@ -9,9 +9,11 @@ import javax.ws.rs.client.ClientBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.reactive.JettyClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -24,6 +26,9 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 
 import io.netty.handler.ssl.SslContextBuilder;
+import kong.unirest.Config;
+import kong.unirest.Unirest;
+import kong.unirest.apache.ApacheClient;
 import okhttp3.OkHttpClient;
 
 @Configuration
@@ -31,6 +36,7 @@ import okhttp3.OkHttpClient;
 public class ClientConfig {
 
     @Bean
+    @Scope("prototype")
     public org.apache.http.client.HttpClient apacheHttpClient(SSLTrustManagerHelper sslTrustManagerHelper) {
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
@@ -149,6 +155,14 @@ public class ClientConfig {
         }
         return httpTransportBuilder
                 .build();
+    }
+
+    @Autowired
+    public void unirest(org.apache.http.client.HttpClient httpClient) {
+        kong.unirest.Client client = ApacheClient.builder(httpClient)
+                                                  .apply(new Config());
+
+        Unirest.primaryInstance().config().httpClient(config -> client);
     }
 
 }

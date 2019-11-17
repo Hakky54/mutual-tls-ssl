@@ -32,6 +32,7 @@
         <version.org.glassfish.jersey.inject>2.29.1</version.org.glassfish.jersey.inject>
         <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
         <version.google.http.client>1.33.0</version.google.http.client>
+        <version.unirest>3.1.04</version.unirest>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -101,6 +102,11 @@
                 <groupId>com.google.http-client</groupId>
                 <artifactId>google-http-client</artifactId>
                 <version>${version.google.http.client}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.konghq</groupId>
+                <artifactId>unirest-java</artifactId>
+                <version>${version.unirest}</version>
             </dependency>
 
             <dependency>
