@@ -24,7 +24,7 @@ import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration("prototype")
+@Configuration
 public class SSLTrustManagerHelper {
 
     private KeyStore keyStore;
