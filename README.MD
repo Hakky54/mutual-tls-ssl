@@ -30,6 +30,7 @@ Below is a list of supported clients with examples, see in the [ClientConfig cla
 - Jersey Client
 - Old Jersey Client
 - Google HttpClient
+- Unirest
 
 ## Starting the server
 **Minimum requirements:**
