@@ -1,7 +1,7 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.ClientType.SPRING_REST_TEMPATE;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
-import static nl.altindag.client.Constants.SPRING_REST_TEMPATE;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -26,7 +26,7 @@ public class SpringRestTemplateWrapper extends RequestService {
     @Override
     public ClientResponse executeRequest(String url) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HEADER_KEY_CLIENT_TYPE, SPRING_REST_TEMPATE);
+        headers.add(HEADER_KEY_CLIENT_TYPE, SPRING_REST_TEMPATE.getValue());
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);

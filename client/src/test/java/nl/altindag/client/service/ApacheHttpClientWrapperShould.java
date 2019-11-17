@@ -1,6 +1,6 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.Constants.APACHE_HTTP_CLIENT;
+import static nl.altindag.client.ClientType.APACHE_HTTP_CLIENT;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.GET_METHOD;
 import static nl.altindag.client.TestConstants.HTTP_URL;
@@ -61,7 +61,7 @@ public class ApacheHttpClientWrapperShould {
         assertThat(httpGetArgumentCaptor.getValue().getURI().toString()).isEqualTo(HTTP_URL);
         assertThat(httpGetArgumentCaptor.getValue().getMethod()).isEqualTo(GET_METHOD);
         assertThat(httpGetArgumentCaptor.getValue().getAllHeaders()).hasSize(1);
-        assertThat(httpGetArgumentCaptor.getValue().getFirstHeader(HEADER_KEY_CLIENT_TYPE).getValue()).isEqualTo(APACHE_HTTP_CLIENT);
+        assertThat(httpGetArgumentCaptor.getValue().getFirstHeader(HEADER_KEY_CLIENT_TYPE).getValue()).isEqualTo(APACHE_HTTP_CLIENT.getValue());
     }
 
 }

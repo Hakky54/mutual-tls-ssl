@@ -1,15 +1,5 @@
 package nl.altindag.client.stepdefs;
 
-import static nl.altindag.client.Constants.APACHE_HTTP_CLIENT;
-import static nl.altindag.client.Constants.GOOGLE_HTTP_CLIENT;
-import static nl.altindag.client.Constants.JDK_HTTP_CLIENT;
-import static nl.altindag.client.Constants.JERSEY_CLIENT;
-import static nl.altindag.client.Constants.OK_HTTP;
-import static nl.altindag.client.Constants.OLD_JDK_HTTP_CLIENT;
-import static nl.altindag.client.Constants.OLD_JERSEY_CLIENT;
-import static nl.altindag.client.Constants.SPRING_REST_TEMPATE;
-import static nl.altindag.client.Constants.SPRING_WEB_CLIENT_JETTY;
-import static nl.altindag.client.Constants.SPRING_WEB_CLIENT_NETTY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +9,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import nl.altindag.client.ClientException;
+import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 public class HelloStepDefs extends BaseStepDefs {
@@ -38,28 +29,20 @@ public class HelloStepDefs extends BaseStepDefs {
         String url = SERVER_URL + HELLO_ENDPOINT;
         ClientResponse clientResponse;
 
-        if (APACHE_HTTP_CLIENT.equalsIgnoreCase(client)) {
-            clientResponse = apacheHttpClientWrapper.executeRequest(url);
-        } else if (JDK_HTTP_CLIENT.equalsIgnoreCase(client)) {
-            clientResponse = jdkHttpClientWrapper.executeRequest(url);
-        } else if (OLD_JDK_HTTP_CLIENT.equalsIgnoreCase(client)) {
-            clientResponse = oldJdkHttpClientWrapper.executeRequest(url);
-        } else if (SPRING_REST_TEMPATE.equalsIgnoreCase(client)) {
-            clientResponse = springRestTemplateWrapper.executeRequest(url);
-        } else if (SPRING_WEB_CLIENT_NETTY.equalsIgnoreCase(client)) {
-            clientResponse = springWebClientNettyWrapper.executeRequest(url);
-        } else if (SPRING_WEB_CLIENT_JETTY.equalsIgnoreCase(client)) {
-            clientResponse = springWebClientJettyWrapper.executeRequest(url);
-        } else if (OK_HTTP.equalsIgnoreCase(client)) {
-            clientResponse = okHttpClientWrapper.executeRequest(url);
-        } else if (JERSEY_CLIENT.equalsIgnoreCase(client)) {
-            clientResponse = jerseyClientWrapper.executeRequest(url);
-        } else if (OLD_JERSEY_CLIENT.equalsIgnoreCase(client)) {
-            clientResponse = oldJerseyClientWrapper.executeRequest(url);
-        } else if (GOOGLE_HTTP_CLIENT.equalsIgnoreCase(client)) {
-            clientResponse = googleHttpClientWrapper.executeRequest(url);
-        } else {
-            throw new ClientException(String.format("Could not found any [%s] type of client", client));
+        ClientType clientType = ClientType.from(client);
+        switch (clientType) {
+            case APACHE_HTTP_CLIENT:        { clientResponse = apacheHttpClientWrapper.executeRequest(url); }       break;
+            case JDK_HTTP_CLIENT:           { clientResponse = jdkHttpClientWrapper.executeRequest(url); }          break;
+            case OLD_JDK_HTTP_CLIENT:       { clientResponse = oldJdkHttpClientWrapper.executeRequest(url); }       break;
+            case SPRING_REST_TEMPATE:       { clientResponse = springRestTemplateWrapper.executeRequest(url); }     break;
+            case SPRING_WEB_CLIENT_NETTY:   { clientResponse = springWebClientNettyWrapper.executeRequest(url); }   break;
+            case SPRING_WEB_CLIENT_JETTY:   { clientResponse = springWebClientJettyWrapper.executeRequest(url); }   break;
+            case OK_HTTP:                   { clientResponse = okHttpClientWrapper.executeRequest(url); }           break;
+            case JERSEY_CLIENT:             { clientResponse = jerseyClientWrapper.executeRequest(url); }           break;
+            case OLD_JERSEY_CLIENT:         { clientResponse = oldJerseyClientWrapper.executeRequest(url); }        break;
+            case GOOGLE_HTTP_CLIENT:        { clientResponse = googleHttpClientWrapper.executeRequest(url); }       break;
+            case UNIREST:                   { clientResponse = unirestWrapper.executeRequest(url); }                break;
+            default: throw new ClientException(String.format("Received a not supported [%s] client type ", clientType.getValue()));
         }
 
         testScenario.setClientResponse(clientResponse);

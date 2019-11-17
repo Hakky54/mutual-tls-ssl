@@ -1,9 +1,9 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.ClientType.OK_HTTP;
 import static nl.altindag.client.TestConstants.GET_METHOD;
 import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.HTTP_URL;
-import static nl.altindag.client.TestConstants.OK_HTTP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -56,7 +56,7 @@ public class OkHttpClientWrapperShould {
         assertThat(requestArgumentCaptor.getValue().url().toString()).isEqualTo(HTTP_URL);
         assertThat(requestArgumentCaptor.getValue().method()).isEqualTo(GET_METHOD);
         assertThat(requestArgumentCaptor.getValue().headers()).hasSize(1);
-        assertThat(requestArgumentCaptor.getValue().header(HEADER_KEY_CLIENT_TYPE)).isEqualTo(OK_HTTP);
+        assertThat(requestArgumentCaptor.getValue().header(HEADER_KEY_CLIENT_TYPE)).isEqualTo(OK_HTTP.getValue());
     }
 
 }

@@ -1,5 +1,7 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.ClientType.OLD_JDK_HTTP_CLIENT;
+import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.HTTPS_URL;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,6 +54,8 @@ public class OldJdkHttpClientWrapperShould {
 
         assertThat(clientResponse.getStatusCode()).isEqualTo(200);
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
+
+        verify(connection, times(1)).setRequestProperty(HEADER_KEY_CLIENT_TYPE, OLD_JDK_HTTP_CLIENT.getValue());
     }
 
     @Test
@@ -73,6 +77,7 @@ public class OldJdkHttpClientWrapperShould {
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
 
         verify(connection, times(1)).setSSLSocketFactory(sslSocketFactory);
+        verify(connection, times(1)).setRequestProperty(HEADER_KEY_CLIENT_TYPE, OLD_JDK_HTTP_CLIENT.getValue());
     }
 
     @Test

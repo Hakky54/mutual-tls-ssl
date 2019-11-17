@@ -1,9 +1,9 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.ClientType.JDK_HTTP_CLIENT;
 import static nl.altindag.client.TestConstants.GET_METHOD;
 import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.HTTP_URL;
-import static nl.altindag.client.TestConstants.JDK_HTTP_CLIENT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -53,7 +53,7 @@ public class JdkHttpClientWrapperShould {
         verify(httpClient, times(1)).send(httpRequestArgumentCaptor.capture(), bodyHandlerArgumentCaptor.capture());
         assertThat(httpRequestArgumentCaptor.getValue().uri().toString()).isEqualTo(HTTP_URL);
         assertThat(httpRequestArgumentCaptor.getValue().method()).isEqualTo(GET_METHOD);
-        assertThat(httpRequestArgumentCaptor.getValue().headers().map()).containsExactly(Assertions.entry(HEADER_KEY_CLIENT_TYPE, Collections.singletonList(JDK_HTTP_CLIENT)));
+        assertThat(httpRequestArgumentCaptor.getValue().headers().map()).containsExactly(Assertions.entry(HEADER_KEY_CLIENT_TYPE, Collections.singletonList(JDK_HTTP_CLIENT.getValue())));
         assertThat(bodyHandlerArgumentCaptor.getValue()).isEqualTo(HttpResponse.BodyHandlers.ofString());
     }
 
