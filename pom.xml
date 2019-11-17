@@ -33,6 +33,7 @@
         <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
         <version.google.http.client>1.33.0</version.google.http.client>
         <version.unirest>3.1.04</version.unirest>
+        <version.cobertura-maven-plugin>2.7</version.cobertura-maven-plugin>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -178,6 +179,18 @@
                 <configuration>
                     <source>${version.java}</source>
                     <target>${version.java}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>${version.cobertura-maven-plugin}</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                    <check />
                 </configuration>
             </plugin>
         </plugins>
