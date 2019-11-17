@@ -14,7 +14,7 @@ jobs:
           java-version: 11
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean verify cobertura:cobertura
 
       - uses: actions/upload-artifact@master
         with:
@@ -36,7 +36,7 @@ jobs:
           java-version: 11
 
       - name: Build with Maven
-        run: mvn clean install -P with-one-way-authentication
+        run: mvn clean verify -P with-one-way-authentication
 
       - uses: actions/upload-artifact@master
         with:
@@ -54,7 +54,7 @@ jobs:
         java-version: 11
 
     - name: Build with Maven
-      run: mvn clean install -P with-two-way-authentication-by-trusting-root-ca
+      run: mvn clean verify -P with-two-way-authentication-by-trusting-root-ca
 
     - uses: actions/upload-artifact@master
       with:
@@ -72,7 +72,7 @@ jobs:
         java-version: 11
 
     - name: Build with Maven
-      run: mvn clean install -P with-two-way-authentication-by-trusting-each-other
+      run: mvn clean verify -P with-two-way-authentication-by-trusting-each-other
 
     - uses: actions/upload-artifact@master
       with:
