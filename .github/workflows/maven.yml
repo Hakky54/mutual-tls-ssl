@@ -14,12 +14,16 @@ jobs:
           java-version: 11
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean verify
 
       - uses: actions/upload-artifact@master
         with:
           name: server-without-encryption
           path: server/target/server.jar
+
+      - uses: codecov/codecov-action@v1.0.3
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
 
   one-way-authentication:
     runs-on: ubuntu-latest
@@ -32,7 +36,7 @@ jobs:
           java-version: 11
 
       - name: Build with Maven
-        run: mvn clean install -P with-one-way-authentication
+        run: mvn clean verify -P with-one-way-authentication
 
       - uses: actions/upload-artifact@master
         with:
@@ -50,7 +54,7 @@ jobs:
         java-version: 11
 
     - name: Build with Maven
-      run: mvn clean install -P with-two-way-authentication-by-trusting-root-ca
+      run: mvn clean verify -P with-two-way-authentication-by-trusting-root-ca
 
     - uses: actions/upload-artifact@master
       with:
@@ -68,7 +72,7 @@ jobs:
         java-version: 11
 
     - name: Build with Maven
-      run: mvn clean install -P with-two-way-authentication-by-trusting-each-other
+      run: mvn clean verify -P with-two-way-authentication-by-trusting-each-other
 
     - uses: actions/upload-artifact@master
       with:
