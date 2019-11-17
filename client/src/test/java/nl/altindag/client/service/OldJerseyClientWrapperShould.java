@@ -1,8 +1,8 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.ClientType.OLD_JERSEY_CLIENT;
 import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.HTTP_URL;
-import static nl.altindag.client.TestConstants.OLD_JERSEY_CLIENT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -33,7 +33,7 @@ public class OldJerseyClientWrapperShould {
         com.sun.jersey.api.client.ClientResponse response = mock(com.sun.jersey.api.client.ClientResponse.class);
 
         when(client.resource(HTTP_URL)).thenReturn(webResource);
-        when(webResource.header(HEADER_KEY_CLIENT_TYPE, OLD_JERSEY_CLIENT)).thenReturn(builder);
+        when(webResource.header(HEADER_KEY_CLIENT_TYPE, OLD_JERSEY_CLIENT.getValue())).thenReturn(builder);
         when(builder.get(com.sun.jersey.api.client.ClientResponse.class)).thenReturn(response);
         when(response.getEntity(String.class)).thenReturn("Hello");
         when(response.getStatus()).thenReturn(200);

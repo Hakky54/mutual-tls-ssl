@@ -181,7 +181,7 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     public void throwExceptionWhenISayHelloWithClientUnknownClient() {
         assertThatThrownBy(() -> victim.iSayHelloWithClient("some dirty client"))
                 .isInstanceOf(ClientException.class)
-                .hasMessage("Could not found any [some dirty client] type of client");
+                .hasMessage("Could not find the provided [some dirty client] client type");
     }
 
     @Test

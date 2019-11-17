@@ -1,6 +1,6 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.Constants.GOOGLE_HTTP_CLIENT;
+import static nl.altindag.client.ClientType.GOOGLE_HTTP_CLIENT;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
 import java.nio.charset.StandardCharsets;
@@ -30,7 +30,7 @@ public class GoogleHttpClientWrapper extends RequestService {
     public ClientResponse executeRequest(String url) throws Exception {
         HttpResponse response = httpTransport.createRequestFactory()
                                              .buildGetRequest(new GenericUrl(url))
-                                             .setHeaders(new HttpHeaders().set(HEADER_KEY_CLIENT_TYPE, GOOGLE_HTTP_CLIENT))
+                                             .setHeaders(new HttpHeaders().set(HEADER_KEY_CLIENT_TYPE, GOOGLE_HTTP_CLIENT.getValue()))
                                              .execute();
 
         return new ClientResponse(IOUtils.toString(response.getContent(), StandardCharsets.UTF_8), response.getStatusCode());

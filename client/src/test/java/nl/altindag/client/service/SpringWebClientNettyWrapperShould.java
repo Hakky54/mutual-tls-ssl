@@ -1,8 +1,8 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.ClientType.SPRING_WEB_CLIENT_NETTY;
 import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.HTTP_URL;
-import static nl.altindag.client.TestConstants.SPRING_WEB_CLIENT_NETTY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -42,7 +42,7 @@ public class SpringWebClientNettyWrapperShould {
 
         when(webClient.get()).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.uri(HTTP_URL)).thenReturn(requestHeadersUriSpec);
-        when(requestHeadersUriSpec.header(HEADER_KEY_CLIENT_TYPE, SPRING_WEB_CLIENT_NETTY)).thenReturn(requestHeadersUriSpec);
+        when(requestHeadersUriSpec.header(HEADER_KEY_CLIENT_TYPE, SPRING_WEB_CLIENT_NETTY.getValue())).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.exchange()).thenReturn(clientResponseMono);
         when(response.toEntity(String.class)).thenReturn(responseEntityMono);
         when(responseEntity.getBody()).thenReturn("Hello");

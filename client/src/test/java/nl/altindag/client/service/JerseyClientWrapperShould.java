@@ -2,7 +2,6 @@ package nl.altindag.client.service;
 
 import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.HTTP_URL;
-import static nl.altindag.client.TestConstants.JERSEY_CLIENT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -37,7 +37,7 @@ public class JerseyClientWrapperShould {
 
         when(client.target(HTTP_URL)).thenReturn(webTarget);
         when(webTarget.request(MediaType.TEXT_PLAIN_TYPE)).thenReturn(requestBuilder);
-        when(requestBuilder.header(HEADER_KEY_CLIENT_TYPE, JERSEY_CLIENT)).thenReturn(requestBuilder);
+        when(requestBuilder.header(HEADER_KEY_CLIENT_TYPE, ClientType.JERSEY_CLIENT.getValue())).thenReturn(requestBuilder);
         when(requestBuilder.get()).thenReturn(response);
         when(response.readEntity(String.class)).thenReturn("Hello");
         when(response.getStatus()).thenReturn(200);

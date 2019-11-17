@@ -1,7 +1,7 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.ClientType.JDK_HTTP_CLIENT;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
-import static nl.altindag.client.Constants.JDK_HTTP_CLIENT;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -27,7 +27,7 @@ public class JdkHttpClientWrapper extends RequestService {
     public ClientResponse executeRequest(String url) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                                          .GET()
-                                         .header(HEADER_KEY_CLIENT_TYPE, JDK_HTTP_CLIENT)
+                                         .header(HEADER_KEY_CLIENT_TYPE, JDK_HTTP_CLIENT.getValue())
                                          .uri(URI.create(url))
                                          .build();
 

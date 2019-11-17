@@ -1,6 +1,6 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.TestConstants.GOOGLE_HTTP_CLIENT;
+import static nl.altindag.client.ClientType.GOOGLE_HTTP_CLIENT;
 import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,7 +60,7 @@ public class GoogleHttpClientWrapperShould {
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
 
         verify(httpRequest, times(1)).setHeaders(httpHeadersArgumentCaptor.capture());
-        assertThat(httpHeadersArgumentCaptor.getValue().get(HEADER_KEY_CLIENT_TYPE)).isEqualTo(GOOGLE_HTTP_CLIENT);
+        assertThat(httpHeadersArgumentCaptor.getValue().get(HEADER_KEY_CLIENT_TYPE)).isEqualTo(GOOGLE_HTTP_CLIENT.getValue());
 
         verify(httpRequestFactory, times(1)).buildGetRequest(genericUrlArgumentCaptor.capture());
         assertThat(genericUrlArgumentCaptor.getValue().toString()).isEqualTo(HTTP_URL);
