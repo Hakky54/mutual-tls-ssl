@@ -9,7 +9,6 @@ import javax.ws.rs.client.ClientBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -31,15 +30,8 @@ import okhttp3.OkHttpClient;
 @Import({SSLTrustManagerHelper.class})
 public class ClientConfig {
 
-    private final SSLTrustManagerHelper sslTrustManagerHelper;
-
-    @Autowired
-    public ClientConfig(SSLTrustManagerHelper sslTrustManagerHelper) {
-        this.sslTrustManagerHelper = sslTrustManagerHelper;
-    }
-
     @Bean
-    public org.apache.http.client.HttpClient apacheHttpClient() {
+    public org.apache.http.client.HttpClient apacheHttpClient(SSLTrustManagerHelper sslTrustManagerHelper) {
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
             httpClientBuilder.setSSLContext(sslTrustManagerHelper.getSslContext());
@@ -49,7 +41,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public HttpClient jdkHttpClient() {
+    public HttpClient jdkHttpClient(SSLTrustManagerHelper sslTrustManagerHelper) {
         HttpClient.Builder httpClientBuilder = HttpClient.newBuilder();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
             httpClientBuilder.sslContext(sslTrustManagerHelper.getSslContext());
@@ -65,10 +57,9 @@ public class ClientConfig {
     }
 
     @Bean
-    public OkHttpClient okHttpClient() {
+    public OkHttpClient okHttpClient(SSLTrustManagerHelper sslTrustManagerHelper) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
-            SSLTrustManagerHelper sslTrustManagerHelper = this.sslTrustManagerHelper.createNewInstance();
             httpClientBuilder.sslSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory(), sslTrustManagerHelper.getX509TrustManager())
                              .hostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
         }
@@ -78,7 +69,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public WebClient webClientWithNetty() {
+    public WebClient webClientWithNetty(SSLTrustManagerHelper sslTrustManagerHelper) {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
             SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
@@ -101,7 +92,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public WebClient webClientWithJetty() {
+    public WebClient webClientWithJetty(SSLTrustManagerHelper sslTrustManagerHelper) {
         org.eclipse.jetty.client.HttpClient httpClient = new org.eclipse.jetty.client.HttpClient();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
             SslContextFactory sslContextFactory = new SslContextFactory();
@@ -127,10 +118,9 @@ public class ClientConfig {
     }
 
     @Bean
-    public Client jerseyClient() {
+    public Client jerseyClient(SSLTrustManagerHelper sslTrustManagerHelper) {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
-            SSLTrustManagerHelper sslTrustManagerHelper = this.sslTrustManagerHelper.createNewInstance();
             clientBuilder.sslContext(sslTrustManagerHelper.getSslContext());
             clientBuilder.hostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
         }
@@ -138,7 +128,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public com.sun.jersey.api.client.Client oldJerseyClient() {
+    public com.sun.jersey.api.client.Client oldJerseyClient(SSLTrustManagerHelper sslTrustManagerHelper) {
         com.sun.jersey.api.client.Client client = com.sun.jersey.api.client.Client.create();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
             HttpsURLConnection.setDefaultSSLSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory());
@@ -151,10 +141,9 @@ public class ClientConfig {
     }
 
     @Bean
-    public HttpTransport googleHttpClient() {
+    public HttpTransport googleHttpClient(SSLTrustManagerHelper sslTrustManagerHelper) {
         NetHttpTransport.Builder httpTransportBuilder = new NetHttpTransport.Builder();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
-            SSLTrustManagerHelper sslTrustManagerHelper = this.sslTrustManagerHelper.createNewInstance();
             httpTransportBuilder.setSslSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory())
                                 .setHostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
         }
