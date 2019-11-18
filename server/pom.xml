@@ -67,7 +67,7 @@
                 <version>${version.jacoco-maven-plugin}</version>
                 <configuration>
                     <excludes>
-                        <exclude>nl/altindag/server/App.class</exclude>
+                        <exclude>**/*App.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
