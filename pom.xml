@@ -18,7 +18,7 @@
         <version.java>11</version.java>
         <version.spring>2.2.0.RELEASE</version.spring>
         <version.apache.httpclient>4.5.10</version.apache.httpclient>
-        <version.cucumber>4.7.0</version.cucumber>
+        <version.cucumber>4.8.0</version.cucumber>
         <version.junit>4.12</version.junit>
         <version.maven-fail-safe>2.22.2</version.maven-fail-safe>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
