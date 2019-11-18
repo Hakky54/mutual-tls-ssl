@@ -42,7 +42,7 @@ public class HelloStepDefs extends BaseStepDefs {
             case OLD_JERSEY_CLIENT:         { clientResponse = oldJerseyClientWrapper.executeRequest(url); }        break;
             case GOOGLE_HTTP_CLIENT:        { clientResponse = googleHttpClientWrapper.executeRequest(url); }       break;
             case UNIREST:                   { clientResponse = unirestWrapper.executeRequest(url); }                break;
-            default: throw new ClientException(String.format("Received a not supported [%s] client type ", clientType.getValue()));
+            default: throw new ClientException(String.format("Received a not supported [%s] client type", clientType.getValue()));
         }
 
         testScenario.setClientResponse(clientResponse);

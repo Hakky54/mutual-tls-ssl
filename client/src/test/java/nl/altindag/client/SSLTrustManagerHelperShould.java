@@ -6,10 +6,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.Test;
 
+@SuppressWarnings({ "UnnecessaryLocalVariable", "ConstantConditions" })
 public class SSLTrustManagerHelperShould {
 
     @Test
-    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions"})
     public void notCreateSSLContextIfOneWayAndTwoWayAuthenticationIsDisabled() {
         boolean oneWayAuthenticationEnabled = false;
         boolean twoWayAuthenticationEnabled = false;
@@ -34,7 +34,6 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
-    @SuppressWarnings("ConstantConditions")
     public void createSSLContextWithClientIdentity() {
         boolean oneWayAuthenticationEnabled = false;
         boolean twoWayAuthenticationEnabled = true;
@@ -61,7 +60,6 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
-    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions"})
     public void createSSLContextWithClientTrustStore() {
         boolean oneWayAuthenticationEnabled = true;
         boolean twoWayAuthenticationEnabled = false;
@@ -84,7 +82,6 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
-    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions"})
     public void createSSLContextWithTlsProtocolVersionOneDotTwo() {
         boolean oneWayAuthenticationEnabled = true;
         boolean twoWayAuthenticationEnabled = false;
@@ -101,7 +98,6 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
-    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionWhenKeyStoreFileIsNotFound() {
         boolean oneWayAuthenticationEnabled = true;
         boolean twoWayAuthenticationEnabled = false;
@@ -116,7 +112,6 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
-    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionOneWayAuthenticationIsEnabledWhileTrustStorePathIsNotProvided() {
         boolean oneWayAuthenticationEnabled = true;
         boolean twoWayAuthenticationEnabled = false;
@@ -131,7 +126,6 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
-    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionOneWayAuthenticationIsEnabledWhileTrustStorePasswordIsNotProvided() {
         boolean oneWayAuthenticationEnabled = true;
         boolean twoWayAuthenticationEnabled = false;
@@ -146,7 +140,6 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
-    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionTwoWayAuthenticationEnabledWhileKeyStorePathIsNotProvided() {
         boolean oneWayAuthenticationEnabled = false;
         boolean twoWayAuthenticationEnabled = true;
@@ -161,7 +154,6 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
-    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionTwoWayAuthenticationEnabledWhileKeyStorePasswordIsNotProvided() {
         boolean oneWayAuthenticationEnabled = false;
         boolean twoWayAuthenticationEnabled = true;
@@ -176,7 +168,6 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
-    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionTwoWayAuthenticationEnabledWhileTrustStorePathIsNotProvided() {
         boolean oneWayAuthenticationEnabled = false;
         boolean twoWayAuthenticationEnabled = true;
@@ -191,7 +182,6 @@ public class SSLTrustManagerHelperShould {
     }
 
     @Test
-    @SuppressWarnings({"UnnecessaryLocalVariable", "ConstantConditions", "unused"})
     public void throwExceptionTwoWayAuthenticationEnabledWhileTrustStorePasswordIsNotProvided() {
         boolean oneWayAuthenticationEnabled = false;
         boolean twoWayAuthenticationEnabled = true;
@@ -203,6 +193,23 @@ public class SSLTrustManagerHelperShould {
         assertThatThrownBy(() -> new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled, keyStorePath, keyStorePassword, trustStorePath, trustStorePassword))
                 .isInstanceOf(ClientException.class)
                 .hasMessage("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
+    }
+
+    @Test
+    public void throwExceptionWhenX509TrustManagerIsRequestWhenSecurityIsDisabled() {
+        boolean oneWayAuthenticationEnabled = false;
+        boolean twoWayAuthenticationEnabled = false;
+        String keyStorePath = EMPTY;
+        String keyStorePassword = EMPTY;
+        String trustStorePath = EMPTY;
+        String trustStorePassword = EMPTY;
+
+        SSLTrustManagerHelper sslTrustManagerHelper = new SSLTrustManagerHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled,
+                                                                                keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+
+        assertThatThrownBy(sslTrustManagerHelper::getX509TrustManager)
+                .isInstanceOf(ClientException.class)
+                .hasMessage("The TrustManager could not be provided because it is not available");
     }
 
 }
