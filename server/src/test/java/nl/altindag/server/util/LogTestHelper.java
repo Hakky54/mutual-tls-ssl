@@ -13,12 +13,11 @@ import ch.qos.logback.core.read.ListAppender;
 
 public abstract class LogTestHelper<T> {
 
-    private Logger logger;
     private ListAppender<ILoggingEvent> listAppender;
 
     @Before
     public void setup() {
-        logger = (Logger) LoggerFactory.getLogger(getTargetClass());
+        Logger logger = (Logger) LoggerFactory.getLogger(getTargetClass());
 
         listAppender = new ListAppender<>();
         listAppender.start();
