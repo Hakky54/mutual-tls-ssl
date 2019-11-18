@@ -1,5 +1,6 @@
 [![Actions Status](https://github.com/Hakky54/mutual-tls-ssl/workflows/Build/badge.svg)](https://github.com/Hakky54/mutual-tls-ssl/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0d1d7fbf53440f6372f0/maintainability)](https://codeclimate.com/github/Hakky54/mutual-tls-ssl/maintainability)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/70a8a5e2a32e4a3c85e33060c326caf0)](https://www.codacy.com/manual/Hakky54/mutual-tls-ssl?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Hakky54/mutual-tls-ssl&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/Hakky54/mutual-tls-ssl/branch/master/graph/badge.svg)](https://codecov.io/gh/Hakky54/mutual-tls-ssl)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Hakky54/mutual-tls-ssl/blob/master/LICENSE)
 
@@ -20,22 +21,22 @@ These are the following steps:
 8. [Automated script for two way authentication with TLS by trusting the Certificate Authority](#automated-script-for-two-way-authentication-with-tls-by-trusting-the-certificate-authority)
 
 Usefull links
-- [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
-- [Openssl Cheatsheet](https://gist.github.com/webtobesocial/5313b0d7abc25e06c2d78f8b767d4bc3)
-- [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
+  - [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
+  - [Openssl Cheatsheet](https://gist.github.com/webtobesocial/5313b0d7abc25e06c2d78f8b767d4bc3)
+  - [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
 Below is a list of supported clients with examples, see in the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java) for detailed configuration
-- Apache HttpClient
-- JDK HttpClient
-- Old JDK HttpClient
-- Spring RestTemplate
-- Spring WebFlux WebClient Netty
-- Spring WebFlux WebClient Jetty
-- OkHttp
-- Jersey Client
-- Old Jersey Client
-- Google HttpClient
-- Unirest
+  - Apache HttpClient
+  - JDK HttpClient
+  - Old JDK HttpClient
+  - Spring RestTemplate
+  - Spring WebFlux WebClient Netty
+  - Spring WebFlux WebClient Jetty
+  - OkHttp
+  - Jersey Client
+  - Old Jersey Client
+  - Google HttpClient
+  - Unirest
 
 ## Starting the server
 **Minimum requirements:**
@@ -208,12 +209,13 @@ If you run the client again, you will see that the test passed and that the clie
 ## Two way TLS based on trusting the Certificate Authority
 There is another way to have mutual authentication and that is based on trusting the Certificate Authority. It has pros and cons.
 
-##### Pros
-- Client's do not need to add the certificate of the server
-- Server does not need to add all the certificates of the clients
-- Maintenance will be less because only the Certificate Authority's certificate validity can expire
-##### Cons
-- You don't have control anymore for which applications are allowed to call your application. You give permission to any application who has a signed certificate by the Certificate Authority.
+**Pros**
+  - Client's do not need to add the certificate of the server
+  - Server does not need to add all the certificates of the clients
+  - Maintenance will be less because only the Certificate Authority's certificate validity can expire
+  
+**Cons**
+  - You don't have control anymore for which applications are allowed to call your application. You give permission to any application who has a signed certificate by the Certificate Authority.
 
 These are the following steps:
 1. [Creating a Certificate Authority](#creating-a-certificate-authority)
@@ -278,7 +280,7 @@ openssl x509 -req -in server/src/main/resources/server.csr -CA root-ca/root-ca.p
 #### Replace unsigned certificate with a signed one
 The identity keystore of the server and client still have the unsigned certificate. Now you can replaced it with the signed one. It won't be that easy, because the signed certificate does not have the private key so it won't be a valid identity without it. What you need to do is extract the key file from the identity and then merge it back to the identity with the signed certificate. You can do that with the following commands:
 
-##### Client
+**Client**
 ```bash
 keytool -importkeystore -srckeystore client/src/test/resources/identity.jks -destkeystore client/src/test/resources/client.p12 -srcstoretype jks -deststoretype pkcs12 -srcstorepass secret -deststorepass secret
 openssl pkcs12 -in client/src/test/resources/client.p12 -nodes -out client/src/test/resources/client-private.key -nocerts -passin pass:secret
@@ -287,7 +289,7 @@ keytool -delete -alias client -keystore client/src/test/resources/identity.jks -
 keytool -importkeystore -srckeystore client/src/test/resources/client-signed.p12 -srcstoretype PKCS12 -destkeystore client/src/test/resources/identity.jks -srcstorepass secret -deststorepass secret
 ```
 
-##### Server
+**Server**
 ```bash
 keytool -importkeystore -srckeystore server/src/main/resources/identity.jks -destkeystore server/src/main/resources/server.p12 -srcstoretype jks -deststoretype pkcs12 -srcstorepass secret -deststorepass secret
 openssl pkcs12 -in server/src/main/resources/server.p12 -nodes -out server/src/main/resources/server-private.key -nocerts -passin pass:secret
@@ -299,23 +301,24 @@ keytool -importkeystore -srckeystore server/src/main/resources/server-signed.p12
 #### Trusting the Certificate Authority only
 Now you need to configure your client and server to only trust the Certificate Authority. You can do that by importing the certificate of the Certificate Authority into the truststores of the client and server. You can do that with the following two commands:
 
-##### Client
+**Client**
 ```bash
 keytool -keystore client/src/test/resources/truststore.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret
 ```
 
-##### Server
+**Server**
 ```bash
 keytool -keystore server/src/main/resources/truststore.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret
 ```
 
 The truststores still contains the client and server specific certificates and that needs to be removed. You can do that with the following command:
-##### Client
+
+**Client**
 ```bash
 keytool -keystore client/src/test/resources/truststore.jks -delete -alias server -storepass secret
 ```
 
-##### Server
+**Server**
 ```bash
 keytool -keystore server/src/main/resources/truststore.jks -delete -alias client -storepass secret
 ```
