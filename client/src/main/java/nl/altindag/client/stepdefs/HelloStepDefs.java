@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
@@ -26,7 +27,7 @@ public class HelloStepDefs extends BaseStepDefs {
     @When("I say hello with (.*)")
     public void iSayHelloWithClient(String client) throws Exception {
         String url = SERVER_URL + HELLO_ENDPOINT;
-        ClientResponse clientResponse = null;
+        ClientResponse clientResponse;
 
         ClientType clientType = ClientType.from(client);
         switch (clientType) {
@@ -41,9 +42,9 @@ public class HelloStepDefs extends BaseStepDefs {
             case OLD_JERSEY_CLIENT:         { clientResponse = oldJerseyClientWrapper.executeRequest(url); }        break;
             case GOOGLE_HTTP_CLIENT:        { clientResponse = googleHttpClientWrapper.executeRequest(url); }       break;
             case UNIREST:                   { clientResponse = unirestWrapper.executeRequest(url); }                break;
+            default: throw new ClientException(String.format("Received a not supported [%s] client type", clientType.getValue()));
         }
 
-        assertThat(clientResponse).isNotNull();
         testScenario.setClientResponse(clientResponse);
     }
 

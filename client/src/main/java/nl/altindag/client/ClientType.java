@@ -12,7 +12,8 @@ public enum ClientType {
     JERSEY_CLIENT("jersey client"),
     OLD_JERSEY_CLIENT("old jersey client"),
     GOOGLE_HTTP_CLIENT("google httpclient"),
-    UNIREST("unirest");
+    UNIREST("unirest"),
+    NONE("none");
 
     private String value;
 

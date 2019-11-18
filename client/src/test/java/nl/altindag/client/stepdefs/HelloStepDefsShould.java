@@ -4,9 +4,7 @@ import static nl.altindag.client.TestConstants.HTTPS_URL;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -86,8 +84,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     public void iSayHelloWithClientApacheHttpClient() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-        when(apacheHttpClientWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
-
         victim.iSayHelloWithClient("Apache HttpClient");
 
         verify(apacheHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
@@ -97,8 +93,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     @Test
     public void iSayHelloWithClientJdkHttpClient() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
-
-        when(jdkHttpClientWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
 
         victim.iSayHelloWithClient("JDK HttpClient");
 
@@ -110,8 +104,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     public void iSayHelloWithClientOldJdkHttpClient() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-        when(oldJdkHttpClientWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
-
         victim.iSayHelloWithClient("Old JDK HttpClient");
 
         verify(oldJdkHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
@@ -121,8 +113,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     @Test
     public void iSayHelloWithClientSpringRestTemplate() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
-
-        when(springRestTemplateWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
 
         victim.iSayHelloWithClient("Spring RestTemplate");
 
@@ -134,8 +124,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     public void iSayHelloWithClientSpringWebFluxWebClientNetty() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-        when(springWebClientNettyWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
-
         victim.iSayHelloWithClient("Spring WebFlux WebClient Netty");
 
         verify(springWebClientNettyWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
@@ -145,8 +133,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     @Test
     public void iSayHelloWithClientSpringWebFluxWebClientJetty() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
-
-        when(springWebClientJettyWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
 
         victim.iSayHelloWithClient("Spring WebFlux WebClient Jetty");
 
@@ -158,8 +144,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     public void iSayHelloWithClientOkHttp() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-        when(okHttpClientWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
-
         victim.iSayHelloWithClient("OkHttp");
 
         verify(okHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
@@ -169,8 +153,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     @Test
     public void iSayHelloWithClientJerseyClient() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
-
-        when(jerseyClientWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
 
         victim.iSayHelloWithClient("Jersey Client");
 
@@ -182,8 +164,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     public void iSayHelloWithClientOldJerseyClient() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-        when(oldJerseyClientWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
-
         victim.iSayHelloWithClient("Old Jersey Client");
 
         verify(oldJerseyClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
@@ -194,8 +174,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     public void iSayHelloWithClientGoogleHttpTransport() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-        when(googleHttpClientWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
-
         victim.iSayHelloWithClient("Google HttpClient");
 
         verify(googleHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
@@ -205,8 +183,6 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     @Test
     public void iSayHelloWithUnirest() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
-
-        when(unirestWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
 
         victim.iSayHelloWithClient("Unirest");
 
@@ -219,6 +195,13 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
         assertThatThrownBy(() -> victim.iSayHelloWithClient("some dirty client"))
                 .isInstanceOf(ClientException.class)
                 .hasMessage("Could not find the provided [some dirty client] client type");
+    }
+
+    @Test
+    public void throwExceptionWhenISayHelloWithClientUnsupportedClient() {
+        assertThatThrownBy(() -> victim.iSayHelloWithClient("none"))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("Received a not supported [none] client type");
     }
 
     @Test
