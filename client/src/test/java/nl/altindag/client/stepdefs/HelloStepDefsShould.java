@@ -36,6 +36,7 @@ import nl.altindag.client.service.OldJerseyClientWrapper;
 import nl.altindag.client.service.SpringRestTemplateWrapper;
 import nl.altindag.client.service.SpringWebClientJettyWrapper;
 import nl.altindag.client.service.SpringWebClientNettyWrapper;
+import nl.altindag.client.service.UnirestWrapper;
 import nl.altindag.client.util.LogTestHelper;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -66,6 +67,8 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     private OldJerseyClientWrapper oldJerseyClientWrapper;
     @Mock
     private GoogleHttpClientWrapper googleHttpClientWrapper;
+    @Mock
+    private UnirestWrapper unirestWrapper;
     @Mock
     private TestScenario testScenario;
 
@@ -196,6 +199,18 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
         victim.iSayHelloWithClient("Google HttpClient");
 
         verify(googleHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
+    }
+
+    @Test
+    public void iSayHelloWithUnirest() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        when(unirestWrapper.executeRequest(anyString())).thenReturn(mock(ClientResponse.class));
+
+        victim.iSayHelloWithClient("Unirest");
+
+        verify(unirestWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
         assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
