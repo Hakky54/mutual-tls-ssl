@@ -34,6 +34,7 @@ import nl.altindag.client.service.OldJerseyClientWrapper;
 import nl.altindag.client.service.SpringRestTemplateWrapper;
 import nl.altindag.client.service.SpringWebClientJettyWrapper;
 import nl.altindag.client.service.SpringWebClientNettyWrapper;
+import nl.altindag.client.service.UnirestWrapper;
 import nl.altindag.client.util.LogTestHelper;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -64,6 +65,8 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     private OldJerseyClientWrapper oldJerseyClientWrapper;
     @Mock
     private GoogleHttpClientWrapper googleHttpClientWrapper;
+    @Mock
+    private UnirestWrapper unirestWrapper;
     @Mock
     private TestScenario testScenario;
 
@@ -178,10 +181,27 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     }
 
     @Test
+    public void iSayHelloWithUnirest() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        victim.iSayHelloWithClient("Unirest");
+
+        verify(unirestWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
+    }
+
+    @Test
     public void throwExceptionWhenISayHelloWithClientUnknownClient() {
         assertThatThrownBy(() -> victim.iSayHelloWithClient("some dirty client"))
                 .isInstanceOf(ClientException.class)
                 .hasMessage("Could not find the provided [some dirty client] client type");
+    }
+
+    @Test
+    public void throwExceptionWhenISayHelloWithClientUnsupportedClient() {
+        assertThatThrownBy(() -> victim.iSayHelloWithClient("none"))
+                .isInstanceOf(ClientException.class)
+                .hasMessage("Received a not supported [none] client type");
     }
 
     @Test
