@@ -1,6 +1,7 @@
 [![Actions Status](https://github.com/Hakky54/mutual-tls-ssl/workflows/Build/badge.svg)](https://github.com/Hakky54/mutual-tls-ssl/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0d1d7fbf53440f6372f0/maintainability)](https://codeclimate.com/github/Hakky54/mutual-tls-ssl/maintainability)
 [![codecov](https://codecov.io/gh/Hakky54/mutual-tls-ssl/branch/master/graph/badge.svg)](https://codecov.io/gh/Hakky54/mutual-tls-ssl)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Hakky54/mutual-tls-ssl/blob/master/LICENSE)
 
 # Mastering two way TLS
 
