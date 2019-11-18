@@ -116,7 +116,7 @@ public class ClientConfig {
         org.eclipse.jetty.client.HttpClient httpClient = new org.eclipse.jetty.client.HttpClient();
         if (sslTrustManagerHelper.isSecurityEnabled()) {
             SslContextFactory sslContextFactory = new SslContextFactory();
-            sslContextFactory.setSslContext(sslContextFactory.getSslContext());
+            sslContextFactory.setSslContext(sslTrustManagerHelper.getSslContext());
             sslContextFactory.setHostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
             if (sslTrustManagerHelper.isOneWayAuthenticationEnabled()) {
                 sslContextFactory.setTrustStore(sslTrustManagerHelper.getTrustStore());
