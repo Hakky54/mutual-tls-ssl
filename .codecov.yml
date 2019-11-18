@@ -1,2 +1,2 @@
 ignore:
-  - ".*App.java/"
+  - "**/*App.java/"
