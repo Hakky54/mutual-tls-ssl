@@ -37,11 +37,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${version.maven-surefire-plugin}</version>
-                <configuration>
-                    <includes>
-                        <include>%regex[.*Should.*]</include>
-                    </includes>
-                </configuration>
             </plugin>
 
             <plugin>
