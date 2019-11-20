@@ -3,7 +3,7 @@ name: Build
 on: [
   push
   schedule:
-    - cron: * 6 * * 3
+    - cron: 0 6 * * 3
 ]
 
 jobs:
