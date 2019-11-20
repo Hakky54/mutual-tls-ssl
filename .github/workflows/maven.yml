@@ -1,10 +1,9 @@
 name: Build
 
-on: [
-  push:,
+on:
+  push:
   schedule:
     - cron: 0 6 * * 3
-]
 
 jobs:
   without-encryption:
