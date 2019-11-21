@@ -22,7 +22,7 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 
-public class SSLTrustManagerHelper {
+public class SSLContextHelper {
 
     private KeyStore keyStore;
     private String keyStorePath;
@@ -40,12 +40,12 @@ public class SSLTrustManagerHelper {
     private KeyManagerFactory keyManagerFactory;
     private DefaultHostnameVerifier defaultHostnameVerifier = new DefaultHostnameVerifier();
 
-    public SSLTrustManagerHelper(boolean oneWayAuthenticationEnabled,
-                                 boolean twoWayAuthenticationEnabled,
-                                 String keyStorePath,
-                                 String keyStorePassword,
-                                 String trustStorePath,
-                                 String trustStorePassword) {
+    public SSLContextHelper(boolean oneWayAuthenticationEnabled,
+                            boolean twoWayAuthenticationEnabled,
+                            String keyStorePath,
+                            String keyStorePassword,
+                            String trustStorePath,
+                            String trustStorePassword) {
         if (oneWayAuthenticationEnabled && (isBlank(trustStorePath) || isBlank(trustStorePassword))) {
             throw new ClientException("TrustStore details are empty, which are required to be present when SSL is enabled");
         }
@@ -112,7 +112,7 @@ public class SSLTrustManagerHelper {
     }
 
     private static KeyStore loadKeyStore(String keystorePath, String keystorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
-        try(InputStream keystoreInputStream = SSLTrustManagerHelper.class.getClassLoader().getResourceAsStream(keystorePath)) {
+        try(InputStream keystoreInputStream = SSLContextHelper.class.getClassLoader().getResourceAsStream(keystorePath)) {
             if (isNull(keystoreInputStream)) {
                 throw new ClientException(String.format("Could not find the keystore file with the given location %s", keystorePath));
             }

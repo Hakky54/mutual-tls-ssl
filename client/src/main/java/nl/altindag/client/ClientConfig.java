@@ -35,36 +35,36 @@ public class ClientConfig {
 
     @Bean
     @Scope("prototype")
-    public SSLTrustManagerHelper sslTrustManagerHelper(@Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
-                                                       @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
-                                                       @Value("${client.ssl.key-store:}") String keyStorePath,
-                                                       @Value("${client.ssl.key-store-password:}") String keyStorePassword,
-                                                       @Value("${client.ssl.trust-store:}") String trustStorePath,
-                                                       @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
-        return new SSLTrustManagerHelper(oneWayAuthenticationEnabled,
-                                         twoWayAuthenticationEnabled,
-                                         keyStorePath,
-                                         keyStorePassword,
-                                         trustStorePath,
-                                         trustStorePassword);
+    public SSLContextHelper sslTrustManagerHelper(@Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
+                                                  @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
+                                                  @Value("${client.ssl.key-store:}") String keyStorePath,
+                                                  @Value("${client.ssl.key-store-password:}") String keyStorePassword,
+                                                  @Value("${client.ssl.trust-store:}") String trustStorePath,
+                                                  @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
+        return new SSLContextHelper(oneWayAuthenticationEnabled,
+                                    twoWayAuthenticationEnabled,
+                                    keyStorePath,
+                                    keyStorePassword,
+                                    trustStorePath,
+                                    trustStorePassword);
     }
 
     @Bean
     @Scope("prototype")
-    public org.apache.http.client.HttpClient apacheHttpClient(SSLTrustManagerHelper sslTrustManagerHelper) {
+    public org.apache.http.client.HttpClient apacheHttpClient(SSLContextHelper sslContextHelper) {
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
-        if (sslTrustManagerHelper.isSecurityEnabled()) {
-            httpClientBuilder.setSSLContext(sslTrustManagerHelper.getSslContext());
-            httpClientBuilder.setSSLHostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
+        if (sslContextHelper.isSecurityEnabled()) {
+            httpClientBuilder.setSSLContext(sslContextHelper.getSslContext());
+            httpClientBuilder.setSSLHostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
         }
         return httpClientBuilder.build();
     }
 
     @Bean
-    public HttpClient jdkHttpClient(SSLTrustManagerHelper sslTrustManagerHelper) {
+    public HttpClient jdkHttpClient(SSLContextHelper sslContextHelper) {
         HttpClient.Builder httpClientBuilder = HttpClient.newBuilder();
-        if (sslTrustManagerHelper.isSecurityEnabled()) {
-            httpClientBuilder.sslContext(sslTrustManagerHelper.getSslContext());
+        if (sslContextHelper.isSecurityEnabled()) {
+            httpClientBuilder.sslContext(sslContextHelper.getSslContext());
         }
         return httpClientBuilder.build();
     }
@@ -77,11 +77,11 @@ public class ClientConfig {
     }
 
     @Bean
-    public OkHttpClient okHttpClient(SSLTrustManagerHelper sslTrustManagerHelper) {
+    public OkHttpClient okHttpClient(SSLContextHelper sslContextHelper) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        if (sslTrustManagerHelper.isSecurityEnabled()) {
-            httpClientBuilder.sslSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory(), sslTrustManagerHelper.getX509TrustManager())
-                             .hostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
+        if (sslContextHelper.isSecurityEnabled()) {
+            httpClientBuilder.sslSocketFactory(sslContextHelper.getSslContext().getSocketFactory(), sslContextHelper.getX509TrustManager())
+                             .hostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
         }
 
         return httpClientBuilder
@@ -89,19 +89,19 @@ public class ClientConfig {
     }
 
     @Bean
-    public WebClient webClientWithNetty(SSLTrustManagerHelper sslTrustManagerHelper) {
+    public WebClient webClientWithNetty(SSLContextHelper sslContextHelper) {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
-        if (sslTrustManagerHelper.isSecurityEnabled()) {
+        if (sslContextHelper.isSecurityEnabled()) {
             SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
                                                                    .startTls(true)
-                                                                   .protocols(sslTrustManagerHelper.getSslContext().getProtocol());
-            if (sslTrustManagerHelper.isOneWayAuthenticationEnabled()) {
-                sslContextBuilder.trustManager(sslTrustManagerHelper.getTrustManagerFactory());
+                                                                   .protocols(sslContextHelper.getSslContext().getProtocol());
+            if (sslContextHelper.isOneWayAuthenticationEnabled()) {
+                sslContextBuilder.trustManager(sslContextHelper.getTrustManagerFactory());
             }
 
-            if (sslTrustManagerHelper.isTwoWayAuthenticationEnabled()) {
-                sslContextBuilder.keyManager(sslTrustManagerHelper.getKeyManagerFactory())
-                                 .trustManager(sslTrustManagerHelper.getTrustManagerFactory());
+            if (sslContextHelper.isTwoWayAuthenticationEnabled()) {
+                sslContextBuilder.keyManager(sslContextHelper.getKeyManagerFactory())
+                                 .trustManager(sslContextHelper.getTrustManagerFactory());
             }
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContextBuilder));
         }
@@ -112,22 +112,22 @@ public class ClientConfig {
     }
 
     @Bean
-    public WebClient webClientWithJetty(SSLTrustManagerHelper sslTrustManagerHelper) {
+    public WebClient webClientWithJetty(SSLContextHelper sslContextHelper) {
         org.eclipse.jetty.client.HttpClient httpClient = new org.eclipse.jetty.client.HttpClient();
-        if (sslTrustManagerHelper.isSecurityEnabled()) {
+        if (sslContextHelper.isSecurityEnabled()) {
             SslContextFactory sslContextFactory = new SslContextFactory();
-            sslContextFactory.setSslContext(sslTrustManagerHelper.getSslContext());
-            sslContextFactory.setHostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
-            if (sslTrustManagerHelper.isOneWayAuthenticationEnabled()) {
-                sslContextFactory.setTrustStore(sslTrustManagerHelper.getTrustStore());
-                sslContextFactory.setTrustStorePassword(sslTrustManagerHelper.getTrustStorePassword());
+            sslContextFactory.setSslContext(sslContextHelper.getSslContext());
+            sslContextFactory.setHostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
+            if (sslContextHelper.isOneWayAuthenticationEnabled()) {
+                sslContextFactory.setTrustStore(sslContextHelper.getTrustStore());
+                sslContextFactory.setTrustStorePassword(sslContextHelper.getTrustStorePassword());
             }
 
-            if (sslTrustManagerHelper.isTwoWayAuthenticationEnabled()) {
-                sslContextFactory.setKeyStore(sslTrustManagerHelper.getKeyStore());
-                sslContextFactory.setKeyStorePassword(sslTrustManagerHelper.getKeyStorePassword());
-                sslContextFactory.setTrustStore(sslTrustManagerHelper.getTrustStore());
-                sslContextFactory.setTrustStorePassword(sslTrustManagerHelper.getTrustStorePassword());
+            if (sslContextHelper.isTwoWayAuthenticationEnabled()) {
+                sslContextFactory.setKeyStore(sslContextHelper.getKeyStore());
+                sslContextFactory.setKeyStorePassword(sslContextHelper.getKeyStorePassword());
+                sslContextFactory.setTrustStore(sslContextHelper.getTrustStore());
+                sslContextFactory.setTrustStorePassword(sslContextHelper.getTrustStorePassword());
             }
             httpClient = new org.eclipse.jetty.client.HttpClient(sslContextFactory);
         }
@@ -138,34 +138,34 @@ public class ClientConfig {
     }
 
     @Bean
-    public Client jerseyClient(SSLTrustManagerHelper sslTrustManagerHelper) {
+    public Client jerseyClient(SSLContextHelper sslContextHelper) {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
-        if (sslTrustManagerHelper.isSecurityEnabled()) {
-            clientBuilder.sslContext(sslTrustManagerHelper.getSslContext());
-            clientBuilder.hostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
+        if (sslContextHelper.isSecurityEnabled()) {
+            clientBuilder.sslContext(sslContextHelper.getSslContext());
+            clientBuilder.hostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
         }
         return clientBuilder.build();
     }
 
     @Bean
-    public com.sun.jersey.api.client.Client oldJerseyClient(SSLTrustManagerHelper sslTrustManagerHelper) {
+    public com.sun.jersey.api.client.Client oldJerseyClient(SSLContextHelper sslContextHelper) {
         com.sun.jersey.api.client.Client client = com.sun.jersey.api.client.Client.create();
-        if (sslTrustManagerHelper.isSecurityEnabled()) {
-            HttpsURLConnection.setDefaultSSLSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory());
+        if (sslContextHelper.isSecurityEnabled()) {
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContextHelper.getSslContext().getSocketFactory());
             DefaultClientConfig clientConfig = new DefaultClientConfig();
             clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                                             new HTTPSProperties(sslTrustManagerHelper.getDefaultHostnameVerifier(), sslTrustManagerHelper.getSslContext()));
+                                             new HTTPSProperties(sslContextHelper.getDefaultHostnameVerifier(), sslContextHelper.getSslContext()));
             com.sun.jersey.api.client.Client.create(clientConfig);
         }
         return client;
     }
 
     @Bean
-    public HttpTransport googleHttpClient(SSLTrustManagerHelper sslTrustManagerHelper) {
+    public HttpTransport googleHttpClient(SSLContextHelper sslContextHelper) {
         NetHttpTransport.Builder httpTransportBuilder = new NetHttpTransport.Builder();
-        if (sslTrustManagerHelper.isSecurityEnabled()) {
-            httpTransportBuilder.setSslSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory())
-                                .setHostnameVerifier(sslTrustManagerHelper.getDefaultHostnameVerifier());
+        if (sslContextHelper.isSecurityEnabled()) {
+            httpTransportBuilder.setSslSocketFactory(sslContextHelper.getSslContext().getSocketFactory())
+                                .setHostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
         }
         return httpTransportBuilder
                 .build();
