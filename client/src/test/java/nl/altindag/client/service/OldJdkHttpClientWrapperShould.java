@@ -25,20 +25,20 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.altindag.client.ClientException;
-import nl.altindag.client.SSLTrustManagerHelper;
+import nl.altindag.client.SSLContextHelper;
 import nl.altindag.client.model.ClientResponse;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OldJdkHttpClientWrapperShould {
 
     private OldJdkHttpClientWrapper victim;
-    private SSLTrustManagerHelper sslTrustManagerHelper;
+    private SSLContextHelper sslContextHelper;
 
     @Before
     public void setUp() {
-        sslTrustManagerHelper = mock(SSLTrustManagerHelper.class);
+        sslContextHelper = mock(SSLContextHelper.class);
 
-        victim = spy(new OldJdkHttpClientWrapper(sslTrustManagerHelper));
+        victim = spy(new OldJdkHttpClientWrapper(sslContextHelper));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class OldJdkHttpClientWrapperShould {
         when(victim.createHttpsURLConnection(HTTPS_URL)).thenReturn(connection);
         when(connection.getInputStream()).thenReturn(stream);
         when(connection.getResponseCode()).thenReturn(200);
-        when(sslTrustManagerHelper.getSslContext()).thenReturn(sslContext);
+        when(sslContextHelper.getSslContext()).thenReturn(sslContext);
         when(sslContext.getSocketFactory()).thenReturn(sslSocketFactory);
 
         ClientResponse clientResponse = victim.executeRequest(HTTPS_URL);

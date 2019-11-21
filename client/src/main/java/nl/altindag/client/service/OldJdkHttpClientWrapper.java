@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nl.altindag.client.ClientException;
-import nl.altindag.client.SSLTrustManagerHelper;
+import nl.altindag.client.SSLContextHelper;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
@@ -24,11 +24,11 @@ public class OldJdkHttpClientWrapper extends RequestService {
     private static final String HTTP_REQUEST = "http:";
     private static final String HTTPS_REQUEST = "https:";
 
-    private final SSLTrustManagerHelper sslTrustManagerHelper;
+    private final SSLContextHelper sslContextHelper;
 
     @Autowired
-    public OldJdkHttpClientWrapper(SSLTrustManagerHelper sslTrustManagerHelper) {
-        this.sslTrustManagerHelper = sslTrustManagerHelper;
+    public OldJdkHttpClientWrapper(SSLContextHelper sslContextHelper) {
+        this.sslContextHelper = sslContextHelper;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class OldJdkHttpClientWrapper extends RequestService {
             connection = createHttpURLConnection(url);
         } else if (url.contains(HTTPS_REQUEST)) {
             HttpsURLConnection httpsURLConnection = createHttpsURLConnection(url);
-            httpsURLConnection.setSSLSocketFactory(sslTrustManagerHelper.getSslContext().getSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(sslContextHelper.getSslContext().getSocketFactory());
             connection = httpsURLConnection;
         } else {
             throw new ClientException("Could not create a http client for one of these reasons: "
