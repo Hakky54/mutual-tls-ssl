@@ -101,7 +101,7 @@
                 <configuration>
                     <!--
                         temporally fix till there is a normal solution for netty to work under java 11 and above
-                        The annotation argline is required to concat the original arguments of for example jacoco with the fix for netty
+                        The annotation argline is required to append the original arguments of for example jacoco with the fix for netty
                     -->
                     <argLine>@{argLine} ${vm.args-for-netty}</argLine>
                 </configuration>
