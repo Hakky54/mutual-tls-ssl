@@ -209,7 +209,7 @@
                             <include>%regex[.*Should.*]</include>
                         </includes>
                         <!-- temporally fix till there is a normal solution for netty to work under java 11 and above -->
-                        <argLine>${vm.args-for-netty}</argLine>
+                        <argLine>@{argLine} ${vm.args-for-netty}</argLine>
                     </configuration>
                 </plugin>
 
