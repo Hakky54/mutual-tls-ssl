@@ -36,6 +36,7 @@
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <vm.args-for-netty>--add-opens java.base/jdk.internal.misc=ALL-UNNAMED -Dio.netty.tryReflectionSetAccessible=true</vm.args-for-netty>
     </properties>
 
     <dependencyManagement>
@@ -207,6 +208,8 @@
                         <includes>
                             <include>%regex[.*Should.*]</include>
                         </includes>
+                        <!-- temporally fix till there is a normal solution for netty to work under java 11 and above -->
+                        <argLine>${vm.args-for-netty}</argLine>
                     </configuration>
                 </plugin>
 

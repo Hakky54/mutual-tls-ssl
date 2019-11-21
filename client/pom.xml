@@ -12,7 +12,6 @@
 
     <properties>
         <mainClassServer>nl.altindag.server.App</mainClassServer>
-        <vm.args-for-netty>--add-opens java.base/jdk.internal.misc=ALL-UNNAMED -Dio.netty.tryReflectionSetAccessible=true</vm.args-for-netty>
     </properties>
 
     <dependencies>
@@ -98,13 +97,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${version.maven-surefire-plugin}</version>
-                <configuration>
-                    <!-- temporally fix till there is a normal solution for netty to work under java 11 and above -->
-                    <argLine>${vm.args-for-netty}</argLine>
-                    <includes>
-                        <include>%regex[.*Should.*]</include>
-                    </includes>
-                </configuration>
             </plugin>
 
             <plugin>
