@@ -46,6 +46,12 @@ Below is a list of supported clients with examples, see in the [ClientConfig cla
 4. A terminal
 5. Openssl (For Windows users use [Git Bash](https://git-scm.com/))
 
+If you want to run this project with Java 8, you can get an older version with the git command below.
+And it is recommended to follow the instruction for that specific version, which is available at this [page](https://github.com/Hakky54/mutual-tls-ssl/tree/java-8-compatible)
+```bash
+git checkout tags/java-8-compatible
+```
+
 Start the server by running the main method of the [App Class](server/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
 ```bash
 (cd server/ && mvn spring-boot:run)
