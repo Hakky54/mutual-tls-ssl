@@ -198,25 +198,30 @@ public class SSLContextHelper {
             SSLContextHelper sslContextHelper = new SSLContextHelper();
             if (oneWayAuthenticationEnabled || twoWayAuthenticationEnabled) {
                 sslContextHelper.securityEnabled = true;
-            }
-
-            if (sslContextHelper.isSecurityEnabled()) {
-                if (oneWayAuthenticationEnabled) {
-                    sslContextHelper.oneWayAuthenticationEnabled = true;
-                    sslContextHelper.trustStorePath = trustStorePath;
-                    sslContextHelper.trustStorePassword = trustStorePassword;
-                    sslContextHelper.createSSLContextWithClientTrustStore();
-                }
-                if (twoWayAuthenticationEnabled) {
-                    sslContextHelper.twoWayAuthenticationEnabled = true;
-                    sslContextHelper.keyStorePath = keyStorePath;
-                    sslContextHelper.keyStorePassword = keyStorePassword;
-                    sslContextHelper.trustStorePath = trustStorePath;
-                    sslContextHelper.trustStorePassword = trustStorePassword;
-                    sslContextHelper.createSSLContextWithClientKeyStoreAndTrustStore();
-                }
+                buildSLLContextForOneWayAuthenticationIfEnabled(sslContextHelper);
+                buildSLLContextForTwoWayAuthenticationIfEnabled(sslContextHelper);
             }
             return sslContextHelper;
+        }
+
+        private void buildSLLContextForTwoWayAuthenticationIfEnabled(SSLContextHelper sslContextHelper) {
+            if (twoWayAuthenticationEnabled) {
+                sslContextHelper.twoWayAuthenticationEnabled = true;
+                sslContextHelper.keyStorePath = keyStorePath;
+                sslContextHelper.keyStorePassword = keyStorePassword;
+                sslContextHelper.trustStorePath = trustStorePath;
+                sslContextHelper.trustStorePassword = trustStorePassword;
+                sslContextHelper.createSSLContextWithClientKeyStoreAndTrustStore();
+            }
+        }
+
+        private void buildSLLContextForOneWayAuthenticationIfEnabled(SSLContextHelper sslContextHelper) {
+            if (oneWayAuthenticationEnabled) {
+                sslContextHelper.oneWayAuthenticationEnabled = true;
+                sslContextHelper.trustStorePath = trustStorePath;
+                sslContextHelper.trustStorePassword = trustStorePassword;
+                sslContextHelper.createSSLContextWithClientTrustStore();
+            }
         }
     }
 
