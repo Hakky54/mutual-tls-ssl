@@ -4,7 +4,6 @@ coverage:
   range: "90...100"
 
 ignore:
-  - "**/App.java"
-  - "**/CucumberConfiguration.java"
-  - "**/TestScenario.java"
-  - "**/ClientException.java"
+  - "server/src/main/java/nl/altindag/server/App.java"
+  - "client/src/main/java/nl/altindag/client/CucumberConfiguration.java"
+  - "client/src/main/java/nl/altindag/client/TestScenario.java"
