@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.ws.rs.client.Client;
@@ -264,6 +265,8 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
         verify(sslContextHelper, times(0)).getDefaultHostnameVerifier();
+
+        client.close();
     }
 
     @Test
@@ -276,6 +279,8 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
         verify(sslContextHelper, times(1)).getDefaultHostnameVerifier();
+
+        client.close();
     }
 
     @Test
@@ -288,6 +293,8 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
         verify(sslContextHelper, times(0)).getDefaultHostnameVerifier();
+
+        client.destroy();
     }
 
     @Test
@@ -300,10 +307,12 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(2)).getSslContext();
         verify(sslContextHelper, times(1)).getDefaultHostnameVerifier();
+
+        client.destroy();
     }
 
     @Test
-    public void createGoogleHttpClientWithoutSecurity() {
+    public void createGoogleHttpClientWithoutSecurity() throws IOException {
         SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
 
         HttpTransport httpTransport = victim.googleHttpClient(sslContextHelper);
@@ -312,10 +321,12 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
         verify(sslContextHelper, times(0)).getDefaultHostnameVerifier();
+
+        httpTransport.shutdown();
     }
 
     @Test
-    public void createGoogleHttpClientWithSecurity() {
+    public void createGoogleHttpClientWithSecurity() throws IOException {
         SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
 
         HttpTransport httpTransport = victim.googleHttpClient(sslContextHelper);
@@ -324,6 +335,8 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
         verify(sslContextHelper, times(1)).getDefaultHostnameVerifier();
+
+        httpTransport.shutdown();
     }
 
     @Test
@@ -334,6 +347,8 @@ public class ClientConfigShould {
 
         Object client = Unirest.primaryInstance().config().getClient().getClient();
         assertThat(client).isEqualTo(httpClient);
+
+        Unirest.shutDown();
     }
 
     private SSLContextHelper createSSLContextHelper(boolean oneWayAuthenticationEnabled, boolean twoWayAuthenticationEnabled) {
