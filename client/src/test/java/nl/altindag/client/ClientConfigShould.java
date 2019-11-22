@@ -32,9 +32,43 @@ public class ClientConfigShould {
 
     @Test
     public void createSslTrustManagerHelper() {
-        SSLContextHelper sslContextHelper = victim.sslTrustManagerHelper(false, false, EMPTY, EMPTY, EMPTY, EMPTY);
+        SSLContextHelper sslContextHelper = victim.sslTrustManagerHelper(false, false,
+                                                                         EMPTY, EMPTY, EMPTY, EMPTY);
 
         assertThat(sslContextHelper).isNotNull();
+        assertThat(sslContextHelper.isSecurityEnabled()).isFalse();
+        assertThat(sslContextHelper.isOneWayAuthenticationEnabled()).isFalse();
+        assertThat(sslContextHelper.isTwoWayAuthenticationEnabled()).isFalse();
+    }
+
+    @Test
+    public void createSslTrustManagerHelperWithOneWayAuthentication() {
+        String trustStorePath = "keystores-for-unit-tests/truststore.jks";
+        String trustStorePassword = "secret";
+
+        SSLContextHelper sslContextHelper = victim.sslTrustManagerHelper(true, false,
+                                                                         EMPTY, EMPTY, trustStorePath, trustStorePassword);
+
+        assertThat(sslContextHelper).isNotNull();
+        assertThat(sslContextHelper.isSecurityEnabled()).isTrue();
+        assertThat(sslContextHelper.isOneWayAuthenticationEnabled()).isTrue();
+        assertThat(sslContextHelper.isTwoWayAuthenticationEnabled()).isFalse();
+    }
+
+    @Test
+    public void createSslTrustManagerHelperWithTwoWayAuthentication() {
+        String keyStorePath = "keystores-for-unit-tests/identity.jks";
+        String keyStorePassword = "secret";
+        String trustStorePath = "keystores-for-unit-tests/truststore.jks";
+        String trustStorePassword = "secret";
+
+        SSLContextHelper sslContextHelper = victim.sslTrustManagerHelper(false, true,
+                                                                         keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+
+        assertThat(sslContextHelper).isNotNull();
+        assertThat(sslContextHelper.isSecurityEnabled()).isTrue();
+        assertThat(sslContextHelper.isOneWayAuthenticationEnabled()).isFalse();
+        assertThat(sslContextHelper.isTwoWayAuthenticationEnabled()).isTrue();
     }
 
     @Test
