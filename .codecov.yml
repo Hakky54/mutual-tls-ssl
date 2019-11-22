@@ -5,3 +5,6 @@ coverage:
 
 ignore:
   - "**/App.java"
+  - "**/CucumberConfiguration.java"
+  - "**/TestScenario.java"
+  - "**/ClientException.java"
