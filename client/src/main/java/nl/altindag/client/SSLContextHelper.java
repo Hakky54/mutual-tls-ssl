@@ -40,52 +40,20 @@ public class SSLContextHelper {
     private KeyManagerFactory keyManagerFactory;
     private DefaultHostnameVerifier defaultHostnameVerifier = new DefaultHostnameVerifier();
 
-    public SSLContextHelper(boolean oneWayAuthenticationEnabled,
-                            boolean twoWayAuthenticationEnabled,
-                            String keyStorePath,
-                            String keyStorePassword,
-                            String trustStorePath,
-                            String trustStorePassword) {
-        if (oneWayAuthenticationEnabled && (isBlank(trustStorePath) || isBlank(trustStorePassword))) {
-            throw new ClientException("TrustStore details are empty, which are required to be present when SSL is enabled");
-        }
+    private SSLContextHelper() {}
 
-        if (twoWayAuthenticationEnabled && (isBlank(keyStorePath) || isBlank(keyStorePassword) || isBlank(trustStorePath) || isBlank(trustStorePassword))) {
-            throw new ClientException("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
-        }
-
-        this.keyStorePath = keyStorePath;
-        this.keyStorePassword = keyStorePassword;
-        this.trustStorePath = trustStorePath;
-        this.trustStorePassword = trustStorePassword;
-        this.twoWayAuthenticationEnabled = twoWayAuthenticationEnabled;
-        this.oneWayAuthenticationEnabled = oneWayAuthenticationEnabled;
-
-        if (oneWayAuthenticationEnabled || twoWayAuthenticationEnabled) {
-            securityEnabled = true;
-        }
-
-        if (oneWayAuthenticationEnabled) {
-            sslContext = createSSLContextWithClientTrustStore();
-        }
-
-        if (twoWayAuthenticationEnabled) {
-            sslContext = createSSLContextWithClientKeyStoreAndTrustStore();
-        }
-    }
-
-    private SSLContext createSSLContextWithClientTrustStore() {
+    private void createSSLContextWithClientTrustStore() {
         try {
-            return getSSLContext(null, getTrustManagerFactory(trustStorePath, trustStorePassword).getTrustManagers());
+            sslContext = getSSLContext(null, getTrustManagerFactory(trustStorePath, trustStorePassword).getTrustManagers());
         } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException | IOException | CertificateException e) {
             throw new ClientException(e);
         }
     }
 
-    private SSLContext createSSLContextWithClientKeyStoreAndTrustStore() {
+    private void createSSLContextWithClientKeyStoreAndTrustStore() {
         try {
-            return getSSLContext(getKeyManagerFactory(keyStorePath, keyStorePassword).getKeyManagers(),
-                                 getTrustManagerFactory(trustStorePath, trustStorePassword).getTrustManagers());
+            sslContext = getSSLContext(getKeyManagerFactory(keyStorePath, keyStorePassword).getKeyManagers(),
+                                       getTrustManagerFactory(trustStorePath, trustStorePassword).getTrustManagers());
         } catch (UnrecoverableKeyException | NoSuchAlgorithmException | CertificateException | KeyStoreException | IOException | KeyManagementException e) {
             throw new ClientException(e);
         }
@@ -178,6 +146,78 @@ public class SSLContextHelper {
 
     public DefaultHostnameVerifier getDefaultHostnameVerifier() {
         return defaultHostnameVerifier;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private String keyStorePath;
+        private String keyStorePassword;
+        private String trustStorePath;
+        private String trustStorePassword;
+
+        private boolean oneWayAuthenticationEnabled;
+        private boolean twoWayAuthenticationEnabled;
+
+        public Builder withoutSecurity() {
+            oneWayAuthenticationEnabled = false;
+            twoWayAuthenticationEnabled = false;
+            return this;
+        }
+
+        public Builder withOneWayAuthentication(String trustStorePath, String trustStorePassword) {
+            if (isBlank(trustStorePath) || isBlank(trustStorePassword)) {
+                throw new ClientException("TrustStore details are empty, which are required to be present when SSL is enabled");
+            }
+
+            this.oneWayAuthenticationEnabled = true;
+            this.twoWayAuthenticationEnabled = false;
+            this.trustStorePath = trustStorePath;
+            this.trustStorePassword = trustStorePassword;
+            return this;
+        }
+
+        public Builder withTwoWayAuthentication(String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword) {
+            if (isBlank(keyStorePath) || isBlank(keyStorePassword) || isBlank(trustStorePath) || isBlank(trustStorePassword)) {
+                throw new ClientException("TrustStore or KeyStore details are empty, which are required to be present when SSL is enabled");
+            }
+
+            this.oneWayAuthenticationEnabled = false;
+            this.twoWayAuthenticationEnabled = true;
+            this.keyStorePath = keyStorePath;
+            this.keyStorePassword = keyStorePassword;
+            this.trustStorePath = trustStorePath;
+            this.trustStorePassword = trustStorePassword;
+            return this;
+        }
+
+        public SSLContextHelper build() {
+            SSLContextHelper sslContextHelper = new SSLContextHelper();
+            if (oneWayAuthenticationEnabled || twoWayAuthenticationEnabled) {
+                sslContextHelper.securityEnabled = true;
+            }
+
+            if (sslContextHelper.isSecurityEnabled()) {
+                if (oneWayAuthenticationEnabled) {
+                    sslContextHelper.oneWayAuthenticationEnabled = true;
+                    sslContextHelper.trustStorePath = trustStorePath;
+                    sslContextHelper.trustStorePassword = trustStorePassword;
+                    sslContextHelper.createSSLContextWithClientTrustStore();
+                }
+                if (twoWayAuthenticationEnabled) {
+                    sslContextHelper.twoWayAuthenticationEnabled = true;
+                    sslContextHelper.keyStorePath = keyStorePath;
+                    sslContextHelper.keyStorePassword = keyStorePassword;
+                    sslContextHelper.trustStorePath = trustStorePath;
+                    sslContextHelper.trustStorePassword = trustStorePassword;
+                    sslContextHelper.createSSLContextWithClientKeyStoreAndTrustStore();
+                }
+            }
+            return sslContextHelper;
+        }
     }
 
 }

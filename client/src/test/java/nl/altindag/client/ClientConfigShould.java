@@ -308,9 +308,15 @@ public class ClientConfigShould {
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = "secret";
 
-        SSLContextHelper sslContextHelper = new SSLContextHelper(oneWayAuthenticationEnabled, twoWayAuthenticationEnabled, keyStorePath,
-                                                                 keyStorePassword, trustStorePath, trustStorePassword);
-        return Mockito.spy(sslContextHelper);
+        SSLContextHelper.Builder sslContextBuilder = SSLContextHelper.builder();
+        if (oneWayAuthenticationEnabled) {
+            sslContextBuilder.withOneWayAuthentication(trustStorePath, trustStorePassword);
+        }
+
+        if (twoWayAuthenticationEnabled) {
+            sslContextBuilder.withTwoWayAuthentication(keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+        }
+        return Mockito.spy(sslContextBuilder.build());
     }
 
 }

@@ -41,12 +41,15 @@ public class ClientConfig {
                                                   @Value("${client.ssl.key-store-password:}") String keyStorePassword,
                                                   @Value("${client.ssl.trust-store:}") String trustStorePath,
                                                   @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
-        return new SSLContextHelper(oneWayAuthenticationEnabled,
-                                    twoWayAuthenticationEnabled,
-                                    keyStorePath,
-                                    keyStorePassword,
-                                    trustStorePath,
-                                    trustStorePassword);
+        SSLContextHelper.Builder sslContextHelperBuilder = SSLContextHelper.builder();
+        if (oneWayAuthenticationEnabled) {
+            sslContextHelperBuilder.withOneWayAuthentication(trustStorePath, trustStorePassword);
+        }
+
+        if (twoWayAuthenticationEnabled) {
+            sslContextHelperBuilder.withTwoWayAuthentication(keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+        }
+        return sslContextHelperBuilder.build();
     }
 
     @Bean
