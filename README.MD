@@ -16,9 +16,7 @@ These are the following steps:
 3. [Enabling HTTPS on the server (one-way TLS)](#enabling-https-on-the-server-one-way-tls)
 4. [Require the client to identify itself (two way TLS)](#require-the-client-to-identify-itself-two-way-tls)
 5. [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
-6. [Automated script for one way authentication with TLS](#automated-script-for-one-way-authentication-with-tls)
-7. [Automated script for two way authentication with TLS by trusting each other](#automated-script-for-two-way-authentication-with-tls-by-trusting-each-other)
-8. [Automated script for two way authentication with TLS by trusting the Certificate Authority](#automated-script-for-two-way-authentication-with-tls-by-trusting-the-certificate-authority)
+6. [Automated script for enabling authentication with TLS](#automated-script-for-enabling-authentication-with-tls)
 
 Usefull links
   - [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
@@ -331,16 +329,8 @@ keytool -keystore server/src/main/resources/truststore.jks -delete -alias client
 
 If you run the client again, you will see that the test passed and that the client received the hello message from the server while based on a certificate which is signed by the Certificate Authority.
 
-## Automated script for one way authentication with TLS
-
-You can also automate the creation of the server certificates including trusting the server certificate by the client, updating the application properties and the client configuration with the provided script at the root directory. Run it with the following command: `./configure-one-way-authentication`
-
-## Automated script for two way authentication with TLS by trusting each other
-
-You can also automate the creation of the client and server certificates including trusting the both parties by their specific certificate, updating the application properties and the client configuration with the provided script at the root directory. Run it with the following command: `./configure-two-way-authentication-by-trusting-each-other my-company-name`
-The provided argument will be used as CN (Common Name) when creating the client certificate.
-
-## Automated script for two way authentication with TLS by trusting the Certificate Authority
-
-You can also automate the creation of the client and server certificates including the signing process, updating the application properties and the client configuration with the provided script at the root directory. Run it with the following command: `./configure-two-way-authentication-by-trusting-root-ca my-company-name`
-The provided argument will be used as CN (Common Name) when creating the client certificate.
+## Automated script for enabling authentication with TLS
+You can also automate all the previous steps described above with the provided scripts at the [script directory](script) of this project. Run one of these commands to run the scripts:
+ - One way authentication: `./configure-one-way-authentication`
+ - Two way authentication: `./configure-two-way-authentication-by-trusting-each-other my-company-name`
+ - Two way authentication by trusting the Certificate Authority: `./configure-two-way-authentication-by-trusting-root-ca my-company-name`
