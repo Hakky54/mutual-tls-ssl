@@ -75,9 +75,8 @@ Hello
 ```
 
 You can also call the server with the provided client in the client directory. The client is an integration test based on Cucumber, and you can start it by running the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class from your IDE. There is a [Hello.feature](client/src/test/resources/features/Hello.feature) file that describes the steps for the integration test. You can find it in the test resources of the client project. You can also start the client from the command line with the following command: `mvn clean verify -P\!start-server` or `mvn clean verify -P!start-server`.
-
-There is another way to run the server and client and that is with the following command: `mvn clean verify`
-
+There is another way to run the server and client and that is with the following command: `mvn clean verify`.
+The client sends by default requests to localhost, because it expects the server on the same machine. If the server is running on a different machine you can still provide a custom url with the following VM argument while running the client: `-Durl=http://[HOST]:[PORT]`
 ## Enabling HTTPS on the server (one-way TLS)
 
 Now, you will learn how to secure your server by enabling TLS. You can do that by adding the required properties to the application properties file named: `application.yml`
