@@ -2,6 +2,8 @@ package nl.altindag.client.stepdefs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +18,7 @@ public class HelloStepDefs extends BaseStepDefs {
 
     private static final Logger LOGGER = LogManager.getLogger(HelloStepDefs.class);
 
-    private static final String SERVER_URL = "http://localhost:8080";
+    private static final String SERVER_URL = Optional.ofNullable(System.getProperty("url")).orElse("http://localhost:8080");
     private static final String HELLO_ENDPOINT = "/api/hello";
 
     @Given("^Server is alive$")
