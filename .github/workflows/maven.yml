@@ -63,9 +63,9 @@ jobs:
         run: mvn clean verify -P with-one-way-authentication
 
       - uses: actions/upload-artifact@master
-          with:
-            name: client-with-one-way-authentication
-            path: client/target/client.jar
+        with:
+          name: client-with-one-way-authentication
+          path: client/target/client.jar
 
       - uses: actions/upload-artifact@master
         with:
@@ -94,9 +94,9 @@ jobs:
         run: mvn clean verify -P with-two-way-authentication-by-trusting-root-ca
 
       - uses: actions/upload-artifact@master
-          with:
-            name: client-with-two-way-authentication-by-trusting-root-ca
-            path: client/target/client.jar
+        with:
+          name: client-with-two-way-authentication-by-trusting-root-ca
+          path: client/target/client.jar
 
       - uses: actions/upload-artifact@master
         with:
@@ -125,9 +125,9 @@ jobs:
         run: mvn clean verify -P with-two-way-authentication-by-trusting-each-other
 
       - uses: actions/upload-artifact@master
-          with:
-            name: client-with-two-way-authentication-by-trusting-each-other
-            path: client/target/client.jar
+        with:
+          name: client-with-two-way-authentication-by-trusting-each-other
+          path: client/target/client.jar
 
       - uses: actions/upload-artifact@master
         with:
