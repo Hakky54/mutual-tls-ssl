@@ -35,6 +35,7 @@
         <version.unirest>3.1.04</version.unirest>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
+        <version.maven-assembly-plugin>3.2.0</version.maven-assembly-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -251,6 +252,12 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${version.maven-assembly-plugin}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
