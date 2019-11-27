@@ -4,6 +4,7 @@ spring:
 
 logging:
   level:
+    org.springframework: OFF
     nl.altindag.client: INFO
 
 client:
