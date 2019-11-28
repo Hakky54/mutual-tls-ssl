@@ -13,6 +13,7 @@ public enum ClientType {
     OLD_JERSEY_CLIENT("old jersey client"),
     GOOGLE_HTTP_CLIENT("google httpclient"),
     UNIREST("unirest"),
+    RETROFIT("retrofit"),
     NONE("none");
 
     private String value;

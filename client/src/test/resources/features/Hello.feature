@@ -20,3 +20,4 @@ Feature: Securing the connection between you and the world
       | Old Jersey Client               |
       | Google HttpClient               |
       | Unirest                         |
+      | Retrofit                        |

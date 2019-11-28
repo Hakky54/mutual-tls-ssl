@@ -1,7 +1,6 @@
 package nl.altindag.client.stepdefs;
 
-import static nl.altindag.client.TestConstants.HTTPS_URL;
-import static nl.altindag.client.TestConstants.HTTP_URL;
+import static nl.altindag.client.util.AssertJCustomConditions.HTTP_OR_HTTPS_SERVER_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.atLeast;
@@ -10,9 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
-import java.util.Set;
 
-import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -31,6 +28,7 @@ import nl.altindag.client.service.JerseyClientWrapper;
 import nl.altindag.client.service.OkHttpClientWrapper;
 import nl.altindag.client.service.OldJdkHttpClientWrapper;
 import nl.altindag.client.service.OldJerseyClientWrapper;
+import nl.altindag.client.service.RetrofitWrapper;
 import nl.altindag.client.service.SpringRestTemplateWrapper;
 import nl.altindag.client.service.SpringWebClientJettyWrapper;
 import nl.altindag.client.service.SpringWebClientNettyWrapper;
@@ -39,9 +37,6 @@ import nl.altindag.client.util.LogTestHelper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
-
-    private static final Set<String> URLS = Set.of(HTTP_URL, HTTPS_URL);
-    private static final Condition<String> HTTP_OR_HTTPS_SERVER_URL = new Condition<>(URLS::contains, "Validates if url is equal to the http or https url of the server");
 
     @InjectMocks
     private HelloStepDefs victim;
@@ -67,6 +62,8 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     private GoogleHttpClientWrapper googleHttpClientWrapper;
     @Mock
     private UnirestWrapper unirestWrapper;
+    @Mock
+    private RetrofitWrapper retrofitWrapper;
     @Mock
     private TestScenario testScenario;
 
@@ -188,6 +185,16 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
 
         verify(unirestWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
         assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
+    }
+
+    @Test
+    public void iSayHelloWithRetrofit() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        victim.iSayHelloWithClient("Retrofit");
+
+        verify(retrofitWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).isNull();
     }
 
     @Test

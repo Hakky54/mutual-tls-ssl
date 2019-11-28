@@ -1,5 +1,7 @@
 package nl.altindag.client;
 
+import static nl.altindag.client.Constants.SERVER_URL;
+
 import java.net.http.HttpClient;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -22,6 +24,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 
@@ -29,6 +32,8 @@ import io.netty.handler.ssl.SslContextBuilder;
 import kong.unirest.Unirest;
 import kong.unirest.apache.ApacheClient;
 import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Configuration
 public class ClientConfig {
@@ -80,6 +85,7 @@ public class ClientConfig {
     }
 
     @Bean
+    @Scope("prototype")
     public OkHttpClient okHttpClient(SSLContextHelper sslContextHelper) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         if (sslContextHelper.isSecurityEnabled()) {
@@ -179,6 +185,15 @@ public class ClientConfig {
         Unirest.primaryInstance()
                .config()
                .httpClient(config -> ApacheClient.builder(httpClient).apply(config));
+    }
+
+    @Bean
+    public Retrofit retrofit(OkHttpClient okHttpClient) {
+        return new Retrofit.Builder()
+                .client(okHttpClient)
+                .baseUrl(SERVER_URL)
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
+                .build();
     }
 
 }

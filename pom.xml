@@ -33,6 +33,7 @@
         <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
         <version.google.http.client>1.33.0</version.google.http.client>
         <version.unirest>3.1.04</version.unirest>
+        <version.retrofit>2.6.2</version.retrofit>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-assembly-plugin>3.2.0</version.maven-assembly-plugin>
@@ -109,6 +110,16 @@
                 <groupId>com.konghq</groupId>
                 <artifactId>unirest-java</artifactId>
                 <version>${version.unirest}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>retrofit</artifactId>
+                <version>${version.retrofit}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>converter-gson</artifactId>
+                <version>${version.retrofit}</version>
             </dependency>
 
             <dependency>
