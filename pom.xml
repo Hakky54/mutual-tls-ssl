@@ -28,7 +28,7 @@
         <version.commons-io>2.6</version.commons-io>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <version.okhttp>4.2.2</version.okhttp>
-        <version.jetty-reactive-httpclient>1.0.3</version.jetty-reactive-httpclient>
+        <version.jetty-reactive-httpclient>1.1.0</version.jetty-reactive-httpclient>
         <version.org.glassfish.jersey.inject>2.29.1</version.org.glassfish.jersey.inject>
         <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
         <version.google.http.client>1.33.0</version.google.http.client>
