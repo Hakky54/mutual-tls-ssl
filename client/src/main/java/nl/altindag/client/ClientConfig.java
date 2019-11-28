@@ -124,7 +124,7 @@ public class ClientConfig {
     public WebClient webClientWithJetty(SSLContextHelper sslContextHelper) {
         org.eclipse.jetty.client.HttpClient httpClient = new org.eclipse.jetty.client.HttpClient();
         if (sslContextHelper.isSecurityEnabled()) {
-            SslContextFactory sslContextFactory = new SslContextFactory();
+            SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
             sslContextFactory.setSslContext(sslContextHelper.getSslContext());
             sslContextFactory.setHostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
             if (sslContextHelper.isOneWayAuthenticationEnabled()) {
