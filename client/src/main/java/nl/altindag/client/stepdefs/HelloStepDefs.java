@@ -1,8 +1,8 @@
 package nl.altindag.client.stepdefs;
 
+import static nl.altindag.client.Constants.HELLO_ENDPOINT;
+import static nl.altindag.client.Constants.SERVER_URL;
 import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,9 +17,6 @@ import nl.altindag.client.model.ClientResponse;
 public class HelloStepDefs extends BaseStepDefs {
 
     private static final Logger LOGGER = LogManager.getLogger(HelloStepDefs.class);
-
-    private static final String SERVER_URL = Optional.ofNullable(System.getProperty("url")).orElse("http://localhost:8080");
-    private static final String HELLO_ENDPOINT = "/api/hello";
 
     @Given("^Server is alive$")
     public void serverIsAlive() {
@@ -44,6 +41,7 @@ public class HelloStepDefs extends BaseStepDefs {
             case OLD_JERSEY_CLIENT:         { clientResponse = oldJerseyClientWrapper.executeRequest(url); }        break;
             case GOOGLE_HTTP_CLIENT:        { clientResponse = googleHttpClientWrapper.executeRequest(url); }       break;
             case UNIREST:                   { clientResponse = unirestWrapper.executeRequest(url); }                break;
+            case RETROFIT:                  { clientResponse = retrofitWrapper.executeRequest(null); }          break;
             default: throw new ClientException(String.format("Received a not supported [%s] client type", clientType.getValue()));
         }
 

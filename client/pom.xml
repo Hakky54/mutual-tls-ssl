@@ -75,6 +75,15 @@
             <groupId>com.konghq</groupId>
             <artifactId>unirest-java</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>converter-gson</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.apache.commons</groupId>

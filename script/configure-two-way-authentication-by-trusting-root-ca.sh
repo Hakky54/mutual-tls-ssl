@@ -68,7 +68,7 @@ configureApplicationProperties() {
 
 configureClientRequestToUseHttps() {
     echo 'Configuring client to send request to HTTPS'
-    sed -E -i.bak 's/http:\/\/localhost:8080/https:\/\/localhost:8443/g' client/src/main/java/nl/altindag/client/stepdefs/HelloStepDefs.java
+    sed -E -i.bak 's/http:\/\/localhost:8080/https:\/\/localhost:8443/g' client/src/main/java/nl/altindag/client/Constants.java
 }
 
 #Validate if provided argument is present

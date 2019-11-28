@@ -1,5 +1,7 @@
 package nl.altindag.client;
 
+import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
+import static nl.altindag.client.util.AssertJCustomConditions.SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -24,6 +26,7 @@ import com.google.api.client.http.HttpTransport;
 
 import kong.unirest.Unirest;
 import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 @RunWith(MockitoJUnitRunner.class)
@@ -349,6 +352,16 @@ public class ClientConfigShould {
         assertThat(client).isEqualTo(httpClient);
 
         Unirest.shutDown();
+    }
+
+    @Test
+    public void createRetrofitWithProvidedOkHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+        Retrofit retrofit = victim.retrofit(okHttpClient);
+
+        assertThat(retrofit).isNotNull();
+        assertThat(retrofit.baseUrl().toString()).has(SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL);
+        assertThat(retrofit.converterFactories()).has(GSON_CONVERTER_FACTORY);
     }
 
     private SSLContextHelper createSSLContextHelper(boolean oneWayAuthenticationEnabled, boolean twoWayAuthenticationEnabled) {

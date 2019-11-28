@@ -35,6 +35,7 @@ Below is a list of supported clients with examples, see in the [ClientConfig cla
   - Old Jersey Client
   - Google HttpClient
   - Unirest
+  - Retrofit
 
 ## Starting the server
 **Minimum requirements:**

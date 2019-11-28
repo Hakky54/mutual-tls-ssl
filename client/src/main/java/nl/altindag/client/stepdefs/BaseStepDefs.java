@@ -11,6 +11,7 @@ import nl.altindag.client.service.JerseyClientWrapper;
 import nl.altindag.client.service.OkHttpClientWrapper;
 import nl.altindag.client.service.OldJdkHttpClientWrapper;
 import nl.altindag.client.service.OldJerseyClientWrapper;
+import nl.altindag.client.service.RetrofitWrapper;
 import nl.altindag.client.service.SpringRestTemplateWrapper;
 import nl.altindag.client.service.SpringWebClientJettyWrapper;
 import nl.altindag.client.service.SpringWebClientNettyWrapper;
@@ -40,6 +41,8 @@ public class BaseStepDefs extends SpringBootHelper {
     protected GoogleHttpClientWrapper googleHttpClientWrapper;
     @Autowired
     protected UnirestWrapper unirestWrapper;
+    @Autowired
+    protected RetrofitWrapper retrofitWrapper;
     @Autowired
     protected TestScenario testScenario;
 
