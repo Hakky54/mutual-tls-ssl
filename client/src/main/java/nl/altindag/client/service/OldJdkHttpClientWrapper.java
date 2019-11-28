@@ -38,6 +38,7 @@ public class OldJdkHttpClientWrapper extends RequestService {
             connection = createHttpURLConnection(url);
         } else if (url.contains(HTTPS_REQUEST)) {
             HttpsURLConnection httpsURLConnection = createHttpsURLConnection(url);
+            httpsURLConnection.setHostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
             httpsURLConnection.setSSLSocketFactory(sslContextHelper.getSslContext().getSocketFactory());
             connection = httpsURLConnection;
         } else {
