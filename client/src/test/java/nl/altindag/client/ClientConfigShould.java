@@ -14,7 +14,6 @@ import java.security.NoSuchAlgorithmException;
 import javax.ws.rs.client.Client;
 
 import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -343,13 +342,30 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createUnirestWithProvidedApacheHttpClient() {
-        HttpClient httpClient = HttpClients.createDefault();
+    public void createUnirestWithoutSecurity() {
+        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
 
-        victim.unirest(httpClient);
+        victim.unirest(sslContextHelper);
 
-        Object client = Unirest.primaryInstance().config().getClient().getClient();
-        assertThat(client).isEqualTo(httpClient);
+        assertThat(Unirest.primaryInstance().config().getSslContext()).isNull();
+        verify(sslContextHelper, times(1)).isSecurityEnabled();
+        verify(sslContextHelper, times(0)).getSslContext();
+        verify(sslContextHelper, times(0)).getDefaultHostnameVerifier(); //TODO Unirest doesn't support the hostname verifier yet
+
+        Unirest.shutDown();
+    }
+
+    @Test
+    public void createUnirestWithSecurity() {
+        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+
+        victim.unirest(sslContextHelper);
+
+        verify(sslContextHelper, times(1)).isSecurityEnabled();
+        verify(sslContextHelper, times(1)).getSslContext();
+        verify(sslContextHelper, times(0)).getDefaultHostnameVerifier(); //TODO Unirest doesn't support the hostname verifier yet
+
+        assertThat(Unirest.primaryInstance().config().getSslContext()).isEqualTo(sslContextHelper.getSslContext());
 
         Unirest.shutDown();
     }

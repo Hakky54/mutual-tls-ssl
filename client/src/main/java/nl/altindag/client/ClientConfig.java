@@ -30,7 +30,6 @@ import com.sun.jersey.client.urlconnection.HTTPSProperties;
 
 import io.netty.handler.ssl.SslContextBuilder;
 import kong.unirest.Unirest;
-import kong.unirest.apache.ApacheClient;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -181,10 +180,12 @@ public class ClientConfig {
     }
 
     @Autowired
-    public void unirest(org.apache.http.client.HttpClient httpClient) {
-        Unirest.primaryInstance()
-               .config()
-               .httpClient(config -> ApacheClient.builder(httpClient).apply(config));
+    public void unirest(SSLContextHelper sslContextHelper) {
+        if (sslContextHelper.isSecurityEnabled()) {
+            Unirest.primaryInstance()
+                   .config()
+                   .sslContext(sslContextHelper.getSslContext());
+        }
     }
 
     @Bean
