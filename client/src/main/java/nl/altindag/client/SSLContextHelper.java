@@ -13,6 +13,7 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.Arrays;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -21,6 +22,7 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 
 public class SSLContextHelper {
 
@@ -38,7 +40,7 @@ public class SSLContextHelper {
     private SSLContext sslContext;
     private TrustManagerFactory trustManagerFactory;
     private KeyManagerFactory keyManagerFactory;
-    private DefaultHostnameVerifier defaultHostnameVerifier = new DefaultHostnameVerifier();
+    private HostnameVerifier hostnameVerifier;
 
     private SSLContextHelper() {}
 
@@ -144,8 +146,8 @@ public class SSLContextHelper {
                                                   .orElseThrow(() -> clientException);
     }
 
-    public DefaultHostnameVerifier getDefaultHostnameVerifier() {
-        return defaultHostnameVerifier;
+    public HostnameVerifier getHostnameVerifier() {
+        return hostnameVerifier;
     }
 
     public static Builder builder() {
@@ -161,6 +163,7 @@ public class SSLContextHelper {
 
         private boolean oneWayAuthenticationEnabled;
         private boolean twoWayAuthenticationEnabled;
+        private boolean hostnameVerifierEnabled = true;
 
         public Builder withoutSecurity() {
             oneWayAuthenticationEnabled = false;
@@ -194,14 +197,28 @@ public class SSLContextHelper {
             return this;
         }
 
+        public Builder withHostnameVerifierEnabled(boolean hostnameVerifierEnabled) {
+            this.hostnameVerifierEnabled = hostnameVerifierEnabled;
+            return this;
+        }
+
         public SSLContextHelper build() {
             SSLContextHelper sslContextHelper = new SSLContextHelper();
+            buildHostnameVerifier(sslContextHelper);
             if (oneWayAuthenticationEnabled || twoWayAuthenticationEnabled) {
                 sslContextHelper.securityEnabled = true;
                 buildSLLContextForOneWayAuthenticationIfEnabled(sslContextHelper);
                 buildSLLContextForTwoWayAuthenticationIfEnabled(sslContextHelper);
             }
             return sslContextHelper;
+        }
+
+        private void buildHostnameVerifier(SSLContextHelper sslContextHelper) {
+            if (hostnameVerifierEnabled) {
+                sslContextHelper.hostnameVerifier = new DefaultHostnameVerifier();
+            } else {
+                sslContextHelper.hostnameVerifier = new NoopHostnameVerifier();
+            }
         }
 
         private void buildSLLContextForTwoWayAuthenticationIfEnabled(SSLContextHelper sslContextHelper) {

@@ -4,6 +4,8 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.apache.http.conn.ssl.DefaultHostnameVerifier;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.junit.Test;
 
 @SuppressWarnings("UnnecessaryLocalVariable")
@@ -34,7 +36,7 @@ public class SSLContextHelperShould {
         assertThat(sslContextHelper.getTrustManagerFactory().getTrustManagers()).isNotEmpty();
         assertThat(sslContextHelper.getTrustStore()).isNotNull();
         assertThat(sslContextHelper.getX509TrustManager()).isNotNull();
-        assertThat(sslContextHelper.getDefaultHostnameVerifier()).isNotNull();
+        assertThat(sslContextHelper.getHostnameVerifier()).isNotNull();
     }
 
     @Test
@@ -55,7 +57,33 @@ public class SSLContextHelperShould {
         assertThat(sslContextHelper.getTrustManagerFactory().getTrustManagers()).isNotEmpty();
         assertThat(sslContextHelper.getTrustStore()).isNotNull();
         assertThat(sslContextHelper.getX509TrustManager()).isNotNull();
-        assertThat(sslContextHelper.getDefaultHostnameVerifier()).isNotNull();
+        assertThat(sslContextHelper.getHostnameVerifier()).isNotNull();
+    }
+
+    @Test
+    public void createSSLContextHelperWithHostnameVerifier() {
+        String trustStorePath = "keystores-for-unit-tests/truststore.jks";
+        String trustStorePassword = "secret";
+
+        SSLContextHelper sslContextHelper = SSLContextHelper.builder()
+                                                            .withOneWayAuthentication(trustStorePath, trustStorePassword)
+                                                            .withHostnameVerifierEnabled(true)
+                                                            .build();
+
+        assertThat(sslContextHelper.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
+    }
+
+    @Test
+    public void createSSLContextHelperWithoutHostnameVerifier() {
+        String trustStorePath = "keystores-for-unit-tests/truststore.jks";
+        String trustStorePassword = "secret";
+
+        SSLContextHelper sslContextHelper = SSLContextHelper.builder()
+                                                            .withOneWayAuthentication(trustStorePath, trustStorePassword)
+                                                            .withHostnameVerifierEnabled(false)
+                                                            .build();
+
+        assertThat(sslContextHelper.getHostnameVerifier()).isInstanceOf(NoopHostnameVerifier.class);
     }
 
     @Test

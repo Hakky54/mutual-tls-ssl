@@ -30,18 +30,18 @@ public class HelloStepDefs extends BaseStepDefs {
 
         ClientType clientType = ClientType.from(client);
         switch (clientType) {
-            case APACHE_HTTP_CLIENT:        { clientResponse = apacheHttpClientWrapper.executeRequest(url); }       break;
-            case JDK_HTTP_CLIENT:           { clientResponse = jdkHttpClientWrapper.executeRequest(url); }          break;
-            case OLD_JDK_HTTP_CLIENT:       { clientResponse = oldJdkHttpClientWrapper.executeRequest(url); }       break;
-            case SPRING_REST_TEMPATE:       { clientResponse = springRestTemplateWrapper.executeRequest(url); }     break;
-            case SPRING_WEB_CLIENT_NETTY:   { clientResponse = springWebClientNettyWrapper.executeRequest(url); }   break;
-            case SPRING_WEB_CLIENT_JETTY:   { clientResponse = springWebClientJettyWrapper.executeRequest(url); }   break;
-            case OK_HTTP:                   { clientResponse = okHttpClientWrapper.executeRequest(url); }           break;
-            case JERSEY_CLIENT:             { clientResponse = jerseyClientWrapper.executeRequest(url); }           break;
-            case OLD_JERSEY_CLIENT:         { clientResponse = oldJerseyClientWrapper.executeRequest(url); }        break;
-            case GOOGLE_HTTP_CLIENT:        { clientResponse = googleHttpClientWrapper.executeRequest(url); }       break;
-            case UNIREST:                   { clientResponse = unirestWrapper.executeRequest(url); }                break;
-            case RETROFIT:                  { clientResponse = retrofitWrapper.executeRequest(null); }          break;
+            case APACHE_HTTP_CLIENT:        clientResponse = apacheHttpClientWrapper.executeRequest(url);       break;
+            case JDK_HTTP_CLIENT:           clientResponse = jdkHttpClientWrapper.executeRequest(url);          break;
+            case OLD_JDK_HTTP_CLIENT:       clientResponse = oldJdkHttpClientWrapper.executeRequest(url);       break;
+            case SPRING_REST_TEMPATE:       clientResponse = springRestTemplateWrapper.executeRequest(url);     break;
+            case SPRING_WEB_CLIENT_NETTY:   clientResponse = springWebClientNettyWrapper.executeRequest(url);   break;
+            case SPRING_WEB_CLIENT_JETTY:   clientResponse = springWebClientJettyWrapper.executeRequest(url);   break;
+            case OK_HTTP:                   clientResponse = okHttpClientWrapper.executeRequest(url);           break;
+            case JERSEY_CLIENT:             clientResponse = jerseyClientWrapper.executeRequest(url);           break;
+            case OLD_JERSEY_CLIENT:         clientResponse = oldJerseyClientWrapper.executeRequest(url);        break;
+            case GOOGLE_HTTP_CLIENT:        clientResponse = googleHttpClientWrapper.executeRequest(url);       break;
+            case UNIREST:                   clientResponse = unirestWrapper.executeRequest(url);                break;
+            case RETROFIT:                  clientResponse = retrofitWrapper.executeRequest(null);          break;
             default: throw new ClientException(String.format("Received a not supported [%s] client type", clientType.getValue()));
         }
 

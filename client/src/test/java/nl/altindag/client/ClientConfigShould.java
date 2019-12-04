@@ -83,7 +83,7 @@ public class ClientConfigShould {
         assertThat(httpClient).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(0)).getHostnameVerifier();
     }
 
     @Test
@@ -95,7 +95,7 @@ public class ClientConfigShould {
         assertThat(httpClient).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(1)).getHostnameVerifier();
     }
 
     @Test
@@ -139,7 +139,7 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
         verify(sslContextHelper, times(0)).getX509TrustManager();
-        verify(sslContextHelper, times(0)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(0)).getHostnameVerifier();
     }
 
     @Test
@@ -152,9 +152,9 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
         verify(sslContextHelper, times(1)).getX509TrustManager();
-        verify(sslContextHelper, times(1)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(1)).getHostnameVerifier();
 
-        assertThat(okHttpClient.hostnameVerifier()).isEqualTo(sslContextHelper.getDefaultHostnameVerifier());
+        assertThat(okHttpClient.hostnameVerifier()).isEqualTo(sslContextHelper.getHostnameVerifier());
         assertThat(okHttpClient.x509TrustManager()).isEqualTo(sslContextHelper.getX509TrustManager());
     }
 
@@ -214,7 +214,7 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(0)).isOneWayAuthenticationEnabled();
         verify(sslContextHelper, times(0)).isTwoWayAuthenticationEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(0)).getHostnameVerifier();
         verify(sslContextHelper, times(0)).getTrustStore();
         verify(sslContextHelper, times(0)).getTrustStorePassword();
         verify(sslContextHelper, times(0)).getKeyStore();
@@ -232,7 +232,7 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).isOneWayAuthenticationEnabled();
         verify(sslContextHelper, times(1)).isTwoWayAuthenticationEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(1)).getHostnameVerifier();
         verify(sslContextHelper, times(1)).getTrustStore();
         verify(sslContextHelper, times(1)).getTrustStorePassword();
         verify(sslContextHelper, times(1)).getKeyStore();
@@ -250,7 +250,7 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).isOneWayAuthenticationEnabled();
         verify(sslContextHelper, times(1)).isTwoWayAuthenticationEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(1)).getHostnameVerifier();
         verify(sslContextHelper, times(1)).getTrustStore();
         verify(sslContextHelper, times(1)).getTrustStorePassword();
         verify(sslContextHelper, times(0)).getKeyStore();
@@ -266,7 +266,7 @@ public class ClientConfigShould {
         assertThat(client).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(0)).getHostnameVerifier();
 
         client.close();
     }
@@ -280,7 +280,7 @@ public class ClientConfigShould {
         assertThat(client).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(1)).getHostnameVerifier();
 
         client.close();
     }
@@ -294,7 +294,7 @@ public class ClientConfigShould {
         assertThat(client).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(0)).getHostnameVerifier();
 
         client.destroy();
     }
@@ -308,7 +308,7 @@ public class ClientConfigShould {
         assertThat(client).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(2)).getSslContext();
-        verify(sslContextHelper, times(1)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(1)).getHostnameVerifier();
 
         client.destroy();
     }
@@ -322,7 +322,7 @@ public class ClientConfigShould {
         assertThat(httpTransport).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(0)).getHostnameVerifier();
 
         httpTransport.shutdown();
     }
@@ -336,7 +336,7 @@ public class ClientConfigShould {
         assertThat(httpTransport).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getDefaultHostnameVerifier();
+        verify(sslContextHelper, times(1)).getHostnameVerifier();
 
         httpTransport.shutdown();
     }
@@ -350,7 +350,7 @@ public class ClientConfigShould {
         assertThat(Unirest.primaryInstance().config().getSslContext()).isNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getDefaultHostnameVerifier(); //TODO Unirest doesn't support the hostname verifier yet
+        verify(sslContextHelper, times(0)).getHostnameVerifier(); //TODO Unirest doesn't support the hostname verifier yet
 
         Unirest.shutDown();
     }
@@ -363,7 +363,7 @@ public class ClientConfigShould {
 
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(0)).getDefaultHostnameVerifier(); //TODO Unirest doesn't support the hostname verifier yet
+        verify(sslContextHelper, times(0)).getHostnameVerifier(); //TODO Unirest doesn't support the hostname verifier yet
 
         assertThat(Unirest.primaryInstance().config().getSslContext()).isEqualTo(sslContextHelper.getSslContext());
 

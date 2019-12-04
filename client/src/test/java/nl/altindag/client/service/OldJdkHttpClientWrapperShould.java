@@ -77,7 +77,7 @@ public class OldJdkHttpClientWrapperShould {
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
 
         verify(connection, times(1)).setSSLSocketFactory(sslSocketFactory);
-        verify(connection, times(1)).setHostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
+        verify(connection, times(1)).setHostnameVerifier(sslContextHelper.getHostnameVerifier());
         verify(connection, times(1)).setRequestProperty(HEADER_KEY_CLIENT_TYPE, OLD_JDK_HTTP_CLIENT.getValue());
     }
 

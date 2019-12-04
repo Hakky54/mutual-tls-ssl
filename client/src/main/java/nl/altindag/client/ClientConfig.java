@@ -47,11 +47,13 @@ public class ClientConfig {
                                                   @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
         SSLContextHelper.Builder sslContextHelperBuilder = SSLContextHelper.builder();
         if (oneWayAuthenticationEnabled) {
-            sslContextHelperBuilder.withOneWayAuthentication(trustStorePath, trustStorePassword);
+            sslContextHelperBuilder.withOneWayAuthentication(trustStorePath, trustStorePassword)
+                                   .withHostnameVerifierEnabled(true);
         }
 
         if (twoWayAuthenticationEnabled) {
-            sslContextHelperBuilder.withTwoWayAuthentication(keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+            sslContextHelperBuilder.withTwoWayAuthentication(keyStorePath, keyStorePassword, trustStorePath, trustStorePassword)
+                                   .withHostnameVerifierEnabled(true);
         }
         return sslContextHelperBuilder.build();
     }
@@ -62,7 +64,7 @@ public class ClientConfig {
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
         if (sslContextHelper.isSecurityEnabled()) {
             httpClientBuilder.setSSLContext(sslContextHelper.getSslContext());
-            httpClientBuilder.setSSLHostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
+            httpClientBuilder.setSSLHostnameVerifier(sslContextHelper.getHostnameVerifier());
         }
         return httpClientBuilder.build();
     }
@@ -89,7 +91,7 @@ public class ClientConfig {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         if (sslContextHelper.isSecurityEnabled()) {
             httpClientBuilder.sslSocketFactory(sslContextHelper.getSslContext().getSocketFactory(), sslContextHelper.getX509TrustManager())
-                             .hostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
+                             .hostnameVerifier(sslContextHelper.getHostnameVerifier());
         }
 
         return httpClientBuilder
@@ -125,7 +127,7 @@ public class ClientConfig {
         if (sslContextHelper.isSecurityEnabled()) {
             SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
             sslContextFactory.setSslContext(sslContextHelper.getSslContext());
-            sslContextFactory.setHostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
+            sslContextFactory.setHostnameVerifier(sslContextHelper.getHostnameVerifier());
             if (sslContextHelper.isOneWayAuthenticationEnabled()) {
                 sslContextFactory.setTrustStore(sslContextHelper.getTrustStore());
                 sslContextFactory.setTrustStorePassword(sslContextHelper.getTrustStorePassword());
@@ -150,7 +152,7 @@ public class ClientConfig {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         if (sslContextHelper.isSecurityEnabled()) {
             clientBuilder.sslContext(sslContextHelper.getSslContext());
-            clientBuilder.hostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
+            clientBuilder.hostnameVerifier(sslContextHelper.getHostnameVerifier());
         }
         return clientBuilder.build();
     }
@@ -162,7 +164,7 @@ public class ClientConfig {
             HttpsURLConnection.setDefaultSSLSocketFactory(sslContextHelper.getSslContext().getSocketFactory());
             DefaultClientConfig clientConfig = new DefaultClientConfig();
             clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                                             new HTTPSProperties(sslContextHelper.getDefaultHostnameVerifier(), sslContextHelper.getSslContext()));
+                                             new HTTPSProperties(sslContextHelper.getHostnameVerifier(), sslContextHelper.getSslContext()));
             com.sun.jersey.api.client.Client.create(clientConfig);
         }
         return client;
@@ -173,7 +175,7 @@ public class ClientConfig {
         NetHttpTransport.Builder httpTransportBuilder = new NetHttpTransport.Builder();
         if (sslContextHelper.isSecurityEnabled()) {
             httpTransportBuilder.setSslSocketFactory(sslContextHelper.getSslContext().getSocketFactory())
-                                .setHostnameVerifier(sslContextHelper.getDefaultHostnameVerifier());
+                                .setHostnameVerifier(sslContextHelper.getHostnameVerifier());
         }
         return httpTransportBuilder
                 .build();
