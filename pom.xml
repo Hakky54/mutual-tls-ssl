@@ -23,7 +23,7 @@
         <version.maven-fail-safe>2.22.2</version.maven-fail-safe>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
         <version.aspectjweaver>1.9.5</version.aspectjweaver>
-        <version.maven-cucumber-reporting>4.11.2</version.maven-cucumber-reporting>
+        <version.maven-cucumber-reporting>5.0.0</version.maven-cucumber-reporting>
         <version.commons-lang3>3.9</version.commons-lang3>
         <version.commons-io>2.6</version.commons-io>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
