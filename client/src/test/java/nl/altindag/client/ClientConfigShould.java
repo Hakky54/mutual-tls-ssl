@@ -350,7 +350,7 @@ public class ClientConfigShould {
         assertThat(Unirest.primaryInstance().config().getSslContext()).isNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getHostnameVerifier(); //TODO Unirest doesn't support the hostname verifier yet
+        verify(sslContextHelper, times(0)).getHostnameVerifier();
 
         Unirest.shutDown();
     }
@@ -363,7 +363,7 @@ public class ClientConfigShould {
 
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(0)).getHostnameVerifier(); //TODO Unirest doesn't support the hostname verifier yet
+        verify(sslContextHelper, times(1)).getHostnameVerifier();
 
         assertThat(Unirest.primaryInstance().config().getSslContext()).isEqualTo(sslContextHelper.getSslContext());
 

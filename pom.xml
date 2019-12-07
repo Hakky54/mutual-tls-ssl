@@ -32,7 +32,7 @@
         <version.org.glassfish.jersey.inject>2.29.1</version.org.glassfish.jersey.inject>
         <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
         <version.google.http.client>1.33.0</version.google.http.client>
-        <version.unirest>3.2.00</version.unirest>
+        <version.unirest>3.3.00</version.unirest>
         <version.retrofit>2.6.2</version.retrofit>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
