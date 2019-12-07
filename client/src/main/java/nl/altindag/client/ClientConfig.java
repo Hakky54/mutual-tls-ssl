@@ -186,7 +186,8 @@ public class ClientConfig {
         if (sslContextHelper.isSecurityEnabled()) {
             Unirest.primaryInstance()
                    .config()
-                   .sslContext(sslContextHelper.getSslContext());
+                   .sslContext(sslContextHelper.getSslContext())
+                   .hostnameVerifier(sslContextHelper.getHostnameVerifier());
         }
     }
 
