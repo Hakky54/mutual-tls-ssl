@@ -14,6 +14,8 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import nl.altindag.client.ClientException;
 import nl.altindag.client.SSLContextHelper;
 import nl.altindag.client.model.ClientResponse;
@@ -54,10 +56,12 @@ public class OldJdkHttpClientWrapper extends RequestService {
         return new ClientResponse(responseBody, connection.getResponseCode());
     }
 
+    @VisibleForTesting
     HttpURLConnection createHttpURLConnection(String url) throws IOException {
         return (HttpURLConnection) new URL(url).openConnection();
     }
 
+    @VisibleForTesting
     HttpsURLConnection createHttpsURLConnection(String url) throws IOException {
         return (HttpsURLConnection) new URL(url).openConnection();
     }
