@@ -34,6 +34,8 @@
         <version.google.http.client>1.33.0</version.google.http.client>
         <version.unirest>3.3.00</version.unirest>
         <version.retrofit>2.6.2</version.retrofit>
+        <version.finagle-scala_2.12>19.11.0</version.finagle-scala_2.12>
+        <version.jackson-module-scala_2.12>2.10.1</version.jackson-module-scala_2.12>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-assembly-plugin>3.2.0</version.maven-assembly-plugin>
@@ -120,6 +122,16 @@
                 <groupId>com.squareup.retrofit2</groupId>
                 <artifactId>converter-gson</artifactId>
                 <version>${version.retrofit}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>finagle-http_2.12</artifactId>
+                <version>${version.finagle-scala_2.12}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-scala_2.12</artifactId>
+                <version>${version.jackson-module-scala_2.12}</version>
             </dependency>
 
             <dependency>

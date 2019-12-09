@@ -2,6 +2,8 @@ package nl.altindag.client;
 
 import static nl.altindag.client.Constants.SERVER_URL;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -27,6 +29,10 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
+import com.twitter.finagle.Http;
+import com.twitter.finagle.Service;
+import com.twitter.finagle.http.Request;
+import com.twitter.finagle.http.Response;
 
 import io.netty.handler.ssl.SslContextBuilder;
 import kong.unirest.Unirest;
@@ -198,6 +204,18 @@ public class ClientConfig {
                 .baseUrl(SERVER_URL)
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
                 .build();
+    }
+
+    @Bean
+    public Service<Request, Response> finagle(SSLContextHelper sslContextHelper) throws URISyntaxException {
+        URI uri = new URI(SERVER_URL);
+        Http.Client client = Http.client();
+        if (sslContextHelper.isSecurityEnabled()) {
+            client = client
+                    .withTransport()
+                    .tls(sslContextHelper.getSslContext());
+        }
+        return client.newService(uri.getHost() + ":" + uri.getPort());
     }
 
 }
