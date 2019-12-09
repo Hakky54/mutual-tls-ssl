@@ -16,7 +16,7 @@
 
     <properties>
         <version.java>11</version.java>
-        <version.spring>2.2.1.RELEASE</version.spring>
+        <version.spring>2.2.2.RELEASE</version.spring>
         <version.apache.httpclient>4.5.10</version.apache.httpclient>
         <version.cucumber>4.8.0</version.cucumber>
         <version.junit>4.12</version.junit>
