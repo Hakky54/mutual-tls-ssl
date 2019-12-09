@@ -9,6 +9,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.ws.rs.client.Client;
@@ -22,6 +23,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.api.client.http.HttpTransport;
+import com.twitter.finagle.Service;
+import com.twitter.finagle.http.Request;
+import com.twitter.finagle.http.Response;
 
 import kong.unirest.Unirest;
 import okhttp3.OkHttpClient;
@@ -378,6 +382,36 @@ public class ClientConfigShould {
         assertThat(retrofit).isNotNull();
         assertThat(retrofit.baseUrl().toString()).has(SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL);
         assertThat(retrofit.converterFactories()).has(GSON_CONVERTER_FACTORY);
+    }
+
+    @Test
+    public void createFinagleClientWithoutSecurity() throws URISyntaxException {
+        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+
+        Service<Request, Response> service = victim.finagle(sslContextHelper);
+
+        verify(sslContextHelper, times(1)).isSecurityEnabled();
+        verify(sslContextHelper, times(0)).getSslContext();
+
+        assertThat(service.isAvailable()).isTrue();
+        assertThat(service.status().toString()).isEqualTo("Open");
+
+        service.close();
+    }
+
+    @Test
+    public void createFinagleClientWithSecurity() throws URISyntaxException {
+        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+
+        Service<Request, Response> service = victim.finagle(sslContextHelper);
+
+        verify(sslContextHelper, times(1)).isSecurityEnabled();
+        verify(sslContextHelper, times(1)).getSslContext();
+
+        assertThat(service.isAvailable()).isTrue();
+        assertThat(service.status().toString()).isEqualTo("Open");
+
+        service.close();
     }
 
     private SSLContextHelper createSSLContextHelper(boolean oneWayAuthenticationEnabled, boolean twoWayAuthenticationEnabled) {

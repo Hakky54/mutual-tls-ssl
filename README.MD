@@ -36,6 +36,7 @@ Below is a list of supported clients with examples, see in the [ClientConfig cla
   - Google HttpClient
   - Unirest
   - Retrofit
+  - Finagle
 
 ## Starting the server
 **Minimum requirements:**
