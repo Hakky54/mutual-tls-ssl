@@ -22,6 +22,7 @@ import nl.altindag.client.ClientException;
 import nl.altindag.client.TestScenario;
 import nl.altindag.client.model.ClientResponse;
 import nl.altindag.client.service.ApacheHttpClientWrapper;
+import nl.altindag.client.service.FinagleHttpClientWrapper;
 import nl.altindag.client.service.GoogleHttpClientWrapper;
 import nl.altindag.client.service.JdkHttpClientWrapper;
 import nl.altindag.client.service.JerseyClientWrapper;
@@ -64,6 +65,8 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
     private UnirestWrapper unirestWrapper;
     @Mock
     private RetrofitWrapper retrofitWrapper;
+    @Mock
+    private FinagleHttpClientWrapper finagleHttpClientWrapper;
     @Mock
     private TestScenario testScenario;
 
@@ -195,6 +198,16 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
 
         verify(retrofitWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
         assertThat(urlArgumentCaptor.getValue()).isNull();
+    }
+
+    @Test
+    public void iSayHelloWithFinagle() throws Exception {
+        ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        victim.iSayHelloWithClient("Finagle");
+
+        verify(finagleHttpClientWrapper, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
     @Test

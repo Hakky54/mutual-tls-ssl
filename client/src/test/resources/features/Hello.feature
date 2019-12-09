@@ -21,3 +21,4 @@ Feature: Securing the connection between you and the world
       | Google HttpClient               |
       | Unirest                         |
       | Retrofit                        |
+      | Finagle                         |

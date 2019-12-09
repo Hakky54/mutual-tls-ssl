@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import nl.altindag.client.SpringBootHelper;
 import nl.altindag.client.TestScenario;
 import nl.altindag.client.service.ApacheHttpClientWrapper;
+import nl.altindag.client.service.FinagleHttpClientWrapper;
 import nl.altindag.client.service.GoogleHttpClientWrapper;
 import nl.altindag.client.service.JdkHttpClientWrapper;
 import nl.altindag.client.service.JerseyClientWrapper;
@@ -43,6 +44,8 @@ public class BaseStepDefs extends SpringBootHelper {
     protected UnirestWrapper unirestWrapper;
     @Autowired
     protected RetrofitWrapper retrofitWrapper;
+    @Autowired
+    protected FinagleHttpClientWrapper finagleHttpClientWrapper;
     @Autowired
     protected TestScenario testScenario;
 

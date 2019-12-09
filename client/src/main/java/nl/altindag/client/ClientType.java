@@ -14,6 +14,7 @@ public enum ClientType {
     GOOGLE_HTTP_CLIENT("google httpclient"),
     UNIREST("unirest"),
     RETROFIT("retrofit"),
+    FINAGLE("finagle"),
     NONE("none");
 
     private String value;
