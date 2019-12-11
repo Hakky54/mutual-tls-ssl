@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
@@ -26,11 +27,15 @@ public class SpringRestTemplateWrapper extends RequestService {
     @Override
     public ClientResponse executeRequest(String url) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HEADER_KEY_CLIENT_TYPE, SPRING_REST_TEMPATE.getValue());
+        headers.add(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return new ClientResponse(response.getBody(), response.getStatusCodeValue());
     }
 
+    @Override
+    public ClientType getClientType() {
+        return SPRING_REST_TEMPATE;
+    }
 }

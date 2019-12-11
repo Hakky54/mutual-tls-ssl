@@ -1,52 +1,30 @@
 package nl.altindag.client.stepdefs;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import static java.util.stream.Collectors.toMap;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
+import javax.annotation.Nullable;
+
+import nl.altindag.client.ClientType;
 import nl.altindag.client.SpringBootHelper;
 import nl.altindag.client.TestScenario;
-import nl.altindag.client.service.ApacheHttpClientWrapper;
-import nl.altindag.client.service.FinagleHttpClientWrapper;
-import nl.altindag.client.service.GoogleHttpClientWrapper;
-import nl.altindag.client.service.JdkHttpClientWrapper;
-import nl.altindag.client.service.JerseyClientWrapper;
-import nl.altindag.client.service.OkHttpClientWrapper;
-import nl.altindag.client.service.OldJdkHttpClientWrapper;
-import nl.altindag.client.service.OldJerseyClientWrapper;
-import nl.altindag.client.service.RetrofitWrapper;
-import nl.altindag.client.service.SpringRestTemplateWrapper;
-import nl.altindag.client.service.SpringWebClientJettyWrapper;
-import nl.altindag.client.service.SpringWebClientNettyWrapper;
-import nl.altindag.client.service.UnirestWrapper;
+import nl.altindag.client.service.RequestService;
 
 public class BaseStepDefs extends SpringBootHelper {
 
-    @Autowired
-    protected ApacheHttpClientWrapper apacheHttpClientWrapper;
-    @Autowired
-    protected JdkHttpClientWrapper jdkHttpClientWrapper;
-    @Autowired
-    protected OldJdkHttpClientWrapper oldJdkHttpClientWrapper;
-    @Autowired
-    protected SpringRestTemplateWrapper springRestTemplateWrapper;
-    @Autowired
-    protected SpringWebClientNettyWrapper springWebClientNettyWrapper;
-    @Autowired
-    protected SpringWebClientJettyWrapper springWebClientJettyWrapper;
-    @Autowired
-    protected OkHttpClientWrapper okHttpClientWrapper;
-    @Autowired
-    protected JerseyClientWrapper jerseyClientWrapper;
-    @Autowired
-    protected OldJerseyClientWrapper oldJerseyClientWrapper;
-    @Autowired
-    protected GoogleHttpClientWrapper googleHttpClientWrapper;
-    @Autowired
-    protected UnirestWrapper unirestWrapper;
-    @Autowired
-    protected RetrofitWrapper retrofitWrapper;
-    @Autowired
-    protected FinagleHttpClientWrapper finagleHttpClientWrapper;
-    @Autowired
     protected TestScenario testScenario;
+    private Map<ClientType, RequestService> requestServices;
 
+    public BaseStepDefs(TestScenario testScenario, List<RequestService> requestServices) {
+        this.testScenario = testScenario;
+        this.requestServices = requestServices.stream()
+                                              .collect(toMap(RequestService::getClientType, Function.identity()));
+    }
+
+    public @Nullable RequestService getRequestService(ClientType clientType) {
+        return requestServices.get(clientType);
+    }
 }

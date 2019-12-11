@@ -12,6 +12,7 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
@@ -27,12 +28,17 @@ public class ApacheHttpClientWrapper extends RequestService {
     @Override
     public ClientResponse executeRequest(String url) throws IOException {
         HttpGet request = new HttpGet(url);
-        request.addHeader(HEADER_KEY_CLIENT_TYPE, APACHE_HTTP_CLIENT.getValue());
+        request.addHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
         HttpResponse response = httpClient.execute(request);
 
         String responseBody = EntityUtils.toString(response.getEntity());
         int statusCode = response.getStatusLine().getStatusCode();
         return new ClientResponse(responseBody, statusCode);
+    }
+
+    @Override
+    public ClientType getClientType() {
+        return APACHE_HTTP_CLIENT;
     }
 
 }
