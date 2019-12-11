@@ -15,7 +15,7 @@ public abstract class SpringWebClientWrapper extends RequestService {
     }
 
     @Override
-    public ClientResponse executeRequest(String url) throws Exception {
+    public ClientResponse executeRequest(String url) {
         return webClient.get()
                         .uri(url)
                         .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
