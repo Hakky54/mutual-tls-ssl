@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.altindag.client.ClientException;
+import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -58,6 +59,11 @@ public class RetrofitWrapperShould {
         assertThatThrownBy(() -> victim.executeRequest(null))
                 .isInstanceOf(ClientException.class)
                 .hasMessage("could not execute the request, received the following message: KABOOOM!!!");
+    }
+
+    @Test
+    public void getClientType() {
+        assertThat(victim.getClientType()).isEqualTo(ClientType.RETROFIT);
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import nl.altindag.client.ClientType;
+import nl.altindag.client.model.ClientResponse;
 
 @Service
 public class SpringWebClientJettyWrapper extends SpringWebClientWrapper {
@@ -17,7 +18,12 @@ public class SpringWebClientJettyWrapper extends SpringWebClientWrapper {
     }
 
     @Override
-    protected ClientType getClientType() {
+    public ClientResponse executeRequest(String url) throws Exception {
+        return super.executeRequest(url);
+    }
+
+    @Override
+    public ClientType getClientType() {
         return SPRING_WEB_CLIENT_JETTY;
     }
 

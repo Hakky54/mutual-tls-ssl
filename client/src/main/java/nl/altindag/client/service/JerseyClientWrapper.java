@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
@@ -26,10 +27,15 @@ public class JerseyClientWrapper extends RequestService {
     public ClientResponse executeRequest(String url) {
         Response response = client.target(url)
                                   .request(MediaType.TEXT_PLAIN_TYPE)
-                                  .header(HEADER_KEY_CLIENT_TYPE, JERSEY_CLIENT.getValue())
+                                  .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                                   .get();
 
         return new ClientResponse(response.readEntity(String.class), response.getStatus());
+    }
+
+    @Override
+    public ClientType getClientType() {
+        return JERSEY_CLIENT;
     }
 
 }

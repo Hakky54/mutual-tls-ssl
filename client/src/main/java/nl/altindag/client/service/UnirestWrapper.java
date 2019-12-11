@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
@@ -15,9 +16,14 @@ public class UnirestWrapper extends RequestService {
     @Override
     public ClientResponse executeRequest(String url) {
         HttpResponse<String> response = Unirest.get(url)
-                                               .header(HEADER_KEY_CLIENT_TYPE, UNIREST.getValue())
+                                               .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                                                .asString();
 
         return new ClientResponse(response.getBody(), response.getStatus());
+    }
+
+    @Override
+    public ClientType getClientType() {
+        return UNIREST;
     }
 }

@@ -4,7 +4,6 @@ import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
-import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 public abstract class SpringWebClientWrapper extends RequestService {
@@ -25,7 +24,5 @@ public abstract class SpringWebClientWrapper extends RequestService {
                         .map(responseEntity -> new ClientResponse(responseEntity.getBody(), responseEntity.getStatusCodeValue()))
                         .block();
     }
-
-    protected abstract ClientType getClientType();
 
 }

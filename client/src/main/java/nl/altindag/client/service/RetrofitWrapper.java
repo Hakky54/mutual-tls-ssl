@@ -1,5 +1,6 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.ClientType.RETROFIT;
 import static nl.altindag.client.Constants.HELLO_ENDPOINT;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nl.altindag.client.ClientException;
+import nl.altindag.client.ClientType;
 import nl.altindag.client.Constants;
 import nl.altindag.client.model.ClientResponse;
 import retrofit2.Call;
@@ -37,6 +39,11 @@ public class RetrofitWrapper extends RequestService {
         } catch (IOException e) {
             throw new ClientException(String.format("could not execute the request, received the following message: %s", e.getMessage()));
         }
+    }
+
+    @Override
+    public ClientType getClientType() {
+        return RETROFIT;
     }
 
     interface Server {
