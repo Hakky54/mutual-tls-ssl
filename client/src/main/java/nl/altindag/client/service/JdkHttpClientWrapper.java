@@ -11,6 +11,7 @@ import java.net.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
@@ -27,13 +28,18 @@ public class JdkHttpClientWrapper extends RequestService {
     public ClientResponse executeRequest(String url) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                                          .GET()
-                                         .header(HEADER_KEY_CLIENT_TYPE, JDK_HTTP_CLIENT.getValue())
+                                         .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                                          .uri(URI.create(url))
                                          .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         return new ClientResponse(response.body(), response.statusCode());
+    }
+
+    @Override
+    public ClientType getClientType() {
+        return JDK_HTTP_CLIENT;
     }
 
 }

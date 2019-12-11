@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.sun.jersey.api.client.Client;
 
+import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
@@ -23,9 +24,14 @@ public class OldJerseyClientWrapper extends RequestService {
     @Override
     public ClientResponse executeRequest(String url) {
         com.sun.jersey.api.client.ClientResponse clientResponse = client.resource(url)
-                                                                        .header(HEADER_KEY_CLIENT_TYPE, OLD_JERSEY_CLIENT.getValue())
+                                                                        .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                                                                         .get(com.sun.jersey.api.client.ClientResponse.class);
 
         return new ClientResponse(clientResponse.getEntity(String.class), clientResponse.getStatus());
+    }
+
+    @Override
+    public ClientType getClientType() {
+        return OLD_JERSEY_CLIENT;
     }
 }

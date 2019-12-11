@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.annotations.VisibleForTesting;
 
 import nl.altindag.client.ClientException;
+import nl.altindag.client.ClientType;
 import nl.altindag.client.SSLContextHelper;
 import nl.altindag.client.model.ClientResponse;
 
@@ -51,7 +52,7 @@ public class OldJdkHttpClientWrapper extends RequestService {
         }
 
         connection.setRequestMethod("GET");
-        connection.setRequestProperty(HEADER_KEY_CLIENT_TYPE, OLD_JDK_HTTP_CLIENT.getValue());
+        connection.setRequestProperty(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
         String responseBody = IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
         return new ClientResponse(responseBody, connection.getResponseCode());
     }
@@ -64,6 +65,11 @@ public class OldJdkHttpClientWrapper extends RequestService {
     @VisibleForTesting
     HttpsURLConnection createHttpsURLConnection(String url) throws IOException {
         return (HttpsURLConnection) new URL(url).openConnection();
+    }
+
+    @Override
+    public ClientType getClientType() {
+        return OLD_JDK_HTTP_CLIENT;
     }
 
 }

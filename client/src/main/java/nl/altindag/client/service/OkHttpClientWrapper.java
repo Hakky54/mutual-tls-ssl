@@ -5,6 +5,7 @@ import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
 import org.springframework.stereotype.Service;
 
+import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -23,7 +24,7 @@ public class OkHttpClientWrapper extends RequestService {
     public ClientResponse executeRequest(String url) throws Exception {
         Request request = new Request.Builder()
                                      .url(url)
-                                     .header(HEADER_KEY_CLIENT_TYPE, OK_HTTP.getValue())
+                                     .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                                      .build();
 
         Response response = okHttpClient.newCall(request).execute();
@@ -31,4 +32,8 @@ public class OkHttpClientWrapper extends RequestService {
         return new ClientResponse(response.body().string(), response.code());
     }
 
+    @Override
+    public ClientType getClientType() {
+        return OK_HTTP;
+    }
 }

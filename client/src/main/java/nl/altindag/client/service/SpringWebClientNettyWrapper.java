@@ -17,7 +17,7 @@ public class SpringWebClientNettyWrapper extends SpringWebClientWrapper {
     }
 
     @Override
-    protected ClientType getClientType() {
+    public ClientType getClientType() {
         return SPRING_WEB_CLIENT_NETTY;
     }
 

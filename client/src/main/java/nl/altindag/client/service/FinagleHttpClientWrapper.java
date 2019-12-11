@@ -1,5 +1,6 @@
 package nl.altindag.client.service;
 
+import static nl.altindag.client.ClientType.FINAGLE;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
 import java.util.concurrent.TimeUnit;
@@ -30,7 +31,7 @@ public class FinagleHttpClientWrapper extends RequestService {
     @SuppressWarnings("unchecked")
     public ClientResponse executeRequest(String url) throws Exception {
         Request request = new RequestBuilder()
-                .addHeader(HEADER_KEY_CLIENT_TYPE, ClientType.FINAGLE.getValue())
+                .addHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .url(url)
                 .buildGet(null);
 
@@ -40,4 +41,8 @@ public class FinagleHttpClientWrapper extends RequestService {
                       .get(TIMEOUT_AMOUNT_IN_SECONDS, TimeUnit.SECONDS);
     }
 
+    @Override
+    public ClientType getClientType() {
+        return FINAGLE;
+    }
 }
