@@ -11,7 +11,8 @@
     <artifactId>client</artifactId>
 
     <properties>
-        <mainClassServer>nl.altindag.server.App</mainClassServer>
+        <main-class-server>nl.altindag.server.App</main-class-server>
+        <main-class-client>nl.altindag.client.ClientRunner</main-class-client>
         <vm.args-for-netty>--add-opens java.base/jdk.internal.misc=ALL-UNNAMED -Dio.netty.tryReflectionSetAccessible=true</vm.args-for-netty>
     </properties>
 
@@ -111,6 +112,22 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${version.exec-maven-plugin}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>${main-class-client}</mainClass>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${version.maven-surefire-plugin}</version>
@@ -165,7 +182,7 @@
                                     <finalName>client</finalName>
                                     <archive>
                                         <manifest>
-                                            <mainClass>nl.altindag.client.ClientRunner</mainClass>
+                                            <mainClass>${main-class-client}</mainClass>
                                         </manifest>
                                     </archive>
                                     <descriptorRefs>
@@ -208,7 +225,7 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <version>${version.spring}</version>
                         <configuration>
-                            <mainClass>${mainClassServer}</mainClass>
+                            <mainClass>${main-class-server}</mainClass>
                             <wait>1000</wait>
                             <maxAttempts>180</maxAttempts>
                         </configuration>
