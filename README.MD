@@ -119,15 +119,15 @@ Congratulations! You enabled a TLS-encrypted connection between the server and t
 
 Let's also run the client in the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class.
 
-You will see the following error message: `java.net.ConnectException: Connection refused (Connection refused)`. It looks like the client is trying to say hello to the server but the server is not there. The problem is that the client it trying to say hello to the server on port 8080 while it is active on the port 8443. Apply the following changes to the HelloStepDefs class:
+You will see the following error message: `java.net.ConnectException: Connection refused (Connection refused)`. It looks like the client is trying to say hello to the server but the server is not there. The problem is that the client it trying to say hello to the server on port 8080 while it is active on the port 8443. Apply the following changes to the Constants class:
 
 **From**:
 ```java
-private static final String SERVER_URL = "http://localhost:8080";
+private static final String DEFAULT_SERVER_URL = "http://localhost:8080";
 ```
 **To**:
 ```java
-private static final String SERVER_URL = "https://localhost:8443";
+private static final String DEFAULT_SERVER_URL = "https://localhost:8443";
 ```
 
 Let's try to run the client again and you will see that the following message will appear: `javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target`.
