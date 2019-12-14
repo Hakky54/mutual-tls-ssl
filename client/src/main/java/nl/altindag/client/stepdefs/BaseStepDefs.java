@@ -4,9 +4,8 @@ import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
-
-import javax.annotation.Nullable;
 
 import nl.altindag.client.ClientType;
 import nl.altindag.client.SpringBootHelper;
@@ -24,7 +23,7 @@ public class BaseStepDefs extends SpringBootHelper {
                                               .collect(toMap(RequestService::getClientType, Function.identity()));
     }
 
-    public @Nullable RequestService getRequestService(ClientType clientType) {
-        return requestServices.get(clientType);
+    public Optional<RequestService> getRequestService(ClientType clientType) {
+        return Optional.ofNullable(requestServices.get(clientType));
     }
 }
