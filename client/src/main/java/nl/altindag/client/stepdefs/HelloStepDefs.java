@@ -1,6 +1,5 @@
 package nl.altindag.client.stepdefs;
 
-import static java.util.Objects.isNull;
 import static nl.altindag.client.Constants.HELLO_ENDPOINT;
 import static nl.altindag.client.Constants.SERVER_URL;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,10 +38,9 @@ public class HelloStepDefs extends BaseStepDefs {
         String url = SERVER_URL + HELLO_ENDPOINT;
 
         ClientType clientType = ClientType.from(client);
-        RequestService requestService = getRequestService(clientType);
-        if (isNull(requestService)) {
-            throw new ClientException(String.format("Received a not supported [%s] client type", clientType.getValue()));
-        }
+        RequestService requestService = getRequestService(clientType)
+                .orElseThrow(() -> new ClientException(String.format("Received a not supported [%s] client type", clientType.getValue())));
+
         ClientResponse clientResponse = requestService.executeRequest(url);
         testScenario.setClientResponse(clientResponse);
     }
