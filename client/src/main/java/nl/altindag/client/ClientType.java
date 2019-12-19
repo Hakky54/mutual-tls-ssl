@@ -15,6 +15,7 @@ public enum ClientType {
     UNIREST("unirest"),
     RETROFIT("retrofit"),
     FINAGLE("finagle"),
+    AKKA_HTTP_CLIENT("akka http client"),
     NONE("none");
 
     private String value;

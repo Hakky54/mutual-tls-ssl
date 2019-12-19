@@ -7,7 +7,6 @@ import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,9 +18,11 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.altindag.client.ClientException;
@@ -31,15 +32,11 @@ import nl.altindag.client.model.ClientResponse;
 @RunWith(MockitoJUnitRunner.class)
 public class OldJdkHttpClientWrapperShould {
 
+    @Spy
+    @InjectMocks
     private OldJdkHttpClientWrapper victim;
+    @Mock
     private SSLContextHelper sslContextHelper;
-
-    @Before
-    public void setUp() {
-        sslContextHelper = mock(SSLContextHelper.class);
-
-        victim = spy(new OldJdkHttpClientWrapper(sslContextHelper));
-    }
 
     @Test
     public void executeHttpRequest() throws Exception {
