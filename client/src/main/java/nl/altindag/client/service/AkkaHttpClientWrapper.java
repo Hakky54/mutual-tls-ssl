@@ -11,6 +11,7 @@ import akka.http.javadsl.model.HttpHeader;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.stream.impl.PhasedFusingActorMaterializer;
+import akka.stream.javadsl.Sink;
 import akka.util.ByteString;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.Constants;
@@ -37,8 +38,9 @@ public class AkkaHttpClientWrapper extends RequestService {
     private String extractBody(HttpResponse httpResponse) {
         return httpResponse.entity()
                            .getDataBytes()
-                           .runFold(ByteString.empty(), ByteString::concat, PhasedFusingActorMaterializer.createMaterializer(ActorSystem.create()))
-                           .thenApply(ByteString::utf8String)
+                           .fold(ByteString.empty(), ByteString::concat)
+                           .map(ByteString::utf8String)
+                           .runWith(Sink.head(), ActorSystem.create())
                            .toCompletableFuture()
                            .join();
     }
