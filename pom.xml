@@ -225,17 +225,10 @@
                             </goals>
                         </execution>
                         <execution>
-                            <id>report-unit-test</id>
+                            <id>report</id>
                             <phase>test</phase>
                             <goals>
                                 <goal>report</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>report-integration-test</id>
-                            <phase>integration-test</phase>
-                            <goals>
-                                <goal>report-integration</goal>
                             </goals>
                         </execution>
                     </executions>

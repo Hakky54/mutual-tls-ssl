@@ -5,13 +5,13 @@ import static nl.altindag.client.ClientType.AKKA_HTTP_CLIENT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.annotations.VisibleForTesting;
-
+import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.model.HttpHeader;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
-import akka.http.javadsl.unmarshalling.Unmarshaller;
+import akka.stream.impl.PhasedFusingActorMaterializer;
+import akka.util.ByteString;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.Constants;
 import nl.altindag.client.model.ClientResponse;
@@ -34,10 +34,11 @@ public class AkkaHttpClientWrapper extends RequestService {
                              .join();
     }
 
-    @VisibleForTesting
-    String extractBody(HttpResponse httpResponse) {
-        return Unmarshaller.entityToString()
-                           .unmarshal(httpResponse.entity(), null, null)
+    private String extractBody(HttpResponse httpResponse) {
+        return httpResponse.entity()
+                           .getDataBytes()
+                           .runFold(ByteString.empty(), ByteString::concat, PhasedFusingActorMaterializer.createMaterializer(ActorSystem.create()))
+                           .thenApply(ByteString::utf8String)
                            .toCompletableFuture()
                            .join();
     }
