@@ -26,7 +26,7 @@ configureApplicationProperties() {
 
     echo 'Configuring application properties of the client'
     rm client/src/test/resources/application.yml
-    echo -e 'spring:\n  main:\n    banner-mode: "off"\n\nlogging:\n  level:\n    nl.altindag.client: INFO\n\nclient:\n  ssl:\n    one-way-authentication-enabled: true\n    two-way-authentication-enabled: false\n    trust-store: truststore.jks\n    trust-store-password: secret'  >> client/src/test/resources/application.yml
+    echo -e 'spring:\n  main:\n    banner-mode: "off"\n    web-application-type: none\n\nlogging:\n  level:\n    nl.altindag.client: INFO\n\nclient:\n  ssl:\n    one-way-authentication-enabled: true\n    two-way-authentication-enabled: false\n    trust-store: truststore.jks\n    trust-store-password: secret'  >> client/src/test/resources/application.yml
 }
 
 configureClientRequestToUseHttps() {
