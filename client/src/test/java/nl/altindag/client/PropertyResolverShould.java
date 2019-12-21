@@ -20,7 +20,7 @@ public class PropertyResolverShould extends LogTestHelper<YamlPropertiesFactoryB
         assertThat(properties).isNotNull();
 
         assertThat(getLogs(Level.DEBUG)).contains("Loading from YAML: class path resource [application.yml]");
-        assertThat(getLogs(Level.DEBUG)).anyMatch(logEntry -> logEntry.contains("Merging document (no matchers set): {spring={main={banner-mode=off}}, "));
+        assertThat(getLogs(Level.DEBUG)).anyMatch(logEntry -> logEntry.contains("Merging document (no matchers set): {spring={main={banner-mode=off, web-application-type=none}}, "));
         assertThat(getLogs(Level.DEBUG)).contains("Loaded 1 document from YAML resource: class path resource [application.yml]");
     }
 

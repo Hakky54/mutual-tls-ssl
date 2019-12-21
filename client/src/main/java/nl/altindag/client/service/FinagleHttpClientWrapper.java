@@ -18,7 +18,7 @@ import nl.altindag.client.model.ClientResponse;
 @Service
 public class FinagleHttpClientWrapper extends RequestService {
 
-    private static final int TIMEOUT_AMOUNT_IN_SECONDS = 1;
+    private static final int TIMEOUT_AMOUNT_IN_SECONDS = 5;
 
     private com.twitter.finagle.Service<Request, Response> service;
 
