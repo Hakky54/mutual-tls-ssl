@@ -9,6 +9,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import ch.qos.logback.classic.Level;
 import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.TestScenario;
+import nl.altindag.client.aspect.LogExecutionTime;
 import nl.altindag.client.model.ClientResponse;
 import nl.altindag.client.service.RequestService;
 import nl.altindag.client.util.LogTestHelper;
@@ -63,6 +65,13 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
         assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 
+    @Test
+    public void iSayHelloWithClientIsAnnotatedWithLogExecutionTime() throws NoSuchMethodException {
+        Method method = victim.getClass().getMethod("iSayHelloWithClient", String.class);
+        LogExecutionTime annotation = method.getAnnotation(LogExecutionTime.class);
+
+        assertThat(annotation).isNotNull();
+    }
 
     @Test
     public void throwExceptionWhenISayHelloWithClientUnknownClient() {
@@ -96,6 +105,19 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
         victim.iExpectToReceiveBody("Hello");
 
         verify(testScenario, times(1)).getClientResponse();
+    }
+
+    @Test
+    public void iDisplayTheTimeItTookToGetTheMessage() {
+        when(testScenario.getExecutionTimeInMilliSeconds()).thenReturn(134L);
+
+        victim.iDisplayTheTimeItTookToGetTheMessage();
+
+        List<String> logs = getLogs(Level.INFO);
+        assertThat(logs).hasSize(1);
+        assertThat(logs).containsExactly("Executed request within 134 milliseconds");
+
+        verify(testScenario, times(1)).getExecutionTimeInMilliSeconds();
     }
 
     @Override
