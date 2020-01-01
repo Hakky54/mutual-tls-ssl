@@ -34,6 +34,8 @@ import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 
+import akka.actor.ActorSystem;
+import akka.http.javadsl.HttpsConnectionContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import kong.unirest.Unirest;
 import okhttp3.OkHttpClient;
@@ -216,6 +218,18 @@ public class ClientConfig {
                     .tls(sslContextHelper.getSslContext());
         }
         return client.newService(uri.getHost() + ":" + uri.getPort());
+    }
+
+    @Bean
+    public akka.http.javadsl.Http akkaHttpClient(SSLContextHelper sslContextHelper) {
+        ActorSystem system = ActorSystem.create();
+        akka.http.javadsl.Http http = akka.http.javadsl.Http.get(system);
+
+        if (sslContextHelper.isSecurityEnabled()) {
+            HttpsConnectionContext httpsContext = HttpsConnectionContext.https(sslContextHelper.getSslContext());
+            http.setDefaultClientHttpsContext(httpsContext);
+        }
+        return http;
     }
 
 }

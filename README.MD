@@ -37,6 +37,7 @@ Below is a list of supported clients with examples, see in the [ClientConfig cla
   - Unirest
   - Retrofit
   - Finagle
+  - Akka Http Client
 
 ## Starting the server
 **Minimum requirements:**
