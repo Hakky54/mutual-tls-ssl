@@ -23,3 +23,4 @@ Feature: Securing the connection between you and the world
       | Unirest                         |
       | Retrofit                        |
       | Finagle                         |
+      | Akka Http Client                |

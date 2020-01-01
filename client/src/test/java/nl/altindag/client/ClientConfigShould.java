@@ -27,6 +27,7 @@ import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 
+import akka.http.javadsl.Http;
 import kong.unirest.Unirest;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -412,6 +413,28 @@ public class ClientConfigShould {
         assertThat(service.status().toString()).isEqualTo("Open");
 
         service.close();
+    }
+
+    @Test
+    public void createAkkaHttpClientWithoutSecurity() {
+        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+
+        Http http = victim.akkaHttpClient(sslContextHelper);
+
+        assertThat(http).isNotNull();
+        verify(sslContextHelper, times(1)).isSecurityEnabled();
+        verify(sslContextHelper, times(0)).getSslContext();
+    }
+
+    @Test
+    public void createAkkaHttpClientWithSecurity() {
+        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+
+        Http http = victim.akkaHttpClient(sslContextHelper);
+
+        assertThat(http).isNotNull();
+        verify(sslContextHelper, times(1)).isSecurityEnabled();
+        verify(sslContextHelper, times(1)).getSslContext();
     }
 
     private SSLContextHelper createSSLContextHelper(boolean oneWayAuthenticationEnabled, boolean twoWayAuthenticationEnabled) {

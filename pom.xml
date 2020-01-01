@@ -35,10 +35,12 @@
         <version.unirest>3.3.00</version.unirest>
         <version.retrofit>2.7.0</version.retrofit>
         <version.finagle-scala_2.12>19.12.0</version.finagle-scala_2.12>
+        <version.akka-http_2.12>10.1.11</version.akka-http_2.12>
+        <version.akka-stream_2.12>2.6.1</version.akka-stream_2.12>
         <version.jackson-module-scala_2.12>2.10.1</version.jackson-module-scala_2.12>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
-        <version.maven-assembly-plugin>3.2.0</version.maven-assembly-plugin>
+        <version.maven-shade-plugin>3.2.1</version.maven-shade-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -54,12 +56,10 @@
                 <artifactId>spring-boot</artifactId>
                 <version>${version.spring}</version>
             </dependency>
-
-            <!--     Plugin to build executable jar       -->
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${version.spring}</version>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${version.aspectjweaver}</version>
             </dependency>
 
             <!--     Http Clients       -->
@@ -68,12 +68,6 @@
                 <artifactId>spring-boot-starter-webflux</artifactId>
                 <version>${version.spring}</version>
             </dependency>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjweaver</artifactId>
-                <version>${version.aspectjweaver}</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
@@ -133,6 +127,16 @@
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
                 <version>${version.okhttp}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-http_2.12</artifactId>
+                <version>${version.akka-http_2.12}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-stream_2.12</artifactId>
+                <version>${version.akka-stream_2.12}</version>
             </dependency>
 
             <!--     Apache Utils       -->
@@ -278,8 +282,14 @@
                 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${version.maven-assembly-plugin}</version>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${version.maven-shade-plugin}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${version.spring}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
