@@ -27,16 +27,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean verify
 
-      - uses: actions/upload-artifact@master
-        with:
-          name: client-without-encryption
-          path: client/target/client.jar
-
-      - uses: actions/upload-artifact@master
-        with:
-          name: server-without-encryption
-          path: server/target/server.jar
-
       - uses: codecov/codecov-action@v1.0.3
         with:
           token: ${{secrets.CODECOV_TOKEN}}
@@ -62,16 +52,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean verify -P with-one-way-authentication
 
-      - uses: actions/upload-artifact@master
-        with:
-          name: client-with-one-way-authentication
-          path: client/target/client.jar
-
-      - uses: actions/upload-artifact@master
-        with:
-          name: server-with-one-way-authentication
-          path: server/target/server.jar
-
   two-way-authentication-by-trusting-root-ca:
     runs-on: ubuntu-latest
     steps:
@@ -93,16 +73,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean verify -P with-two-way-authentication-by-trusting-root-ca
 
-      - uses: actions/upload-artifact@master
-        with:
-          name: client-with-two-way-authentication-by-trusting-root-ca
-          path: client/target/client.jar
-
-      - uses: actions/upload-artifact@master
-        with:
-          name: server-with-two-way-authentication-by-trusting-root-ca
-          path: server/target/server.jar
-
   two-way-authentication-by-trusting-each-other:
     runs-on: ubuntu-latest
     steps:
@@ -123,13 +93,3 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean verify -P with-two-way-authentication-by-trusting-each-other
-
-      - uses: actions/upload-artifact@master
-        with:
-          name: client-with-two-way-authentication-by-trusting-each-other
-          path: client/target/client.jar
-
-      - uses: actions/upload-artifact@master
-        with:
-          name: server-with-two-way-authentication-by-trusting-each-other
-          path: server/target/server.jar
