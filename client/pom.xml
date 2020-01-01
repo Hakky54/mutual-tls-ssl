@@ -180,26 +180,25 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <version>${version.maven-assembly-plugin}</version>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <version>${version.maven-shade-plugin}</version>
+                        <configuration>
+                            <finalName>client</finalName>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>${main-class-client}</mainClass>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>reference.conf</resource>
+                                </transformer>
+                            </transformers>
+                        </configuration>
                         <executions>
                             <execution>
                                 <phase>package</phase>
                                 <goals>
-                                    <goal>single</goal>
+                                    <goal>shade</goal>
                                 </goals>
-                                <configuration>
-                                    <finalName>client</finalName>
-                                    <archive>
-                                        <manifest>
-                                            <mainClass>${main-class-client}</mainClass>
-                                        </manifest>
-                                    </archive>
-                                    <descriptorRefs>
-                                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                                    </descriptorRefs>
-                                    <appendAssemblyId>false</appendAssemblyId>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
