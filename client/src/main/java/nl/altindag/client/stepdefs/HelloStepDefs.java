@@ -10,12 +10,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.TestScenario;
+import nl.altindag.client.aspect.LogExecutionTime;
 import nl.altindag.client.model.ClientResponse;
 import nl.altindag.client.service.RequestService;
 
@@ -33,6 +35,7 @@ public class HelloStepDefs extends BaseStepDefs {
         LOGGER.debug("Assuming the server is up and running");
     }
 
+    @LogExecutionTime
     @When("I say hello with (.*)")
     public void iSayHelloWithClient(String client) throws Exception {
         String url = SERVER_URL + HELLO_ENDPOINT;
@@ -53,6 +56,11 @@ public class HelloStepDefs extends BaseStepDefs {
     @Then("I expect to receive (.*) message")
     public void iExpectToReceiveBody(String body) {
         assertThat(testScenario.getClientResponse().getResponseBody()).isEqualTo(body);
+    }
+
+    @And("I display the time it took to get the message")
+    public void iDisplayTheTimeItTookToGetTheMessage() {
+        LOGGER.info("Executed request within {} milliseconds", testScenario.getExecutionTimeInMilliSeconds());
     }
 
 }

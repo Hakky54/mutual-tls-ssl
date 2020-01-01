@@ -1,6 +1,7 @@
 spring:
   main:
     banner-mode: "off"
+    web-application-type: none
 
 logging:
   level:
