@@ -16,6 +16,7 @@
 
     <properties>
         <version.java>11</version.java>
+        <version.sslcontext-kickstart>1.0.2</version.sslcontext-kickstart>
         <version.spring>2.2.2.RELEASE</version.spring>
         <version.apache.httpclient>4.5.10</version.apache.httpclient>
         <version.cucumber>4.8.0</version.cucumber>
@@ -46,6 +47,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.github.hakky54</groupId>
+                <artifactId>sslcontext-kickstart</artifactId>
+                <version>${version.sslcontext-kickstart}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -434,6 +441,14 @@
             </build>
         </profile>
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>oss-sonatype</id>
+            <name>oss-sonatype</name>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+    </repositories>
 
     <licenses>
         <license>
