@@ -38,6 +38,7 @@ import akka.actor.ActorSystem;
 import akka.http.javadsl.HttpsConnectionContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import kong.unirest.Unirest;
+import nl.altindag.sslcontext.SSLContextHelper;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -55,12 +56,13 @@ public class ClientConfig {
                                                   @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
         SSLContextHelper.Builder sslContextHelperBuilder = SSLContextHelper.builder();
         if (oneWayAuthenticationEnabled) {
-            sslContextHelperBuilder.withOneWayAuthentication(trustStorePath, trustStorePassword)
+            sslContextHelperBuilder.withTrustStore(trustStorePath, trustStorePassword)
                                    .withHostnameVerifierEnabled(true);
         }
 
         if (twoWayAuthenticationEnabled) {
-            sslContextHelperBuilder.withTwoWayAuthentication(keyStorePath, keyStorePassword, trustStorePath, trustStorePassword)
+            sslContextHelperBuilder.withIdentity(keyStorePath, keyStorePassword)
+                                   .withTrustStore(trustStorePath, trustStorePassword)
                                    .withHostnameVerifierEnabled(true);
         }
         return sslContextHelperBuilder.build();
@@ -142,8 +144,8 @@ public class ClientConfig {
             }
 
             if (sslContextHelper.isTwoWayAuthenticationEnabled()) {
-                sslContextFactory.setKeyStore(sslContextHelper.getKeyStore());
-                sslContextFactory.setKeyStorePassword(sslContextHelper.getKeyStorePassword());
+                sslContextFactory.setKeyStore(sslContextHelper.getIdentity());
+                sslContextFactory.setKeyStorePassword(sslContextHelper.getIdentityPassword());
                 sslContextFactory.setTrustStore(sslContextHelper.getTrustStore());
                 sslContextFactory.setTrustStorePassword(sslContextHelper.getTrustStorePassword());
             }

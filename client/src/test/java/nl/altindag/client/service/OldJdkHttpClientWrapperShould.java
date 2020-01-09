@@ -26,8 +26,8 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.altindag.client.ClientException;
-import nl.altindag.client.SSLContextHelper;
 import nl.altindag.client.model.ClientResponse;
+import nl.altindag.sslcontext.SSLContextHelper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OldJdkHttpClientWrapperShould {
