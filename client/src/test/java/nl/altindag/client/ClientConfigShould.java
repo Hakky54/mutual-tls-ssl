@@ -29,6 +29,7 @@ import com.twitter.finagle.http.Response;
 
 import akka.http.javadsl.Http;
 import kong.unirest.Unirest;
+import nl.altindag.sslcontext.SSLContextHelper;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
@@ -222,8 +223,8 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(0)).getHostnameVerifier();
         verify(sslContextHelper, times(0)).getTrustStore();
         verify(sslContextHelper, times(0)).getTrustStorePassword();
-        verify(sslContextHelper, times(0)).getKeyStore();
-        verify(sslContextHelper, times(0)).getKeyStorePassword();
+        verify(sslContextHelper, times(0)).getIdentity();
+        verify(sslContextHelper, times(0)).getIdentityPassword();
     }
 
     @Test
@@ -240,8 +241,8 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).getHostnameVerifier();
         verify(sslContextHelper, times(1)).getTrustStore();
         verify(sslContextHelper, times(1)).getTrustStorePassword();
-        verify(sslContextHelper, times(1)).getKeyStore();
-        verify(sslContextHelper, times(1)).getKeyStorePassword();
+        verify(sslContextHelper, times(1)).getIdentity();
+        verify(sslContextHelper, times(1)).getIdentityPassword();
     }
 
     @Test
@@ -258,8 +259,8 @@ public class ClientConfigShould {
         verify(sslContextHelper, times(1)).getHostnameVerifier();
         verify(sslContextHelper, times(1)).getTrustStore();
         verify(sslContextHelper, times(1)).getTrustStorePassword();
-        verify(sslContextHelper, times(0)).getKeyStore();
-        verify(sslContextHelper, times(0)).getKeyStorePassword();
+        verify(sslContextHelper, times(0)).getIdentity();
+        verify(sslContextHelper, times(0)).getIdentityPassword();
     }
 
     @Test
@@ -445,11 +446,14 @@ public class ClientConfigShould {
 
         SSLContextHelper.Builder sslContextBuilder = SSLContextHelper.builder();
         if (oneWayAuthenticationEnabled) {
-            sslContextBuilder.withOneWayAuthentication(trustStorePath, trustStorePassword);
+            sslContextBuilder.withTrustStore(trustStorePath, trustStorePassword)
+                             .withHostnameVerifierEnabled(true);
         }
 
         if (twoWayAuthenticationEnabled) {
-            sslContextBuilder.withTwoWayAuthentication(keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+            sslContextBuilder.withIdentity(keyStorePath, keyStorePassword)
+                             .withTrustStore(trustStorePath, trustStorePassword)
+                             .withHostnameVerifierEnabled(true);
         }
         return Mockito.spy(sslContextBuilder.build());
     }

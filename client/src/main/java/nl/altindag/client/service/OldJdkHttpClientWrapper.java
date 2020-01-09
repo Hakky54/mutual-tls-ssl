@@ -18,8 +18,8 @@ import com.google.common.annotations.VisibleForTesting;
 
 import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
-import nl.altindag.client.SSLContextHelper;
 import nl.altindag.client.model.ClientResponse;
+import nl.altindag.sslcontext.SSLContextHelper;
 
 @Service
 public class OldJdkHttpClientWrapper extends RequestService {
