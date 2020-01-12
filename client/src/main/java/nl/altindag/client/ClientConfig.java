@@ -138,17 +138,6 @@ public class ClientConfig {
             SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
             sslContextFactory.setSslContext(sslContextHelper.getSslContext());
             sslContextFactory.setHostnameVerifier(sslContextHelper.getHostnameVerifier());
-            if (sslContextHelper.isOneWayAuthenticationEnabled()) {
-                sslContextFactory.setTrustStore(sslContextHelper.getTrustStore());
-                sslContextFactory.setTrustStorePassword(String.valueOf(sslContextHelper.getTrustStorePassword()));
-            }
-
-            if (sslContextHelper.isTwoWayAuthenticationEnabled()) {
-                sslContextFactory.setKeyStore(sslContextHelper.getIdentity());
-                sslContextFactory.setKeyStorePassword(String.valueOf(sslContextHelper.getIdentityPassword()));
-                sslContextFactory.setTrustStore(sslContextHelper.getTrustStore());
-                sslContextFactory.setTrustStorePassword(String.valueOf(sslContextHelper.getTrustStorePassword()));
-            }
             httpClient = new org.eclipse.jetty.client.HttpClient(sslContextFactory);
         }
 
