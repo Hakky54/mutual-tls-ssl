@@ -33,7 +33,6 @@ import nl.altindag.sslcontext.SSLContextHelper;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
 @RunWith(MockitoJUnitRunner.class)
 public class ClientConfigShould {
 
@@ -42,7 +41,7 @@ public class ClientConfigShould {
     @Test
     public void createSslTrustManagerHelper() {
         SSLContextHelper sslContextHelper = victim.sslTrustManagerHelper(false, false,
-                                                                         EMPTY, EMPTY, EMPTY, EMPTY);
+                                                                         EMPTY, EMPTY.toCharArray(), EMPTY, EMPTY.toCharArray());
 
         assertThat(sslContextHelper).isNotNull();
         assertThat(sslContextHelper.isSecurityEnabled()).isFalse();
@@ -56,7 +55,7 @@ public class ClientConfigShould {
         String trustStorePassword = "secret";
 
         SSLContextHelper sslContextHelper = victim.sslTrustManagerHelper(true, false,
-                                                                         EMPTY, EMPTY, trustStorePath, trustStorePassword);
+                                                                         EMPTY, EMPTY.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
 
         assertThat(sslContextHelper).isNotNull();
         assertThat(sslContextHelper.isSecurityEnabled()).isTrue();
@@ -72,7 +71,7 @@ public class ClientConfigShould {
         String trustStorePassword = "secret";
 
         SSLContextHelper sslContextHelper = victim.sslTrustManagerHelper(false, true,
-                                                                         keyStorePath, keyStorePassword, trustStorePath, trustStorePassword);
+                                                                         keyStorePath, keyStorePassword.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
 
         assertThat(sslContextHelper).isNotNull();
         assertThat(sslContextHelper.isSecurityEnabled()).isTrue();
@@ -446,13 +445,13 @@ public class ClientConfigShould {
 
         SSLContextHelper.Builder sslContextBuilder = SSLContextHelper.builder();
         if (oneWayAuthenticationEnabled) {
-            sslContextBuilder.withTrustStore(trustStorePath, trustStorePassword)
+            sslContextBuilder.withTrustStore(trustStorePath, trustStorePassword.toCharArray())
                              .withHostnameVerifierEnabled(true);
         }
 
         if (twoWayAuthenticationEnabled) {
-            sslContextBuilder.withIdentity(keyStorePath, keyStorePassword)
-                             .withTrustStore(trustStorePath, trustStorePassword)
+            sslContextBuilder.withIdentity(keyStorePath, keyStorePassword.toCharArray())
+                             .withTrustStore(trustStorePath, trustStorePassword.toCharArray())
                              .withHostnameVerifierEnabled(true);
         }
         return Mockito.spy(sslContextBuilder.build());
