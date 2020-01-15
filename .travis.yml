@@ -12,6 +12,6 @@ branches:
     - switch-to-travis-ci
 
 script:
-  - "./scripts/test-all-scenarios.sh"
+  - "mvn clean install -P with-two-way-authentication-by-trusting-root-ca"
 
 
