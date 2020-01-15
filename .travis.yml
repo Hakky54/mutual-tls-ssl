@@ -14,3 +14,5 @@ script:
   - "mvn clean verify -P with-one-way-authentication"
   - "mvn clean verify -P with-two-way-authentication-by-trusting-root-ca"
   - "mvn clean verify -P with-two-way-authentication-by-trusting-each-other"
+
+
