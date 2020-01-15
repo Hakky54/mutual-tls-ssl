@@ -235,14 +235,14 @@ public class ClientConfigShould {
 
         assertThat(webClient).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslContextHelper, times(1)).isTwoWayAuthenticationEnabled();
+        verify(sslContextHelper, times(0)).isOneWayAuthenticationEnabled();
+        verify(sslContextHelper, times(0)).isTwoWayAuthenticationEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
         verify(sslContextHelper, times(1)).getHostnameVerifier();
-        verify(sslContextHelper, times(1)).getTrustStore();
-        verify(sslContextHelper, times(1)).getTrustStorePassword();
-        verify(sslContextHelper, times(1)).getIdentity();
-        verify(sslContextHelper, times(1)).getIdentityPassword();
+        verify(sslContextHelper, times(0)).getTrustStore();
+        verify(sslContextHelper, times(0)).getTrustStorePassword();
+        verify(sslContextHelper, times(0)).getIdentity();
+        verify(sslContextHelper, times(0)).getIdentityPassword();
     }
 
     @Test
@@ -253,12 +253,12 @@ public class ClientConfigShould {
 
         assertThat(webClient).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslContextHelper, times(1)).isTwoWayAuthenticationEnabled();
+        verify(sslContextHelper, times(0)).isOneWayAuthenticationEnabled();
+        verify(sslContextHelper, times(0)).isTwoWayAuthenticationEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
         verify(sslContextHelper, times(1)).getHostnameVerifier();
-        verify(sslContextHelper, times(1)).getTrustStore();
-        verify(sslContextHelper, times(1)).getTrustStorePassword();
+        verify(sslContextHelper, times(0)).getTrustStore();
+        verify(sslContextHelper, times(0)).getTrustStorePassword();
         verify(sslContextHelper, times(0)).getIdentity();
         verify(sslContextHelper, times(0)).getIdentityPassword();
     }
