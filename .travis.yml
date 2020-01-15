@@ -9,6 +9,6 @@ branches:
   only:
     - switch-to-travis-ci
 
-script: mvn clean verify -Pwith-one-way-authentication -Dmaven.test.skip=false
+script: "mvn clean verify -Pwith-one-way-authentication -Dmaven.test.skip=false"
 
 
