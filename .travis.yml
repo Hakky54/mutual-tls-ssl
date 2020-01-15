@@ -1,5 +1,6 @@
 language: java
 os: linux
+sudo: true
 
 cache:
   directories:
@@ -9,6 +10,6 @@ branches:
   only:
     - switch-to-travis-ci
 
-script: "./script/test-all-scenarios.sh"
+script: "mvn clean verify -P with-one-way-authentication"
 
 
