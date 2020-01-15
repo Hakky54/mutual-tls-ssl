@@ -2,7 +2,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/0d1d7fbf53440f6372f0/maintainability)](https://codeclimate.com/github/Hakky54/mutual-tls-ssl/maintainability)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/70a8a5e2a32e4a3c85e33060c326caf0)](https://www.codacy.com/manual/Hakky54/mutual-tls-ssl?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Hakky54/mutual-tls-ssl&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/Hakky54/mutual-tls-ssl/branch/master/graph/badge.svg)](https://codecov.io/gh/Hakky54/mutual-tls-ssl)
-[![GPL license](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/Hakky54/mutual-tls-ssl/blob/master/LICENSE)
+[![Apache2 license](https://img.shields.io/badge/license-Aache2.0-blue.svg)](https://github.com/Hakky54/mutual-tls-ssl/blob/master/LICENSE)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FHakky54%2Fmutual-tls-ssl.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FHakky54%2Fmutual-tls-ssl?ref=badge_shield)
 
 # Mastering two way TLS
 
@@ -336,3 +337,6 @@ You can also automate all the previous steps described above with the provided s
  - One way authentication: `./configure-one-way-authentication`
  - Two way authentication: `./configure-two-way-authentication-by-trusting-each-other my-company-name`
  - Two way authentication by trusting the Certificate Authority: `./configure-two-way-authentication-by-trusting-root-ca my-company-name`
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FHakky54%2Fmutual-tls-ssl.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FHakky54%2Fmutual-tls-ssl?ref=badge_large)
