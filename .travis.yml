@@ -11,6 +11,7 @@ branches:
   only:
     - switch-to-travis-ci
 
-script: "mvn clean verify -P with-one-way-authentication"
+script:
+  - "./scripts/test-all-scenarios.sh"
 
 
