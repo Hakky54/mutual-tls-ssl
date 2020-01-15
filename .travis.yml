@@ -4,6 +4,10 @@ cache:
   directories:
     - $HOME/.m2
 
+branches:
+  only:
+    - switch-to-travis-ci
+
 script:
   - mvn clean verify
   - mvn clean verify -P with-one-way-authentication
