@@ -1,5 +1,8 @@
 name: Build
 
+on:
+  push:
+
 jobs:
   report-code-coverage:
     runs-on: ubuntu-latest
