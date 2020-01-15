@@ -9,10 +9,6 @@ branches:
   only:
     - switch-to-travis-ci
 
-script:
-  - mvn clean verify
-  - mvn clean verify -Pwith-one-way-authentication
-  - mvn clean verify -Pwith-two-way-authentication-by-trusting-root-ca
-  - mvn clean verify -Pwith-two-way-authentication-by-trusting-each-other
+script: mvn clean verify -Pwith-one-way-authentication -Dmaven.test.skip=false
 
 
