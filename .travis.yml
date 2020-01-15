@@ -1,7 +1,8 @@
 language: java
 os: linux
 sudo: true
-install: true
+install: ""
+jdk: openjdk11
 
 cache:
   directories:
@@ -13,11 +14,11 @@ branches:
 
 jobs:
   include:
-    - stage: "without-encryption"
+    - stage: "without authentication"
     - script: "mvn clean verify -P without-authentication"
-    - stage: "one-way-authentication"
+    - stage: "one way authentication"
     - script: "mvn clean verify -P with-one-way-authentication"
-    - stage: "two-way-authentication-by-trusting-each-other"
+    - stage: "two way authentication by trusting each other"
     - script: "mvn clean verify -P with-two-way-authentication-by-trusting-each-other"
-    - stage: "two-way-authentication-by-trusting-root-ca"
+    - stage: "two way authentication by trusting root ca"
     - script: "mvn clean verify -P with-two-way-authentication-by-trusting-root-ca"
