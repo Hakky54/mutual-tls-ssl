@@ -51,9 +51,9 @@ public class ClientConfig {
     public SSLContextHelper sslTrustManagerHelper(@Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
                                                   @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
                                                   @Value("${client.ssl.key-store:}") String keyStorePath,
-                                                  @Value("${client.ssl.key-store-password:}") String keyStorePassword,
+                                                  @Value("${client.ssl.key-store-password:}") char[] keyStorePassword,
                                                   @Value("${client.ssl.trust-store:}") String trustStorePath,
-                                                  @Value("${client.ssl.trust-store-password:}") String trustStorePassword) {
+                                                  @Value("${client.ssl.trust-store-password:}") char[] trustStorePassword) {
         SSLContextHelper.Builder sslContextHelperBuilder = SSLContextHelper.builder();
         if (oneWayAuthenticationEnabled) {
             sslContextHelperBuilder.withTrustStore(trustStorePath, trustStorePassword)
