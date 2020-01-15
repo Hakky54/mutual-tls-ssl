@@ -10,7 +10,7 @@ cache:
 
 branches:
   only:
-    - switch-to-travis-ci
+    - master
 
 jobs:
   include:
