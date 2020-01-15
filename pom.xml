@@ -238,7 +238,6 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${version.maven-surefire-plugin}</version>
                     <configuration>
-                        <testFailureIgnore>true</testFailureIgnore>
                         <includes>
                             <include>%regex[.*Should.*]</include>
                         </includes>

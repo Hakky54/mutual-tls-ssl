@@ -1,6 +1,7 @@
 language: java
 os: linux
 sudo: true
+install: true
 
 cache:
   directories:
