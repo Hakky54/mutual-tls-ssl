@@ -1,0 +1,24 @@
+language: java
+os: linux
+sudo: true
+install: true
+jdk: openjdk11
+
+cache:
+  directories:
+    - $HOME/.m2
+
+branches:
+  only:
+    - master
+
+jobs:
+  include:
+    - stage: "without authentication"
+    - script: "mvn clean verify -P without-authentication"
+    - stage: "one way authentication"
+    - script: "mvn clean verify -P with-one-way-authentication"
+    - stage: "two way authentication by trusting each other"
+    - script: "mvn clean verify -P with-two-way-authentication-by-trusting-each-other"
+    - stage: "two way authentication by trusting root ca"
+    - script: "mvn clean verify -P with-two-way-authentication-by-trusting-root-ca"
