@@ -1,7 +1,8 @@
 language: java
 os: linux
 sudo: true
-install: ""
+install:
+  - ""
 jdk: openjdk11
 
 cache:
