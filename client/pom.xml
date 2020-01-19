@@ -173,6 +173,15 @@
                 <version>${version.jacoco-maven-plugin}</version>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>logback-test.xml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
     <profiles>
