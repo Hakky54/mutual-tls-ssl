@@ -27,6 +27,7 @@ import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 
+import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLContextHelper;
@@ -420,7 +421,7 @@ public class ClientConfigShould {
     public void createAkkaHttpClientWithoutSecurity() {
         SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
 
-        Http http = victim.akkaHttpClient(sslContextHelper);
+        Http http = victim.akkaHttpClient(sslContextHelper, ActorSystem.create());
 
         assertThat(http).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
@@ -431,11 +432,19 @@ public class ClientConfigShould {
     public void createAkkaHttpClientWithSecurity() {
         SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
 
-        Http http = victim.akkaHttpClient(sslContextHelper);
+        Http http = victim.akkaHttpClient(sslContextHelper, ActorSystem.create());
 
         assertThat(http).isNotNull();
         verify(sslContextHelper, times(1)).isSecurityEnabled();
         verify(sslContextHelper, times(1)).getSslContext();
+    }
+
+    @Test
+    public void createActorSystem() {
+        ActorSystem actorSystem = victim.actorSystem();
+
+        assertThat(actorSystem).isNotNull();
+        assertThat(actorSystem.name()).isEqualTo("ClientConfig");
     }
 
     private SSLContextHelper createSSLContextHelper(boolean oneWayAuthenticationEnabled, boolean twoWayAuthenticationEnabled) {

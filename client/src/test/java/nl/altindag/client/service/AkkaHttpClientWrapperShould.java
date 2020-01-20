@@ -3,19 +3,20 @@ package nl.altindag.client.service;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.concurrent.CompletableFuture;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.model.ContentTypes;
 import akka.http.javadsl.model.HttpHeader;
@@ -28,10 +29,14 @@ import nl.altindag.client.model.ClientResponse;
 @RunWith(MockitoJUnitRunner.class)
 public class AkkaHttpClientWrapperShould {
 
-    @InjectMocks
     private AkkaHttpClientWrapper victim;
-    @Mock
     private Http akkaHttpClient;
+
+    @Before
+    public void setUp() {
+        akkaHttpClient = mock(Http.class);
+        victim = new AkkaHttpClientWrapper(akkaHttpClient, ActorSystem.create());
+    }
 
     @Test
     public void executeRequest() {
