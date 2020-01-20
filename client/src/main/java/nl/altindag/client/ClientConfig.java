@@ -214,9 +214,10 @@ public class ClientConfig {
 
     @Bean
     public ActorSystem actorSystem() {
-        ClassLoader classLoader = ClientConfig.class.getClassLoader();
-        return ActorSystem.create(ClientConfig.class.getSimpleName(),
-                                  ConfigFactory.defaultApplication(classLoader), classLoader);
+        return ActorSystem.create(
+                ClientConfig.class.getSimpleName(),
+                ConfigFactory.defaultApplication(ClientConfig.class.getClassLoader())
+        );
     }
 
     @Bean
