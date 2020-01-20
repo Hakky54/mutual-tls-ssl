@@ -20,10 +20,12 @@ import nl.altindag.client.model.ClientResponse;
 public class AkkaHttpClientWrapper extends RequestService {
 
     private final Http akkaHttpClient;
+    private final ActorSystem actorSystem;
 
     @Autowired
-    public AkkaHttpClientWrapper(Http akkaHttpClient) {
+    public AkkaHttpClientWrapper(Http akkaHttpClient, ActorSystem actorSystem) {
         this.akkaHttpClient = akkaHttpClient;
+        this.actorSystem = actorSystem;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class AkkaHttpClientWrapper extends RequestService {
                            .getDataBytes()
                            .fold(ByteString.empty(), ByteString::concat)
                            .map(ByteString::utf8String)
-                           .runWith(Sink.head(), ActorSystem.create())
+                           .runWith(Sink.head(), actorSystem)
                            .toCompletableFuture()
                            .join();
     }
