@@ -33,6 +33,7 @@ import com.twitter.finagle.Http;
 import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
+import com.typesafe.config.ConfigFactory;
 
 import akka.actor.ActorSystem;
 import akka.http.javadsl.HttpsConnectionContext;
@@ -212,9 +213,15 @@ public class ClientConfig {
     }
 
     @Bean
-    public akka.http.javadsl.Http akkaHttpClient(SSLContextHelper sslContextHelper) {
-        ActorSystem system = ActorSystem.create();
-        akka.http.javadsl.Http http = akka.http.javadsl.Http.get(system);
+    public ActorSystem actorSystem() {
+        ClassLoader classLoader = ClientConfig.class.getClassLoader();
+        return ActorSystem.create(ClientConfig.class.getSimpleName(),
+                                  ConfigFactory.defaultApplication(classLoader), classLoader);
+    }
+
+    @Bean
+    public akka.http.javadsl.Http akkaHttpClient(SSLContextHelper sslContextHelper, ActorSystem actorSystem) {
+        akka.http.javadsl.Http http = akka.http.javadsl.Http.get(actorSystem);
 
         if (sslContextHelper.isSecurityEnabled()) {
             HttpsConnectionContext httpsContext = HttpsConnectionContext.https(sslContextHelper.getSslContext());
