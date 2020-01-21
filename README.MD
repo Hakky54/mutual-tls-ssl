@@ -21,7 +21,7 @@ These are the following steps:
 
 Usefull links
   - [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
-  - [Openssl Cheatsheet](https://gist.github.com/webtobesocial/5313b0d7abc25e06c2d78f8b767d4bc3)
+  - [Openssl Cheatsheet](https://gist.github.com/Hakky54/b30418b25215ad7d18f978bc0b448d81)
   - [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
 Below is a list of supported clients with examples, see in the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java) for detailed configuration
