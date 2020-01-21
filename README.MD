@@ -56,7 +56,7 @@ git checkout tags/java-8-compatible
 
 Start the server by running the main method of the [App Class](server/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
 ```bash
-(cd server/ && mvn spring-boot:run)
+cd server/ && mvn spring-boot:run
 ```
 
 ## Saying hello to the server (without encryption)
@@ -78,8 +78,8 @@ Date: Sun, 11 Nov 2018 14:21:50 GMT
 Hello
 ```
 
-You can also call the server with the provided client in the client directory. The client is an integration test based on Cucumber, and you can start it by running the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class from your IDE. There is a [Hello.feature](client/src/test/resources/features/Hello.feature) file that describes the steps for the integration test. You can find it in the test resources of the client project. You can also start the client from the command line with the following command: `mvn clean verify -P\!start-server` or `mvn clean verify -P!start-server`.
-There is another way to run the server and client and that is with the following command: `mvn clean verify`.
+You can also call the server with the provided client in the client directory. The client is an integration test based on Cucumber, and you can start it by running the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class from your IDE or by running the following command from the terminal in the root directory `cd client/ && mvn exec:java`. There is a [Hello.feature](client/src/test/resources/features/Hello.feature) file that describes the steps for the integration test. You can find it in the test resources of the client project.
+There is another way to run both the server and the client and that is with the following command in the root directory: `mvn clean verify`.
 The client sends by default requests to localhost, because it expects the server on the same machine. If the server is running on a different machine you can still provide a custom url with the following VM argument while running the client: `-Durl=http://[HOST]:[PORT]`
 ## Enabling HTTPS on the server (one-way TLS)
 
