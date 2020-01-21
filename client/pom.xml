@@ -127,6 +127,39 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.spring}</version>
+                <configuration>
+                    <mainClass>${main-class-server}</mainClass>
+                    <wait>1000</wait>
+                    <maxAttempts>180</maxAttempts>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <classesDirectory>../server/target/classes</classesDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>integration-test</id>
+                    </execution>
+                    <execution>
+                        <phase>post-integration-test</phase>
+                        <id>post-integration-test</id>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${version.exec-maven-plugin}</version>
@@ -236,48 +269,6 @@
                         </includes>
                     </resource>
                 </resources>
-            </build>
-        </profile>
-        <profile>
-            <id>start-server</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <version>${version.spring}</version>
-                        <configuration>
-                            <mainClass>${main-class-server}</mainClass>
-                            <wait>1000</wait>
-                            <maxAttempts>180</maxAttempts>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>pre-integration-test</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                                <configuration>
-                                    <classesDirectory>../server/target/classes</classesDirectory>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>integration-test</id>
-                            </execution>
-                            <execution>
-                                <phase>post-integration-test</phase>
-                                <id>post-integration-test</id>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
             </build>
         </profile>
     </profiles>
