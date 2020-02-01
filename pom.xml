@@ -37,7 +37,7 @@
         <version.retrofit>2.7.1</version.retrofit>
         <version.finagle-scala_2.12>20.1.0</version.finagle-scala_2.12>
         <version.akka-http_2.12>10.1.11</version.akka-http_2.12>
-        <version.akka-stream_2.12>2.6.1</version.akka-stream_2.12>
+        <version.akka-stream_2.12>2.6.3</version.akka-stream_2.12>
         <version.jackson-module-scala_2.12>2.10.2</version.jackson-module-scala_2.12>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
