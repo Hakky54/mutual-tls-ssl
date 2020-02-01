@@ -30,13 +30,13 @@ public class HelloStepDefs extends BaseStepDefs {
         super(testScenario, requestServices);
     }
 
-    @Given("^Server is alive$")
+    @Given("Server is alive")
     public void serverIsAlive() {
         LOGGER.debug("Assuming the server is up and running");
     }
 
     @LogExecutionTime
-    @When("I say hello with (.*)")
+    @When("I say hello with {string}")
     public void iSayHelloWithClient(String client) throws Exception {
         String url = SERVER_URL + HELLO_ENDPOINT;
 
@@ -48,12 +48,12 @@ public class HelloStepDefs extends BaseStepDefs {
         testScenario.setClientResponse(clientResponse);
     }
 
-    @Then("I expect to receive status code (\\d+)")
+    @Then("I expect to receive status code {int}")
     public void iExpectToReceiveStatusCodeStatusCode(int statusCode) {
         assertThat(testScenario.getClientResponse().getStatusCode()).isEqualTo(statusCode);
     }
 
-    @Then("I expect to receive (.*) message")
+    @Then("I expect to receive {string} message")
     public void iExpectToReceiveBody(String body) {
         assertThat(testScenario.getClientResponse().getResponseBody()).isEqualTo(body);
     }
