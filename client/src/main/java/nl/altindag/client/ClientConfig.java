@@ -39,7 +39,7 @@ import akka.actor.ActorSystem;
 import akka.http.javadsl.HttpsConnectionContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import kong.unirest.Unirest;
-import nl.altindag.sslcontext.SSLContextHelper;
+import nl.altindag.sslcontext.SSLFactory;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -49,42 +49,42 @@ public class ClientConfig {
 
     @Bean
     @Scope("prototype")
-    public SSLContextHelper sslTrustManagerHelper(@Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
-                                                  @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
-                                                  @Value("${client.ssl.key-store:}") String keyStorePath,
-                                                  @Value("${client.ssl.key-store-password:}") char[] keyStorePassword,
-                                                  @Value("${client.ssl.trust-store:}") String trustStorePath,
-                                                  @Value("${client.ssl.trust-store-password:}") char[] trustStorePassword) {
-        SSLContextHelper.Builder sslContextHelperBuilder = SSLContextHelper.builder();
+    public SSLFactory sslFactory(@Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
+                                 @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
+                                 @Value("${client.ssl.key-store:}") String keyStorePath,
+                                 @Value("${client.ssl.key-store-password:}") char[] keyStorePassword,
+                                 @Value("${client.ssl.trust-store:}") String trustStorePath,
+                                 @Value("${client.ssl.trust-store-password:}") char[] trustStorePassword) {
+        SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder();
         if (oneWayAuthenticationEnabled) {
-            sslContextHelperBuilder.withTrustStore(trustStorePath, trustStorePassword)
-                                   .withHostnameVerifierEnabled(true);
+            sslFactoryBuilder.withTrustStore(trustStorePath, trustStorePassword)
+                             .withHostnameVerifierEnabled(true);
         }
 
         if (twoWayAuthenticationEnabled) {
-            sslContextHelperBuilder.withIdentity(keyStorePath, keyStorePassword)
-                                   .withTrustStore(trustStorePath, trustStorePassword)
-                                   .withHostnameVerifierEnabled(true);
+            sslFactoryBuilder.withIdentity(keyStorePath, keyStorePassword)
+                             .withTrustStore(trustStorePath, trustStorePassword)
+                             .withHostnameVerifierEnabled(true);
         }
-        return sslContextHelperBuilder.build();
+        return sslFactoryBuilder.build();
     }
 
     @Bean
     @Scope("prototype")
-    public org.apache.http.client.HttpClient apacheHttpClient(SSLContextHelper sslContextHelper) {
+    public org.apache.http.client.HttpClient apacheHttpClient(SSLFactory sslFactory) {
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
-        if (sslContextHelper.isSecurityEnabled()) {
-            httpClientBuilder.setSSLContext(sslContextHelper.getSslContext());
-            httpClientBuilder.setSSLHostnameVerifier(sslContextHelper.getHostnameVerifier());
+        if (sslFactory.isSecurityEnabled()) {
+            httpClientBuilder.setSSLContext(sslFactory.getSslContext());
+            httpClientBuilder.setSSLHostnameVerifier(sslFactory.getHostnameVerifier());
         }
         return httpClientBuilder.build();
     }
 
     @Bean
-    public HttpClient jdkHttpClient(SSLContextHelper sslContextHelper) {
+    public HttpClient jdkHttpClient(SSLFactory sslFactory) {
         HttpClient.Builder httpClientBuilder = HttpClient.newBuilder();
-        if (sslContextHelper.isSecurityEnabled()) {
-            httpClientBuilder.sslContext(sslContextHelper.getSslContext());
+        if (sslFactory.isSecurityEnabled()) {
+            httpClientBuilder.sslContext(sslFactory.getSslContext());
         }
         return httpClientBuilder.build();
     }
@@ -98,11 +98,11 @@ public class ClientConfig {
 
     @Bean
     @Scope("prototype")
-    public OkHttpClient okHttpClient(SSLContextHelper sslContextHelper) {
+    public OkHttpClient okHttpClient(SSLFactory sslFactory) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        if (sslContextHelper.isSecurityEnabled()) {
-            httpClientBuilder.sslSocketFactory(sslContextHelper.getSslContext().getSocketFactory(), sslContextHelper.getX509TrustManager())
-                             .hostnameVerifier(sslContextHelper.getHostnameVerifier());
+        if (sslFactory.isSecurityEnabled()) {
+            httpClientBuilder.sslSocketFactory(sslFactory.getSslContext().getSocketFactory(), sslFactory.getTrustManager())
+                             .hostnameVerifier(sslFactory.getHostnameVerifier());
         }
 
         return httpClientBuilder
@@ -110,19 +110,19 @@ public class ClientConfig {
     }
 
     @Bean
-    public WebClient webClientWithNetty(SSLContextHelper sslContextHelper) {
+    public WebClient webClientWithNetty(SSLFactory sslFactory) {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
-        if (sslContextHelper.isSecurityEnabled()) {
+        if (sslFactory.isSecurityEnabled()) {
             SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
                                                                    .startTls(true)
-                                                                   .protocols(sslContextHelper.getSslContext().getProtocol());
-            if (sslContextHelper.isOneWayAuthenticationEnabled()) {
-                sslContextBuilder.trustManager(sslContextHelper.getTrustManagerFactory());
+                                                                   .protocols(sslFactory.getSslContext().getProtocol());
+            if (sslFactory.isOneWayAuthenticationEnabled()) {
+                sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
             }
 
-            if (sslContextHelper.isTwoWayAuthenticationEnabled()) {
-                sslContextBuilder.keyManager(sslContextHelper.getKeyManagerFactory())
-                                 .trustManager(sslContextHelper.getTrustManagerFactory());
+            if (sslFactory.isTwoWayAuthenticationEnabled()) {
+                sslContextBuilder.keyManager(sslFactory.getKeyManagerFactory())
+                                 .trustManager(sslFactory.getTrustManagerFactory());
             }
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContextBuilder));
         }
@@ -133,12 +133,12 @@ public class ClientConfig {
     }
 
     @Bean
-    public WebClient webClientWithJetty(SSLContextHelper sslContextHelper) {
+    public WebClient webClientWithJetty(SSLFactory sslFactory) {
         org.eclipse.jetty.client.HttpClient httpClient = new org.eclipse.jetty.client.HttpClient();
-        if (sslContextHelper.isSecurityEnabled()) {
+        if (sslFactory.isSecurityEnabled()) {
             SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
-            sslContextFactory.setSslContext(sslContextHelper.getSslContext());
-            sslContextFactory.setHostnameVerifier(sslContextHelper.getHostnameVerifier());
+            sslContextFactory.setSslContext(sslFactory.getSslContext());
+            sslContextFactory.setHostnameVerifier(sslFactory.getHostnameVerifier());
             httpClient = new org.eclipse.jetty.client.HttpClient(sslContextFactory);
         }
 
@@ -148,46 +148,46 @@ public class ClientConfig {
     }
 
     @Bean
-    public Client jerseyClient(SSLContextHelper sslContextHelper) {
+    public Client jerseyClient(SSLFactory sslFactory) {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
-        if (sslContextHelper.isSecurityEnabled()) {
-            clientBuilder.sslContext(sslContextHelper.getSslContext());
-            clientBuilder.hostnameVerifier(sslContextHelper.getHostnameVerifier());
+        if (sslFactory.isSecurityEnabled()) {
+            clientBuilder.sslContext(sslFactory.getSslContext());
+            clientBuilder.hostnameVerifier(sslFactory.getHostnameVerifier());
         }
         return clientBuilder.build();
     }
 
     @Bean
-    public com.sun.jersey.api.client.Client oldJerseyClient(SSLContextHelper sslContextHelper) {
+    public com.sun.jersey.api.client.Client oldJerseyClient(SSLFactory sslFactory) {
         com.sun.jersey.api.client.Client client = com.sun.jersey.api.client.Client.create();
-        if (sslContextHelper.isSecurityEnabled()) {
-            HttpsURLConnection.setDefaultSSLSocketFactory(sslContextHelper.getSslContext().getSocketFactory());
+        if (sslFactory.isSecurityEnabled()) {
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslFactory.getSslContext().getSocketFactory());
             DefaultClientConfig clientConfig = new DefaultClientConfig();
             clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                                             new HTTPSProperties(sslContextHelper.getHostnameVerifier(), sslContextHelper.getSslContext()));
+                                             new HTTPSProperties(sslFactory.getHostnameVerifier(), sslFactory.getSslContext()));
             com.sun.jersey.api.client.Client.create(clientConfig);
         }
         return client;
     }
 
     @Bean
-    public HttpTransport googleHttpClient(SSLContextHelper sslContextHelper) {
+    public HttpTransport googleHttpClient(SSLFactory sslFactory) {
         NetHttpTransport.Builder httpTransportBuilder = new NetHttpTransport.Builder();
-        if (sslContextHelper.isSecurityEnabled()) {
-            httpTransportBuilder.setSslSocketFactory(sslContextHelper.getSslContext().getSocketFactory())
-                                .setHostnameVerifier(sslContextHelper.getHostnameVerifier());
+        if (sslFactory.isSecurityEnabled()) {
+            httpTransportBuilder.setSslSocketFactory(sslFactory.getSslContext().getSocketFactory())
+                                .setHostnameVerifier(sslFactory.getHostnameVerifier());
         }
         return httpTransportBuilder
                 .build();
     }
 
     @Autowired
-    public void unirest(SSLContextHelper sslContextHelper) {
-        if (sslContextHelper.isSecurityEnabled()) {
+    public void unirest(SSLFactory sslFactory) {
+        if (sslFactory.isSecurityEnabled()) {
             Unirest.primaryInstance()
                    .config()
-                   .sslContext(sslContextHelper.getSslContext())
-                   .hostnameVerifier(sslContextHelper.getHostnameVerifier());
+                   .sslContext(sslFactory.getSslContext())
+                   .hostnameVerifier(sslFactory.getHostnameVerifier());
         }
     }
 
@@ -201,13 +201,13 @@ public class ClientConfig {
     }
 
     @Bean
-    public Service<Request, Response> finagle(SSLContextHelper sslContextHelper) throws URISyntaxException {
+    public Service<Request, Response> finagle(SSLFactory sslFactory) throws URISyntaxException {
         URI uri = new URI(SERVER_URL);
         Http.Client client = Http.client();
-        if (sslContextHelper.isSecurityEnabled()) {
+        if (sslFactory.isSecurityEnabled()) {
             client = client
                     .withTransport()
-                    .tls(sslContextHelper.getSslContext());
+                    .tls(sslFactory.getSslContext());
         }
         return client.newService(uri.getHost() + ":" + uri.getPort());
     }
@@ -221,11 +221,11 @@ public class ClientConfig {
     }
 
     @Bean
-    public akka.http.javadsl.Http akkaHttpClient(SSLContextHelper sslContextHelper, ActorSystem actorSystem) {
+    public akka.http.javadsl.Http akkaHttpClient(SSLFactory sslFactory, ActorSystem actorSystem) {
         akka.http.javadsl.Http http = akka.http.javadsl.Http.get(actorSystem);
 
-        if (sslContextHelper.isSecurityEnabled()) {
-            HttpsConnectionContext httpsContext = HttpsConnectionContext.https(sslContextHelper.getSslContext());
+        if (sslFactory.isSecurityEnabled()) {
+            HttpsConnectionContext httpsContext = HttpsConnectionContext.https(sslFactory.getSslContext());
             http.setDefaultClientHttpsContext(httpsContext);
         }
         return http;
