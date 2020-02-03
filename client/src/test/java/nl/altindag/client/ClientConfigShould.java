@@ -30,7 +30,7 @@ import com.twitter.finagle.http.Response;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
 import kong.unirest.Unirest;
-import nl.altindag.sslcontext.SSLContextHelper;
+import nl.altindag.sslcontext.SSLFactory;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
@@ -42,13 +42,13 @@ public class ClientConfigShould {
 
     @Test
     public void createSslTrustManagerHelper() {
-        SSLContextHelper sslContextHelper = victim.sslTrustManagerHelper(false, false,
-                                                                         EMPTY, EMPTY.toCharArray(), EMPTY, EMPTY.toCharArray());
+        SSLFactory sslFactory = victim.sslFactory(false, false,
+                                                              EMPTY, EMPTY.toCharArray(), EMPTY, EMPTY.toCharArray());
 
-        assertThat(sslContextHelper).isNotNull();
-        assertThat(sslContextHelper.isSecurityEnabled()).isFalse();
-        assertThat(sslContextHelper.isOneWayAuthenticationEnabled()).isFalse();
-        assertThat(sslContextHelper.isTwoWayAuthenticationEnabled()).isFalse();
+        assertThat(sslFactory).isNotNull();
+        assertThat(sslFactory.isSecurityEnabled()).isFalse();
+        assertThat(sslFactory.isOneWayAuthenticationEnabled()).isFalse();
+        assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isFalse();
     }
 
     @Test
@@ -56,13 +56,13 @@ public class ClientConfigShould {
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = "secret";
 
-        SSLContextHelper sslContextHelper = victim.sslTrustManagerHelper(true, false,
-                                                                         EMPTY, EMPTY.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
+        SSLFactory sslFactory = victim.sslFactory(true, false,
+                                                              EMPTY, EMPTY.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
 
-        assertThat(sslContextHelper).isNotNull();
-        assertThat(sslContextHelper.isSecurityEnabled()).isTrue();
-        assertThat(sslContextHelper.isOneWayAuthenticationEnabled()).isTrue();
-        assertThat(sslContextHelper.isTwoWayAuthenticationEnabled()).isFalse();
+        assertThat(sslFactory).isNotNull();
+        assertThat(sslFactory.isSecurityEnabled()).isTrue();
+        assertThat(sslFactory.isOneWayAuthenticationEnabled()).isTrue();
+        assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isFalse();
     }
 
     @Test
@@ -72,59 +72,59 @@ public class ClientConfigShould {
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = "secret";
 
-        SSLContextHelper sslContextHelper = victim.sslTrustManagerHelper(false, true,
-                                                                         keyStorePath, keyStorePassword.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
+        SSLFactory sslFactory = victim.sslFactory(false, true,
+                                                              keyStorePath, keyStorePassword.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
 
-        assertThat(sslContextHelper).isNotNull();
-        assertThat(sslContextHelper.isSecurityEnabled()).isTrue();
-        assertThat(sslContextHelper.isOneWayAuthenticationEnabled()).isFalse();
-        assertThat(sslContextHelper.isTwoWayAuthenticationEnabled()).isTrue();
+        assertThat(sslFactory).isNotNull();
+        assertThat(sslFactory.isSecurityEnabled()).isTrue();
+        assertThat(sslFactory.isOneWayAuthenticationEnabled()).isFalse();
+        assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isTrue();
     }
 
     @Test
     public void createApacheHttpClientWithoutSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        HttpClient httpClient = victim.apacheHttpClient(sslContextHelper);
+        HttpClient httpClient = victim.apacheHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).getSslContext();
+        verify(sslFactory, times(0)).getHostnameVerifier();
     }
 
     @Test
     public void createApacheHttpClientWithSecurity() throws NoSuchAlgorithmException {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        HttpClient httpClient = victim.apacheHttpClient(sslContextHelper);
+        HttpClient httpClient = victim.apacheHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
     }
 
     @Test
     public void createJdkHttpClientWithoutSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        java.net.http.HttpClient httpClient = victim.jdkHttpClient(sslContextHelper);
+        java.net.http.HttpClient httpClient = victim.jdkHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).getSslContext();
     }
 
     @Test
     public void createJdkHttpClientWithSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        java.net.http.HttpClient httpClient = victim.jdkHttpClient(sslContextHelper);
+        java.net.http.HttpClient httpClient = victim.jdkHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).getSslContext();
     }
 
     @Test
@@ -138,241 +138,235 @@ public class ClientConfigShould {
 
     @Test
     public void createOkHttpClientWithoutSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        OkHttpClient okHttpClient = victim.okHttpClient(sslContextHelper);
+        OkHttpClient okHttpClient = victim.okHttpClient(sslFactory);
 
         assertThat(okHttpClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getX509TrustManager();
-        verify(sslContextHelper, times(0)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).getSslContext();
+        verify(sslFactory, times(0)).getTrustManager();
+        verify(sslFactory, times(0)).getHostnameVerifier();
     }
 
     @Test
     public void createOkHttpClientWithSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        OkHttpClient okHttpClient = victim.okHttpClient(sslContextHelper);
+        OkHttpClient okHttpClient = victim.okHttpClient(sslFactory);
 
         assertThat(okHttpClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getX509TrustManager();
-        verify(sslContextHelper, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getTrustManager();
+        verify(sslFactory, times(1)).getHostnameVerifier();
 
-        assertThat(okHttpClient.hostnameVerifier()).isEqualTo(sslContextHelper.getHostnameVerifier());
-        assertThat(okHttpClient.x509TrustManager()).isEqualTo(sslContextHelper.getX509TrustManager());
+        assertThat(okHttpClient.hostnameVerifier()).isEqualTo(sslFactory.getHostnameVerifier());
+        assertThat(okHttpClient.x509TrustManager()).isEqualTo(sslFactory.getTrustManager());
     }
 
     @Test
     public void createWebClientWithNettyWithoutSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        WebClient webClient = victim.webClientWithNetty(sslContextHelper);
+        WebClient webClient = victim.webClientWithNetty(sslFactory);
 
         assertThat(webClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).isOneWayAuthenticationEnabled();
-        verify(sslContextHelper, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getKeyManagerFactory();
-        verify(sslContextHelper, times(0)).getTrustManagerFactory();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(0)).getSslContext();
+        verify(sslFactory, times(0)).getKeyManagerFactory();
+        verify(sslFactory, times(0)).getTrustManagerFactory();
     }
 
     @Test
     public void createWebClientWithNettyWithTwoWayAuthentication() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        WebClient webClient = victim.webClientWithNetty(sslContextHelper);
+        WebClient webClient = victim.webClientWithNetty(sslFactory);
 
         assertThat(webClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslContextHelper, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getKeyManagerFactory();
-        verify(sslContextHelper, times(1)).getTrustManagerFactory();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getKeyManagerFactory();
+        verify(sslFactory, times(1)).getTrustManagerFactory();
     }
 
     @Test
     public void createWebClientWithNettyWithOneWayAuthentication() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(true, false);
+        SSLFactory sslFactory = createSSLFactory(true, false);
 
-        WebClient webClient = victim.webClientWithNetty(sslContextHelper);
+        WebClient webClient = victim.webClientWithNetty(sslFactory);
 
         assertThat(webClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslContextHelper, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(0)).getKeyManagerFactory();
-        verify(sslContextHelper, times(1)).getTrustManagerFactory();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(0)).getKeyManagerFactory();
+        verify(sslFactory, times(1)).getTrustManagerFactory();
     }
 
     @Test
     public void createWebClientWithJettyWithoutSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        WebClient webClient = victim.webClientWithJetty(sslContextHelper);
+        WebClient webClient = victim.webClientWithJetty(sslFactory);
 
         assertThat(webClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).isOneWayAuthenticationEnabled();
-        verify(sslContextHelper, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getHostnameVerifier();
-        verify(sslContextHelper, times(0)).getTrustStore();
-        verify(sslContextHelper, times(0)).getTrustStorePassword();
-        verify(sslContextHelper, times(0)).getIdentity();
-        verify(sslContextHelper, times(0)).getIdentityPassword();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(0)).getSslContext();
+        verify(sslFactory, times(0)).getHostnameVerifier();
+        verify(sslFactory, times(0)).getTrustStores();
+        verify(sslFactory, times(0)).getIdentities();
     }
 
     @Test
     public void createWebClientWithJettyWithTwoWayAuthentication() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        WebClient webClient = victim.webClientWithJetty(sslContextHelper);
+        WebClient webClient = victim.webClientWithJetty(sslFactory);
 
         assertThat(webClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).isOneWayAuthenticationEnabled();
-        verify(sslContextHelper, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getHostnameVerifier();
-        verify(sslContextHelper, times(0)).getTrustStore();
-        verify(sslContextHelper, times(0)).getTrustStorePassword();
-        verify(sslContextHelper, times(0)).getIdentity();
-        verify(sslContextHelper, times(0)).getIdentityPassword();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(0)).getTrustStores();
+        verify(sslFactory, times(0)).getIdentities();
     }
 
     @Test
     public void createWebClientWithJettyWithOneWayAuthentication() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(true, false);
+        SSLFactory sslFactory = createSSLFactory(true, false);
 
-        WebClient webClient = victim.webClientWithJetty(sslContextHelper);
+        WebClient webClient = victim.webClientWithJetty(sslFactory);
 
         assertThat(webClient).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).isOneWayAuthenticationEnabled();
-        verify(sslContextHelper, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getHostnameVerifier();
-        verify(sslContextHelper, times(0)).getTrustStore();
-        verify(sslContextHelper, times(0)).getTrustStorePassword();
-        verify(sslContextHelper, times(0)).getIdentity();
-        verify(sslContextHelper, times(0)).getIdentityPassword();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(0)).getTrustStores();
+        verify(sslFactory, times(0)).getIdentities();
     }
 
     @Test
     public void createJerseyClientWithoutSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        Client client = victim.jerseyClient(sslContextHelper);
+        Client client = victim.jerseyClient(sslFactory);
 
         assertThat(client).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).getSslContext();
+        verify(sslFactory, times(0)).getHostnameVerifier();
 
         client.close();
     }
 
     @Test
     public void createJerseyClientWithSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        Client client = victim.jerseyClient(sslContextHelper);
+        Client client = victim.jerseyClient(sslFactory);
 
         assertThat(client).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
 
         client.close();
     }
 
     @Test
     public void createOldJerseyClientWithoutSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        com.sun.jersey.api.client.Client client = victim.oldJerseyClient(sslContextHelper);
+        com.sun.jersey.api.client.Client client = victim.oldJerseyClient(sslFactory);
 
         assertThat(client).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).getSslContext();
+        verify(sslFactory, times(0)).getHostnameVerifier();
 
         client.destroy();
     }
 
     @Test
     public void createOldJerseyClientWithSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        com.sun.jersey.api.client.Client client = victim.oldJerseyClient(sslContextHelper);
+        com.sun.jersey.api.client.Client client = victim.oldJerseyClient(sslFactory);
 
         assertThat(client).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(2)).getSslContext();
-        verify(sslContextHelper, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
 
         client.destroy();
     }
 
     @Test
     public void createGoogleHttpClientWithoutSecurity() throws IOException {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        HttpTransport httpTransport = victim.googleHttpClient(sslContextHelper);
+        HttpTransport httpTransport = victim.googleHttpClient(sslFactory);
 
         assertThat(httpTransport).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).getSslContext();
+        verify(sslFactory, times(0)).getHostnameVerifier();
 
         httpTransport.shutdown();
     }
 
     @Test
     public void createGoogleHttpClientWithSecurity() throws IOException {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        HttpTransport httpTransport = victim.googleHttpClient(sslContextHelper);
+        HttpTransport httpTransport = victim.googleHttpClient(sslFactory);
 
         assertThat(httpTransport).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
 
         httpTransport.shutdown();
     }
 
     @Test
     public void createUnirestWithoutSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        victim.unirest(sslContextHelper);
+        victim.unirest(sslFactory);
 
         assertThat(Unirest.primaryInstance().config().getSslContext()).isNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
-        verify(sslContextHelper, times(0)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).getSslContext();
+        verify(sslFactory, times(0)).getHostnameVerifier();
 
         Unirest.shutDown();
     }
 
     @Test
     public void createUnirestWithSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        victim.unirest(sslContextHelper);
+        victim.unirest(sslFactory);
 
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
-        verify(sslContextHelper, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
 
-        assertThat(Unirest.primaryInstance().config().getSslContext()).isEqualTo(sslContextHelper.getSslContext());
+        assertThat(Unirest.primaryInstance().config().getSslContext()).isEqualTo(sslFactory.getSslContext());
 
         Unirest.shutDown();
     }
@@ -389,12 +383,12 @@ public class ClientConfigShould {
 
     @Test
     public void createFinagleClientWithoutSecurity() throws URISyntaxException {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        Service<Request, Response> service = victim.finagle(sslContextHelper);
+        Service<Request, Response> service = victim.finagle(sslFactory);
 
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).getSslContext();
 
         assertThat(service.isAvailable()).isTrue();
         assertThat(service.status().toString()).isEqualTo("Open");
@@ -404,12 +398,12 @@ public class ClientConfigShould {
 
     @Test
     public void createFinagleClientWithSecurity() throws URISyntaxException {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        Service<Request, Response> service = victim.finagle(sslContextHelper);
+        Service<Request, Response> service = victim.finagle(sslFactory);
 
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).getSslContext();
 
         assertThat(service.isAvailable()).isTrue();
         assertThat(service.status().toString()).isEqualTo("Open");
@@ -419,24 +413,24 @@ public class ClientConfigShould {
 
     @Test
     public void createAkkaHttpClientWithoutSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, false);
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        Http http = victim.akkaHttpClient(sslContextHelper, ActorSystem.create());
+        Http http = victim.akkaHttpClient(sslFactory, ActorSystem.create());
 
         assertThat(http).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(0)).getSslContext();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).getSslContext();
     }
 
     @Test
     public void createAkkaHttpClientWithSecurity() {
-        SSLContextHelper sslContextHelper = createSSLContextHelper(false, true);
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
-        Http http = victim.akkaHttpClient(sslContextHelper, ActorSystem.create());
+        Http http = victim.akkaHttpClient(sslFactory, ActorSystem.create());
 
         assertThat(http).isNotNull();
-        verify(sslContextHelper, times(1)).isSecurityEnabled();
-        verify(sslContextHelper, times(1)).getSslContext();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).getSslContext();
     }
 
     @Test
@@ -447,24 +441,24 @@ public class ClientConfigShould {
         assertThat(actorSystem.name()).isEqualTo("ClientConfig");
     }
 
-    private SSLContextHelper createSSLContextHelper(boolean oneWayAuthenticationEnabled, boolean twoWayAuthenticationEnabled) {
+    private SSLFactory createSSLFactory(boolean oneWayAuthenticationEnabled, boolean twoWayAuthenticationEnabled) {
         String keyStorePath = "keystores-for-unit-tests/identity.jks";
         String keyStorePassword = "secret";
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = "secret";
 
-        SSLContextHelper.Builder sslContextBuilder = SSLContextHelper.builder();
+        SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder();
         if (oneWayAuthenticationEnabled) {
-            sslContextBuilder.withTrustStore(trustStorePath, trustStorePassword.toCharArray())
+            sslFactoryBuilder.withTrustStore(trustStorePath, trustStorePassword.toCharArray())
                              .withHostnameVerifierEnabled(true);
         }
 
         if (twoWayAuthenticationEnabled) {
-            sslContextBuilder.withIdentity(keyStorePath, keyStorePassword.toCharArray())
+            sslFactoryBuilder.withIdentity(keyStorePath, keyStorePassword.toCharArray())
                              .withTrustStore(trustStorePath, trustStorePassword.toCharArray())
                              .withHostnameVerifierEnabled(true);
         }
-        return Mockito.spy(sslContextBuilder.build());
+        return Mockito.spy(sslFactoryBuilder.build());
     }
 
 }

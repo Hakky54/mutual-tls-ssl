@@ -19,7 +19,7 @@ import com.google.common.annotations.VisibleForTesting;
 import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
-import nl.altindag.sslcontext.SSLContextHelper;
+import nl.altindag.sslcontext.SSLFactory;
 
 @Service
 public class OldJdkHttpClientWrapper extends RequestService {
@@ -27,11 +27,11 @@ public class OldJdkHttpClientWrapper extends RequestService {
     private static final String HTTP_REQUEST = "http:";
     private static final String HTTPS_REQUEST = "https:";
 
-    private final SSLContextHelper sslContextHelper;
+    private final SSLFactory sslFactory;
 
     @Autowired
-    public OldJdkHttpClientWrapper(SSLContextHelper sslContextHelper) {
-        this.sslContextHelper = sslContextHelper;
+    public OldJdkHttpClientWrapper(SSLFactory sslFactory) {
+        this.sslFactory = sslFactory;
     }
 
     @Override
@@ -41,8 +41,8 @@ public class OldJdkHttpClientWrapper extends RequestService {
             connection = createHttpURLConnection(url);
         } else if (url.contains(HTTPS_REQUEST)) {
             HttpsURLConnection httpsURLConnection = createHttpsURLConnection(url);
-            httpsURLConnection.setHostnameVerifier(sslContextHelper.getHostnameVerifier());
-            httpsURLConnection.setSSLSocketFactory(sslContextHelper.getSslContext().getSocketFactory());
+            httpsURLConnection.setHostnameVerifier(sslFactory.getHostnameVerifier());
+            httpsURLConnection.setSSLSocketFactory(sslFactory.getSslContext().getSocketFactory());
             connection = httpsURLConnection;
         } else {
             throw new ClientException("Could not create a http client for one of these reasons: "
