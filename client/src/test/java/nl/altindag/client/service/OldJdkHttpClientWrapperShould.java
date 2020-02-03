@@ -27,7 +27,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.altindag.client.ClientException;
 import nl.altindag.client.model.ClientResponse;
-import nl.altindag.sslcontext.SSLContextHelper;
+import nl.altindag.sslcontext.SSLFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OldJdkHttpClientWrapperShould {
@@ -36,7 +36,7 @@ public class OldJdkHttpClientWrapperShould {
     @InjectMocks
     private OldJdkHttpClientWrapper victim;
     @Mock
-    private SSLContextHelper sslContextHelper;
+    private SSLFactory sslFactory;
 
     @Test
     public void executeHttpRequest() throws Exception {
@@ -65,7 +65,7 @@ public class OldJdkHttpClientWrapperShould {
         when(victim.createHttpsURLConnection(HTTPS_URL)).thenReturn(connection);
         when(connection.getInputStream()).thenReturn(stream);
         when(connection.getResponseCode()).thenReturn(200);
-        when(sslContextHelper.getSslContext()).thenReturn(sslContext);
+        when(sslFactory.getSslContext()).thenReturn(sslContext);
         when(sslContext.getSocketFactory()).thenReturn(sslSocketFactory);
 
         ClientResponse clientResponse = victim.executeRequest(HTTPS_URL);
@@ -74,7 +74,7 @@ public class OldJdkHttpClientWrapperShould {
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
 
         verify(connection, times(1)).setSSLSocketFactory(sslSocketFactory);
-        verify(connection, times(1)).setHostnameVerifier(sslContextHelper.getHostnameVerifier());
+        verify(connection, times(1)).setHostnameVerifier(sslFactory.getHostnameVerifier());
         verify(connection, times(1)).setRequestProperty(HEADER_KEY_CLIENT_TYPE, OLD_JDK_HTTP_CLIENT.getValue());
     }
 
