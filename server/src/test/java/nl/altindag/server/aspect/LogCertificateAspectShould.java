@@ -17,15 +17,17 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import nl.altindag.server.util.LogTestHelper;
+import nl.altindag.log.LogCaptor;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LogCertificateAspectShould extends LogTestHelper<LogCertificateAspect> {
+public class LogCertificateAspectShould {
 
     private LogCertificateAspect logCertificateAspect = new LogCertificateAspect();
 
     @Test
     public void logDetailedClientCertificate() {
+        LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
+
         X509Certificate x509Certificate = mock(X509Certificate.class);
         X509Certificate[] x509Certificates = new X509Certificate[]{x509Certificate};
 
@@ -38,12 +40,14 @@ public class LogCertificateAspectShould extends LogTestHelper<LogCertificateAspe
         LogCertificate logCertificate = createLogCertificate(true);
         logCertificateAspect.logCertificateIfPresent(logCertificate);
 
-        List<String> logs = super.getLogs();
+        List<String> logs = logCaptor.getLogs();
         assertThat(logs).containsExactly("Received the following certificate details: this is a dummy detailed certificate");
     }
 
     @Test
     public void logLessDetailedClientCertificate() {
+        LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
+
         X509Certificate x509Certificate = mock(X509Certificate.class);
         X509Certificate[] x509Certificates = new X509Certificate[]{x509Certificate};
         X500Principal x500Principal = mock(X500Principal.class);
@@ -58,19 +62,21 @@ public class LogCertificateAspectShould extends LogTestHelper<LogCertificateAspe
         LogCertificate logCertificate = createLogCertificate(false);
         logCertificateAspect.logCertificateIfPresent(logCertificate);
 
-        List<String> logs = super.getLogs();
+        List<String> logs = logCaptor.getLogs();
         assertThat(logs).containsExactly("Received the following certificate details: cn=hakan");
     }
 
     @Test
     public void notLogCertificateWhenNotPresent() {
+        LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
         LogCertificate logCertificate = createLogCertificate(true);
         logCertificateAspect.logCertificateIfPresent(logCertificate);
 
-        List<String> logs = super.getLogs();
+        List<String> logs = logCaptor.getLogs();
         assertThat(logs).isEmpty();
     }
 
@@ -86,11 +92,6 @@ public class LogCertificateAspectShould extends LogTestHelper<LogCertificateAspe
                 return detailed;
             }
         };
-    }
-
-    @Override
-    protected Class<LogCertificateAspect> getTargetClass() {
-        return LogCertificateAspect.class;
     }
 
 }
