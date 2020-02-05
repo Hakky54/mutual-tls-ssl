@@ -26,10 +26,10 @@ import nl.altindag.client.TestScenario;
 import nl.altindag.client.aspect.LogExecutionTime;
 import nl.altindag.client.model.ClientResponse;
 import nl.altindag.client.service.RequestService;
-import nl.altindag.client.util.LogTestHelper;
+import nl.altindag.log.LogCaptor;
 
 @RunWith(MockitoJUnitRunner.class)
-public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
+public class HelloStepDefsShould {
 
     private HelloStepDefs victim;
     private TestScenario testScenario;
@@ -47,9 +47,11 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
 
     @Test
     public void serverIsAlive() {
+        LogCaptor logCaptor = LogCaptor.forClass(HelloStepDefs.class);
+
         victim.serverIsAlive();
 
-        List<String> logs = super.getLogs(Level.DEBUG);
+        List<String> logs = logCaptor.getLogs(Level.DEBUG);
 
         assertThat(logs).hasSize(1);
         assertThat(logs).containsExactly("Assuming the server is up and running");
@@ -109,20 +111,17 @@ public class HelloStepDefsShould extends LogTestHelper<HelloStepDefs> {
 
     @Test
     public void iDisplayTheTimeItTookToGetTheMessage() {
+        LogCaptor logCaptor = LogCaptor.forClass(HelloStepDefs.class);
+
         when(testScenario.getExecutionTimeInMilliSeconds()).thenReturn(134L);
 
         victim.iDisplayTheTimeItTookToGetTheMessage();
 
-        List<String> logs = getLogs(Level.INFO);
+        List<String> logs = logCaptor.getLogs(Level.INFO);
         assertThat(logs).hasSize(1);
         assertThat(logs).containsExactly("Executed request within 134 milliseconds");
 
         verify(testScenario, times(1)).getExecutionTimeInMilliSeconds();
-    }
-
-    @Override
-    protected Class<HelloStepDefs> getTargetClass() {
-        return HelloStepDefs.class;
     }
 
 }

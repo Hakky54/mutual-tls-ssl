@@ -40,6 +40,7 @@
         <version.akka-stream_2.12>2.6.3</version.akka-stream_2.12>
         <version.jackson-module-scala_2.12>2.10.2</version.jackson-module-scala_2.12>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
+        <version.logcaptor>1.0.0</version.logcaptor>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.1</version.maven-shade-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -183,6 +184,12 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${version.junit}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.hakky54</groupId>
+                <artifactId>logcaptor</artifactId>
+                <version>${version.logcaptor}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
