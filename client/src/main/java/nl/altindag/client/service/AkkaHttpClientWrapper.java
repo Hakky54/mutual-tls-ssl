@@ -17,7 +17,7 @@ import nl.altindag.client.Constants;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class AkkaHttpClientWrapper extends RequestService {
+public class AkkaHttpClientWrapper implements RequestService {
 
     private final Http akkaHttpClient;
     private final ActorSystem actorSystem;

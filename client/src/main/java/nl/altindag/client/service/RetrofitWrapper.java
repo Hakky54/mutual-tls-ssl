@@ -19,7 +19,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
 @Service
-public class RetrofitWrapper extends RequestService {
+public class RetrofitWrapper implements RequestService {
 
     private final Retrofit retrofit;
 

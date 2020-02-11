@@ -11,7 +11,7 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class UnirestWrapper extends RequestService {
+public class UnirestWrapper implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) {

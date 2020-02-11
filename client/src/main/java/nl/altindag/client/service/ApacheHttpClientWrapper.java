@@ -16,7 +16,7 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class ApacheHttpClientWrapper extends RequestService {
+public class ApacheHttpClientWrapper implements RequestService {
 
     private final HttpClient httpClient;
 

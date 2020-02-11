@@ -22,7 +22,7 @@ import nl.altindag.client.model.ClientResponse;
 import nl.altindag.sslcontext.SSLFactory;
 
 @Service
-public class OldJdkHttpClientWrapper extends RequestService {
+public class OldJdkHttpClientWrapper implements RequestService {
 
     private static final String HTTP_REQUEST = "http:";
     private static final String HTTPS_REQUEST = "https:";
@@ -35,7 +35,7 @@ public class OldJdkHttpClientWrapper extends RequestService {
     }
 
     @Override
-    public ClientResponse executeRequest(String url) throws Exception {
+    public ClientResponse executeRequest(String url) throws IOException {
         HttpURLConnection connection;
         if (url.contains(HTTP_REQUEST)) {
             connection = createHttpURLConnection(url);

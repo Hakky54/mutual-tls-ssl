@@ -6,7 +6,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import nl.altindag.client.model.ClientResponse;
 
-public abstract class SpringWebClientWrapper extends RequestService {
+public abstract class SpringWebClientWrapper implements RequestService {
 
     private final WebClient webClient;
 

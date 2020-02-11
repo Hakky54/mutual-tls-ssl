@@ -36,6 +36,7 @@ import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
 
 import akka.actor.ActorSystem;
+import akka.http.javadsl.ConnectionContext;
 import akka.http.javadsl.HttpsConnectionContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import kong.unirest.Unirest;
@@ -225,7 +226,7 @@ public class ClientConfig {
         akka.http.javadsl.Http http = akka.http.javadsl.Http.get(actorSystem);
 
         if (sslFactory.isSecurityEnabled()) {
-            HttpsConnectionContext httpsContext = HttpsConnectionContext.https(sslFactory.getSslContext());
+            HttpsConnectionContext httpsContext = ConnectionContext.https(sslFactory.getSslContext());
             http.setDefaultClientHttpsContext(httpsContext);
         }
         return http;
