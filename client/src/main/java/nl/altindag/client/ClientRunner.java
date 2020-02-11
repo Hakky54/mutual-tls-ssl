@@ -8,7 +8,8 @@ public class ClientRunner {
     private static String[] defaultOptions = {
             "--glue", "nl.altindag.client.stepdefs",
             "--plugin", "pretty",
-            "classpath:Hello.feature"
+            "classpath:Hello.feature",
+            "--strict"
     };
 
     public static void main(String[] args) {
