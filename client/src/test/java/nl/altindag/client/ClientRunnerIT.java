@@ -8,7 +8,8 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = { "pretty", "json:target/test-report/report.json" },
                  features = "src/test/resources/features",
-                 glue = "nl.altindag.client.stepdefs")
+                 glue = "nl.altindag.client.stepdefs",
+                 strict = true)
 public class ClientRunnerIT {
 
 }
