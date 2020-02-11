@@ -15,11 +15,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 @Service
-public class OkHttpClientWrapper implements RequestService {
+public class OkHttpClientService implements RequestService {
 
     private final OkHttpClient okHttpClient;
 
-    public OkHttpClientWrapper(OkHttpClient okHttpClient) {
+    public OkHttpClientService(OkHttpClient okHttpClient) {
         this.okHttpClient = okHttpClient;
     }
 

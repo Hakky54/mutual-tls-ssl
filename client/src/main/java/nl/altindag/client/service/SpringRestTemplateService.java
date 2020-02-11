@@ -15,12 +15,12 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class SpringRestTemplateWrapper implements RequestService {
+public class SpringRestTemplateService implements RequestService {
 
     private final RestTemplate restTemplate;
 
     @Autowired
-    public SpringRestTemplateWrapper(RestTemplate restTemplate) {
+    public SpringRestTemplateService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

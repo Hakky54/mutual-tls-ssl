@@ -29,10 +29,10 @@ import nl.altindag.client.model.ClientResponse;
 import scala.Tuple2;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FinagleHttpClientWrapperShould {
+public class FinagleHttpClientServiceShould {
 
     @InjectMocks
-    private FinagleHttpClientWrapper victim;
+    private FinagleHttpClientService victim;
     @Mock
     private Service<Request, Response> finagleService;
 

@@ -29,10 +29,10 @@ import nl.altindag.client.TestConstants;
 import nl.altindag.client.model.ClientResponse;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SpringRestTemplateWrapperShould {
+public class SpringRestTemplateServiceShould {
 
     @InjectMocks
-    private SpringRestTemplateWrapper victim;
+    private SpringRestTemplateService victim;
     @Mock
     private RestTemplate restTemplate;
 

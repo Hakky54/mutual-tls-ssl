@@ -27,10 +27,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import nl.altindag.client.model.ClientResponse;
 
 @RunWith(MockitoJUnitRunner.class)
-public class JdkHttpClientWrapperShould {
+public class JdkHttpClientServiceShould {
 
     @InjectMocks
-    private JdkHttpClientWrapper victim;
+    private JdkHttpClientService victim;
     @Mock
     private HttpClient httpClient;
 

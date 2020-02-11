@@ -22,7 +22,7 @@ import nl.altindag.client.model.ClientResponse;
 import nl.altindag.sslcontext.SSLFactory;
 
 @Service
-public class OldJdkHttpClientWrapper implements RequestService {
+public class OldJdkHttpClientService implements RequestService {
 
     private static final String HTTP_REQUEST = "http:";
     private static final String HTTPS_REQUEST = "https:";
@@ -30,7 +30,7 @@ public class OldJdkHttpClientWrapper implements RequestService {
     private final SSLFactory sslFactory;
 
     @Autowired
-    public OldJdkHttpClientWrapper(SSLFactory sslFactory) {
+    public OldJdkHttpClientService(SSLFactory sslFactory) {
         this.sslFactory = sslFactory;
     }
 
