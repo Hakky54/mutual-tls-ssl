@@ -17,13 +17,13 @@ import nl.altindag.client.Constants;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class AkkaHttpClientWrapper implements RequestService {
+public class AkkaHttpClientService implements RequestService {
 
     private final Http akkaHttpClient;
     private final ActorSystem actorSystem;
 
     @Autowired
-    public AkkaHttpClientWrapper(Http akkaHttpClient, ActorSystem actorSystem) {
+    public AkkaHttpClientService(Http akkaHttpClient, ActorSystem actorSystem) {
         this.akkaHttpClient = akkaHttpClient;
         this.actorSystem = actorSystem;
     }

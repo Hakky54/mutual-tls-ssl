@@ -27,15 +27,15 @@ import nl.altindag.client.TestConstants;
 import nl.altindag.client.model.ClientResponse;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AkkaHttpClientWrapperShould {
+public class AkkaHttpClientServiceShould {
 
-    private AkkaHttpClientWrapper victim;
+    private AkkaHttpClientService victim;
     private Http akkaHttpClient;
 
     @Before
     public void setUp() {
         akkaHttpClient = mock(Http.class);
-        victim = new AkkaHttpClientWrapper(akkaHttpClient, ActorSystem.create());
+        victim = new AkkaHttpClientService(akkaHttpClient, ActorSystem.create());
     }
 
     @Test

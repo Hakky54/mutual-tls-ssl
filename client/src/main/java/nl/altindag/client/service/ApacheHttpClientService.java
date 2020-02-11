@@ -16,12 +16,12 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class ApacheHttpClientWrapper implements RequestService {
+public class ApacheHttpClientService implements RequestService {
 
     private final HttpClient httpClient;
 
     @Autowired
-    public ApacheHttpClientWrapper(HttpClient httpClient) {
+    public ApacheHttpClientService(HttpClient httpClient) {
         this.httpClient = httpClient;
     }
 

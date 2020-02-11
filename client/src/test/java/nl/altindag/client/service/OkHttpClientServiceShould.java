@@ -26,10 +26,10 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 @RunWith(MockitoJUnitRunner.class)
-public class OkHttpClientWrapperShould {
+public class OkHttpClientServiceShould {
 
     @InjectMocks
-    private OkHttpClientWrapper victim;
+    private OkHttpClientService victim;
     @Mock
     private OkHttpClient okHttpClient;
 

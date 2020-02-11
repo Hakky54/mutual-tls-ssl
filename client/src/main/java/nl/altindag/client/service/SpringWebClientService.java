@@ -6,11 +6,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import nl.altindag.client.model.ClientResponse;
 
-public abstract class SpringWebClientWrapper implements RequestService {
+public abstract class SpringWebClientService implements RequestService {
 
     private final WebClient webClient;
 
-    public SpringWebClientWrapper(WebClient webClient) {
+    public SpringWebClientService(WebClient webClient) {
         this.webClient = webClient;
     }
 

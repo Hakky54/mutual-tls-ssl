@@ -1,6 +1,6 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.ClientType.SPRING_WEB_CLIENT_JETTY;
+import static nl.altindag.client.ClientType.SPRING_WEB_CLIENT_NETTY;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,16 +9,16 @@ import org.springframework.web.reactive.function.client.WebClient;
 import nl.altindag.client.ClientType;
 
 @Service
-public class SpringWebClientJettyWrapper extends SpringWebClientWrapper {
+public class SpringWebClientNettyService extends SpringWebClientService {
 
     @Autowired
-    public SpringWebClientJettyWrapper(WebClient webClientWithJetty) {
-        super(webClientWithJetty);
+    public SpringWebClientNettyService(WebClient webClientWithNetty) {
+        super(webClientWithNetty);
     }
 
     @Override
     public ClientType getClientType() {
-        return SPRING_WEB_CLIENT_JETTY;
+        return SPRING_WEB_CLIENT_NETTY;
     }
 
 }

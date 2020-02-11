@@ -35,14 +35,14 @@ import nl.altindag.client.model.ClientResponse;
 
 @SuppressWarnings("SameParameterValue")
 @RunWith(MockitoJUnitRunner.class)
-public class UnirestWrapperShould {
+public class UnirestServiceShould {
 
-    private UnirestWrapper victim;
+    private UnirestService victim;
     private HttpClient httpClient;
 
     @Before
     public void setUp() {
-        victim = new UnirestWrapper();
+        victim = new UnirestService();
 
         httpClient = mock(HttpClient.class);
         Unirest.config()

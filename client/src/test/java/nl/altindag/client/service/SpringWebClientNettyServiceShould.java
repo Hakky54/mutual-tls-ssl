@@ -1,6 +1,6 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.ClientType.SPRING_WEB_CLIENT_JETTY;
+import static nl.altindag.client.ClientType.SPRING_WEB_CLIENT_NETTY;
 import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,16 +19,16 @@ import nl.altindag.client.model.ClientResponse;
 import reactor.core.publisher.Mono;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SpringWebClientJettyWrapperShould {
+public class SpringWebClientNettyServiceShould {
 
     @InjectMocks
-    private SpringWebClientJettyWrapper victim;
+    private SpringWebClientNettyService victim;
     @Mock
     private WebClient webClient;
 
     @Test
     public void getClientType() {
-        assertThat(victim.getClientType()).isEqualTo(SPRING_WEB_CLIENT_JETTY);
+        assertThat(victim.getClientType()).isEqualTo(SPRING_WEB_CLIENT_NETTY);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class SpringWebClientJettyWrapperShould {
 
         when(webClient.get()).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.uri(HTTP_URL)).thenReturn(requestHeadersUriSpec);
-        when(requestHeadersUriSpec.header(HEADER_KEY_CLIENT_TYPE, SPRING_WEB_CLIENT_JETTY.getValue())).thenReturn(requestHeadersUriSpec);
+        when(requestHeadersUriSpec.header(HEADER_KEY_CLIENT_TYPE, SPRING_WEB_CLIENT_NETTY.getValue())).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.exchange()).thenReturn(clientResponseMono);
         when(response.toEntity(String.class)).thenReturn(responseEntityMono);
         when(responseEntity.getBody()).thenReturn("Hello");

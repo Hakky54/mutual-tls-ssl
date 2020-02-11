@@ -14,12 +14,12 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class JerseyClientWrapper implements RequestService {
+public class JerseyClientService implements RequestService {
 
     private final Client client;
 
     @Autowired
-    public JerseyClientWrapper(Client client) {
+    public JerseyClientService(Client client) {
         this.client = client;
     }
 

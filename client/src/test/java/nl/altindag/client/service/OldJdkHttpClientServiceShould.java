@@ -30,11 +30,11 @@ import nl.altindag.client.model.ClientResponse;
 import nl.altindag.sslcontext.SSLFactory;
 
 @RunWith(MockitoJUnitRunner.class)
-public class OldJdkHttpClientWrapperShould {
+public class OldJdkHttpClientServiceShould {
 
     @Spy
     @InjectMocks
-    private OldJdkHttpClientWrapper victim;
+    private OldJdkHttpClientService victim;
     @Mock
     private SSLFactory sslFactory;
 

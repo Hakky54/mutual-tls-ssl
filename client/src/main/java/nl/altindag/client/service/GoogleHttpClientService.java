@@ -19,12 +19,12 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class GoogleHttpClientWrapper implements RequestService {
+public class GoogleHttpClientService implements RequestService {
 
     private final HttpTransport httpTransport;
 
     @Autowired
-    public GoogleHttpClientWrapper(HttpTransport httpTransport) {
+    public GoogleHttpClientService(HttpTransport httpTransport) {
         this.httpTransport = httpTransport;
     }
 

@@ -19,12 +19,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
 @Service
-public class RetrofitWrapper implements RequestService {
+public class RetrofitService implements RequestService {
 
     private final Retrofit retrofit;
 
     @Autowired
-    public RetrofitWrapper(Retrofit retrofit) {
+    public RetrofitService(Retrofit retrofit) {
         this.retrofit = retrofit;
     }
 

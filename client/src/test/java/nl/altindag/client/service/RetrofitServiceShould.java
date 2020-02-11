@@ -22,20 +22,20 @@ import retrofit2.Retrofit;
 
 @SuppressWarnings("unchecked")
 @RunWith(MockitoJUnitRunner.class)
-public class RetrofitWrapperShould {
+public class RetrofitServiceShould {
 
     @InjectMocks
-    private RetrofitWrapper victim;
+    private RetrofitService victim;
     @Mock
     private Retrofit retrofit;
 
     @Test
     public void executeRequest() throws Exception {
-        RetrofitWrapper.Server server = mock(RetrofitWrapper.Server.class);
+        RetrofitService.Server server = mock(RetrofitService.Server.class);
         Call<String> helloCall = mock(Call.class);
         Response<String> response = mock(Response.class);
 
-        when(retrofit.create(RetrofitWrapper.Server.class)).thenReturn(server);
+        when(retrofit.create(RetrofitService.Server.class)).thenReturn(server);
         when(server.getHello()).thenReturn(helloCall);
         when(helloCall.execute()).thenReturn(response);
         when(response.body()).thenReturn("Hello");
@@ -49,10 +49,10 @@ public class RetrofitWrapperShould {
 
     @Test
     public void executeRequestThrowsExceptionWhenServerIsNotReachable() throws Exception {
-        RetrofitWrapper.Server server = mock(RetrofitWrapper.Server.class);
+        RetrofitService.Server server = mock(RetrofitService.Server.class);
         Call<String> helloCall = mock(Call.class);
 
-        when(retrofit.create(RetrofitWrapper.Server.class)).thenReturn(server);
+        when(retrofit.create(RetrofitService.Server.class)).thenReturn(server);
         when(server.getHello()).thenReturn(helloCall);
         when(helloCall.execute()).thenThrow(new IOException("KABOOOM!!!"));
 

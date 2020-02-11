@@ -30,10 +30,10 @@ import com.google.api.client.http.HttpTransport;
 import nl.altindag.client.model.ClientResponse;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GoogleHttpClientWrapperShould {
+public class GoogleHttpClientServiceShould {
 
     @InjectMocks
-    private GoogleHttpClientWrapper victim;
+    private GoogleHttpClientService victim;
     @Mock
     private HttpTransport httpTransport;
 
