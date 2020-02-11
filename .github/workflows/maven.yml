@@ -23,7 +23,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build with Maven
-        run: mvn clean package
+        run: mvn clean package -P jacoco
 
       - uses: codecov/codecov-action@v1.0.3
         with:
