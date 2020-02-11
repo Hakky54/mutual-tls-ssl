@@ -203,12 +203,6 @@
                 <artifactId>maven-cucumber-reporting</artifactId>
                 <version>${version.maven-cucumber-reporting}</version>
             </plugin>
-
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${version.jacoco-maven-plugin}</version>
-            </plugin>
         </plugins>
 
         <resources>
@@ -273,6 +267,22 @@
                         </includes>
                     </resource>
                 </resources>
+            </build>
+        </profile>
+
+        <profile>
+            <id>jacoco</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${version.jacoco-maven-plugin}</version>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
     </profiles>
