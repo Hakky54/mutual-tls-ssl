@@ -13,7 +13,6 @@
     <properties>
         <main-class-server>nl.altindag.server.App</main-class-server>
         <main-class-client>nl.altindag.client.ClientRunner</main-class-client>
-        <vm.args-for-netty>--add-opens java.base/jdk.internal.misc=ALL-UNNAMED -Dio.netty.tryReflectionSetAccessible=true</vm.args-for-netty>
     </properties>
 
     <dependencies>
@@ -183,13 +182,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${version.maven-surefire-plugin}</version>
-                <configuration>
-                    <!--
-                        temporally fix till there is a normal solution for netty to work under java 11 and above
-                        The annotation argline is required to append the original arguments of for example jacoco with the fix for netty
-                    -->
-                    <argLine>@{argLine} ${vm.args-for-netty}</argLine>
-                </configuration>
             </plugin>
 
             <plugin>
