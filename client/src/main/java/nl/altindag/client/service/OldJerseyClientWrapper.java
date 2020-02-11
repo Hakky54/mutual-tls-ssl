@@ -12,7 +12,7 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class OldJerseyClientWrapper extends RequestService {
+public class OldJerseyClientWrapper implements RequestService {
 
     private final Client client;
 

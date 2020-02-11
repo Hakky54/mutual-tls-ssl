@@ -11,12 +11,10 @@ import nl.altindag.log.LogCaptor;
 
 public class PropertyResolverShould {
 
-    private PropertyResolver propertyResolver = new PropertyResolver();
-
     @Test
     public void loadProperties() {
         LogCaptor logCaptor = LogCaptor.forClass(YamlPropertiesFactoryBean.class);
-        PropertySourcesPlaceholderConfigurer properties = propertyResolver.properties();
+        PropertySourcesPlaceholderConfigurer properties = new PropertyResolver().properties();
 
         assertThat(properties).isNotNull();
 

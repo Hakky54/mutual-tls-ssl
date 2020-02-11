@@ -15,7 +15,7 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class SpringRestTemplateWrapper extends RequestService {
+public class SpringRestTemplateWrapper implements RequestService {
 
     private final RestTemplate restTemplate;
 

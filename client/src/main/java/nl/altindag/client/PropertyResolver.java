@@ -14,7 +14,7 @@ public class PropertyResolver {
     private static final String CLIENT_PROPERTY_FILE = "application.yml";
 
     @Bean
-    public static PropertySourcesPlaceholderConfigurer properties() {
+    public PropertySourcesPlaceholderConfigurer properties() {
         PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
         YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
         yaml.setResources(new ClassPathResource(CLIENT_PROPERTY_FILE));

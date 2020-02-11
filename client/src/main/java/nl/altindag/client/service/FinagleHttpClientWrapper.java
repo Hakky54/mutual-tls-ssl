@@ -16,7 +16,7 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 
 @Service
-public class FinagleHttpClientWrapper extends RequestService {
+public class FinagleHttpClientWrapper implements RequestService {
 
     private static final int TIMEOUT_AMOUNT_IN_SECONDS = 5;
 
