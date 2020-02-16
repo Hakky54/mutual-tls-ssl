@@ -1,15 +1,6 @@
 package nl.altindag.server.aspect;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.lang.annotation.Annotation;
-import java.security.cert.X509Certificate;
-import java.util.List;
-
-import javax.security.auth.x500.X500Principal;
-
+import nl.altindag.log.LogCaptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -17,7 +8,14 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import nl.altindag.log.LogCaptor;
+import javax.security.auth.x500.X500Principal;
+import java.lang.annotation.Annotation;
+import java.security.cert.X509Certificate;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LogCertificateAspectShould {
@@ -26,7 +24,7 @@ public class LogCertificateAspectShould {
 
     @Test
     public void logDetailedClientCertificate() {
-        LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
+        LogCaptor<LogCertificateAspect> logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
 
         X509Certificate x509Certificate = mock(X509Certificate.class);
         X509Certificate[] x509Certificates = new X509Certificate[]{x509Certificate};
@@ -46,7 +44,7 @@ public class LogCertificateAspectShould {
 
     @Test
     public void logLessDetailedClientCertificate() {
-        LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
+        LogCaptor<LogCertificateAspect> logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
 
         X509Certificate x509Certificate = mock(X509Certificate.class);
         X509Certificate[] x509Certificates = new X509Certificate[]{x509Certificate};
@@ -68,7 +66,7 @@ public class LogCertificateAspectShould {
 
     @Test
     public void notLogCertificateWhenNotPresent() {
-        LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
+        LogCaptor<LogCertificateAspect> logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));

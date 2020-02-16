@@ -1,24 +1,5 @@
 package nl.altindag.client.stepdefs;
 
-import static nl.altindag.client.util.AssertJCustomConditions.HTTP_OR_HTTPS_SERVER_URL;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.junit.MockitoJUnitRunner;
-
 import ch.qos.logback.classic.Level;
 import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
@@ -27,8 +8,23 @@ import nl.altindag.client.aspect.LogExecutionTime;
 import nl.altindag.client.model.ClientResponse;
 import nl.altindag.client.service.RequestService;
 import nl.altindag.log.LogCaptor;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.List;
+
+import static nl.altindag.client.util.AssertJCustomConditions.HTTP_OR_HTTPS_SERVER_URL;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class HelloStepDefsShould {
 
     private HelloStepDefs victim;
@@ -47,7 +43,7 @@ public class HelloStepDefsShould {
 
     @Test
     public void serverIsAlive() {
-        LogCaptor logCaptor = LogCaptor.forClass(HelloStepDefs.class);
+        LogCaptor<HelloStepDefs> logCaptor = LogCaptor.forClass(HelloStepDefs.class);
 
         victim.serverIsAlive();
 
@@ -111,7 +107,7 @@ public class HelloStepDefsShould {
 
     @Test
     public void iDisplayTheTimeItTookToGetTheMessage() {
-        LogCaptor logCaptor = LogCaptor.forClass(HelloStepDefs.class);
+        LogCaptor<HelloStepDefs> logCaptor = LogCaptor.forClass(HelloStepDefs.class);
 
         when(testScenario.getExecutionTimeInMilliSeconds()).thenReturn(134L);
 

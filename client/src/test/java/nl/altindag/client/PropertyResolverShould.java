@@ -1,19 +1,19 @@
 package nl.altindag.client;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import ch.qos.logback.classic.Level;
+import nl.altindag.log.LogCaptor;
 import org.junit.Test;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
-import ch.qos.logback.classic.Level;
-import nl.altindag.log.LogCaptor;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PropertyResolverShould {
 
     @Test
+    @SuppressWarnings("AccessStaticViaInstance")
     public void loadProperties() {
-        LogCaptor logCaptor = LogCaptor.forClass(YamlPropertiesFactoryBean.class);
+        LogCaptor<YamlPropertiesFactoryBean> logCaptor = LogCaptor.forClass(YamlPropertiesFactoryBean.class);
         PropertySourcesPlaceholderConfigurer properties = new PropertyResolver().properties();
 
         assertThat(properties).isNotNull();
