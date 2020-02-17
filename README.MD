@@ -21,6 +21,12 @@ These are the following steps:
 5. [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
 6. [Automated script for enabling authentication with TLS](#automated-script-for-enabling-authentication-with-tls)
 
+Definition
+  - Identity: A KeyStore which holds the key pair also known as private and public key
+  - TrustStore: A KeyStore containing one or more certificates also known as public key. This KeyStore contains a list of trusted certificates
+  - One way authentication (also known as one way tls, one way ssl): Https connection where the client validates the certificate of the counter party
+  - Two way authentication (also known as two way tls, two way ssl, mutual authentication): Https connection where the client as well as the counter party validates the certificate, also known as mutual authentication
+
 Usefull links
   - [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
   - [Openssl Cheatsheet](https://gist.github.com/Hakky54/b30418b25215ad7d18f978bc0b448d81)
