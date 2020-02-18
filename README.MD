@@ -158,8 +158,8 @@ You created the a truststore for the client. Unfortunately, the client is not aw
 ```yaml
 client:
   ssl:
-    one-way-authentication-enabled: false
-    two-way-authentication-enabled: true
+    one-way-authentication-enabled: true
+    two-way-authentication-enabled: false
     trust-store: truststore.jks
     trust-store-password: secret
 ```
