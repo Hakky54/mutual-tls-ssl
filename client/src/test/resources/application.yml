@@ -3,7 +3,11 @@ spring:
     banner-mode: "off"
     web-application-type: none
 
+logging:
+  level:
+    nl.altindag.sslcontext: INFO
+
 client:
   ssl:
-    two-way-authentication-enabled: false
     one-way-authentication-enabled: false
+    two-way-authentication-enabled: false
