@@ -1,17 +1,25 @@
 package nl.altindag.client;
 
-import static nl.altindag.client.Constants.SERVER_URL;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-
+import akka.actor.ActorSystem;
+import akka.http.javadsl.ConnectionContext;
+import akka.http.javadsl.HttpsConnectionContext;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.gson.GsonBuilder;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.client.urlconnection.HTTPSProperties;
+import com.twitter.finagle.Http;
+import com.twitter.finagle.Service;
+import com.twitter.finagle.http.Request;
+import com.twitter.finagle.http.Response;
+import com.typesafe.config.ConfigFactory;
+import io.netty.handler.ssl.SslContextBuilder;
+import kong.unirest.Unirest;
+import nl.altindag.sslcontext.SSLFactory;
+import okhttp3.OkHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,27 +31,18 @@ import org.springframework.http.client.reactive.JettyClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.gson.GsonBuilder;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.client.urlconnection.HTTPSProperties;
-import com.twitter.finagle.Http;
-import com.twitter.finagle.Service;
-import com.twitter.finagle.http.Request;
-import com.twitter.finagle.http.Response;
-import com.typesafe.config.ConfigFactory;
-
-import akka.actor.ActorSystem;
-import akka.http.javadsl.ConnectionContext;
-import akka.http.javadsl.HttpsConnectionContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import kong.unirest.Unirest;
-import nl.altindag.sslcontext.SSLFactory;
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+
+import static nl.altindag.client.Constants.SERVER_URL;
 
 @Configuration
 public class ClientConfig {
@@ -229,6 +228,32 @@ public class ClientConfig {
             HttpsConnectionContext httpsContext = ConnectionContext.https(sslFactory.getSslContext());
             http.setDefaultClientHttpsContext(httpsContext);
         }
+        return http;
+    }
+
+    @Bean
+    public dispatch.Http dispatchRebootClient(SSLFactory sslFactory) throws SSLException {
+        dispatch.Http http = dispatch.Http.withConfiguration(builder -> builder);
+
+        if (sslFactory.isSecurityEnabled()) {
+            SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
+                    .startTls(true)
+                    .protocols(sslFactory.getSslContext().getProtocol());
+            if (sslFactory.isOneWayAuthenticationEnabled()) {
+                sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
+            }
+
+            if (sslFactory.isTwoWayAuthenticationEnabled()) {
+                sslContextBuilder.keyManager(sslFactory.getKeyManagerFactory())
+                        .trustManager(sslFactory.getTrustManagerFactory());
+            }
+
+            DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
+                    .setSslContext(sslContextBuilder.build());
+
+            http = dispatch.Http.withConfiguration(defaultClientConfigBuilder -> clientConfigBuilder);
+        }
+
         return http;
     }
 
