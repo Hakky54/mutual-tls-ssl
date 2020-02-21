@@ -1,19 +1,14 @@
 package nl.altindag.client;
 
-import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
-import static nl.altindag.client.util.AssertJCustomConditions.SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.ws.rs.client.Client;
-
+import akka.actor.ActorSystem;
+import akka.http.javadsl.Http;
+import com.google.api.client.http.HttpTransport;
+import com.twitter.finagle.Service;
+import com.twitter.finagle.http.Request;
+import com.twitter.finagle.http.Response;
+import kong.unirest.Unirest;
+import nl.altindag.sslcontext.SSLFactory;
+import okhttp3.OkHttpClient;
 import org.apache.http.client.HttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,18 +16,19 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import com.google.api.client.http.HttpTransport;
-import com.twitter.finagle.Service;
-import com.twitter.finagle.http.Request;
-import com.twitter.finagle.http.Response;
-
-import akka.actor.ActorSystem;
-import akka.http.javadsl.Http;
-import kong.unirest.Unirest;
-import nl.altindag.sslcontext.SSLFactory;
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+
+import javax.net.ssl.SSLException;
+import javax.ws.rs.client.Client;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.NoSuchAlgorithmException;
+
+import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
+import static nl.altindag.client.util.AssertJCustomConditions.SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 @RunWith(MockitoJUnitRunner.class)
@@ -439,6 +435,51 @@ public class ClientConfigShould {
 
         assertThat(actorSystem).isNotNull();
         assertThat(actorSystem.name()).isEqualTo("ClientConfig");
+    }
+
+    @Test
+    public void createDispatchRebootHttpClientWithoutSecurity() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(false, false);
+
+        dispatch.Http httpClient = victim.dispatchRebootHttpClient(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(0)).getSslContext();
+        verify(sslFactory, times(0)).getKeyManagerFactory();
+        verify(sslFactory, times(0)).getTrustManagerFactory();
+    }
+
+    @Test
+    public void createDispatchRebootHttpClientWithTwoWayAuthentication() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(false, true);
+
+        dispatch.Http httpClient = victim.dispatchRebootHttpClient(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getKeyManagerFactory();
+        verify(sslFactory, times(1)).getTrustManagerFactory();
+    }
+
+    @Test
+    public void createDispatchRebootHttpClientWithOneWayAuthentication() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(true, false);
+
+        dispatch.Http httpClient = victim.dispatchRebootHttpClient(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(0)).getKeyManagerFactory();
+        verify(sslFactory, times(1)).getTrustManagerFactory();
     }
 
     private SSLFactory createSSLFactory(boolean oneWayAuthenticationEnabled, boolean twoWayAuthenticationEnabled) {

@@ -80,7 +80,6 @@
         <dependency>
             <groupId>org.dispatchhttp</groupId>
             <artifactId>dispatch-core_2.12</artifactId>
-            <version>1.2.0</version>
         </dependency>
 
         <!--     Testing libraries       -->

@@ -232,7 +232,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public dispatch.Http dispatchRebootClient(SSLFactory sslFactory) throws SSLException {
+    public dispatch.Http dispatchRebootHttpClient(SSLFactory sslFactory) throws SSLException {
         dispatch.Http http = dispatch.Http.withConfiguration(builder -> builder);
 
         if (sslFactory.isSecurityEnabled()) {

@@ -18,11 +18,11 @@ public class DispatchRebootService implements RequestService {
 
     private static final int TIMEOUT_AMOUNT_IN_SECONDS = 5;
 
-    private final Http http;
+    private final Http httpClient;
 
     @Autowired
-    public DispatchRebootService(Http http) {
-        this.http = http;
+    public DispatchRebootService(Http httpClient) {
+        this.httpClient = httpClient;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class DispatchRebootService implements RequestService {
                 .setUrl(url)
                 .setHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
 
-        Response response = http.client().executeRequest(requestBuilder)
+        Response response = httpClient.client().executeRequest(requestBuilder)
                 .toCompletableFuture()
                 .get(TIMEOUT_AMOUNT_IN_SECONDS, TimeUnit.SECONDS);
 
