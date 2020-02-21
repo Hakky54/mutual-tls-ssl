@@ -16,6 +16,7 @@ public enum ClientType {
     RETROFIT("retrofit"),
     FINAGLE("finagle"),
     AKKA_HTTP_CLIENT("akka http client"),
+    DISPATCH_REBOOT_HTTP_CLIENT("dispatch reboot http client"),
     NONE("none");
 
     private String value;
