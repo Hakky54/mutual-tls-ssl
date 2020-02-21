@@ -16,6 +16,7 @@
 
     <properties>
         <version.java>11</version.java>
+        <version.scala>2.12</version.scala>
         <version.sslcontext-kickstart>3.0.0</version.sslcontext-kickstart>
         <version.spring>2.2.4.RELEASE</version.spring>
         <version.apache.httpclient>4.5.11</version.apache.httpclient>
@@ -35,11 +36,13 @@
         <version.google.http.client>1.34.1</version.google.http.client>
         <version.unirest>3.4.01</version.unirest>
         <version.retrofit>2.7.1</version.retrofit>
-        <version.finagle-scala_2.12>20.1.0</version.finagle-scala_2.12>
-        <version.akka-http_2.12>10.1.11</version.akka-http_2.12>
-        <version.akka-stream_2.12>2.6.3</version.akka-stream_2.12>
-        <version.dispatch-core_2.12>1.2.0</version.dispatch-core_2.12>
-        <version.jackson-module-scala_2.12>2.10.2</version.jackson-module-scala_2.12>
+        <version.finagle>20.1.0</version.finagle>
+        <version.akka-http>10.1.11</version.akka-http>
+        <version.akka-stream>2.6.3</version.akka-stream>
+        <version.dispatch-core>1.2.0</version.dispatch-core>
+        <version.scalaj-http>2.4.2</version.scalaj-http>
+        <version.async-http-client>2.10.5</version.async-http-client>
+        <version.jackson-module-scala>2.10.2</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>1.0.1</version.logcaptor>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
@@ -124,13 +127,13 @@
             </dependency>
             <dependency>
                 <groupId>com.twitter</groupId>
-                <artifactId>finagle-http_2.12</artifactId>
-                <version>${version.finagle-scala_2.12}</version>
+                <artifactId>finagle-http_${version.scala}</artifactId>
+                <version>${version.finagle}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-scala_2.12</artifactId>
-                <version>${version.jackson-module-scala_2.12}</version>
+                <artifactId>jackson-module-scala_${version.scala}</artifactId>
+                <version>${version.jackson-module-scala}</version>
             </dependency>
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
@@ -139,18 +142,23 @@
             </dependency>
             <dependency>
                 <groupId>com.typesafe.akka</groupId>
-                <artifactId>akka-http_2.12</artifactId>
-                <version>${version.akka-http_2.12}</version>
+                <artifactId>akka-http_${version.scala}</artifactId>
+                <version>${version.akka-http}</version>
             </dependency>
             <dependency>
                 <groupId>com.typesafe.akka</groupId>
-                <artifactId>akka-stream_2.12</artifactId>
-                <version>${version.akka-stream_2.12}</version>
+                <artifactId>akka-stream_${version.scala}</artifactId>
+                <version>${version.akka-stream}</version>
             </dependency>
             <dependency>
                 <groupId>org.dispatchhttp</groupId>
-                <artifactId>dispatch-core_2.12</artifactId>
-                <version>${version.dispatch-core_2.12}</version>
+                <artifactId>dispatch-core_${version.scala}</artifactId>
+                <version>${version.dispatch-core}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.asynchttpclient</groupId>
+                <artifactId>async-http-client</artifactId>
+                <version>${version.async-http-client}</version>
             </dependency>
 
             <!--     Apache Utils       -->

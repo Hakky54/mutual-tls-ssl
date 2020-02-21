@@ -17,11 +17,12 @@ Feature: Securing the connection between you and the world
       | Spring WebFlux WebClient Netty  |
       | Spring WebFlux WebClient Jetty  |
       | OkHttp                          |
-      | Jersey Client                   |
-      | Old Jersey Client               |
+      | Jersey HttpClient               |
+      | Old Jersey HttpClient           |
       | Google HttpClient               |
       | Unirest                         |
       | Retrofit                        |
       | Finagle                         |
-      | Akka Http Client                |
-      | Dispatch Reboot Http Client     |
+      | Akka HttpClient                 |
+      | Dispatch Reboot HttpClient      |
+      | Async HttpClient                |

@@ -9,14 +9,15 @@ public enum ClientType {
     SPRING_WEB_CLIENT_NETTY("spring webflux webclient netty"),
     SPRING_WEB_CLIENT_JETTY("spring webflux webclient jetty"),
     OK_HTTP("okhttp"),
-    JERSEY_CLIENT("jersey client"),
-    OLD_JERSEY_CLIENT("old jersey client"),
+    JERSEY_CLIENT("jersey httpclient"),
+    OLD_JERSEY_CLIENT("old jersey httpclient"),
     GOOGLE_HTTP_CLIENT("google httpclient"),
     UNIREST("unirest"),
     RETROFIT("retrofit"),
     FINAGLE("finagle"),
-    AKKA_HTTP_CLIENT("akka http client"),
-    DISPATCH_REBOOT_HTTP_CLIENT("dispatch reboot http client"),
+    AKKA_HTTP_CLIENT("akka httpclient"),
+    DISPATCH_REBOOT_HTTP_CLIENT("dispatch reboot httpclient"),
+    ASYNC_HTTP_CLIENT("async httpclient"),
     NONE("none");
 
     private String value;

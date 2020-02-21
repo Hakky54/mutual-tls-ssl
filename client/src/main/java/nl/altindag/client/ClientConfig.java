@@ -20,7 +20,9 @@ import nl.altindag.sslcontext.SSLFactory;
 import okhttp3.OkHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
+import org.asynchttpclient.Dsl;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -241,18 +243,30 @@ public class ClientConfig {
 
     @Bean
     public dispatch.Http dispatchRebootHttpClient(SSLFactory sslFactory) throws SSLException {
-        dispatch.Http http = dispatch.Http.withConfiguration(builder -> builder);
-
         if (sslFactory.isSecurityEnabled()) {
             SslContext sslContext = createNettySslContext(sslFactory);
 
             DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
                     .setSslContext(sslContext);
 
-            http = dispatch.Http.withConfiguration(defaultClientConfigBuilder -> clientConfigBuilder);
+            return dispatch.Http.withConfiguration(defaultClientConfigBuilder -> clientConfigBuilder);
+        } else {
+            return dispatch.Http.withConfiguration(builder -> builder);
         }
+    }
 
-        return http;
+    @Bean
+    public AsyncHttpClient asyncHttpClient(SSLFactory sslFactory) throws SSLException {
+        if (sslFactory.isSecurityEnabled()) {
+            SslContext sslContext = createNettySslContext(sslFactory);
+
+            DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
+                    .setSslContext(sslContext);
+
+            return Dsl.asyncHttpClient(clientConfigBuilder);
+        } else {
+            return Dsl.asyncHttpClient();
+        }
     }
 
 }
