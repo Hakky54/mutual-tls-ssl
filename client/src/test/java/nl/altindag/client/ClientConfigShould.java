@@ -10,6 +10,7 @@ import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
 import okhttp3.OkHttpClient;
 import org.apache.http.client.HttpClient;
+import org.asynchttpclient.AsyncHttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -177,21 +178,6 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createWebClientWithNettyWithTwoWayAuthentication() throws SSLException {
-        SSLFactory sslFactory = createSSLFactory(false, true);
-
-        WebClient webClient = victim.webClientWithNetty(sslFactory);
-
-        assertThat(webClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).getSslContext();
-        verify(sslFactory, times(1)).getKeyManagerFactory();
-        verify(sslFactory, times(1)).getTrustManagerFactory();
-    }
-
-    @Test
     public void createWebClientWithNettyWithOneWayAuthentication() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(true, false);
 
@@ -203,6 +189,21 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(0)).getKeyManagerFactory();
+        verify(sslFactory, times(1)).getTrustManagerFactory();
+    }
+
+    @Test
+    public void createWebClientWithNettyWithTwoWayAuthentication() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(false, true);
+
+        WebClient webClient = victim.webClientWithNetty(sslFactory);
+
+        assertThat(webClient).isNotNull();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
 
@@ -223,8 +224,8 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createWebClientWithJettyWithTwoWayAuthentication() {
-        SSLFactory sslFactory = createSSLFactory(false, true);
+    public void createWebClientWithJettyWithOneWayAuthentication() {
+        SSLFactory sslFactory = createSSLFactory(true, false);
 
         WebClient webClient = victim.webClientWithJetty(sslFactory);
 
@@ -239,8 +240,8 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createWebClientWithJettyWithOneWayAuthentication() {
-        SSLFactory sslFactory = createSSLFactory(true, false);
+    public void createWebClientWithJettyWithTwoWayAuthentication() {
+        SSLFactory sslFactory = createSSLFactory(false, true);
 
         WebClient webClient = victim.webClientWithJetty(sslFactory);
 
@@ -444,6 +445,7 @@ public class ClientConfigShould {
         dispatch.Http httpClient = victim.dispatchRebootHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
+        assertThat(httpClient.client().getConfig().getSslContext()).isNotNull();
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
@@ -453,12 +455,29 @@ public class ClientConfigShould {
     }
 
     @Test
+    public void createDispatchRebootHttpClientWithOneWayAuthentication() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(true, false);
+
+        dispatch.Http httpClient = victim.dispatchRebootHttpClient(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        assertThat(httpClient.client().getConfig().getSslContext()).isNotNull();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(0)).getKeyManagerFactory();
+        verify(sslFactory, times(1)).getTrustManagerFactory();
+    }
+
+    @Test
     public void createDispatchRebootHttpClientWithTwoWayAuthentication() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         dispatch.Http httpClient = victim.dispatchRebootHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
+        assertThat(httpClient.client().getConfig().getSslContext()).isNotNull();
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
@@ -468,17 +487,50 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createDispatchRebootHttpClientWithOneWayAuthentication() throws SSLException {
-        SSLFactory sslFactory = createSSLFactory(true, false);
+    public void createAsyncHttpClientWithoutSecurity() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(false, false);
 
-        dispatch.Http httpClient = victim.dispatchRebootHttpClient(sslFactory);
+        AsyncHttpClient httpClient = victim.asyncHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
+        assertThat(httpClient.getConfig().getSslContext()).isNull();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(0)).getSslContext();
+        verify(sslFactory, times(0)).getKeyManagerFactory();
+        verify(sslFactory, times(0)).getTrustManagerFactory();
+    }
+
+    @Test
+    public void createAsyncHttpClientWithOneWayAuthentication() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(true, false);
+
+        AsyncHttpClient httpClient = victim.asyncHttpClient(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        assertThat(httpClient.getConfig().getSslContext()).isNotNull();
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(0)).getKeyManagerFactory();
+        verify(sslFactory, times(1)).getTrustManagerFactory();
+    }
+
+    @Test
+    public void createAsyncHttpClientWithTwoWayAuthentication() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(false, true);
+
+        AsyncHttpClient httpClient = victim.asyncHttpClient(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        assertThat(httpClient.getConfig().getSslContext()).isNotNull();
+        verify(sslFactory, times(1)).isSecurityEnabled();
+        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
 

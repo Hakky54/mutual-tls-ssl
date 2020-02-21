@@ -1,30 +1,23 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.TestConstants.HTTP_URL;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.concurrent.CompletableFuture;
-
+import akka.actor.ActorSystem;
+import akka.http.javadsl.Http;
+import akka.http.javadsl.model.*;
+import nl.altindag.client.TestConstants;
+import nl.altindag.client.model.ClientResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import akka.actor.ActorSystem;
-import akka.http.javadsl.Http;
-import akka.http.javadsl.model.ContentTypes;
-import akka.http.javadsl.model.HttpHeader;
-import akka.http.javadsl.model.HttpRequest;
-import akka.http.javadsl.model.HttpResponse;
-import akka.http.javadsl.model.StatusCodes;
-import nl.altindag.client.TestConstants;
-import nl.altindag.client.model.ClientResponse;
+import java.util.concurrent.CompletableFuture;
+
+import static nl.altindag.client.ClientType.AKKA_HTTP_CLIENT;
+import static nl.altindag.client.TestConstants.HTTP_URL;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AkkaHttpClientServiceShould {
@@ -54,7 +47,7 @@ public class AkkaHttpClientServiceShould {
 
         verify(akkaHttpClient, times(1)).singleRequest(httpRequestArgumentCaptor.capture());
         assertThat(httpRequestArgumentCaptor.getValue().method().value()).isEqualTo("GET");
-        assertThat(httpRequestArgumentCaptor.getValue().getHeaders()).containsExactly(HttpHeader.parse(TestConstants.HEADER_KEY_CLIENT_TYPE, "akka http client"));
+        assertThat(httpRequestArgumentCaptor.getValue().getHeaders()).containsExactly(HttpHeader.parse(TestConstants.HEADER_KEY_CLIENT_TYPE, AKKA_HTTP_CLIENT.getValue()));
         assertThat(httpRequestArgumentCaptor.getValue().getUri().toString()).isEqualTo(HTTP_URL);
     }
 
