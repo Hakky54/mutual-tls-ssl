@@ -63,23 +63,23 @@
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
-            <artifactId>finagle-http_2.12</artifactId>
+            <artifactId>finagle-http_${version.scala}</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-scala_2.12</artifactId>
+            <artifactId>jackson-module-scala_${version.scala}</artifactId>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-http_2.12</artifactId>
+            <artifactId>akka-http_${version.scala}</artifactId>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-stream_2.12</artifactId>
+            <artifactId>akka-stream_${version.scala}</artifactId>
         </dependency>
         <dependency>
             <groupId>org.dispatchhttp</groupId>
-            <artifactId>dispatch-core_2.12</artifactId>
+            <artifactId>dispatch-core_${version.scala}</artifactId>
         </dependency>
         <dependency>
             <groupId>org.asynchttpclient</groupId>
