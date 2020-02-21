@@ -113,17 +113,7 @@ public class ClientConfig {
     public WebClient webClientWithNetty(SSLFactory sslFactory) {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
         if (sslFactory.isSecurityEnabled()) {
-            SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
-                                                                   .startTls(true)
-                                                                   .protocols(sslFactory.getSslContext().getProtocol());
-            if (sslFactory.isOneWayAuthenticationEnabled()) {
-                sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
-            }
-
-            if (sslFactory.isTwoWayAuthenticationEnabled()) {
-                sslContextBuilder.keyManager(sslFactory.getKeyManagerFactory())
-                                 .trustManager(sslFactory.getTrustManagerFactory());
-            }
+            SslContextBuilder sslContextBuilder = createNettySslContextBuilder(sslFactory);
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContextBuilder));
         }
 
@@ -236,17 +226,7 @@ public class ClientConfig {
         dispatch.Http http = dispatch.Http.withConfiguration(builder -> builder);
 
         if (sslFactory.isSecurityEnabled()) {
-            SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
-                    .startTls(true)
-                    .protocols(sslFactory.getSslContext().getProtocol());
-            if (sslFactory.isOneWayAuthenticationEnabled()) {
-                sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
-            }
-
-            if (sslFactory.isTwoWayAuthenticationEnabled()) {
-                sslContextBuilder.keyManager(sslFactory.getKeyManagerFactory())
-                        .trustManager(sslFactory.getTrustManagerFactory());
-            }
+            SslContextBuilder sslContextBuilder = createNettySslContextBuilder(sslFactory);
 
             DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
                     .setSslContext(sslContextBuilder.build());
@@ -255,6 +235,23 @@ public class ClientConfig {
         }
 
         return http;
+    }
+
+    private SslContextBuilder createNettySslContextBuilder(SSLFactory sslFactory) {
+        SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
+                .startTls(true)
+                .protocols(sslFactory.getSslContext().getProtocol());
+
+        if (sslFactory.isOneWayAuthenticationEnabled()) {
+            sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
+        }
+
+        if (sslFactory.isTwoWayAuthenticationEnabled()) {
+            sslContextBuilder.keyManager(sslFactory.getKeyManagerFactory())
+                    .trustManager(sslFactory.getTrustManagerFactory());
+        }
+
+        return sslContextBuilder;
     }
 
 }
