@@ -162,7 +162,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createWebClientWithNettyWithoutSecurity() {
+    public void createWebClientWithNettyWithoutSecurity() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(false, false);
 
         WebClient webClient = victim.webClientWithNetty(sslFactory);
@@ -177,7 +177,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createWebClientWithNettyWithTwoWayAuthentication() {
+    public void createWebClientWithNettyWithTwoWayAuthentication() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         WebClient webClient = victim.webClientWithNetty(sslFactory);
@@ -192,7 +192,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createWebClientWithNettyWithOneWayAuthentication() {
+    public void createWebClientWithNettyWithOneWayAuthentication() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(true, false);
 
         WebClient webClient = victim.webClientWithNetty(sslFactory);
