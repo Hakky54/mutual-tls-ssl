@@ -24,3 +24,4 @@ Feature: Securing the connection between you and the world
       | Retrofit                        |
       | Finagle                         |
       | Akka Http Client                |
+      | Dispatch Reboot Http Client     |

@@ -77,6 +77,10 @@
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-stream_2.12</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.dispatchhttp</groupId>
+            <artifactId>dispatch-core_2.12</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>
