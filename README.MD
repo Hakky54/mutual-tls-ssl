@@ -33,21 +33,22 @@ Usefull links
   - [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
 Below is a list of supported clients with examples, see in the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java) for detailed configuration
-  - Apache HttpClient
-  - JDK HttpClient
-  - Old JDK HttpClient
+  - [Apache HttpClient](https://github.com/apache/httpcomponents-client)
+  - [JDK HttpClient](https://openjdk.java.net/groups/net/httpclient/intro.html)
+  - [Old JDK HttpClient](https://docs.oracle.com/javase/tutorial/networking/urls/readingWriting.html)
   - Spring RestTemplate
   - Spring WebFlux WebClient Netty
   - Spring WebFlux WebClient Jetty
-  - OkHttp
-  - Jersey Client
+  - [OkHttp](https://github.com/square/okhttp)
+  - [Jersey Client](https://eclipse-ee4j.github.io/jersey/)
   - Old Jersey Client
-  - Google HttpClient
-  - Unirest
-  - Retrofit
-  - Finagle
-  - Akka Http Client
-  - Dispatch Reboot Http Client
+  - [Google HttpClient](https://github.com/googleapis/google-http-java-client)
+  - [Unirest](https://github.com/Kong/unirest-java)
+  - [Retrofit](https://github.com/square/retrofit)
+  - [Twitter Finagle Http Client](https://github.com/twitter/finagle)
+  - [Akka Http Client](https://github.com/akka/akka-http)
+  - [Dispatch Reboot Http Client](https://github.com/dispatch/reboot)
+  - [Async Http Client](https://github.com/AsyncHttpClient/async-http-client)
 
 ## Starting the server
 **Minimum requirements:**

@@ -39,6 +39,7 @@
         <version.akka-http_2.12>10.1.11</version.akka-http_2.12>
         <version.akka-stream_2.12>2.6.3</version.akka-stream_2.12>
         <version.dispatch-core_2.12>1.2.0</version.dispatch-core_2.12>
+        <version.async-http-client>2.10.5</version.async-http-client>
         <version.jackson-module-scala_2.12>2.10.2</version.jackson-module-scala_2.12>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>1.0.1</version.logcaptor>
@@ -151,6 +152,11 @@
                 <groupId>org.dispatchhttp</groupId>
                 <artifactId>dispatch-core_2.12</artifactId>
                 <version>${version.dispatch-core_2.12}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.asynchttpclient</groupId>
+                <artifactId>async-http-client</artifactId>
+                <version>${version.async-http-client}</version>
             </dependency>
 
             <!--     Apache Utils       -->

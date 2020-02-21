@@ -17,6 +17,7 @@ public enum ClientType {
     FINAGLE("finagle"),
     AKKA_HTTP_CLIENT("akka http client"),
     DISPATCH_REBOOT_HTTP_CLIENT("dispatch reboot http client"),
+    ASYNC_HTTP_CLIENT("async http client"),
     NONE("none");
 
     private String value;

@@ -7,3 +7,4 @@
 .settings/
 client/target/
 server/target/
+target/
