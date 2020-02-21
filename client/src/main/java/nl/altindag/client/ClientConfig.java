@@ -13,6 +13,7 @@ import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
+import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
@@ -110,16 +111,33 @@ public class ClientConfig {
     }
 
     @Bean
-    public WebClient webClientWithNetty(SSLFactory sslFactory) {
+    public WebClient webClientWithNetty(SSLFactory sslFactory) throws SSLException {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
         if (sslFactory.isSecurityEnabled()) {
-            SslContextBuilder sslContextBuilder = createNettySslContextBuilder(sslFactory);
-            httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContextBuilder));
+            SslContext sslContext = createNettySslContext(sslFactory);
+            httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContext));
         }
 
         return WebClient.builder()
                  .clientConnector(new ReactorClientHttpConnector(httpClient))
                  .build();
+    }
+
+    private SslContext createNettySslContext(SSLFactory sslFactory) throws SSLException {
+        SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
+                .startTls(true)
+                .protocols(sslFactory.getSslContext().getProtocol());
+
+        if (sslFactory.isOneWayAuthenticationEnabled()) {
+            sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
+        }
+
+        if (sslFactory.isTwoWayAuthenticationEnabled()) {
+            sslContextBuilder.keyManager(sslFactory.getKeyManagerFactory())
+                    .trustManager(sslFactory.getTrustManagerFactory());
+        }
+
+        return sslContextBuilder.build();
     }
 
     @Bean
@@ -226,32 +244,15 @@ public class ClientConfig {
         dispatch.Http http = dispatch.Http.withConfiguration(builder -> builder);
 
         if (sslFactory.isSecurityEnabled()) {
-            SslContextBuilder sslContextBuilder = createNettySslContextBuilder(sslFactory);
+            SslContext sslContext = createNettySslContext(sslFactory);
 
             DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
-                    .setSslContext(sslContextBuilder.build());
+                    .setSslContext(sslContext);
 
             http = dispatch.Http.withConfiguration(defaultClientConfigBuilder -> clientConfigBuilder);
         }
 
         return http;
-    }
-
-    private SslContextBuilder createNettySslContextBuilder(SSLFactory sslFactory) {
-        SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
-                .startTls(true)
-                .protocols(sslFactory.getSslContext().getProtocol());
-
-        if (sslFactory.isOneWayAuthenticationEnabled()) {
-            sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
-        }
-
-        if (sslFactory.isTwoWayAuthenticationEnabled()) {
-            sslContextBuilder.keyManager(sslFactory.getKeyManagerFactory())
-                    .trustManager(sslFactory.getTrustManagerFactory());
-        }
-
-        return sslContextBuilder;
     }
 
 }
