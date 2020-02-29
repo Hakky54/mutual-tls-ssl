@@ -18,9 +18,9 @@
         <version.java>11</version.java>
         <version.scala>2.12</version.scala>
         <version.sslcontext-kickstart>3.0.0</version.sslcontext-kickstart>
-        <version.spring>2.2.4.RELEASE</version.spring>
+        <version.spring>2.2.5.RELEASE</version.spring>
         <version.apache.httpclient>4.5.11</version.apache.httpclient>
-        <version.cucumber>5.1.3</version.cucumber>
+        <version.cucumber>5.4.1</version.cucumber>
         <version.junit>4.13</version.junit>
         <version.maven-fail-safe>2.22.2</version.maven-fail-safe>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
@@ -29,13 +29,13 @@
         <version.commons-lang3>3.9</version.commons-lang3>
         <version.commons-io>2.6</version.commons-io>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
-        <version.okhttp>4.3.1</version.okhttp>
-        <version.jetty-reactive-httpclient>1.1.1</version.jetty-reactive-httpclient>
-        <version.org.glassfish.jersey.inject>2.30</version.org.glassfish.jersey.inject>
+        <version.okhttp>4.4.0</version.okhttp>
+        <version.jetty-reactive-httpclient>1.1.2</version.jetty-reactive-httpclient>
+        <version.org.glassfish.jersey.inject>2.30.1</version.org.glassfish.jersey.inject>
         <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
-        <version.google.http.client>1.34.1</version.google.http.client>
-        <version.unirest>3.4.01</version.unirest>
-        <version.retrofit>2.7.1</version.retrofit>
+        <version.google.http.client>1.34.2</version.google.http.client>
+        <version.unirest>3.6.00</version.unirest>
+        <version.retrofit>2.7.2</version.retrofit>
         <version.finagle>20.1.0</version.finagle>
         <version.akka-http>10.1.11</version.akka-http>
         <version.akka-stream>2.6.3</version.akka-stream>
