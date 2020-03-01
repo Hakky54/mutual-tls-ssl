@@ -1,13 +1,18 @@
 package nl.altindag.client;
 
-import java.util.Objects;
-
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 
+import java.util.Objects;
+
+/**
+ * Suppressed warning: java:S1118 - "Utility classes should not have public constructors"
+ *                                  Spring Framework can't initialize this configuration class without a public constructor
+ */
+@SuppressWarnings("java:S1118")
 @Configuration
 public class PropertyResolver {
 
