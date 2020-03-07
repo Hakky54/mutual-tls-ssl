@@ -31,7 +31,6 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
 @RunWith(MockitoJUnitRunner.class)
 public class ClientConfigShould {
 
