@@ -44,7 +44,7 @@
         <version.async-http-client>2.10.5</version.async-http-client>
         <version.jackson-module-scala>2.10.2</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
-        <version.logcaptor>1.0.1</version.logcaptor>
+        <version.logcaptor>1.1.0</version.logcaptor>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.2</version.maven-shade-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
