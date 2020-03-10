@@ -42,7 +42,7 @@ public class HelloStepDefsShould {
     }
 
     @Test
-    public void serverIsAlive() {
+    public void logDebugMessageWhenCallingServerIsAlive() {
         LogCaptor<HelloStepDefs> logCaptor = LogCaptor.forClass(HelloStepDefs.class);
 
         victim.serverIsAlive();
@@ -51,6 +51,18 @@ public class HelloStepDefsShould {
 
         assertThat(logs).hasSize(1);
         assertThat(logs).containsExactly("Assuming the server is up and running");
+    }
+
+    @Test
+    public void notLogDebugMessageWhenLogLevelIsInfoWhileCallingServerIsAlive() {
+        LogCaptor<HelloStepDefs> logCaptor = LogCaptor.forClass(HelloStepDefs.class);
+        logCaptor.setLogLevel(Level.INFO);
+
+        victim.serverIsAlive();
+
+        assertThat(logCaptor.getLogs()).isEmpty();
+
+        logCaptor.resetLogLevel();
     }
 
     @Test

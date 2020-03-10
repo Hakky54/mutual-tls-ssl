@@ -1,15 +1,5 @@
 package nl.altindag.client.stepdefs;
 
-import static nl.altindag.client.Constants.HELLO_ENDPOINT;
-import static nl.altindag.client.Constants.SERVER_URL;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -20,6 +10,15 @@ import nl.altindag.client.TestScenario;
 import nl.altindag.client.aspect.LogExecutionTime;
 import nl.altindag.client.model.ClientResponse;
 import nl.altindag.client.service.RequestService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static nl.altindag.client.Constants.HELLO_ENDPOINT;
+import static nl.altindag.client.Constants.SERVER_URL;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HelloStepDefs extends BaseStepDefs {
 
@@ -32,7 +31,9 @@ public class HelloStepDefs extends BaseStepDefs {
 
     @Given("Server is alive")
     public void serverIsAlive() {
-        LOGGER.debug("Assuming the server is up and running");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Assuming the server is up and running");
+        }
     }
 
     @LogExecutionTime
