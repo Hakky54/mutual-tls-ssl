@@ -1,18 +1,7 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.ClientType.SPRING_REST_TEMPATE;
-import static nl.altindag.client.TestConstants.HTTP_URL;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Collections;
-
+import nl.altindag.client.TestConstants;
+import nl.altindag.client.model.ClientResponse;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +14,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import nl.altindag.client.TestConstants;
-import nl.altindag.client.model.ClientResponse;
+import java.util.Collections;
+
+import static nl.altindag.client.ClientType.SPRING_REST_TEMPATE;
+import static nl.altindag.client.TestConstants.HTTP_URL;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SpringRestTemplateServiceShould {
@@ -37,6 +31,7 @@ public class SpringRestTemplateServiceShould {
     private RestTemplate restTemplate;
 
     @Test
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void executeRequest() {
         ResponseEntity<String> responseEntity = mock(ResponseEntity.class);
         ArgumentCaptor<HttpEntity> httpEntityArgumentCaptor = ArgumentCaptor.forClass(HttpEntity.class);

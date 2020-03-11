@@ -8,7 +8,4 @@ public class ClientException extends RuntimeException {
         super(message);
     }
 
-    public ClientException(Throwable cause) {
-        super(cause);
-    }
 }
