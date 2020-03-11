@@ -18,7 +18,6 @@ import io.netty.handler.ssl.SslContextBuilder;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
 import okhttp3.OkHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
@@ -75,21 +74,25 @@ public class ClientConfig {
     @Bean
     @Scope("prototype")
     public org.apache.http.client.HttpClient apacheHttpClient(SSLFactory sslFactory) {
-        HttpClientBuilder httpClientBuilder = HttpClients.custom();
         if (sslFactory.isSecurityEnabled()) {
-            httpClientBuilder.setSSLContext(sslFactory.getSslContext());
-            httpClientBuilder.setSSLHostnameVerifier(sslFactory.getHostnameVerifier());
+            return HttpClients.custom()
+                    .setSSLContext(sslFactory.getSslContext())
+                    .setSSLHostnameVerifier(sslFactory.getHostnameVerifier())
+                    .build();
+        } else {
+            return HttpClients.createMinimal();
         }
-        return httpClientBuilder.build();
     }
 
     @Bean
     public HttpClient jdkHttpClient(SSLFactory sslFactory) {
-        HttpClient.Builder httpClientBuilder = HttpClient.newBuilder();
         if (sslFactory.isSecurityEnabled()) {
-            httpClientBuilder.sslContext(sslFactory.getSslContext());
+            return HttpClient.newBuilder()
+                    .sslContext(sslFactory.getSslContext())
+                    .build();
+        } else {
+            return HttpClient.newHttpClient();
         }
-        return httpClientBuilder.build();
     }
 
     @Bean
@@ -102,14 +105,14 @@ public class ClientConfig {
     @Bean
     @Scope("prototype")
     public OkHttpClient okHttpClient(SSLFactory sslFactory) {
-        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         if (sslFactory.isSecurityEnabled()) {
-            httpClientBuilder.sslSocketFactory(sslFactory.getSslContext().getSocketFactory(), sslFactory.getTrustManager())
-                             .hostnameVerifier(sslFactory.getHostnameVerifier());
+            return new OkHttpClient.Builder()
+                    .sslSocketFactory(sslFactory.getSslContext().getSocketFactory(), sslFactory.getTrustManager())
+                    .hostnameVerifier(sslFactory.getHostnameVerifier())
+                    .build();
+        } else {
+            return new OkHttpClient();
         }
-
-        return httpClientBuilder
-                .build();
     }
 
     @Bean
@@ -144,12 +147,14 @@ public class ClientConfig {
 
     @Bean
     public WebClient webClientWithJetty(SSLFactory sslFactory) {
-        org.eclipse.jetty.client.HttpClient httpClient = new org.eclipse.jetty.client.HttpClient();
+        org.eclipse.jetty.client.HttpClient httpClient;
         if (sslFactory.isSecurityEnabled()) {
             SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
             sslContextFactory.setSslContext(sslFactory.getSslContext());
             sslContextFactory.setHostnameVerifier(sslFactory.getHostnameVerifier());
             httpClient = new org.eclipse.jetty.client.HttpClient(sslContextFactory);
+        } else {
+            httpClient = new org.eclipse.jetty.client.HttpClient();
         }
 
         return WebClient.builder()
@@ -159,36 +164,38 @@ public class ClientConfig {
 
     @Bean
     public Client jerseyClient(SSLFactory sslFactory) {
-        ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         if (sslFactory.isSecurityEnabled()) {
-            clientBuilder.sslContext(sslFactory.getSslContext());
-            clientBuilder.hostnameVerifier(sslFactory.getHostnameVerifier());
+            return ClientBuilder.newBuilder()
+                    .sslContext(sslFactory.getSslContext())
+                    .hostnameVerifier(sslFactory.getHostnameVerifier())
+                    .build();
+        } else {
+            return ClientBuilder.newClient();
         }
-        return clientBuilder.build();
     }
 
     @Bean
     public com.sun.jersey.api.client.Client oldJerseyClient(SSLFactory sslFactory) {
-        com.sun.jersey.api.client.Client client = com.sun.jersey.api.client.Client.create();
         if (sslFactory.isSecurityEnabled()) {
             HttpsURLConnection.setDefaultSSLSocketFactory(sslFactory.getSslContext().getSocketFactory());
             DefaultClientConfig clientConfig = new DefaultClientConfig();
-            clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                                             new HTTPSProperties(sslFactory.getHostnameVerifier(), sslFactory.getSslContext()));
-            com.sun.jersey.api.client.Client.create(clientConfig);
+            clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(sslFactory.getHostnameVerifier(), sslFactory.getSslContext()));
+            return com.sun.jersey.api.client.Client.create(clientConfig);
+        } else {
+            return com.sun.jersey.api.client.Client.create();
         }
-        return client;
     }
 
     @Bean
     public HttpTransport googleHttpClient(SSLFactory sslFactory) {
-        NetHttpTransport.Builder httpTransportBuilder = new NetHttpTransport.Builder();
         if (sslFactory.isSecurityEnabled()) {
-            httpTransportBuilder.setSslSocketFactory(sslFactory.getSslContext().getSocketFactory())
-                                .setHostnameVerifier(sslFactory.getHostnameVerifier());
+            return new NetHttpTransport.Builder()
+                    .setSslSocketFactory(sslFactory.getSslContext().getSocketFactory())
+                    .setHostnameVerifier(sslFactory.getHostnameVerifier())
+                    .build();
+        } else {
+            return new NetHttpTransport();
         }
-        return httpTransportBuilder
-                .build();
     }
 
     @Autowired
@@ -233,7 +240,6 @@ public class ClientConfig {
     @Bean
     public akka.http.javadsl.Http akkaHttpClient(SSLFactory sslFactory, ActorSystem actorSystem) {
         akka.http.javadsl.Http http = akka.http.javadsl.Http.get(actorSystem);
-
         if (sslFactory.isSecurityEnabled()) {
             HttpsConnectionContext httpsContext = ConnectionContext.https(sslFactory.getSslContext());
             http.setDefaultClientHttpsContext(httpsContext);
