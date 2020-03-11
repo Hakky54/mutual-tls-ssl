@@ -1,18 +1,17 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.ClientType.OK_HTTP;
-import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
-
-import java.io.IOException;
-import java.util.Objects;
-
-import org.springframework.stereotype.Service;
-
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.Objects;
+
+import static nl.altindag.client.ClientType.OK_HTTP;
+import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
 @Service
 public class OkHttpClientService implements RequestService {
@@ -31,7 +30,6 @@ public class OkHttpClientService implements RequestService {
                                      .build();
 
         Response response = okHttpClient.newCall(request).execute();
-
 
         return new ClientResponse(Objects.requireNonNull(response.body()).string(), response.code());
     }

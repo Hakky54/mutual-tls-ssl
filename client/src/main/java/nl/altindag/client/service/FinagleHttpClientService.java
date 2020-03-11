@@ -1,19 +1,17 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.ClientType.FINAGLE;
-import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
-
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.RequestBuilder;
 import com.twitter.finagle.http.Response;
-
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
+
+import static nl.altindag.client.ClientType.FINAGLE;
+import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
 @Service
 public class FinagleHttpClientService implements RequestService {
@@ -28,7 +26,7 @@ public class FinagleHttpClientService implements RequestService {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public ClientResponse executeRequest(String url) throws Exception {
         Request request = new RequestBuilder()
                 .addHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())

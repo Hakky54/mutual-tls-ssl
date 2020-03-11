@@ -25,6 +25,7 @@ public class HelloStepDefs extends BaseStepDefs {
     private static final Logger LOGGER = LogManager.getLogger(HelloStepDefs.class);
 
     @Autowired
+    @SuppressWarnings("SpringJavaAutowiredMembersInspection")
     public HelloStepDefs(TestScenario testScenario, List<RequestService> requestServices) {
         super(testScenario, requestServices);
     }

@@ -1,12 +1,6 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.ClientType.SPRING_WEB_CLIENT_JETTY;
-import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
-import static nl.altindag.client.TestConstants.HTTP_URL;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import nl.altindag.client.model.ClientResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,9 +8,14 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import nl.altindag.client.model.ClientResponse;
 import reactor.core.publisher.Mono;
+
+import static nl.altindag.client.ClientType.SPRING_WEB_CLIENT_JETTY;
+import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
+import static nl.altindag.client.TestConstants.HTTP_URL;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SpringWebClientJettyServiceShould {
@@ -32,7 +31,7 @@ public class SpringWebClientJettyServiceShould {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void executeRequest() throws Exception {
         WebClient.RequestHeadersUriSpec requestHeadersUriSpec = mock(WebClient.RequestHeadersUriSpec.class);
         org.springframework.web.reactive.function.client.ClientResponse response = mock(org.springframework.web.reactive.function.client.ClientResponse.class);
