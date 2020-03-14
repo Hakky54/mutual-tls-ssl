@@ -10,6 +10,7 @@ import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
 import okhttp3.OkHttpClient;
 import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.asynchttpclient.AsyncHttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +38,7 @@ public class ClientConfigShould {
     private ClientConfig victim = new ClientConfig();
 
     @Test
-    public void createSslTrustManagerHelper() {
+    public void createSslFactory() {
         SSLFactory sslFactory = victim.sslFactory(false, false,
                                                               EMPTY, EMPTY.toCharArray(), EMPTY, EMPTY.toCharArray());
 
@@ -48,7 +49,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createSslTrustManagerHelperWithOneWayAuthentication() {
+    public void createSslFactoryWithOneWayAuthentication() {
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = "secret";
 
@@ -59,10 +60,11 @@ public class ClientConfigShould {
         assertThat(sslFactory.isSecurityEnabled()).isTrue();
         assertThat(sslFactory.isOneWayAuthenticationEnabled()).isTrue();
         assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isFalse();
+        assertThat(sslFactory.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
     }
 
     @Test
-    public void createSslTrustManagerHelperWithTwoWayAuthentication() {
+    public void createSslFactoryWithTwoWayAuthentication() {
         String keyStorePath = "keystores-for-unit-tests/identity.jks";
         String keyStorePassword = "secret";
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
@@ -75,6 +77,7 @@ public class ClientConfigShould {
         assertThat(sslFactory.isSecurityEnabled()).isTrue();
         assertThat(sslFactory.isOneWayAuthenticationEnabled()).isFalse();
         assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isTrue();
+        assertThat(sslFactory.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
     }
 
     @Test

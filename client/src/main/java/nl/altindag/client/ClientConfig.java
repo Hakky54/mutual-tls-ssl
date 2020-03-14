@@ -60,13 +60,15 @@ public class ClientConfig {
         SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder();
         if (oneWayAuthenticationEnabled) {
             sslFactoryBuilder.withTrustStore(trustStorePath, trustStorePassword)
-                             .withHostnameVerifierEnabled(true);
+                             .withHostnameVerifierEnabled(true)
+                             .withProtocol("TLSv1.3");
         }
 
         if (twoWayAuthenticationEnabled) {
             sslFactoryBuilder.withIdentity(keyStorePath, keyStorePassword)
                              .withTrustStore(trustStorePath, trustStorePassword)
-                             .withHostnameVerifierEnabled(true);
+                             .withHostnameVerifierEnabled(true)
+                             .withProtocol("TLSv1.3");
         }
         return sslFactoryBuilder.build();
     }
