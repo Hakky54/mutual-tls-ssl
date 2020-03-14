@@ -43,6 +43,7 @@ public class ClientConfigShould {
                                                               EMPTY, EMPTY.toCharArray(), EMPTY, EMPTY.toCharArray());
 
         assertThat(sslFactory).isNotNull();
+        assertThat(sslFactory.getSslContext()).isNull();
         assertThat(sslFactory.isSecurityEnabled()).isFalse();
         assertThat(sslFactory.isOneWayAuthenticationEnabled()).isFalse();
         assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isFalse();
@@ -58,9 +59,11 @@ public class ClientConfigShould {
 
         assertThat(sslFactory).isNotNull();
         assertThat(sslFactory.isSecurityEnabled()).isTrue();
+        assertThat(sslFactory.getSslContext()).isNotNull();
         assertThat(sslFactory.isOneWayAuthenticationEnabled()).isTrue();
         assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isFalse();
         assertThat(sslFactory.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
+        assertThat(sslFactory.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
     }
 
     @Test
@@ -75,9 +78,11 @@ public class ClientConfigShould {
 
         assertThat(sslFactory).isNotNull();
         assertThat(sslFactory.isSecurityEnabled()).isTrue();
+        assertThat(sslFactory.getSslContext()).isNotNull();
         assertThat(sslFactory.isOneWayAuthenticationEnabled()).isFalse();
         assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isTrue();
         assertThat(sslFactory.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
+        assertThat(sslFactory.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
     }
 
     @Test
