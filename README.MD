@@ -58,6 +58,8 @@ Below is a list of supported clients with examples, see in the [ClientConfig cla
 4. A terminal
 5. Openssl (For Windows users use [Git Bash](https://git-scm.com/))
 
+This project contains a maven wrapper, so you can run this project without installing maven. The documentation for this tutorial contains next to the default mvn command also the commands for the maven wrapper.
+
 If you want to run this project with Java 8, you can get an older version with the git command below.
 And it is recommended to follow the instruction for that specific version, which is available at this [page](https://github.com/Hakky54/mutual-tls-ssl/tree/java-8-compatible)
 ```bash
@@ -67,6 +69,10 @@ git checkout tags/java-8-compatible
 Start the server by running the main method of the [App Class](server/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
 ```bash
 cd server/ && mvn spring-boot:run
+```
+Or with the maven wrapper
+```bash
+cd server/ && ./../mvnw spring-boot:run
 ```
 
 ## Saying hello to the server (without encryption)
@@ -88,8 +94,8 @@ Date: Sun, 11 Nov 2018 14:21:50 GMT
 Hello
 ```
 
-You can also call the server with the provided client in the client directory. The client is an integration test based on Cucumber, and you can start it by running the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class from your IDE or by running the following command from the terminal in the root directory `cd client/ && mvn exec:java`. There is a [Hello.feature](client/src/test/resources/features/Hello.feature) file that describes the steps for the integration test. You can find it in the test resources of the client project.
-There is another way to run both the server and the client and that is with the following command in the root directory: `mvn clean verify`.
+You can also call the server with the provided client in the client directory. The client is an integration test based on Cucumber, and you can start it by running the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class from your IDE or by running the following command from the terminal in the root directory `cd client/ && mvn exec:java` or with the maven wrapper `cd client/ && ./../mvnw exec:java`. There is a [Hello.feature](client/src/test/resources/features/Hello.feature) file that describes the steps for the integration test. You can find it in the test resources of the client project.
+There is another way to run both the server and the client and that is with the following command in the root directory: `mvn clean verify` or with the maven wrapper `./mvnw clean verify`.
 The client sends by default requests to localhost, because it expects the server on the same machine. If the server is running on a different machine you can still provide a custom url with the following VM argument while running the client: `-Durl=http://[HOST]:[PORT]`
 ## Enabling HTTPS on the server (one-way TLS)
 
