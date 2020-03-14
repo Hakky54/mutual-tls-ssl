@@ -160,6 +160,11 @@
                 <artifactId>async-http-client</artifactId>
                 <version>${version.async-http-client}</version>
             </dependency>
+            <dependency>
+                <groupId>org.scalaj</groupId>
+                <artifactId>scalaj-http_${version.scala}</artifactId>
+                <version>${version.scalaj-http}</version>
+            </dependency>
 
             <!--     Apache Utils       -->
             <dependency>
