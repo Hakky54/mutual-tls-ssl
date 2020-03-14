@@ -26,3 +26,4 @@ Feature: Securing the connection between you and the world
       | Akka HttpClient                 |
       | Dispatch Reboot HttpClient      |
       | Async HttpClient                |
+      | ScalaJ HttpClient               |

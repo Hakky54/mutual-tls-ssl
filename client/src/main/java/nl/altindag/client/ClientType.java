@@ -18,6 +18,7 @@ public enum ClientType {
     AKKA_HTTP_CLIENT("akka httpclient"),
     DISPATCH_REBOOT_HTTP_CLIENT("dispatch reboot httpclient"),
     ASYNC_HTTP_CLIENT("async httpclient"),
+    SCALAJ_HTTP_CLIENT("scalaj httpclient"),
     NONE("none");
 
     private String value;
