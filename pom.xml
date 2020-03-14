@@ -19,8 +19,8 @@
         <version.scala>2.12</version.scala>
         <version.sslcontext-kickstart>3.0.1</version.sslcontext-kickstart>
         <version.spring>2.2.5.RELEASE</version.spring>
-        <version.apache.httpclient>4.5.11</version.apache.httpclient>
-        <version.cucumber>5.4.1</version.cucumber>
+        <version.apache.httpclient>4.5.12</version.apache.httpclient>
+        <version.cucumber>5.5.0</version.cucumber>
         <version.junit>4.13</version.junit>
         <version.maven-fail-safe>2.22.2</version.maven-fail-safe>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
@@ -29,20 +29,20 @@
         <version.commons-lang3>3.9</version.commons-lang3>
         <version.commons-io>2.6</version.commons-io>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
-        <version.okhttp>4.4.0</version.okhttp>
+        <version.okhttp>4.4.1</version.okhttp>
         <version.jetty-reactive-httpclient>1.1.2</version.jetty-reactive-httpclient>
         <version.org.glassfish.jersey.inject>2.30.1</version.org.glassfish.jersey.inject>
         <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
         <version.google.http.client>1.34.2</version.google.http.client>
-        <version.unirest>3.6.00</version.unirest>
+        <version.unirest>3.6.01</version.unirest>
         <version.retrofit>2.7.2</version.retrofit>
-        <version.finagle>20.1.0</version.finagle>
+        <version.finagle>20.3.0</version.finagle>
         <version.akka-http>10.1.11</version.akka-http>
-        <version.akka-stream>2.6.3</version.akka-stream>
+        <version.akka-stream>2.6.4</version.akka-stream>
         <version.dispatch-core>1.2.0</version.dispatch-core>
         <version.scalaj-http>2.4.2</version.scalaj-http>
-        <version.async-http-client>2.10.5</version.async-http-client>
-        <version.jackson-module-scala>2.10.2</version.jackson-module-scala>
+        <version.async-http-client>2.11.0</version.async-http-client>
+        <version.jackson-module-scala>2.10.3</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>1.1.0</version.logcaptor>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
