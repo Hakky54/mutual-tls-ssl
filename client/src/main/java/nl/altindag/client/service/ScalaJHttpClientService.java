@@ -4,6 +4,7 @@ import com.google.common.annotations.VisibleForTesting;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 import nl.altindag.sslcontext.SSLFactory;
+import org.apache.http.client.methods.HttpGet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scala.runtime.BoxedUnit;
@@ -30,7 +31,7 @@ public class ScalaJHttpClientService implements RequestService {
     @Override
     public ClientResponse executeRequest(String url) throws IOException {
         HttpResponse<String> response = createRequest(url)
-                .method("GET")
+                .method(HttpGet.METHOD_NAME)
                 .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .option(httpUrlConnection -> {
                    if (httpUrlConnection instanceof HttpsURLConnection && sslFactory.isSecurityEnabled()) {

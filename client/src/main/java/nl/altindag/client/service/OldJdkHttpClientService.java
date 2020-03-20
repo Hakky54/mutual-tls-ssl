@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.client.methods.HttpGet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,7 @@ public class OldJdkHttpClientService implements RequestService {
                                               + "security is disable while using an url with https");
         }
 
-        connection.setRequestMethod("GET");
+        connection.setRequestMethod(HttpGet.METHOD_NAME);
         connection.setRequestProperty(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
         String responseBody = IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
         return new ClientResponse(responseBody, connection.getResponseCode());
