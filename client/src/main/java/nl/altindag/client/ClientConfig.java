@@ -15,6 +15,7 @@ import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.SupportedCipherSuiteFilter;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
 import okhttp3.OkHttpClient;
@@ -43,6 +44,8 @@ import javax.ws.rs.client.ClientBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
+import java.util.List;
+import java.util.Optional;
 
 import static nl.altindag.client.Constants.SERVER_URL;
 
@@ -90,6 +93,7 @@ public class ClientConfig {
     public HttpClient jdkHttpClient(SSLFactory sslFactory) {
         if (sslFactory.isSecurityEnabled()) {
             return HttpClient.newBuilder()
+                    .sslParameters(sslFactory.getSslContext().getDefaultSSLParameters())
                     .sslContext(sslFactory.getSslContext())
                     .build();
         } else {
@@ -133,7 +137,8 @@ public class ClientConfig {
     private SslContext createNettySslContext(SSLFactory sslFactory) throws SSLException {
         SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
                 .startTls(true)
-                .protocols(sslFactory.getSslContext().getProtocol());
+                .ciphers(List.of(sslFactory.getSslContext().getDefaultSSLParameters().getCipherSuites()), SupportedCipherSuiteFilter.INSTANCE)
+                .protocols(sslFactory.getSslContext().getDefaultSSLParameters().getProtocols());
 
         if (sslFactory.isOneWayAuthenticationEnabled()) {
             sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
@@ -153,6 +158,8 @@ public class ClientConfig {
         if (sslFactory.isSecurityEnabled()) {
             SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
             sslContextFactory.setSslContext(sslFactory.getSslContext());
+            sslContextFactory.setIncludeProtocols(sslFactory.getSslContext().getDefaultSSLParameters().getProtocols());
+            sslContextFactory.setIncludeCipherSuites(sslFactory.getSslContext().getDefaultSSLParameters().getCipherSuites());
             sslContextFactory.setHostnameVerifier(sslFactory.getHostnameVerifier());
             httpClient = new org.eclipse.jetty.client.HttpClient(sslContextFactory);
         } else {
@@ -243,7 +250,12 @@ public class ClientConfig {
     public akka.http.javadsl.Http akkaHttpClient(SSLFactory sslFactory, ActorSystem actorSystem) {
         akka.http.javadsl.Http http = akka.http.javadsl.Http.get(actorSystem);
         if (sslFactory.isSecurityEnabled()) {
-            HttpsConnectionContext httpsContext = ConnectionContext.https(sslFactory.getSslContext());
+            HttpsConnectionContext httpsContext = ConnectionContext.https(
+                    sslFactory.getSslContext(),
+                    Optional.empty(),
+                    Optional.empty(),
+                    Optional.empty(),
+                    Optional.of(sslFactory.getSslContext().getDefaultSSLParameters()));
             http.setDefaultClientHttpsContext(httpsContext);
         }
         return http;

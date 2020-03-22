@@ -128,7 +128,7 @@ public class ClientConfigShould {
 
         assertThat(httpClient).isNotNull();
         verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
     }
 
     @Test
@@ -194,7 +194,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(0)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
@@ -209,7 +209,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
@@ -240,7 +240,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(3)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
         verify(sslFactory, times(0)).getTrustStores();
         verify(sslFactory, times(0)).getIdentities();
@@ -256,7 +256,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(3)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
         verify(sslFactory, times(0)).getTrustStores();
         verify(sslFactory, times(0)).getIdentities();
@@ -434,7 +434,7 @@ public class ClientConfigShould {
 
         assertThat(http).isNotNull();
         verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
     }
 
     @Test
@@ -472,7 +472,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(0)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
@@ -488,7 +488,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
@@ -520,7 +520,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(0)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
@@ -536,7 +536,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
