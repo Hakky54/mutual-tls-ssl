@@ -10,20 +10,20 @@ Feature: Securing the connection between you and the world
 
     Examples:
       | client                          |
-      | Apache HttpClient               |
-      | JDK HttpClient                  |
-      | Old JDK HttpClient              |
-      | Spring RestTemplate             |
-      | Spring WebFlux WebClient Netty  |
-      | Spring WebFlux WebClient Jetty  |
-      | OkHttp                          |
-      | Jersey HttpClient               |
-      | Old Jersey HttpClient           |
-      | Google HttpClient               |
-      | Unirest                         |
-      | Retrofit                        |
-      | Finagle                         |
       | Akka HttpClient                 |
-      | Dispatch Reboot HttpClient      |
+      | Apache HttpClient               |
       | Async HttpClient                |
+      | Dispatch Reboot HttpClient      |
+      | Finagle                         |
+      | Google HttpClient               |
+      | JDK HttpClient                  |
+      | Jersey HttpClient               |
+      | OkHttp                          |
+      | Old JDK HttpClient              |
+      | Old Jersey HttpClient           |
+      | Retrofit                        |
       | ScalaJ HttpClient               |
+      | Spring RestTemplate             |
+      | Spring WebFlux WebClient Jetty  |
+      | Spring WebFlux WebClient Netty  |
+      | Unirest                         |
