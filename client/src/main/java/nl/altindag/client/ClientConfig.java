@@ -81,8 +81,7 @@ public class ClientConfig {
     public org.apache.http.client.HttpClient apacheHttpClient(SSLFactory sslFactory) {
         if (sslFactory.isSecurityEnabled()) {
             return HttpClients.custom()
-                    .setSSLContext(sslFactory.getSslContext())
-                    .setSSLHostnameVerifier(sslFactory.getHostnameVerifier())
+                    .setSSLSocketFactory(sslFactory.getLayeredConnectionSocketFactory())
                     .build();
         } else {
             return HttpClients.createMinimal();
@@ -125,31 +124,13 @@ public class ClientConfig {
     public WebClient webClientWithNetty(SSLFactory sslFactory) throws SSLException {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
         if (sslFactory.isSecurityEnabled()) {
-            SslContext sslContext = createNettySslContext(sslFactory);
+            SslContext sslContext = sslFactory.toNettySslContextBuilderForClient().build();
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContext));
         }
 
         return WebClient.builder()
                  .clientConnector(new ReactorClientHttpConnector(httpClient))
                  .build();
-    }
-
-    private SslContext createNettySslContext(SSLFactory sslFactory) throws SSLException {
-        SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
-                .startTls(true)
-                .ciphers(List.of(sslFactory.getSslContext().getDefaultSSLParameters().getCipherSuites()), SupportedCipherSuiteFilter.INSTANCE)
-                .protocols(sslFactory.getSslContext().getDefaultSSLParameters().getProtocols());
-
-        if (sslFactory.isOneWayAuthenticationEnabled()) {
-            sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
-        }
-
-        if (sslFactory.isTwoWayAuthenticationEnabled()) {
-            sslContextBuilder.keyManager(sslFactory.getKeyManagerFactory())
-                    .trustManager(sslFactory.getTrustManagerFactory());
-        }
-
-        return sslContextBuilder.build();
     }
 
     @Bean
@@ -264,7 +245,7 @@ public class ClientConfig {
     @Bean
     public dispatch.Http dispatchRebootHttpClient(SSLFactory sslFactory) throws SSLException {
         if (sslFactory.isSecurityEnabled()) {
-            SslContext sslContext = createNettySslContext(sslFactory);
+            SslContext sslContext = sslFactory.toNettySslContextBuilderForClient().build();
 
             DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
                     .setSslContext(sslContext);
@@ -278,7 +259,7 @@ public class ClientConfig {
     @Bean
     public AsyncHttpClient asyncHttpClient(SSLFactory sslFactory) throws SSLException {
         if (sslFactory.isSecurityEnabled()) {
-            SslContext sslContext = createNettySslContext(sslFactory);
+            SslContext sslContext = sslFactory.toNettySslContextBuilderForClient().build();
 
             DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
                     .setSslContext(sslContext);

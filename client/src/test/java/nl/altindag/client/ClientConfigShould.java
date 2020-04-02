@@ -98,15 +98,14 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createApacheHttpClientWithSecurity() throws NoSuchAlgorithmException {
+    public void createApacheHttpClientWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         HttpClient httpClient = victim.apacheHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
         verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(1)).getSslContext();
-        verify(sslFactory, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(1)).getLayeredConnectionSocketFactory();
     }
 
     @Test
@@ -194,7 +193,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).toNettySslContextBuilderForClient();
         verify(sslFactory, times(0)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
@@ -209,7 +208,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).toNettySslContextBuilderForClient();
         verify(sslFactory, times(1)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
@@ -472,7 +471,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).toNettySslContextBuilderForClient();
         verify(sslFactory, times(0)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
@@ -488,7 +487,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).toNettySslContextBuilderForClient();
         verify(sslFactory, times(1)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
@@ -520,7 +519,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).toNettySslContextBuilderForClient();
         verify(sslFactory, times(0)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
@@ -536,7 +535,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
         verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).toNettySslContextBuilderForClient();
         verify(sslFactory, times(1)).getKeyManagerFactory();
         verify(sslFactory, times(1)).getTrustManagerFactory();
     }
