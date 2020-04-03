@@ -14,8 +14,6 @@ import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
 import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.SupportedCipherSuiteFilter;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
 import okhttp3.OkHttpClient;
@@ -44,7 +42,7 @@ import javax.ws.rs.client.ClientBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
-import java.util.List;
+import java.security.SecureRandom;
 import java.util.Optional;
 
 import static nl.altindag.client.Constants.SERVER_URL;
@@ -63,15 +61,17 @@ public class ClientConfig {
         SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder();
         if (oneWayAuthenticationEnabled) {
             sslFactoryBuilder.withTrustStore(trustStorePath, trustStorePassword)
-                             .withHostnameVerifierEnabled(true)
-                             .withProtocol("TLSv1.3");
+                    .withHostnameVerifierEnabled(true)
+                    .withSecureRandom(new SecureRandom())
+                    .withProtocol("TLSv1.3");
         }
 
         if (twoWayAuthenticationEnabled) {
             sslFactoryBuilder.withIdentity(keyStorePath, keyStorePassword)
-                             .withTrustStore(trustStorePath, trustStorePassword)
-                             .withHostnameVerifierEnabled(true)
-                             .withProtocol("TLSv1.3");
+                    .withTrustStore(trustStorePath, trustStorePassword)
+                    .withHostnameVerifierEnabled(true)
+                    .withSecureRandom(new SecureRandom())
+                    .withProtocol("TLSv1.3");
         }
         return sslFactoryBuilder.build();
     }
