@@ -14,8 +14,11 @@ import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
 import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.SupportedCipherSuiteFilter;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
+import nl.altindag.sslcontext.util.NettySslContextUtils;
 import okhttp3.OkHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.asynchttpclient.AsyncHttpClient;
@@ -36,6 +39,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -43,6 +47,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.Optional;
 
 import static nl.altindag.client.Constants.SERVER_URL;
@@ -124,13 +129,39 @@ public class ClientConfig {
     public WebClient webClientWithNetty(SSLFactory sslFactory) throws SSLException {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
         if (sslFactory.isSecurityEnabled()) {
-            SslContext sslContext = sslFactory.toNettySslContextBuilderForClient().build();
+            // custom mapping to Netty SslContext or use the provided NettySslContextUtils to create a SslContextBuilder from SSLFactory
+            // SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
+            SslContext sslContext = createNettySslContext(sslFactory);
+
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContext));
         }
 
         return WebClient.builder()
                  .clientConnector(new ReactorClientHttpConnector(httpClient))
                  .build();
+    }
+
+    /**
+     * Some HttpClients require {@link SslContext} or {@link SslContextBuilder} from Netty instead of requiring {@link SSLContext}
+     * The example below demonstrates a basic mapping of {@link SSLFactory}/{@link SSLContext} to Netty's {@link SslContext}
+     *
+     * The same mapping is also available at {@link NettySslContextUtils#forClient(SSLFactory)}
+     */
+    private SslContext createNettySslContext(SSLFactory sslFactory) throws SSLException {
+        SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
+                .ciphers(List.of(sslFactory.getSslContext().getDefaultSSLParameters().getCipherSuites()), SupportedCipherSuiteFilter.INSTANCE)
+                .protocols(sslFactory.getSslContext().getDefaultSSLParameters().getProtocols());
+
+        if (sslFactory.isOneWayAuthenticationEnabled()) {
+            sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
+        }
+
+        if (sslFactory.isTwoWayAuthenticationEnabled()) {
+            sslContextBuilder.keyManager(sslFactory.getKeyManagerFactory())
+                    .trustManager(sslFactory.getTrustManagerFactory());
+        }
+
+        return sslContextBuilder.build();
     }
 
     @Bean
@@ -245,7 +276,9 @@ public class ClientConfig {
     @Bean
     public dispatch.Http dispatchRebootHttpClient(SSLFactory sslFactory) throws SSLException {
         if (sslFactory.isSecurityEnabled()) {
-            SslContext sslContext = sslFactory.toNettySslContextBuilderForClient().build();
+            // custom mapping to Netty SslContext or use the provided NettySslContextUtils to create a SslContextBuilder from SSLFactory
+            // SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
+            SslContext sslContext = createNettySslContext(sslFactory);
 
             DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
                     .setSslContext(sslContext);
@@ -259,7 +292,9 @@ public class ClientConfig {
     @Bean
     public AsyncHttpClient asyncHttpClient(SSLFactory sslFactory) throws SSLException {
         if (sslFactory.isSecurityEnabled()) {
-            SslContext sslContext = sslFactory.toNettySslContextBuilderForClient().build();
+            // custom mapping to Netty SslContext or use the provided NettySslContextUtils to create a SslContextBuilder from SSLFactory
+            // SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
+            SslContext sslContext = createNettySslContext(sslFactory);
 
             DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
                     .setSslContext(sslContext);
