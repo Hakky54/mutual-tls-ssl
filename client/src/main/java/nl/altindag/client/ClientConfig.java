@@ -18,6 +18,7 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.SupportedCipherSuiteFilter;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
+import nl.altindag.sslcontext.util.JettySslContextUtils;
 import nl.altindag.sslcontext.util.NettySslContextUtils;
 import okhttp3.OkHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -168,11 +169,10 @@ public class ClientConfig {
     public WebClient webClientWithJetty(SSLFactory sslFactory) {
         org.eclipse.jetty.client.HttpClient httpClient;
         if (sslFactory.isSecurityEnabled()) {
-            SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
-            sslContextFactory.setSslContext(sslFactory.getSslContext());
-            sslContextFactory.setIncludeProtocols(sslFactory.getSslContext().getDefaultSSLParameters().getProtocols());
-            sslContextFactory.setIncludeCipherSuites(sslFactory.getSslContext().getDefaultSSLParameters().getCipherSuites());
-            sslContextFactory.setHostnameVerifier(sslFactory.getHostnameVerifier());
+            // custom mapping to Jetty SslContextFactory or use the provided JettySslContextUtils to create a SslContextFactory from SSLFactory
+            // SslContextFactory.Client sslContextFactory = JettySslContextUtils.forClient(sslFactory);
+            SslContextFactory.Client sslContextFactory = createJettySslContextFactory(sslFactory);
+
             httpClient = new org.eclipse.jetty.client.HttpClient(sslContextFactory);
         } else {
             httpClient = new org.eclipse.jetty.client.HttpClient();
@@ -181,6 +181,21 @@ public class ClientConfig {
         return WebClient.builder()
                 .clientConnector(new JettyClientHttpConnector(httpClient))
                 .build();
+    }
+
+    /**
+     * Some HttpClients require {@link SslContextFactory} from Jetty instead of requiring {@link SSLContext}
+     * The example below demonstrates a basic mapping of {@link SSLFactory}/{@link SSLContext} to Jetty's {@link SslContextFactory}
+     *
+     * The same mapping is also available at {@link JettySslContextUtils#forClient(SSLFactory)}
+     */
+    private SslContextFactory.Client createJettySslContextFactory(SSLFactory sslFactory) {
+        SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
+        sslContextFactory.setSslContext(sslFactory.getSslContext());
+        sslContextFactory.setIncludeProtocols(sslFactory.getSslContext().getDefaultSSLParameters().getProtocols());
+        sslContextFactory.setIncludeCipherSuites(sslFactory.getSslContext().getDefaultSSLParameters().getCipherSuites());
+        sslContextFactory.setHostnameVerifier(sslFactory.getHostnameVerifier());
+        return sslContextFactory;
     }
 
     @Bean
