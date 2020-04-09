@@ -14,13 +14,12 @@ import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
 import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.SupportedCipherSuiteFilter;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
 import nl.altindag.sslcontext.util.JettySslContextUtils;
 import nl.altindag.sslcontext.util.NettySslContextUtils;
 import okhttp3.OkHttpClient;
+import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.impl.client.HttpClients;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
@@ -40,15 +39,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
-import java.security.SecureRandom;
-import java.util.List;
 import java.util.Optional;
 
 import static nl.altindag.client.Constants.SERVER_URL;
@@ -67,16 +63,14 @@ public class ClientConfig {
         SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder();
         if (oneWayAuthenticationEnabled) {
             sslFactoryBuilder.withTrustStore(trustStorePath, trustStorePassword)
-                    .withHostnameVerifierEnabled(true)
-                    .withSecureRandom(new SecureRandom())
+                    .withHostnameVerifier(new DefaultHostnameVerifier())
                     .withProtocol("TLSv1.3");
         }
 
         if (twoWayAuthenticationEnabled) {
             sslFactoryBuilder.withIdentity(keyStorePath, keyStorePassword)
                     .withTrustStore(trustStorePath, trustStorePassword)
-                    .withHostnameVerifierEnabled(true)
-                    .withSecureRandom(new SecureRandom())
+                    .withHostnameVerifier(new DefaultHostnameVerifier())
                     .withProtocol("TLSv1.3");
         }
         return sslFactoryBuilder.build();
@@ -87,7 +81,8 @@ public class ClientConfig {
     public org.apache.http.client.HttpClient apacheHttpClient(SSLFactory sslFactory) {
         if (sslFactory.isSecurityEnabled()) {
             return HttpClients.custom()
-                    .setSSLSocketFactory(sslFactory.getLayeredConnectionSocketFactory())
+                    .setSSLContext(sslFactory.getSslContext())
+                    .setSSLHostnameVerifier(sslFactory.getHostnameVerifier())
                     .build();
         } else {
             return HttpClients.createMinimal();
@@ -130,9 +125,7 @@ public class ClientConfig {
     public WebClient webClientWithNetty(SSLFactory sslFactory) throws SSLException {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
         if (sslFactory.isSecurityEnabled()) {
-            // custom mapping to Netty SslContext or use the provided NettySslContextUtils to create a SslContextBuilder from SSLFactory
-            // SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
-            SslContext sslContext = createNettySslContext(sslFactory);
+            SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
 
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContext));
         }
@@ -142,36 +135,11 @@ public class ClientConfig {
                  .build();
     }
 
-    /**
-     * Some HttpClients require {@link SslContext} or {@link SslContextBuilder} from Netty instead of requiring {@link SSLContext}
-     * The example below demonstrates a basic mapping of {@link SSLFactory}/{@link SSLContext} to Netty's {@link SslContext}
-     *
-     * The same mapping is also available at {@link NettySslContextUtils#forClient(SSLFactory)}
-     */
-    private SslContext createNettySslContext(SSLFactory sslFactory) throws SSLException {
-        SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
-                .ciphers(List.of(sslFactory.getSslContext().getDefaultSSLParameters().getCipherSuites()), SupportedCipherSuiteFilter.INSTANCE)
-                .protocols(sslFactory.getSslContext().getDefaultSSLParameters().getProtocols());
-
-        if (sslFactory.isOneWayAuthenticationEnabled()) {
-            sslContextBuilder.trustManager(sslFactory.getTrustManagerFactory());
-        }
-
-        if (sslFactory.isTwoWayAuthenticationEnabled()) {
-            sslContextBuilder.keyManager(sslFactory.getKeyManagerFactory())
-                    .trustManager(sslFactory.getTrustManagerFactory());
-        }
-
-        return sslContextBuilder.build();
-    }
-
     @Bean
     public WebClient webClientWithJetty(SSLFactory sslFactory) {
         org.eclipse.jetty.client.HttpClient httpClient;
         if (sslFactory.isSecurityEnabled()) {
-            // custom mapping to Jetty SslContextFactory or use the provided JettySslContextUtils to create a SslContextFactory from SSLFactory
-            // SslContextFactory.Client sslContextFactory = JettySslContextUtils.forClient(sslFactory);
-            SslContextFactory.Client sslContextFactory = createJettySslContextFactory(sslFactory);
+            SslContextFactory.Client sslContextFactory = JettySslContextUtils.forClient(sslFactory);
 
             httpClient = new org.eclipse.jetty.client.HttpClient(sslContextFactory);
         } else {
@@ -181,21 +149,6 @@ public class ClientConfig {
         return WebClient.builder()
                 .clientConnector(new JettyClientHttpConnector(httpClient))
                 .build();
-    }
-
-    /**
-     * Some HttpClients require {@link SslContextFactory} from Jetty instead of requiring {@link SSLContext}
-     * The example below demonstrates a basic mapping of {@link SSLFactory}/{@link SSLContext} to Jetty's {@link SslContextFactory}
-     *
-     * The same mapping is also available at {@link JettySslContextUtils#forClient(SSLFactory)}
-     */
-    private SslContextFactory.Client createJettySslContextFactory(SSLFactory sslFactory) {
-        SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
-        sslContextFactory.setSslContext(sslFactory.getSslContext());
-        sslContextFactory.setIncludeProtocols(sslFactory.getSslContext().getDefaultSSLParameters().getProtocols());
-        sslContextFactory.setIncludeCipherSuites(sslFactory.getSslContext().getDefaultSSLParameters().getCipherSuites());
-        sslContextFactory.setHostnameVerifier(sslFactory.getHostnameVerifier());
-        return sslContextFactory;
     }
 
     @Bean
@@ -291,9 +244,7 @@ public class ClientConfig {
     @Bean
     public dispatch.Http dispatchRebootHttpClient(SSLFactory sslFactory) throws SSLException {
         if (sslFactory.isSecurityEnabled()) {
-            // custom mapping to Netty SslContext or use the provided NettySslContextUtils to create a SslContextBuilder from SSLFactory
-            // SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
-            SslContext sslContext = createNettySslContext(sslFactory);
+            SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
 
             DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
                     .setSslContext(sslContext);
@@ -307,9 +258,7 @@ public class ClientConfig {
     @Bean
     public AsyncHttpClient asyncHttpClient(SSLFactory sslFactory) throws SSLException {
         if (sslFactory.isSecurityEnabled()) {
-            // custom mapping to Netty SslContext or use the provided NettySslContextUtils to create a SslContextBuilder from SSLFactory
-            // SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
-            SslContext sslContext = createNettySslContext(sslFactory);
+            SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
 
             DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
                     .setSslContext(sslContext);
