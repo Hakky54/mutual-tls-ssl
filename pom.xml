@@ -17,7 +17,7 @@
     <properties>
         <version.java>11</version.java>
         <version.scala>2.12</version.scala>
-        <version.sslcontext-kickstart>3.0.5</version.sslcontext-kickstart>
+        <version.sslcontext-kickstart>3.0.6</version.sslcontext-kickstart>
         <version.spring>2.2.5.RELEASE</version.spring>
         <version.apache.httpclient>4.5.12</version.apache.httpclient>
         <version.cucumber>5.5.0</version.cucumber>
@@ -55,6 +55,16 @@
             <dependency>
                 <groupId>io.github.hakky54</groupId>
                 <artifactId>sslcontext-kickstart</artifactId>
+                <version>${version.sslcontext-kickstart}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.hakky54</groupId>
+                <artifactId>sslcontext-kickstart-for-netty</artifactId>
+                <version>${version.sslcontext-kickstart}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.hakky54</groupId>
+                <artifactId>sslcontext-kickstart-for-jetty</artifactId>
                 <version>${version.sslcontext-kickstart}</version>
             </dependency>
 
