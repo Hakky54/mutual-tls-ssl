@@ -15,6 +15,7 @@ import scalaj.http.HttpResponse;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 
+import static java.util.Objects.nonNull;
 import static nl.altindag.client.ClientType.SCALAJ_HTTP_CLIENT;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
@@ -23,8 +24,7 @@ public class ScalaJHttpClientService implements RequestService {
 
     private final SSLFactory sslFactory;
 
-    @Autowired
-    public ScalaJHttpClientService(SSLFactory sslFactory) {
+    public ScalaJHttpClientService(@Autowired(required = false) SSLFactory sslFactory) {
         this.sslFactory = sslFactory;
     }
 
@@ -34,7 +34,7 @@ public class ScalaJHttpClientService implements RequestService {
                 .method(HttpGet.METHOD_NAME)
                 .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .option(httpUrlConnection -> {
-                   if (httpUrlConnection instanceof HttpsURLConnection && sslFactory.isSecurityEnabled()) {
+                   if (httpUrlConnection instanceof HttpsURLConnection && nonNull(sslFactory)) {
                        HttpsURLConnection httpsURLConnection = (HttpsURLConnection) httpUrlConnection;
                        httpsURLConnection.setSSLSocketFactory(sslFactory.getSslContext().getSocketFactory());
                        httpsURLConnection.setHostnameVerifier(sslFactory.getHostnameVerifier());

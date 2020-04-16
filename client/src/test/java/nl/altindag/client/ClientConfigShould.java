@@ -38,30 +38,17 @@ public class ClientConfigShould {
     private ClientConfig victim = new ClientConfig();
 
     @Test
-    public void createSslFactory() {
-        SSLFactory sslFactory = victim.sslFactory(false, false,
-                                                              EMPTY, EMPTY.toCharArray(), EMPTY, EMPTY.toCharArray());
-
-        assertThat(sslFactory).isNotNull();
-        assertThat(sslFactory.getSslContext()).isNull();
-        assertThat(sslFactory.isSecurityEnabled()).isFalse();
-        assertThat(sslFactory.isOneWayAuthenticationEnabled()).isFalse();
-        assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isFalse();
-    }
-
-    @Test
     public void createSslFactoryWithOneWayAuthentication() {
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = "secret";
 
         SSLFactory sslFactory = victim.sslFactory(true, false,
-                                                              EMPTY, EMPTY.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
+                EMPTY, EMPTY.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
 
         assertThat(sslFactory).isNotNull();
-        assertThat(sslFactory.isSecurityEnabled()).isTrue();
         assertThat(sslFactory.getSslContext()).isNotNull();
-        assertThat(sslFactory.isOneWayAuthenticationEnabled()).isTrue();
-        assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isFalse();
+        assertThat(sslFactory.getKeyManager()).isNotPresent();
+        assertThat(sslFactory.getTrustManager()).isNotNull();
         assertThat(sslFactory.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
         assertThat(sslFactory.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
     }
@@ -74,27 +61,21 @@ public class ClientConfigShould {
         String trustStorePassword = "secret";
 
         SSLFactory sslFactory = victim.sslFactory(false, true,
-                                                              keyStorePath, keyStorePassword.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
+                keyStorePath, keyStorePassword.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
 
         assertThat(sslFactory).isNotNull();
-        assertThat(sslFactory.isSecurityEnabled()).isTrue();
         assertThat(sslFactory.getSslContext()).isNotNull();
-        assertThat(sslFactory.isOneWayAuthenticationEnabled()).isFalse();
-        assertThat(sslFactory.isTwoWayAuthenticationEnabled()).isTrue();
+        assertThat(sslFactory.getKeyManager()).isPresent();
+        assertThat(sslFactory.getTrustManager()).isNotNull();
         assertThat(sslFactory.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
         assertThat(sslFactory.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
     }
 
     @Test
     public void createApacheHttpClientWithoutSecurity() {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        HttpClient httpClient = victim.apacheHttpClient(sslFactory);
+        HttpClient httpClient = victim.apacheHttpClient(null);
 
         assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getHostnameVerifier();
     }
 
     @Test
@@ -104,21 +85,15 @@ public class ClientConfigShould {
         HttpClient httpClient = victim.apacheHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
     }
 
     @Test
     public void createJdkHttpClientWithoutSecurity() {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        java.net.http.HttpClient httpClient = victim.jdkHttpClient(sslFactory);
+        java.net.http.HttpClient httpClient = victim.jdkHttpClient(null);
 
         assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getHostnameVerifier();
     }
 
     @Test
@@ -128,7 +103,6 @@ public class ClientConfigShould {
         java.net.http.HttpClient httpClient = victim.jdkHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(2)).getSslContext();
     }
 
@@ -143,15 +117,9 @@ public class ClientConfigShould {
 
     @Test
     public void createOkHttpClientWithoutSecurity() {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        OkHttpClient okHttpClient = victim.okHttpClient(sslFactory);
+        OkHttpClient okHttpClient = victim.okHttpClient(null);
 
         assertThat(okHttpClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getTrustManager();
-        verify(sslFactory, times(0)).getHostnameVerifier();
     }
 
     @Test
@@ -161,7 +129,6 @@ public class ClientConfigShould {
         OkHttpClient okHttpClient = victim.okHttpClient(sslFactory);
 
         assertThat(okHttpClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getTrustManager();
         verify(sslFactory, times(1)).getHostnameVerifier();
@@ -172,17 +139,9 @@ public class ClientConfigShould {
 
     @Test
     public void createWebClientWithNettyWithoutSecurity() throws SSLException {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        WebClient webClient = victim.webClientWithNetty(sslFactory);
+        WebClient webClient = victim.webClientWithNetty(null);
 
         assertThat(webClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getKeyManager();
-        verify(sslFactory, times(0)).getTrustManager();
     }
 
     @Test
@@ -192,11 +151,7 @@ public class ClientConfigShould {
         WebClient webClient = victim.webClientWithNetty(sslFactory);
 
         assertThat(webClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(3)).getSslContext();
-        verify(sslFactory, times(0)).getKeyManager();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getTrustManager();
     }
 
@@ -207,28 +162,16 @@ public class ClientConfigShould {
         WebClient webClient = victim.webClientWithNetty(sslFactory);
 
         assertThat(webClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(3)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManager();
         verify(sslFactory, times(1)).getTrustManager();
     }
 
     @Test
     public void createWebClientWithJettyWithoutSecurity() {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        WebClient webClient = victim.webClientWithJetty(sslFactory);
+        WebClient webClient = victim.webClientWithJetty(null);
 
         assertThat(webClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getHostnameVerifier();
-        verify(sslFactory, times(0)).getTrustStores();
-        verify(sslFactory, times(0)).getIdentities();
     }
 
     @Test
@@ -238,10 +181,7 @@ public class ClientConfigShould {
         WebClient webClient = victim.webClientWithJetty(sslFactory);
 
         assertThat(webClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(4)).getSslContext();
+        verify(sslFactory, times(3)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
         verify(sslFactory, times(0)).getTrustStores();
         verify(sslFactory, times(0)).getIdentities();
@@ -254,10 +194,7 @@ public class ClientConfigShould {
         WebClient webClient = victim.webClientWithJetty(sslFactory);
 
         assertThat(webClient).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(4)).getSslContext();
+        verify(sslFactory, times(3)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
         verify(sslFactory, times(0)).getTrustStores();
         verify(sslFactory, times(0)).getIdentities();
@@ -265,14 +202,9 @@ public class ClientConfigShould {
 
     @Test
     public void createJerseyClientWithoutSecurity() {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        Client client = victim.jerseyClient(sslFactory);
+        Client client = victim.jerseyClient(null);
 
         assertThat(client).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getHostnameVerifier();
 
         client.close();
     }
@@ -284,7 +216,6 @@ public class ClientConfigShould {
         Client client = victim.jerseyClient(sslFactory);
 
         assertThat(client).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
 
@@ -293,14 +224,9 @@ public class ClientConfigShould {
 
     @Test
     public void createOldJerseyClientWithoutSecurity() {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        com.sun.jersey.api.client.Client client = victim.oldJerseyClient(sslFactory);
+        com.sun.jersey.api.client.Client client = victim.oldJerseyClient(null);
 
         assertThat(client).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getHostnameVerifier();
 
         client.destroy();
     }
@@ -312,7 +238,6 @@ public class ClientConfigShould {
         com.sun.jersey.api.client.Client client = victim.oldJerseyClient(sslFactory);
 
         assertThat(client).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
 
@@ -321,14 +246,9 @@ public class ClientConfigShould {
 
     @Test
     public void createGoogleHttpClientWithoutSecurity() throws IOException {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        HttpTransport httpTransport = victim.googleHttpClient(sslFactory);
+        HttpTransport httpTransport = victim.googleHttpClient(null);
 
         assertThat(httpTransport).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getHostnameVerifier();
 
         httpTransport.shutdown();
     }
@@ -340,7 +260,6 @@ public class ClientConfigShould {
         HttpTransport httpTransport = victim.googleHttpClient(sslFactory);
 
         assertThat(httpTransport).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
 
@@ -349,14 +268,9 @@ public class ClientConfigShould {
 
     @Test
     public void createUnirestWithoutSecurity() {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        victim.unirest(sslFactory);
+        victim.unirest(null);
 
         assertThat(Unirest.primaryInstance().config().getSslContext()).isNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getHostnameVerifier();
 
         Unirest.shutDown();
     }
@@ -367,7 +281,6 @@ public class ClientConfigShould {
 
         victim.unirest(sslFactory);
 
-        verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
 
@@ -388,12 +301,7 @@ public class ClientConfigShould {
 
     @Test
     public void createFinagleClientWithoutSecurity() throws URISyntaxException {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        Service<Request, Response> service = victim.finagle(sslFactory);
-
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).getSslContext();
+        Service<Request, Response> service = victim.finagle(null);
 
         assertThat(service.isAvailable()).isTrue();
         assertThat(service.status().toString()).isEqualTo("Open");
@@ -407,7 +315,6 @@ public class ClientConfigShould {
 
         Service<Request, Response> service = victim.finagle(sslFactory);
 
-        verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(1)).getSslContext();
 
         assertThat(service.isAvailable()).isTrue();
@@ -418,13 +325,9 @@ public class ClientConfigShould {
 
     @Test
     public void createAkkaHttpClientWithoutSecurity() {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        Http http = victim.akkaHttpClient(sslFactory, ActorSystem.create());
+        Http http = victim.akkaHttpClient(null, ActorSystem.create());
 
         assertThat(http).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).getSslContext();
     }
 
     @Test
@@ -434,7 +337,6 @@ public class ClientConfigShould {
         Http http = victim.akkaHttpClient(sslFactory, ActorSystem.create());
 
         assertThat(http).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
         verify(sslFactory, times(2)).getSslContext();
     }
 
@@ -448,18 +350,9 @@ public class ClientConfigShould {
 
     @Test
     public void createDispatchRebootHttpClientWithoutSecurity() throws SSLException {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        dispatch.Http httpClient = victim.dispatchRebootHttpClient(sslFactory);
+        dispatch.Http httpClient = victim.dispatchRebootHttpClient(null);
 
         assertThat(httpClient).isNotNull();
-        assertThat(httpClient.client().getConfig().getSslContext()).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getKeyManager();
-        verify(sslFactory, times(0)).getTrustManager();
     }
 
     @Test
@@ -470,11 +363,7 @@ public class ClientConfigShould {
 
         assertThat(httpClient).isNotNull();
         assertThat(httpClient.client().getConfig().getSslContext()).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(3)).getSslContext();
-        verify(sslFactory, times(0)).getKeyManager();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getTrustManager();
     }
 
@@ -486,28 +375,17 @@ public class ClientConfigShould {
 
         assertThat(httpClient).isNotNull();
         assertThat(httpClient.client().getConfig().getSslContext()).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(3)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManager();
         verify(sslFactory, times(1)).getTrustManager();
     }
 
     @Test
     public void createAsyncHttpClientWithoutSecurity() throws SSLException {
-        SSLFactory sslFactory = createSSLFactory(false, false);
-
-        AsyncHttpClient httpClient = victim.asyncHttpClient(sslFactory);
+        AsyncHttpClient httpClient = victim.asyncHttpClient(null);
 
         assertThat(httpClient).isNotNull();
         assertThat(httpClient.getConfig().getSslContext()).isNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(0)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(0)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(0)).getSslContext();
-        verify(sslFactory, times(0)).getKeyManager();
-        verify(sslFactory, times(0)).getTrustManager();
     }
 
     @Test
@@ -518,11 +396,7 @@ public class ClientConfigShould {
 
         assertThat(httpClient).isNotNull();
         assertThat(httpClient.getConfig().getSslContext()).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(3)).getSslContext();
-        verify(sslFactory, times(0)).getKeyManager();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getTrustManager();
     }
 
@@ -534,10 +408,7 @@ public class ClientConfigShould {
 
         assertThat(httpClient).isNotNull();
         assertThat(httpClient.getConfig().getSslContext()).isNotNull();
-        verify(sslFactory, times(1)).isSecurityEnabled();
-        verify(sslFactory, times(1)).isOneWayAuthenticationEnabled();
-        verify(sslFactory, times(1)).isTwoWayAuthenticationEnabled();
-        verify(sslFactory, times(3)).getSslContext();
+        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManager();
         verify(sslFactory, times(1)).getTrustManager();
     }

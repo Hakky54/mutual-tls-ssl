@@ -30,8 +30,7 @@ public class OldJdkHttpClientService implements RequestService {
 
     private final SSLFactory sslFactory;
 
-    @Autowired
-    public OldJdkHttpClientService(SSLFactory sslFactory) {
+    public OldJdkHttpClientService(@Autowired(required = false) SSLFactory sslFactory) {
         this.sslFactory = sslFactory;
     }
 
