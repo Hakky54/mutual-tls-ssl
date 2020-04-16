@@ -21,34 +21,34 @@ These are the following steps:
 6. [Automated script for enabling authentication with TLS](#automated-script-for-enabling-authentication-with-tls)
 
 Definition
-  - Identity: A KeyStore which holds the key pair also known as private and public key
-  - TrustStore: A KeyStore containing one or more certificates also known as public key. This KeyStore contains a list of trusted certificates
-  - One way authentication (also known as one way tls, one way ssl): Https connection where the client validates the certificate of the counter party
-  - Two way authentication (also known as two way tls, two way ssl, mutual authentication): Https connection where the client as well as the counter party validates the certificate, also known as mutual authentication
+* Identity: A KeyStore which holds the key pair also known as private and public key
+* TrustStore: A KeyStore containing one or more certificates also known as public key. This KeyStore contains a list of trusted certificates
+* One way authentication (also known as one way tls, one way ssl): Https connection where the client validates the certificate of the counter party
+* Two way authentication (also known as two way tls, two way ssl, mutual authentication): Https connection where the client as well as the counter party validates the certificate, also known as mutual authentication
 
 Usefull links
-  - [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
-  - [Openssl Cheatsheet](https://gist.github.com/Hakky54/b30418b25215ad7d18f978bc0b448d81)
-  - [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
+* [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
+* [Openssl Cheatsheet](https://gist.github.com/Hakky54/b30418b25215ad7d18f978bc0b448d81)
+* [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
 Below is a list of supported clients with examples, see in the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java) and [service directory](client/src/main/java/nl/altindag/client/service) for detailed configuration
-  - [Apache HttpClient](https://github.com/apache/httpcomponents-client)
-  - [JDK HttpClient](https://openjdk.java.net/groups/net/httpclient/intro.html)
-  - [Old JDK HttpClient](https://docs.oracle.com/javase/tutorial/networking/urls/readingWriting.html)
-  - Spring RestTemplate
-  - Spring WebFlux WebClient Netty
-  - Spring WebFlux WebClient Jetty
-  - [OkHttp](https://github.com/square/okhttp)
-  - [Jersey Client](https://eclipse-ee4j.github.io/jersey/)
-  - Old Jersey Client
-  - [Google HttpClient](https://github.com/googleapis/google-http-java-client)
-  - [Unirest](https://github.com/Kong/unirest-java)
-  - [Retrofit](https://github.com/square/retrofit)
-  - [Twitter Finagle Http Client](https://github.com/twitter/finagle)
-  - [Akka Http Client](https://github.com/akka/akka-http)
-  - [Dispatch Reboot Http Client](https://github.com/dispatch/reboot)
-  - [Async Http Client](https://github.com/AsyncHttpClient/async-http-client)
-  - [ScalaJ Http Client](https://github.com/scalaj/scalaj-http)
+* [Apache HttpClient](https://github.com/apache/httpcomponents-client)
+* [JDK HttpClient](https://openjdk.java.net/groups/net/httpclient/intro.html)
+* [Old JDK HttpClient](https://docs.oracle.com/javase/tutorial/networking/urls/readingWriting.html)
+* Spring RestTemplate
+* Spring WebFlux WebClient Netty
+* Spring WebFlux WebClient Jetty
+* [OkHttp](https://github.com/square/okhttp)
+* [Jersey Client](https://eclipse-ee4j.github.io/jersey/)
+* Old Jersey Client
+* [Google HttpClient](https://github.com/googleapis/google-http-java-client)
+* [Unirest](https://github.com/Kong/unirest-java)
+* [Retrofit](https://github.com/square/retrofit)
+* [Twitter Finagle Http Client](https://github.com/twitter/finagle)
+* [Akka Http Client](https://github.com/akka/akka-http)
+* [Dispatch Reboot Http Client](https://github.com/dispatch/reboot)
+* [Async Http Client](https://github.com/AsyncHttpClient/async-http-client)
+* [ScalaJ Http Client](https://github.com/scalaj/scalaj-http)
 
 ## Starting the server
 **Minimum requirements:**
@@ -350,6 +350,6 @@ If you run the client again, you will see that the test passed and that the clie
 
 ## Automated script for enabling authentication with TLS
 You can also automate all the previous steps described above with the provided scripts at the [script directory](script) of this project. Run one of these commands to run the scripts:
- - One way authentication: `./configure-one-way-authentication`
- - Two way authentication: `./configure-two-way-authentication-by-trusting-each-other my-company-name`
- - Two way authentication by trusting the Certificate Authority: `./configure-two-way-authentication-by-trusting-root-ca my-company-name`
+* One way authentication: `./configure-one-way-authentication`
+* Two way authentication: `./configure-two-way-authentication-by-trusting-each-other my-company-name`
+* Two way authentication by trusting the Certificate Authority: `./configure-two-way-authentication-by-trusting-root-ca my-company-name`
