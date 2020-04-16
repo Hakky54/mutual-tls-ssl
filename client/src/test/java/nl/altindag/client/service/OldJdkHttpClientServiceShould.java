@@ -7,6 +7,7 @@ import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -20,9 +21,6 @@ import javax.net.ssl.SSLSocketFactory;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.altindag.client.ClientException;
@@ -32,14 +30,10 @@ import nl.altindag.sslcontext.SSLFactory;
 @RunWith(MockitoJUnitRunner.class)
 public class OldJdkHttpClientServiceShould {
 
-    @Spy
-    @InjectMocks
-    private OldJdkHttpClientService victim;
-    @Mock
-    private SSLFactory sslFactory;
-
     @Test
     public void executeHttpRequest() throws Exception {
+        OldJdkHttpClientService victim = spy(new OldJdkHttpClientService(null));
+
         HttpsURLConnection connection = mock(HttpsURLConnection.class);
         InputStream stream = new ByteArrayInputStream("Hello".getBytes());
 
@@ -57,6 +51,9 @@ public class OldJdkHttpClientServiceShould {
 
     @Test
     public void executeHttpsRequest() throws Exception {
+        SSLFactory sslFactory = mock(SSLFactory.class);
+        OldJdkHttpClientService victim = spy(new OldJdkHttpClientService(sslFactory));
+
         HttpsURLConnection connection = mock(HttpsURLConnection.class);
         InputStream stream = new ByteArrayInputStream("Hello".getBytes());
         SSLContext sslContext = mock(SSLContext.class);
@@ -80,6 +77,9 @@ public class OldJdkHttpClientServiceShould {
 
     @Test
     public void throwClientExceptionWhenProvidedUrlDoesNotContainHttpOrHttps() {
+        SSLFactory sslFactory = mock(SSLFactory.class);
+        OldJdkHttpClientService victim = spy(new OldJdkHttpClientService(sslFactory));
+
         assertThatThrownBy(() -> victim.executeRequest("www.google.com"))
                 .isInstanceOf(ClientException.class)
                 .hasMessage("Could not create a http client for one of these reasons: invalid url, security is enable while using an url with http or security is disable while using an url with https");

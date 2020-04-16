@@ -17,7 +17,7 @@
     <properties>
         <version.java>11</version.java>
         <version.scala>2.12</version.scala>
-        <version.sslcontext-kickstart>3.0.7</version.sslcontext-kickstart>
+        <version.sslcontext-kickstart>3.0.8</version.sslcontext-kickstart>
         <version.spring>2.2.5.RELEASE</version.spring>
         <version.apache.httpclient>4.5.12</version.apache.httpclient>
         <version.cucumber>5.5.0</version.cucumber>
