@@ -3,7 +3,6 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nl.altindag%3Amutual-tls-ssl&metric=alert_status)](https://sonarcloud.io/dashboard?id=nl.altindag%3Amutual-tls-ssl)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=nl.altindag%3Amutual-tls-ssl&metric=coverage)](https://sonarcloud.io/dashboard?id=nl.altindag%3Amutual-tls-ssl)
 [![Apache2 license](https://img.shields.io/badge/license-Aache2.0-blue.svg)](https://github.com/Hakky54/mutual-tls-ssl/blob/master/LICENSE)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FHakky54%2Fmutual-tls-ssl.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FHakky54%2Fmutual-tls-ssl?ref=badge_shield)
 
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/dashboard?id=nl.altindag%3Amutual-tls-ssl)
 
@@ -354,6 +353,3 @@ You can also automate all the previous steps described above with the provided s
  - One way authentication: `./configure-one-way-authentication`
  - Two way authentication: `./configure-two-way-authentication-by-trusting-each-other my-company-name`
  - Two way authentication by trusting the Certificate Authority: `./configure-two-way-authentication-by-trusting-root-ca my-company-name`
-
-## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FHakky54%2Fmutual-tls-ssl.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FHakky54%2Fmutual-tls-ssl?ref=badge_large)
