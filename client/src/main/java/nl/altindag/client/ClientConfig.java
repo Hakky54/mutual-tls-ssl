@@ -65,18 +65,17 @@ public class ClientConfig {
             @Value("${client.ssl.trust-store:}") String trustStorePath,
             @Value("${client.ssl.trust-store-password:}") char[] trustStorePassword) {
 
-        SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder();
+        SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder()
+                .withHostnameVerifier(new DefaultHostnameVerifier())
+                .withProtocol("TLSv1.3");
+
         if (oneWayAuthenticationEnabled) {
-            sslFactoryBuilder.withTrustStore(trustStorePath, trustStorePassword)
-                    .withHostnameVerifier(new DefaultHostnameVerifier())
-                    .withProtocol("TLSv1.3");
+            sslFactoryBuilder.withTrustStore(trustStorePath, trustStorePassword);
         }
 
         if (twoWayAuthenticationEnabled) {
             sslFactoryBuilder.withIdentity(keyStorePath, keyStorePassword)
-                    .withTrustStore(trustStorePath, trustStorePassword)
-                    .withHostnameVerifier(new DefaultHostnameVerifier())
-                    .withProtocol("TLSv1.3");
+                    .withTrustStore(trustStorePath, trustStorePassword);
         }
         return sslFactoryBuilder.build();
     }
