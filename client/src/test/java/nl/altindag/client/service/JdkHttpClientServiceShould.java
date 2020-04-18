@@ -15,10 +15,15 @@ import java.net.http.HttpResponse;
 import java.util.Collections;
 
 import static nl.altindag.client.ClientType.JDK_HTTP_CLIENT;
-import static nl.altindag.client.TestConstants.*;
+import static nl.altindag.client.TestConstants.GET_METHOD;
+import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
+import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JdkHttpClientServiceShould {
