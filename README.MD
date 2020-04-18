@@ -31,7 +31,7 @@ Usefull links
 * [Openssl Cheatsheet](https://gist.github.com/Hakky54/b30418b25215ad7d18f978bc0b448d81)
 * [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
-Below is a list of supported clients with examples, see in the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java) and [service directory](client/src/main/java/nl/altindag/client/service) for detailed configuration
+Below is a list of already tested clients, see in the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java) and [service directory](client/src/main/java/nl/altindag/client/service) for examples and detailed configuration
 * [Apache HttpClient](https://github.com/apache/httpcomponents-client)
 * [JDK HttpClient](https://openjdk.java.net/groups/net/httpclient/intro.html)
 * [Old JDK HttpClient](https://docs.oracle.com/javase/tutorial/networking/urls/readingWriting.html)
