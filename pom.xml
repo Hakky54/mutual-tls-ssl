@@ -45,6 +45,7 @@
         <version.jackson-module-scala>2.10.3</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>1.1.0</version.logcaptor>
+        <version.byte-buddy>1.10.9</version.byte-buddy>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.2</version.maven-shade-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -215,11 +216,24 @@
                 <version>${version.junit}</version>
             </dependency>
             <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>${version.byte-buddy}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy-agent</artifactId>
+                <version>${version.byte-buddy}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>io.github.hakky54</groupId>
                 <artifactId>logcaptor</artifactId>
                 <version>${version.logcaptor}</version>
                 <scope>test</scope>
             </dependency>
+
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
