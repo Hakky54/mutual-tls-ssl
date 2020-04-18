@@ -26,9 +26,9 @@ public class JerseyClientService implements RequestService {
     @Override
     public ClientResponse executeRequest(String url) {
         Response response = client.target(url)
-                                  .request(MediaType.TEXT_PLAIN_TYPE)
-                                  .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
-                                  .get();
+                .request(MediaType.TEXT_PLAIN_TYPE)
+                .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
+                .get();
 
         return new ClientResponse(response.readEntity(String.class), response.getStatus());
     }

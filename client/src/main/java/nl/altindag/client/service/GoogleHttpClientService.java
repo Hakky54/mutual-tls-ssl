@@ -31,9 +31,9 @@ public class GoogleHttpClientService implements RequestService {
     @Override
     public ClientResponse executeRequest(String url) throws IOException {
         HttpResponse response = httpTransport.createRequestFactory()
-                                             .buildGetRequest(new GenericUrl(url))
-                                             .setHeaders(new HttpHeaders().set(HEADER_KEY_CLIENT_TYPE, getClientType().getValue()))
-                                             .execute();
+                .buildGetRequest(new GenericUrl(url))
+                .setHeaders(new HttpHeaders().set(HEADER_KEY_CLIENT_TYPE, getClientType().getValue()))
+                .execute();
 
         return new ClientResponse(IOUtils.toString(response.getContent(), StandardCharsets.UTF_8), response.getStatusCode());
     }

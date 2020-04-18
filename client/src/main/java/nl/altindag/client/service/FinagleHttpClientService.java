@@ -34,9 +34,9 @@ public class FinagleHttpClientService implements RequestService {
                 .buildGet(null);
 
         return service.apply(request)
-                      .map(response -> new ClientResponse(response.contentString(), response.statusCode()))
-                      .toJavaFuture()
-                      .get(TIMEOUT_AMOUNT_IN_SECONDS, TimeUnit.SECONDS);
+                .map(response -> new ClientResponse(response.contentString(), response.statusCode()))
+                .toJavaFuture()
+                .get(TIMEOUT_AMOUNT_IN_SECONDS, TimeUnit.SECONDS);
     }
 
     @Override

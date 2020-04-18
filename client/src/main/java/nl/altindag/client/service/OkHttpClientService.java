@@ -25,9 +25,9 @@ public class OkHttpClientService implements RequestService {
     @Override
     public ClientResponse executeRequest(String url) throws IOException {
         Request request = new Request.Builder()
-                                     .url(url)
-                                     .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
-                                     .build();
+                .url(url)
+                .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
+                .build();
 
         Response response = okHttpClient.newCall(request).execute();
 

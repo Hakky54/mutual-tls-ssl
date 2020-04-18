@@ -24,8 +24,8 @@ public class OldJerseyClientService implements RequestService {
     @Override
     public ClientResponse executeRequest(String url) {
         com.sun.jersey.api.client.ClientResponse clientResponse = client.resource(url)
-                                                                        .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
-                                                                        .get(com.sun.jersey.api.client.ClientResponse.class);
+                .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
+                .get(com.sun.jersey.api.client.ClientResponse.class);
 
         return new ClientResponse(clientResponse.getEntity(String.class), clientResponse.getStatus());
     }

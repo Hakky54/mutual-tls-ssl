@@ -14,8 +14,8 @@ public class ClientRunner {
 
     public static void main(String[] args) {
         String[] cucumberOptions = Stream.of(defaultOptions, args)
-              .flatMap(Arrays::stream)
-              .toArray(String[]::new);
+                .flatMap(Arrays::stream)
+                .toArray(String[]::new);
 
         io.cucumber.core.cli.Main.main(cucumberOptions);
     }

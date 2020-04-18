@@ -31,19 +31,19 @@ public class AkkaHttpClientService implements RequestService {
     @Override
     public ClientResponse executeRequest(String url) {
         return akkaHttpClient.singleRequest(HttpRequest.create(url).addHeader(HttpHeader.parse(Constants.HEADER_KEY_CLIENT_TYPE, getClientType().getValue())))
-                             .thenApply(httpResponse -> new ClientResponse(extractBody(httpResponse), httpResponse.status().intValue()))
-                             .toCompletableFuture()
-                             .join();
+                .thenApply(httpResponse -> new ClientResponse(extractBody(httpResponse), httpResponse.status().intValue()))
+                .toCompletableFuture()
+                .join();
     }
 
     private String extractBody(HttpResponse httpResponse) {
         return httpResponse.entity()
-                           .getDataBytes()
-                           .fold(ByteString.empty(), ByteString::concat)
-                           .map(ByteString::utf8String)
-                           .runWith(Sink.head(), actorSystem)
-                           .toCompletableFuture()
-                           .join();
+                .getDataBytes()
+                .fold(ByteString.empty(), ByteString::concat)
+                .map(ByteString::utf8String)
+                .runWith(Sink.head(), actorSystem)
+                .toCompletableFuture()
+                .join();
     }
 
     @Override

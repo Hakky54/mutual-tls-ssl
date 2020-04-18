@@ -20,7 +20,7 @@ public class BaseStepDefs extends SpringBootHelper {
     public BaseStepDefs(TestScenario testScenario, List<RequestService> requestServices) {
         this.testScenario = testScenario;
         this.requestServices = requestServices.stream()
-                                              .collect(toMap(RequestService::getClientType, Function.identity()));
+                .collect(toMap(RequestService::getClientType, Function.identity()));
     }
 
     public Optional<RequestService> getRequestService(ClientType clientType) {

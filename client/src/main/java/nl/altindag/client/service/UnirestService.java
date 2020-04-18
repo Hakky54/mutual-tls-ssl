@@ -16,8 +16,8 @@ public class UnirestService implements RequestService {
     @Override
     public ClientResponse executeRequest(String url) {
         HttpResponse<String> response = Unirest.get(url)
-                                               .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
-                                               .asString();
+                .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
+                .asString();
 
         return new ClientResponse(response.getBody(), response.getStatus());
     }

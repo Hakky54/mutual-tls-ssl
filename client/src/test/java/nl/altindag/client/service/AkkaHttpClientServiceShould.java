@@ -41,8 +41,9 @@ public class AkkaHttpClientServiceShould {
     @Test
     public void executeRequest() {
         HttpResponse httpResponse = HttpResponse.create()
-                                                .withEntity(ContentTypes.TEXT_PLAIN_UTF8, "Hello")
-                                                .withStatus(StatusCodes.OK);
+                .withEntity(ContentTypes.TEXT_PLAIN_UTF8, "Hello")
+                .withStatus(StatusCodes.OK);
+
         when(akkaHttpClient.singleRequest(any(HttpRequest.class))).thenReturn(CompletableFuture.completedFuture(httpResponse));
 
         ArgumentCaptor<HttpRequest> httpRequestArgumentCaptor = ArgumentCaptor.forClass(HttpRequest.class);
