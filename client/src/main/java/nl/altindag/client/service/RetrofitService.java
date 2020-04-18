@@ -29,8 +29,8 @@ public class RetrofitService implements RequestService {
     @Override
     public ClientResponse executeRequest(String url) throws IOException {
         Response<String> response = retrofit.create(Server.class)
-                                            .getHello()
-                                            .execute();
+                .getHello()
+                .execute();
 
         return new ClientResponse(response.body(), response.code());
     }

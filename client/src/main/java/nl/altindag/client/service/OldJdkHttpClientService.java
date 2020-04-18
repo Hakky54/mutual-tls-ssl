@@ -46,9 +46,9 @@ public class OldJdkHttpClientService implements RequestService {
             connection = httpsURLConnection;
         } else {
             throw new ClientException("Could not create a http client for one of these reasons: "
-                                              + "invalid url, "
-                                              + "security is enable while using an url with http or "
-                                              + "security is disable while using an url with https");
+                    + "invalid url, "
+                    + "security is enable while using an url with http or "
+                    + "security is disable while using an url with https");
         }
 
         connection.setRequestMethod(HttpGet.METHOD_NAME);

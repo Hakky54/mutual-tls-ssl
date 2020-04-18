@@ -34,13 +34,13 @@ public class ScalaJHttpClientService implements RequestService {
                 .method(HttpGet.METHOD_NAME)
                 .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .option(httpUrlConnection -> {
-                   if (httpUrlConnection instanceof HttpsURLConnection && nonNull(sslFactory)) {
-                       HttpsURLConnection httpsURLConnection = (HttpsURLConnection) httpUrlConnection;
-                       httpsURLConnection.setSSLSocketFactory(sslFactory.getSslContext().getSocketFactory());
-                       httpsURLConnection.setHostnameVerifier(sslFactory.getHostnameVerifier());
-                   }
-                   return BoxedUnit.UNIT;
-               }).asString();
+                    if (httpUrlConnection instanceof HttpsURLConnection && nonNull(sslFactory)) {
+                        HttpsURLConnection httpsURLConnection = (HttpsURLConnection) httpUrlConnection;
+                        httpsURLConnection.setSSLSocketFactory(sslFactory.getSslContext().getSocketFactory());
+                        httpsURLConnection.setHostnameVerifier(sslFactory.getHostnameVerifier());
+                    }
+                    return BoxedUnit.UNIT;
+                }).asString();
 
         return new ClientResponse(response.body(), response.code());
     }

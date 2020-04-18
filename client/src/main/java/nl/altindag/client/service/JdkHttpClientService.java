@@ -28,10 +28,10 @@ public class JdkHttpClientService implements RequestService {
     @Override
     public ClientResponse executeRequest(String url) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                                         .GET()
-                                         .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
-                                         .uri(URI.create(url))
-                                         .build();
+                .GET()
+                .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
+                .uri(URI.create(url))
+                .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 

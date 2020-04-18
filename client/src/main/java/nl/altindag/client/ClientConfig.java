@@ -150,8 +150,8 @@ public class ClientConfig {
     @Bean
     public WebClient webClientWithNetty(reactor.netty.http.client.HttpClient httpClient) {
         return WebClient.builder()
-                 .clientConnector(new ReactorClientHttpConnector(httpClient))
-                 .build();
+                .clientConnector(new ReactorClientHttpConnector(httpClient))
+                .build();
     }
 
     @Bean
