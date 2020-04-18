@@ -126,30 +126,36 @@ public class ClientConfig {
     }
 
     @Bean
-    public WebClient webClientWithNetty(@Autowired(required = false) SSLFactory sslFactory) throws SSLException {
+    @Scope("prototype")
+    public reactor.netty.http.client.HttpClient nettyHttpClient(@Autowired(required = false) SSLFactory sslFactory) throws SSLException {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
         if (nonNull(sslFactory)) {
             SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
-
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContext));
         }
+        return httpClient;
+    }
 
+    @Bean
+    @Scope("prototype")
+    public org.eclipse.jetty.client.HttpClient jettyHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
+        if (nonNull(sslFactory)) {
+            SslContextFactory.Client sslContextFactory = JettySslContextUtils.forClient(sslFactory);
+            return new org.eclipse.jetty.client.HttpClient(sslContextFactory);
+        } else {
+            return new org.eclipse.jetty.client.HttpClient();
+        }
+    }
+
+    @Bean
+    public WebClient webClientWithNetty(reactor.netty.http.client.HttpClient httpClient) {
         return WebClient.builder()
                  .clientConnector(new ReactorClientHttpConnector(httpClient))
                  .build();
     }
 
     @Bean
-    public WebClient webClientWithJetty(@Autowired(required = false) SSLFactory sslFactory) {
-        org.eclipse.jetty.client.HttpClient httpClient;
-        if (nonNull(sslFactory)) {
-            SslContextFactory.Client sslContextFactory = JettySslContextUtils.forClient(sslFactory);
-
-            httpClient = new org.eclipse.jetty.client.HttpClient(sslContextFactory);
-        } else {
-            httpClient = new org.eclipse.jetty.client.HttpClient();
-        }
-
+    public WebClient webClientWithJetty(org.eclipse.jetty.client.HttpClient httpClient) {
         return WebClient.builder()
                 .clientConnector(new JettyClientHttpConnector(httpClient))
                 .build();

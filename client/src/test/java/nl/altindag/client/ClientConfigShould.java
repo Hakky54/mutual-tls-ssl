@@ -30,7 +30,9 @@ import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FAC
 import static nl.altindag.client.util.AssertJCustomConditions.SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientConfigShould {
@@ -138,49 +140,57 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createWebClientWithNettyWithoutSecurity() throws SSLException {
-        WebClient webClient = victim.webClientWithNetty(null);
+    public void createNettyHttpClientWithoutSecurity() throws SSLException {
+        reactor.netty.http.client.HttpClient httpClient = victim.nettyHttpClient(null);
 
-        assertThat(webClient).isNotNull();
+        assertThat(httpClient).isNotNull();
     }
 
     @Test
-    public void createWebClientWithNettyWithOneWayAuthentication() throws SSLException {
+    public void createNettyHttpClientWithOneWayAuthentication() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(true, false);
 
-        WebClient webClient = victim.webClientWithNetty(sslFactory);
+        reactor.netty.http.client.HttpClient httpClient = victim.nettyHttpClient(sslFactory);
 
-        assertThat(webClient).isNotNull();
+        assertThat(httpClient).isNotNull();
         verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getTrustManager();
     }
 
     @Test
-    public void createWebClientWithNettyWithTwoWayAuthentication() throws SSLException {
+    public void createNettyHttpClientWithTwoWayAuthentication() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
-        WebClient webClient = victim.webClientWithNetty(sslFactory);
+        reactor.netty.http.client.HttpClient httpClient = victim.nettyHttpClient(sslFactory);
 
-        assertThat(webClient).isNotNull();
+        assertThat(httpClient).isNotNull();
         verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManager();
         verify(sslFactory, times(1)).getTrustManager();
     }
 
     @Test
-    public void createWebClientWithJettyWithoutSecurity() {
-        WebClient webClient = victim.webClientWithJetty(null);
+    public void createWebClientWithNetty() {
+        reactor.netty.http.client.HttpClient httpClient = mock(reactor.netty.http.client.HttpClient.class);
+        WebClient webClient = victim.webClientWithNetty(httpClient);
 
         assertThat(webClient).isNotNull();
     }
 
     @Test
-    public void createWebClientWithJettyWithOneWayAuthentication() {
+    public void createJettyHttpClientWithoutSecurity() {
+        org.eclipse.jetty.client.HttpClient httpClient = victim.jettyHttpClient(null);
+
+        assertThat(httpClient).isNotNull();
+    }
+
+    @Test
+    public void createJettyHttpClientWithOneWayAuthentication() {
         SSLFactory sslFactory = createSSLFactory(true, false);
 
-        WebClient webClient = victim.webClientWithJetty(sslFactory);
+        org.eclipse.jetty.client.HttpClient httpClient = victim.jettyHttpClient(sslFactory);
 
-        assertThat(webClient).isNotNull();
+        assertThat(httpClient).isNotNull();
         verify(sslFactory, times(3)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
         verify(sslFactory, times(0)).getTrustStores();
@@ -188,16 +198,24 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createWebClientWithJettyWithTwoWayAuthentication() {
+    public void createJettyHttpClientWithTwoWayAuthentication() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
-        WebClient webClient = victim.webClientWithJetty(sslFactory);
+        org.eclipse.jetty.client.HttpClient httpClient = victim.jettyHttpClient(sslFactory);
 
-        assertThat(webClient).isNotNull();
+        assertThat(httpClient).isNotNull();
         verify(sslFactory, times(3)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
         verify(sslFactory, times(0)).getTrustStores();
         verify(sslFactory, times(0)).getIdentities();
+    }
+
+    @Test
+    public void createWebClientWithJetty() {
+        org.eclipse.jetty.client.HttpClient httpClient = mock(org.eclipse.jetty.client.HttpClient.class);
+        WebClient webClient = victim.webClientWithJetty(httpClient);
+
+        assertThat(webClient).isNotNull();
     }
 
     @Test

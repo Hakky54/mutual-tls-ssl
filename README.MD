@@ -35,9 +35,11 @@ Below is a list of supported clients with examples, see in the [ClientConfig cla
 * [Apache HttpClient](https://github.com/apache/httpcomponents-client)
 * [JDK HttpClient](https://openjdk.java.net/groups/net/httpclient/intro.html)
 * [Old JDK HttpClient](https://docs.oracle.com/javase/tutorial/networking/urls/readingWriting.html)
-* Spring RestTemplate
-* Spring WebFlux WebClient Netty
-* Spring WebFlux WebClient Jetty
+* [Netty Reactor](https://github.com/reactor/reactor-netty)
+* [Jetty Reactive HttpClient](https://github.com/jetty-project/jetty-reactive-httpclient)
+* [Spring RestTemplate](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html)
+* [Spring WebFlux WebClient Netty](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
+* [Spring WebFlux WebClient Jetty](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
 * [OkHttp](https://github.com/square/okhttp)
 * [Jersey Client](https://eclipse-ee4j.github.io/jersey/)
 * Old Jersey Client
