@@ -18,9 +18,11 @@ Feature: Securing the connection between you and the world
       | Google HttpClient               |
       | JDK HttpClient                  |
       | Jersey HttpClient               |
+      | Jetty Reactive HttpClient       |
       | OkHttp                          |
       | Old JDK HttpClient              |
       | Old Jersey HttpClient           |
+      | Reactor Netty                   |
       | Retrofit                        |
       | ScalaJ HttpClient               |
       | Spring RestTemplate             |

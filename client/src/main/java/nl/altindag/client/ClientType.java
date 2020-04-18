@@ -19,6 +19,8 @@ public enum ClientType {
     DISPATCH_REBOOT_HTTP_CLIENT("dispatch reboot httpclient"),
     ASYNC_HTTP_CLIENT("async httpclient"),
     SCALAJ_HTTP_CLIENT("scalaj httpclient"),
+    REACTOR_NETTY("reactor netty"),
+    JETTY_REACTIVE_HTTPCLIENT("jetty reactive httpclient"),
     NONE("none");
 
     private String value;
