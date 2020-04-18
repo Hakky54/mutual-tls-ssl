@@ -2,7 +2,11 @@ package nl.altindag.client.service;
 
 import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
-import akka.http.javadsl.model.*;
+import akka.http.javadsl.model.ContentTypes;
+import akka.http.javadsl.model.HttpHeader;
+import akka.http.javadsl.model.HttpRequest;
+import akka.http.javadsl.model.HttpResponse;
+import akka.http.javadsl.model.StatusCodes;
 import nl.altindag.client.TestConstants;
 import nl.altindag.client.model.ClientResponse;
 import org.junit.Before;
@@ -17,7 +21,10 @@ import static nl.altindag.client.ClientType.AKKA_HTTP_CLIENT;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AkkaHttpClientServiceShould {
