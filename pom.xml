@@ -48,6 +48,7 @@
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>1.1.0</version.logcaptor>
         <version.byte-buddy>1.10.9</version.byte-buddy>
+        <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.2</version.maven-shade-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -245,6 +246,12 @@
                 <groupId>io.github.hakky54</groupId>
                 <artifactId>logcaptor</artifactId>
                 <version>${version.logcaptor}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.nhaarman.mockitokotlin2</groupId>
+                <artifactId>mockito-kotlin</artifactId>
+                <version>${version.mockito-kotlin}</version>
                 <scope>test</scope>
             </dependency>
 
