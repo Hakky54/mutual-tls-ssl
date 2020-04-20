@@ -105,6 +105,10 @@
             <groupId>io.ktor</groupId>
             <artifactId>ktor-client-cio</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.kittinunf.fuel</groupId>
+            <artifactId>fuel</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>
