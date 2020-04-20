@@ -51,6 +51,7 @@ Below is a list of already tested clients, see in the [ClientConfig class](clien
 * [Dispatch Reboot Http Client](https://github.com/dispatch/reboot)
 * [Async Http Client](https://github.com/AsyncHttpClient/async-http-client)
 * [ScalaJ Http Client](https://github.com/scalaj/scalaj-http)
+* [Fuel](https://github.com/kittinunf/fuel)
 
 ## Starting the server
 **Minimum requirements:**
