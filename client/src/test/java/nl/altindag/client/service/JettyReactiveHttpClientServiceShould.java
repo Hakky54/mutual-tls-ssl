@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static nl.altindag.client.ClientType.JETTY_REACTIVE_HTTPCLIENT;
+import static nl.altindag.client.ClientType.JETTY_REACTIVE_HTTP_CLIENT;
 import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,7 +55,7 @@ public class JettyReactiveHttpClientServiceShould {
 
         verify(request, times(1)).header(headerKeyCaptor.capture(), headerValueCaptor.capture());
         assertThat(headerKeyCaptor.getValue()).isEqualTo(HEADER_KEY_CLIENT_TYPE);
-        assertThat(headerValueCaptor.getValue()).isEqualTo(JETTY_REACTIVE_HTTPCLIENT.getValue());
+        assertThat(headerValueCaptor.getValue()).isEqualTo(JETTY_REACTIVE_HTTP_CLIENT.getValue());
 
         verify(request, times(1)).method(httpMethodCaptor.capture());
         assertThat(httpMethodCaptor.getValue()).isEqualTo(HttpMethod.GET);

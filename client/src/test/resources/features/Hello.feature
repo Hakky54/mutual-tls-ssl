@@ -15,6 +15,7 @@ Feature: Securing the connection between you and the world
       | Async HttpClient                |
       | Dispatch Reboot HttpClient      |
       | Finagle                         |
+      | Fuel                            |
       | Google HttpClient               |
       | JDK HttpClient                  |
       | Jersey HttpClient               |

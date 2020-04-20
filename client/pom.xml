@@ -89,6 +89,10 @@
             <groupId>org.scalaj</groupId>
             <artifactId>scalaj-http_${version.scala}</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.kittinunf.fuel</groupId>
+            <artifactId>fuel</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>
@@ -115,6 +119,10 @@
         <dependency>
             <groupId>io.github.hakky54</groupId>
             <artifactId>logcaptor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.nhaarman.mockitokotlin2</groupId>
+            <artifactId>mockito-kotlin</artifactId>
         </dependency>
 
         <!--     Apache Utils       -->
@@ -149,6 +157,41 @@
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <version>${version.kotlin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.maven-compiler-plugin}</version>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>java-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>java-test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

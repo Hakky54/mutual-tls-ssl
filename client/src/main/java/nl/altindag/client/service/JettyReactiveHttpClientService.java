@@ -8,7 +8,7 @@ import org.eclipse.jetty.http.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static nl.altindag.client.ClientType.JETTY_REACTIVE_HTTPCLIENT;
+import static nl.altindag.client.ClientType.JETTY_REACTIVE_HTTP_CLIENT;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
 @Service
@@ -37,6 +37,6 @@ public class JettyReactiveHttpClientService implements RequestService {
 
     @Override
     public ClientType getClientType() {
-        return JETTY_REACTIVE_HTTPCLIENT;
+        return JETTY_REACTIVE_HTTP_CLIENT;
     }
 }
