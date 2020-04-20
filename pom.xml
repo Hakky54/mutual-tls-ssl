@@ -188,6 +188,16 @@
                 <artifactId>ktor-client-apache</artifactId>
                 <version>${version.ktor}</version>
             </dependency>
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-client-okhttp</artifactId>
+                <version>${version.ktor}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-client-cio</artifactId>
+                <version>${version.ktor}</version>
+            </dependency>
 
             <!--     Apache Utils       -->
             <dependency>

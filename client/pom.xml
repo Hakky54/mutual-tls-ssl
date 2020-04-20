@@ -97,6 +97,14 @@
             <groupId>io.ktor</groupId>
             <artifactId>ktor-client-apache</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-okhttp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-cio</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>

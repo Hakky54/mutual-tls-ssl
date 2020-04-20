@@ -22,6 +22,8 @@ public enum ClientType {
     REACTOR_NETTY("reactor netty"),
     JETTY_REACTIVE_HTTP_CLIENT("jetty reactive httpclient"),
     KTOR_APACHE_HTTP_CLIENT("ktor apache httpclient"),
+    KTOR_OK_HTTP("ktor okhttp"),
+    KTOR_CIO_HTTP_CLIENT("ktor cio httpclient"),
     NONE("none");
 
     private String value;
