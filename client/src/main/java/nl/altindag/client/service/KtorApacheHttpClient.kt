@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-open class KtorApacheHttpClient(@Autowired(required = false) sslFactory: SSLFactory?) : KtorHttpClientService(HttpClient(Apache) {
+class KtorApacheHttpClient(@Autowired(required = false) sslFactory: SSLFactory?) : KtorHttpClientService(HttpClient(Apache) {
     if (sslFactory != null) {
         engine {
             sslContext = sslFactory.sslContext

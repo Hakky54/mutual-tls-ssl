@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 
 @Service
 @KtorExperimentalAPI
-open class KtorCioHttpClient(@Autowired(required = false) sslFactory: SSLFactory?) : KtorHttpClientService(HttpClient(CIO) {
+class KtorCioHttpClient(@Autowired(required = false) sslFactory: SSLFactory?) : KtorHttpClientService(HttpClient(CIO) {
     if (sslFactory != null) {
         engine {
             https {
