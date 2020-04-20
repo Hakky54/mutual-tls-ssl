@@ -29,7 +29,7 @@ open class KtorApacheHttpClient (@Autowired(required = false) sslFactory: SSLFac
     override fun executeRequest(url: String): ClientResponse {
         return runBlocking {
             val httpResponse: HttpResponse = client.get(url) {
-                header(HEADER_KEY_CLIENT_TYPE, clientType)
+                header(HEADER_KEY_CLIENT_TYPE, clientType.value)
             }
 
             ClientResponse(httpResponse.content.readUTF8Line(), httpResponse.status.value)
