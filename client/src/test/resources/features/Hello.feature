@@ -20,7 +20,7 @@ Feature: Securing the connection between you and the world
       | Jersey HttpClient               |
       | Jetty Reactive HttpClient       |
       | Ktor Apache HttpClient          |
-      | Ktor OkHttp client              |
+      | Ktor OkHttp                     |
 #      | Ktor CIO HttpClient             |
       | OkHttp                          |
       | Old JDK HttpClient              |
