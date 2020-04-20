@@ -20,7 +20,8 @@ public enum ClientType {
     ASYNC_HTTP_CLIENT("async httpclient"),
     SCALAJ_HTTP_CLIENT("scalaj httpclient"),
     REACTOR_NETTY("reactor netty"),
-    JETTY_REACTIVE_HTTPCLIENT("jetty reactive httpclient"),
+    JETTY_REACTIVE_HTTP_CLIENT("jetty reactive httpclient"),
+    KTOR_APACHE_HTTP_CLIENT("ktor apache httpclient"),
     NONE("none");
 
     private String value;
