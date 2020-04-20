@@ -43,7 +43,6 @@
         <version.dispatch-core>1.2.0</version.dispatch-core>
         <version.scalaj-http>2.4.2</version.scalaj-http>
         <version.async-http-client>2.12.1</version.async-http-client>
-        <version.ktor>1.3.1</version.ktor>
         <version.fuel>2.2.2</version.fuel>
         <version.jackson-module-scala>2.10.3</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
