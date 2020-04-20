@@ -180,26 +180,6 @@
                 <version>${version.scalaj-http}</version>
             </dependency>
             <dependency>
-                <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-core</artifactId>
-                <version>${version.ktor}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-apache</artifactId>
-                <version>${version.ktor}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-okhttp</artifactId>
-                <version>${version.ktor}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-cio</artifactId>
-                <version>${version.ktor}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.github.kittinunf.fuel</groupId>
                 <artifactId>fuel</artifactId>
                 <version>${version.fuel}</version>
