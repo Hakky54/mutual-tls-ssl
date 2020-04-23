@@ -52,6 +52,7 @@ Below is a list of already tested clients, see in the [ClientConfig class](clien
 * [Async Http Client](https://github.com/AsyncHttpClient/async-http-client)
 * [ScalaJ Http Client](https://github.com/scalaj/scalaj-http)
 * [Fuel](https://github.com/kittinunf/fuel)
+* [Sttp](https://github.com/softwaremill/sttp)
 
 ## Starting the server
 **Minimum requirements:**
