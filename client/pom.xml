@@ -93,6 +93,10 @@
             <groupId>com.github.kittinunf.fuel</groupId>
             <artifactId>fuel</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.softwaremill.sttp.client</groupId>
+            <artifactId>core_${version.scala}</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>
@@ -162,6 +166,13 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <version>${version.kotlin}</version>
             </plugin>
+
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>${version.scala-maven-plugin}</version>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

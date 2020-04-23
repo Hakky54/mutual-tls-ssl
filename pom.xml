@@ -44,6 +44,7 @@
         <version.scalaj-http>2.4.2</version.scalaj-http>
         <version.async-http-client>2.12.1</version.async-http-client>
         <version.fuel>2.2.2</version.fuel>
+        <version.sttp>2.0.9</version.sttp>
         <version.jackson-module-scala>2.10.3</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>1.1.0</version.logcaptor>
@@ -51,6 +52,7 @@
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.2</version.maven-shade-plugin>
+        <version.scala-maven-plugin>4.3.1</version.scala-maven-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -184,6 +186,11 @@
                 <artifactId>fuel</artifactId>
                 <version>${version.fuel}</version>
             </dependency>
+            <dependency>
+                <groupId>com.softwaremill.sttp.client</groupId>
+                <artifactId>core_${version.scala}</artifactId>
+                <version>${version.sttp}</version>
+            </dependency>
 
             <!--     Apache Utils       -->
             <dependency>
@@ -310,6 +317,20 @@
                                     <sourceDir>${project.basedir}/src/test/java</sourceDir>
                                 </sourceDirs>
                             </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>${version.scala-maven-plugin}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>testCompile</goal>
+                            </goals>
                         </execution>
                     </executions>
                 </plugin>
