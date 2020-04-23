@@ -26,6 +26,7 @@ Feature: Securing the connection between you and the world
       | Reactor Netty                   |
       | Retrofit                        |
       | ScalaJ HttpClient               |
+      | Sttp                            |
       | Spring RestTemplate             |
       | Spring WebFlux WebClient Jetty  |
       | Spring WebFlux WebClient Netty  |

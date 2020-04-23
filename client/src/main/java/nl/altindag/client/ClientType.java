@@ -22,6 +22,7 @@ public enum ClientType {
     REACTOR_NETTY("reactor netty"),
     JETTY_REACTIVE_HTTP_CLIENT("jetty reactive httpclient"),
     FUEL("fuel"),
+    STTP("sttp"),
     NONE("none");
 
     private String value;
