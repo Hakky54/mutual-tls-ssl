@@ -42,8 +42,8 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
 
     when(sslFactory.getSslContext).thenReturn(sslContext)
 
-    val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(sslFactory)
     val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(TestConstants.HTTPS_URL)))
+    val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(sslFactory)
 
     when(sslFactory.getSslContext).thenReturn(sslContext)
 
@@ -56,8 +56,8 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
   }
 
   describe("create Sttp backend client without ssl when sslFactory is absent") {
-    val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(null)
     val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(TestConstants.HTTPS_URL)))
+    val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(null)
 
     assertThat(victim).isNotNull
     assertThatThrownBy(() => victim.send(request))
@@ -67,8 +67,8 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
     val sslFactory = mock[SSLFactory]
     val sslContext = mock[SSLContext]
 
-    val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(sslFactory)
     val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(TestConstants.HTTP_URL)))
+    val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(sslFactory)
 
     assertThat(victim).isNotNull
     assertThatThrownBy(() => victim.send(request))
