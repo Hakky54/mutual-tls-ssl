@@ -20,26 +20,30 @@ These are the following steps:
 5. [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
 6. [Automated script for enabling authentication with TLS](#automated-script-for-enabling-authentication-with-tls)
 
-Definition
+**Definition**
 * Identity: A KeyStore which holds the key pair also known as private and public key
 * TrustStore: A KeyStore containing one or more certificates also known as public key. This KeyStore contains a list of trusted certificates
 * One way authentication (also known as one way tls, one way ssl): Https connection where the client validates the certificate of the counter party
 * Two way authentication (also known as two way tls, two way ssl, mutual authentication): Https connection where the client as well as the counter party validates the certificate, also known as mutual authentication
 
-Usefull links
+**Usefull links**
 * [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
 * [Openssl Cheatsheet](https://gist.github.com/Hakky54/b30418b25215ad7d18f978bc0b448d81)
 * [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
+
+**Some History**
 
 I mostly worked with Apache Http Client and therefor I created this project while just only focusing on configuring it for Apache.
 After some time I discovered that there are a lot more Java clients and there also some clients available based on Kotlin and Scala.
 Configuring ssl/tls can be hard and every client requires a different setup. I want to share the knowledge with other developers as every developer will probably work with a different http client.
 Unfortunately I am not so familiar with Kotlin and Scala, so the code snippets within this project for those languages are my best effort. Feel free to contribute if want to improve the code or if you want to include other http client examples.
 Beware that the client module contains quite some http clients and therefor the initial build will try to download all the libraries it requires and so it can take some time to build.
+
+### Tested clients
 Below is a list of already tested clients, plain Java based Http Client configurations can be found at the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java).
 The [service directory](client/src/main/java/nl/altindag/client/service) contains the individual Http Clients with an example requests. Kotlin and Scala based Http Client Configurations are included as nested class, because of language limitation within the ClientConfig class I couldn't include it there.
 
-Java
+**Java**
 * [Apache HttpClient](https://github.com/apache/httpcomponents-client)
 * [JDK HttpClient](https://openjdk.java.net/groups/net/httpclient/intro.html)
 * [Old JDK HttpClient](https://docs.oracle.com/javase/tutorial/networking/urls/readingWriting.html)
@@ -54,15 +58,15 @@ Java
 * [Google HttpClient](https://github.com/googleapis/google-http-java-client)
 * [Unirest](https://github.com/Kong/unirest-java)
 * [Retrofit](https://github.com/square/retrofit)
+* [Async Http Client](https://github.com/AsyncHttpClient/async-http-client)
 
-Kotlin
+**Kotlin**
 * [Fuel](https://github.com/kittinunf/fuel)
 
-Scala
+**Scala**
 * [Twitter Finagle Http Client](https://github.com/twitter/finagle)
 * [Akka Http Client](https://github.com/akka/akka-http)
 * [Dispatch Reboot Http Client](https://github.com/dispatch/reboot)
-* [Async Http Client](https://github.com/AsyncHttpClient/async-http-client)
 * [ScalaJ Http Client](https://github.com/scalaj/scalaj-http)
 * [Sttp](https://github.com/softwaremill/sttp)
 
