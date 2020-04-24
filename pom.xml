@@ -50,6 +50,8 @@
         <version.logcaptor>1.1.0</version.logcaptor>
         <version.byte-buddy>1.10.9</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
+        <version.scalatest>3.1.1</version.scalatest>
+        <version.mockito-scala>1.13.9</version.mockito-scala>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.2</version.maven-shade-plugin>
         <version.scala-maven-plugin>4.3.1</version.scala-maven-plugin>
@@ -226,11 +228,13 @@
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-junit</artifactId>
                 <version>${version.cucumber}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-spring</artifactId>
                 <version>${version.cucumber}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -259,6 +263,18 @@
                 <groupId>com.nhaarman.mockitokotlin2</groupId>
                 <artifactId>mockito-kotlin</artifactId>
                 <version>${version.mockito-kotlin}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest_${version.scala}</artifactId>
+                <version>${version.scalatest}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-scala-scalatest_${version.scala}</artifactId>
+                <version>${version.mockito-scala}</version>
                 <scope>test</scope>
             </dependency>
 

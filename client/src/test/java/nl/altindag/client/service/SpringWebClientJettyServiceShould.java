@@ -32,7 +32,7 @@ public class SpringWebClientJettyServiceShould {
 
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void executeRequest() throws Exception {
+    public void executeRequest() {
         WebClient.RequestHeadersUriSpec requestHeadersUriSpec = mock(WebClient.RequestHeadersUriSpec.class);
         org.springframework.web.reactive.function.client.ClientResponse response = mock(org.springframework.web.reactive.function.client.ClientResponse.class);
         Mono<org.springframework.web.reactive.function.client.ClientResponse> clientResponseMono = Mono.just(response);
