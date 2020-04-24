@@ -31,7 +31,15 @@ Usefull links
 * [Openssl Cheatsheet](https://gist.github.com/Hakky54/b30418b25215ad7d18f978bc0b448d81)
 * [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
-Below is a list of already tested clients, see in the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java) and [service directory](client/src/main/java/nl/altindag/client/service) for examples and detailed configuration
+I mostly worked with Apache Http Client and therefor I created this project while just only focusing on configuring it for Apache.
+After some time I discovered that there are a lot more Java clients and there also some clients available based on Kotlin and Scala.
+Configuring ssl/tls can be hard and every client requires a different setup. I want to share the knowledge with other developers as every developer will probably work with a different http client.
+Unfortunately I am not so familiar with Kotlin and Scala, so the code snippets within this project for those languages are my best effort. Feel free to contribute if want to improve the code or if you want to include other http client examples.
+Beware that the client module contains quite some http clients and therefor the initial build will try to download all the libraries it requires and so it can take some time to build.
+Below is a list of already tested clients, plain Java based Http Client configurations can be found at the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java).
+The [service directory](client/src/main/java/nl/altindag/client/service) contains the individual Http Clients with an example requests. Kotlin and Scala based Http Client Configurations are included as nested class, because of language limitation within the ClientConfig class I couldn't include it there.
+
+Java
 * [Apache HttpClient](https://github.com/apache/httpcomponents-client)
 * [JDK HttpClient](https://openjdk.java.net/groups/net/httpclient/intro.html)
 * [Old JDK HttpClient](https://docs.oracle.com/javase/tutorial/networking/urls/readingWriting.html)
@@ -46,12 +54,16 @@ Below is a list of already tested clients, see in the [ClientConfig class](clien
 * [Google HttpClient](https://github.com/googleapis/google-http-java-client)
 * [Unirest](https://github.com/Kong/unirest-java)
 * [Retrofit](https://github.com/square/retrofit)
+
+Kotlin
+* [Fuel](https://github.com/kittinunf/fuel)
+
+Scala
 * [Twitter Finagle Http Client](https://github.com/twitter/finagle)
 * [Akka Http Client](https://github.com/akka/akka-http)
 * [Dispatch Reboot Http Client](https://github.com/dispatch/reboot)
 * [Async Http Client](https://github.com/AsyncHttpClient/async-http-client)
 * [ScalaJ Http Client](https://github.com/scalaj/scalaj-http)
-* [Fuel](https://github.com/kittinunf/fuel)
 * [Sttp](https://github.com/softwaremill/sttp)
 
 ## Starting the server
