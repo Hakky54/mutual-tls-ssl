@@ -7,10 +7,11 @@ import nl.altindag.client.TestConstants
 import nl.altindag.client.model.ClientResponse
 import nl.altindag.sslcontext.SSLFactory
 import org.assertj.core.api.Assertions.{assertThat, assertThatThrownBy}
+import org.mockito.ArgumentCaptor
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.funspec.AnyFunSpec
 import sttp.client.{Identity, NothingT, Request, RequestT, Response, SttpBackend, basicRequest}
-import sttp.model.{StatusCode, Uri}
+import sttp.model.{Header, StatusCode, Uri}
 
 class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
 
@@ -24,11 +25,18 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
     when(mockedResponse.body).thenReturn(mockedBody)
     when(mockedBody.toOption).thenReturn(Option.apply("Hello"))
 
+    val requestArgumentCaptor: ArgumentCaptor[RequestT[Identity, Either[String, String], Nothing]] = {
+      ArgumentCaptor.forClass(classOf[RequestT[Identity, Either[String, String], Nothing]])
+    }
+
     val victim = new SttpHttpClientService(mockedBackend)
     val clientResponse: ClientResponse = victim.executeRequest(TestConstants.HTTP_URL)
 
     assertThat(clientResponse.getStatusCode).isEqualTo(200)
     assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
+
+    verify(mockedBackend, times(1)).send(requestArgumentCaptor.capture())
+    assertThat(requestArgumentCaptor.getValue.headers.toArray).contains(new Header("client-type", "sttp"))
   }
 
   describe("create Sttp backend client without ssl") {

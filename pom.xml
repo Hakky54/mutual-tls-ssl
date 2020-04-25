@@ -46,6 +46,7 @@
         <version.async-http-client>2.12.1</version.async-http-client>
         <version.fuel>2.2.2</version.fuel>
         <version.sttp>2.0.9</version.sttp>
+        <version.featherbed>0.3.3</version.featherbed>
         <version.jackson-module-scala>2.10.3</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>1.1.0</version.logcaptor>
@@ -54,6 +55,7 @@
         <version.scalatest>3.1.1</version.scalatest>
         <version.scalatest-maven-plugin>2.0.0</version.scalatest-maven-plugin>
         <version.mockito-scala>1.13.9</version.mockito-scala>
+        <version.mockserver>5.10</version.mockserver>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.2</version.maven-shade-plugin>
         <version.scala-maven-plugin>4.3.1</version.scala-maven-plugin>
@@ -195,6 +197,11 @@
                 <artifactId>core_${version.scala}</artifactId>
                 <version>${version.sttp}</version>
             </dependency>
+            <dependency>
+                <groupId>io.github.finagle</groupId>
+                <artifactId>featherbed_${version.scala}</artifactId>
+                <version>${version.featherbed}</version>
+            </dependency>
 
             <!--     Apache Utils       -->
             <dependency>
@@ -242,13 +249,11 @@
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-junit</artifactId>
                 <version>${version.cucumber}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-spring</artifactId>
                 <version>${version.cucumber}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -289,6 +294,12 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-scala-scalatest_${version.scala}</artifactId>
                 <version>${version.mockito-scala}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mock-server</groupId>
+                <artifactId>mockserver-netty</artifactId>
+                <version>${version.mockserver}</version>
                 <scope>test</scope>
             </dependency>
 

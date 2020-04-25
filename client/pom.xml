@@ -97,6 +97,10 @@
             <groupId>com.softwaremill.sttp.client</groupId>
             <artifactId>core_${version.scala}</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.finagle</groupId>
+            <artifactId>featherbed_${version.scala}</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>
@@ -134,6 +138,10 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-scala-scalatest_${version.scala}</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mock-server</groupId>
+            <artifactId>mockserver-netty</artifactId>
         </dependency>
 
         <!--     Apache Utils       -->
