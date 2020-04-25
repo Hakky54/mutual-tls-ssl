@@ -64,9 +64,10 @@ The [service directory](client/src/main/java/nl/altindag/client/service) contain
 * [Fuel](https://github.com/kittinunf/fuel)
 
 **Scala**
-* [Twitter Finagle Http Client](https://github.com/twitter/finagle)
+* [Twitter Finagle](https://github.com/twitter/finagle)
+* [Twitter Finagle Featherbed](https://github.com/finagle/featherbed)
 * [Akka Http Client](https://github.com/akka/akka-http)
-* [Dispatch Reboot Http Client](https://github.com/dispatch/reboot)
+* [Dispatch Reboot](https://github.com/dispatch/reboot)
 * [ScalaJ Http Client](https://github.com/scalaj/scalaj-http)
 * [Sttp](https://github.com/softwaremill/sttp)
 

@@ -23,6 +23,7 @@ public enum ClientType {
     JETTY_REACTIVE_HTTP_CLIENT("jetty reactive httpclient"),
     FUEL("fuel"),
     STTP("sttp"),
+    FEATHERBED("featherbed"),
     NONE("none");
 
     private String value;
