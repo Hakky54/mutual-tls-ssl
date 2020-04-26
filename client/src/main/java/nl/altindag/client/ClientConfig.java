@@ -27,7 +27,6 @@ import org.asynchttpclient.Dsl;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -56,14 +55,16 @@ public class ClientConfig {
 
     @Bean
     @Scope("prototype")
-    @ConditionalOnExpression("${client.ssl.one-way-authentication-enabled:false} or ${client.ssl.two-way-authentication-enabled:false}")
     public SSLFactory sslFactory(
-            @Value("${client.ssl.one-way-authentication-enabled}") boolean oneWayAuthenticationEnabled,
-            @Value("${client.ssl.two-way-authentication-enabled}") boolean twoWayAuthenticationEnabled,
+            @Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
+            @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
             @Value("${client.ssl.key-store:}") String keyStorePath,
             @Value("${client.ssl.key-store-password:}") char[] keyStorePassword,
             @Value("${client.ssl.trust-store:}") String trustStorePath,
             @Value("${client.ssl.trust-store-password:}") char[] trustStorePassword) {
+        if (!oneWayAuthenticationEnabled && !twoWayAuthenticationEnabled) {
+            return null;
+        }
 
         SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder()
                 .withHostnameVerifier(new DefaultHostnameVerifier())

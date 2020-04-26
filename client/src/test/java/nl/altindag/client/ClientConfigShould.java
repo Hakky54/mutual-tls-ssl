@@ -74,6 +74,19 @@ public class ClientConfigShould {
     }
 
     @Test
+    public void notCreateSslFactoryWhenOneWayAuthenticationAndTwoWayAuthenticationIsDisabled() {
+        String keyStorePath = "keystores-for-unit-tests/identity.jks";
+        String keyStorePassword = "secret";
+        String trustStorePath = "keystores-for-unit-tests/truststore.jks";
+        String trustStorePassword = "secret";
+
+        SSLFactory sslFactory = victim.sslFactory(false, false,
+                keyStorePath, keyStorePassword.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
+
+        assertThat(sslFactory).isNull();
+    }
+
+    @Test
     public void createApacheHttpClientWithoutSecurity() {
         HttpClient httpClient = victim.apacheHttpClient(null);
 
