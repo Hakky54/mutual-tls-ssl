@@ -274,12 +274,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.scalatest</groupId>
-                <artifactId>scalatest-maven-plugin</artifactId>
-                <version>${version.scalatest-maven-plugin}</version>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${version.maven-fail-safe}</version>
@@ -358,6 +352,22 @@
         </profile>
 
         <profile>
+            <id>scalatest</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.scalatest</groupId>
+                        <artifactId>scalatest-maven-plugin</artifactId>
+                        <version>${version.scalatest-maven-plugin}</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>jacoco</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
@@ -372,6 +382,7 @@
                 </plugins>
             </build>
         </profile>
+
     </profiles>
 
 </project>
