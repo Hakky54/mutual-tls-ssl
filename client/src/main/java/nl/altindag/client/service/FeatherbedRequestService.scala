@@ -37,7 +37,7 @@ class FeatherbedRequestService(@Autowired client: featherbed.Client) extends Req
 class FeatherbedClientConfig {
 
   @Bean
-  def createClient(@Autowired(required = false) sslFactory: SSLFactory): featherbed.Client = {
+  def createFeatherbedClient(@Autowired(required = false) sslFactory: SSLFactory): featherbed.Client = {
     new CustomizedFeatherbedClient(sslFactory, new URI(SERVER_URL).toURL, StandardCharsets.UTF_8)
   }
 
