@@ -14,7 +14,6 @@ import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.asynchttpclient.AsyncHttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -26,6 +25,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 
+import static nl.altindag.client.util.SSLFactoryTestHelper.createSSLFactory;
 import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
 import static nl.altindag.client.util.AssertJCustomConditions.SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -380,38 +380,6 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createDispatchRebootHttpClientWithoutSecurity() throws SSLException {
-        dispatch.Http httpClient = victim.dispatchRebootHttpClient(null);
-
-        assertThat(httpClient).isNotNull();
-    }
-
-    @Test
-    public void createDispatchRebootHttpClientWithOneWayAuthentication() throws SSLException {
-        SSLFactory sslFactory = createSSLFactory(true, false);
-
-        dispatch.Http httpClient = victim.dispatchRebootHttpClient(sslFactory);
-
-        assertThat(httpClient).isNotNull();
-        assertThat(httpClient.client().getConfig().getSslContext()).isNotNull();
-        verify(sslFactory, times(2)).getSslContext();
-        verify(sslFactory, times(1)).getTrustManager();
-    }
-
-    @Test
-    public void createDispatchRebootHttpClientWithTwoWayAuthentication() throws SSLException {
-        SSLFactory sslFactory = createSSLFactory(false, true);
-
-        dispatch.Http httpClient = victim.dispatchRebootHttpClient(sslFactory);
-
-        assertThat(httpClient).isNotNull();
-        assertThat(httpClient.client().getConfig().getSslContext()).isNotNull();
-        verify(sslFactory, times(2)).getSslContext();
-        verify(sslFactory, times(1)).getKeyManager();
-        verify(sslFactory, times(1)).getTrustManager();
-    }
-
-    @Test
     public void createAsyncHttpClientWithoutSecurity() throws SSLException {
         AsyncHttpClient httpClient = victim.asyncHttpClient(null);
 
@@ -442,26 +410,6 @@ public class ClientConfigShould {
         verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManager();
         verify(sslFactory, times(1)).getTrustManager();
-    }
-
-    private SSLFactory createSSLFactory(boolean oneWayAuthenticationEnabled, boolean twoWayAuthenticationEnabled) {
-        String keyStorePath = "keystores-for-unit-tests/identity.jks";
-        String keyStorePassword = "secret";
-        String trustStorePath = "keystores-for-unit-tests/truststore.jks";
-        String trustStorePassword = "secret";
-
-        SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder();
-        if (oneWayAuthenticationEnabled) {
-            sslFactoryBuilder.withTrustStore(trustStorePath, trustStorePassword.toCharArray())
-                    .withHostnameVerifier(new DefaultHostnameVerifier());
-        }
-
-        if (twoWayAuthenticationEnabled) {
-            sslFactoryBuilder.withIdentity(keyStorePath, keyStorePassword.toCharArray())
-                    .withTrustStore(trustStorePath, trustStorePassword.toCharArray())
-                    .withHostnameVerifier(new DefaultHostnameVerifier());
-        }
-        return Mockito.spy(sslFactoryBuilder.build());
     }
 
 }

@@ -2,10 +2,9 @@ package nl.altindag.client.service
 
 import java.net.URI
 
-import javax.net.ssl.SSLContext
 import nl.altindag.client.TestConstants
 import nl.altindag.client.model.ClientResponse
-import nl.altindag.sslcontext.SSLFactory
+import nl.altindag.client.util.SSLFactoryTestHelper
 import org.assertj.core.api.Assertions.{assertThat, assertThatThrownBy}
 import org.mockito.ArgumentCaptor
 import org.mockito.scalatest.MockitoSugar
@@ -45,22 +44,16 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
   }
 
   describe("create Sttp backend client with ssl") {
-    val sslFactory = mock[SSLFactory]
-    val sslContext = mock[SSLContext]
-
-    when(sslFactory.getSslContext).thenReturn(sslContext)
+    val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
 
     val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(TestConstants.HTTPS_URL)))
     val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(sslFactory)
-
-    when(sslFactory.getSslContext).thenReturn(sslContext)
 
     assertThat(victim).isNotNull
     assertThatThrownBy(() => victim.send(request))
 
     verify(sslFactory, times(1)).getHostnameVerifier
     verify(sslFactory, times(1)).getSslContext
-    verify(sslContext, times(1)).getSocketFactory
   }
 
   describe("create Sttp backend client without ssl when sslFactory is absent") {
@@ -72,8 +65,7 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
   }
 
   describe("create Sttp backend client without ssl when url is http scheme") {
-    val sslFactory = mock[SSLFactory]
-    val sslContext = mock[SSLContext]
+    val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
 
     val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(TestConstants.HTTP_URL)))
     val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(sslFactory)
@@ -83,7 +75,6 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
 
     verify(sslFactory, times(0)).getHostnameVerifier
     verify(sslFactory, times(0)).getSslContext
-    verify(sslContext, times(0)).getSocketFactory
   }
 
 }

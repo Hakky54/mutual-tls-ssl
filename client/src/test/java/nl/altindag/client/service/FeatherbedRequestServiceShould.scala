@@ -3,15 +3,15 @@ package nl.altindag.client.service
 import java.net.URI
 
 import nl.altindag.client.TestConstants
-import nl.altindag.sslcontext.SSLFactory
+import nl.altindag.client.util.SSLFactoryTestHelper
 import org.assertj.core.api.Assertions.assertThat
 import org.mockito.scalatest.MockitoSugar
 import org.mockserver.client.MockServerClient
-import org.scalatest.funspec.AnyFunSpec
+import org.mockserver.integration.ClientAndServer.startClientAndServer
+import org.mockserver.matchers.Times.exactly
 import org.mockserver.model.HttpRequest.request
 import org.mockserver.model.HttpResponse.response
-import org.mockserver.matchers.Times.exactly
-import org.mockserver.integration.ClientAndServer.startClientAndServer
+import org.scalatest.funspec.AnyFunSpec
 
 
 class FeatherbedRequestServiceShould extends AnyFunSpec with MockitoSugar {
@@ -43,15 +43,15 @@ class FeatherbedRequestServiceShould extends AnyFunSpec with MockitoSugar {
   }
 
   describe("create custom instance of featherbed client without ssl") {
-    val client = new FeatherbedClientConfig().createClient(null)
+    val client = new FeatherbedClientConfig().createFeatherbedClient(null)
 
     assertThat(client).isNotNull
   }
 
   describe("create custom instance of featherbed client with ssl") {
-    val sslFactory = mock[SSLFactory]
+    val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
 
-    val client = new FeatherbedClientConfig().createClient(sslFactory)
+    val client = new FeatherbedClientConfig().createFeatherbedClient(sslFactory)
 
     assertThat(client).isNotNull
     verify(sslFactory, times(1)).getSslContext

@@ -254,20 +254,6 @@ public class ClientConfig {
     }
 
     @Bean
-    public dispatch.Http dispatchRebootHttpClient(@Autowired(required = false) SSLFactory sslFactory) throws SSLException {
-        if (nonNull(sslFactory)) {
-            SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
-
-            DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
-                    .setSslContext(sslContext);
-
-            return dispatch.Http.withConfiguration(defaultClientConfigBuilder -> clientConfigBuilder);
-        } else {
-            return dispatch.Http.withConfiguration(builder -> builder);
-        }
-    }
-
-    @Bean
     public AsyncHttpClient asyncHttpClient(@Autowired(required = false) SSLFactory sslFactory) throws SSLException {
         if (nonNull(sslFactory)) {
             SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
