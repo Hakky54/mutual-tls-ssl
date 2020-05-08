@@ -68,7 +68,7 @@ The [service directory](client/src/main/java/nl/altindag/client/service) contain
 * [Twitter Finagle Featherbed](https://github.com/finagle/featherbed)
 * [Akka Http Client](https://github.com/akka/akka-http)
 * [Dispatch Reboot](https://github.com/dispatch/reboot)
-* [ScalaJ Http Client](https://github.com/scalaj/scalaj-http)
+* [ScalaJ / Simplified Http Client](https://github.com/scalaj/scalaj-http)
 * [Sttp](https://github.com/softwaremill/sttp)
 
 ## Starting the server

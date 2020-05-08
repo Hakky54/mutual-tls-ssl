@@ -2,7 +2,7 @@ package nl.altindag.client.service
 
 import java.net.URI
 
-import nl.altindag.client.TestConstants
+import nl.altindag.client.TestConstants.{HTTPS_URL, HTTP_URL}
 import nl.altindag.client.model.ClientResponse
 import nl.altindag.client.util.SSLFactoryTestHelper
 import org.assertj.core.api.Assertions.{assertThat, assertThatThrownBy}
@@ -29,7 +29,7 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
     }
 
     val victim = new SttpHttpClientService(mockedBackend)
-    val clientResponse: ClientResponse = victim.executeRequest(TestConstants.HTTP_URL)
+    val clientResponse: ClientResponse = victim.executeRequest(HTTP_URL)
 
     assertThat(clientResponse.getStatusCode).isEqualTo(200)
     assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
@@ -46,7 +46,7 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
   describe("create Sttp backend client with ssl") {
     val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
 
-    val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(TestConstants.HTTPS_URL)))
+    val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(HTTPS_URL)))
     val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(sslFactory)
 
     assertThat(victim).isNotNull
@@ -57,7 +57,7 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
   }
 
   describe("create Sttp backend client without ssl when sslFactory is absent") {
-    val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(TestConstants.HTTPS_URL)))
+    val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(HTTPS_URL)))
     val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(null)
 
     assertThat(victim).isNotNull
@@ -67,7 +67,7 @@ class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
   describe("create Sttp backend client without ssl when url is http scheme") {
     val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
 
-    val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(TestConstants.HTTP_URL)))
+    val request: Request[Either[String, String], Nothing] =  basicRequest.get(uri = Uri(javaUri = URI.create(HTTP_URL)))
     val victim: SttpBackend[Identity, Nothing, NothingT] = new SttpHttpClientConfiguration().createSttpBackendClient(sslFactory)
 
     assertThat(victim).isNotNull
