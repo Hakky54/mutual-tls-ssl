@@ -1,6 +1,6 @@
 package nl.altindag.client.service
 
-import com.github.kittinunf.fuel.core.*
+import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.FUEL
@@ -11,21 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
+@Suppress("UNUSED_VARIABLE")
 class FuelService(@Autowired(required = false) sslFactory: SSLFactory?): RequestService {
 
     init {
-        if (sslFactory != null) {
-            FuelManager.instance.hostnameVerifier = sslFactory.hostnameVerifier
-            FuelManager.instance.socketFactory = sslFactory.sslContext.socketFactory
+        sslFactory?.let {
+            FuelManager.instance.hostnameVerifier = it.hostnameVerifier
+            FuelManager.instance.socketFactory = it.sslContext.socketFactory
         }
     }
 
     override fun executeRequest(url: String): ClientResponse {
-        val responseString = url.httpGet()
+        val (request, response, result) = url.httpGet()
                 .header(HEADER_KEY_CLIENT_TYPE, clientType.value)
                 .responseString()
 
-        return ClientResponse(responseString.third.component1(), responseString.second.statusCode)
+        return ClientResponse(result.get(), response.statusCode)
     }
 
     override fun getClientType(): ClientType = FUEL

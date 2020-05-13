@@ -16,14 +16,16 @@ class FuelServiceShould {
 
     @Test
     fun executeRequest() {
-        val mockedBody = mock<DefaultBody>() {
+        val mockedBody = mock<DefaultBody> {
             onGeneric {
                 toByteArray()
             } doReturn "Hello".toByteArray()
         }
 
         val mockedClient = mock<Client> {
-            onGeneric { executeRequest(any()) } doReturn Response(
+            onGeneric {
+                executeRequest(any())
+            } doReturn Response(
                     statusCode = 200,
                     responseMessage = "OK",
                     body = mockedBody,
@@ -42,14 +44,16 @@ class FuelServiceShould {
 
     @Test
     fun executeRequestWithSslFactory() {
-        val mockedBody = mock<DefaultBody>() {
+        val mockedBody = mock<DefaultBody> {
             onGeneric {
                 toByteArray()
             } doReturn "Hello".toByteArray()
         }
 
         val mockedClient = mock<Client> {
-            onGeneric { executeRequest(any()) } doReturn Response(
+            onGeneric {
+                executeRequest(any())
+            } doReturn Response(
                     statusCode = 200,
                     responseMessage = "OK",
                     body = mockedBody,
