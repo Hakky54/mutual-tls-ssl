@@ -280,6 +280,12 @@
             </plugin>
 
             <plugin>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest-maven-plugin</artifactId>
+                <version>${version.scalatest-maven-plugin}</version>
+            </plugin>
+
+            <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
                 <version>${version.maven-cucumber-reporting}</version>
@@ -348,22 +354,6 @@
                         </includes>
                     </resource>
                 </resources>
-            </build>
-        </profile>
-
-        <profile>
-            <id>scalatest</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.scalatest</groupId>
-                        <artifactId>scalatest-maven-plugin</artifactId>
-                        <version>${version.scalatest-maven-plugin}</version>
-                    </plugin>
-                </plugins>
             </build>
         </profile>
 
