@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service
 class FuelService(@Autowired(required = false) sslFactory: SSLFactory?): RequestService {
 
     init {
-        sslFactory?.let {
-            FuelManager.instance.hostnameVerifier = it.hostnameVerifier
-            FuelManager.instance.socketFactory = it.sslContext.socketFactory
+        sslFactory?.let { factory ->
+            FuelManager.instance.hostnameVerifier = factory.hostnameVerifier
+            FuelManager.instance.socketFactory = factory.sslContext.socketFactory
         }
     }
 
