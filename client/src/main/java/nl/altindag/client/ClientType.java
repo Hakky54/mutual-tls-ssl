@@ -24,6 +24,7 @@ public enum ClientType {
     FUEL("fuel"),
     STTP("sttp"),
     FEATHERBED("featherbed"),
+    REQUESTS_SCALA("requests scala"),
     NONE("none");
 
     private String value;

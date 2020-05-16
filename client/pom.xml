@@ -101,6 +101,10 @@
             <groupId>io.github.finagle</groupId>
             <artifactId>featherbed_${version.scala}</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.lihaoyi</groupId>
+            <artifactId>requests_${version.scala}</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>
