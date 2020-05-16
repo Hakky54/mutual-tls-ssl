@@ -1,6 +1,5 @@
 package nl.altindag.client.stepdefs;
 
-import ch.qos.logback.classic.Level;
 import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.TestScenario;
@@ -51,7 +50,7 @@ public class HelloStepDefsShould {
 
         victim.serverIsAlive();
 
-        List<String> logs = logCaptor.getLogs(Level.DEBUG);
+        List<String> logs = logCaptor.getDebugLogs();
 
         assertThat(logs).hasSize(1);
         assertThat(logs).containsExactly("Assuming the server is up and running");
@@ -60,7 +59,7 @@ public class HelloStepDefsShould {
     @Test
     public void notLogDebugMessageWhenLogLevelIsInfoWhileCallingServerIsAlive() {
         LogCaptor<HelloStepDefs> logCaptor = LogCaptor.forClass(HelloStepDefs.class);
-        logCaptor.setLogLevel(Level.INFO);
+        logCaptor.setLogLevelToInfo();
 
         victim.serverIsAlive();
 
@@ -129,7 +128,7 @@ public class HelloStepDefsShould {
 
         victim.iDisplayTheTimeItTookToGetTheMessage();
 
-        List<String> logs = logCaptor.getLogs(Level.INFO);
+        List<String> logs = logCaptor.getInfoLogs();
         assertThat(logs).hasSize(1);
         assertThat(logs).containsExactly("Executed request within 134 milliseconds");
 
