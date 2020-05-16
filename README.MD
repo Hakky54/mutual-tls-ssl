@@ -70,6 +70,7 @@ The [service directory](client/src/main/java/nl/altindag/client/service) contain
 * [Dispatch Reboot](https://github.com/dispatch/reboot)
 * [ScalaJ / Simplified Http Client](https://github.com/scalaj/scalaj-http)
 * [Sttp](https://github.com/softwaremill/sttp)
+* [Requests-Scala](https://github.com/lihaoyi/requests-scala)
 
 ## Starting the server
 **Minimum requirements:**

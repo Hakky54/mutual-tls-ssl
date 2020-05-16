@@ -47,6 +47,7 @@
         <version.fuel>2.2.2</version.fuel>
         <version.sttp>2.0.9</version.sttp>
         <version.featherbed>0.3.3</version.featherbed>
+        <version.requests>0.6.2</version.requests>
         <version.jackson-module-scala>2.10.3</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>1.1.0</version.logcaptor>
@@ -201,6 +202,11 @@
                 <groupId>io.github.finagle</groupId>
                 <artifactId>featherbed_${version.scala}</artifactId>
                 <version>${version.featherbed}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lihaoyi</groupId>
+                <artifactId>requests_${version.scala}</artifactId>
+                <version>${version.requests}</version>
             </dependency>
 
             <!--     Apache Utils       -->

@@ -26,6 +26,7 @@ Feature: Securing the connection between you and the world
       | Old Jersey HttpClient           |
       | Reactor Netty                   |
       | Retrofit                        |
+      | Requests Scala                  |
       | ScalaJ HttpClient               |
       | Sttp                            |
       | Spring RestTemplate             |
