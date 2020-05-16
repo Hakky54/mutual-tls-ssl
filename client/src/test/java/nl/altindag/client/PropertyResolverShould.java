@@ -1,10 +1,11 @@
 package nl.altindag.client;
 
-import ch.qos.logback.classic.Level;
 import nl.altindag.log.LogCaptor;
 import org.junit.Test;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,9 +19,12 @@ public class PropertyResolverShould {
 
         assertThat(properties).isNotNull();
 
-        assertThat(logCaptor.getLogs(Level.DEBUG)).contains("Loading from YAML: class path resource [application.yml]");
-        assertThat(logCaptor.getLogs(Level.DEBUG)).anyMatch(logEntry -> logEntry.contains("Merging document (no matchers set): {spring={main={banner-mode=off, web-application-type=none}}, "));
-        assertThat(logCaptor.getLogs(Level.DEBUG)).contains("Loaded 1 document from YAML resource: class path resource [application.yml]");
+        List<String> debugLogs = logCaptor.getDebugLogs();
+
+        assertThat(debugLogs).hasSize(3);
+        assertThat(debugLogs.get(0)).isEqualTo("Loading from YAML: class path resource [application.yml]");
+        assertThat(debugLogs.get(1)).containsSubsequence("Merging document (no matchers set): {spring={main={banner-mode=off, web-application-type=none}}, ");
+        assertThat(debugLogs.get(2)).isEqualTo("Loaded 1 document from YAML resource: class path resource [application.yml]");
     }
 
 }
