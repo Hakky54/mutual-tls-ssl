@@ -4,12 +4,15 @@ import org.springframework.stereotype.Component;
 
 import nl.altindag.client.model.ClientResponse;
 
+import java.time.Duration;
+import java.time.LocalTime;
+
 @Component
 public class TestScenario {
 
     private ClientResponse clientResponse;
-    private long beginTime;
-    private long endTime;
+    private LocalTime beginTime;
+    private LocalTime endTime;
 
     public ClientResponse getClientResponse() {
         return clientResponse;
@@ -19,16 +22,16 @@ public class TestScenario {
         this.clientResponse = clientResponse;
     }
 
-    public void setStartTime(long beginTime) {
+    public void setStartTime(LocalTime beginTime) {
         this.beginTime = beginTime;
     }
 
-    public void setEndTime(long endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
     public long getExecutionTimeInMilliSeconds() {
-        return endTime - beginTime;
+        return Duration.between(beginTime, endTime).toMillis();
     }
 
 }
