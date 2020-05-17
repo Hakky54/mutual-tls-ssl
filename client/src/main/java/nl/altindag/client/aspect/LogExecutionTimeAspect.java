@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-import java.util.function.Supplier;
+import java.time.LocalTime;
 
 @Aspect
 @Configuration
@@ -16,7 +16,6 @@ import java.util.function.Supplier;
 @SuppressWarnings({"SpringFacetCodeInspection", "SpringJavaInjectionPointsAutowiringInspection"})
 public class LogExecutionTimeAspect {
 
-    private static final Supplier<Long> currentTime = System::currentTimeMillis;
     private TestScenario testScenario;
 
     @Autowired
@@ -26,12 +25,12 @@ public class LogExecutionTimeAspect {
 
     @Before("@annotation(nl.altindag.client.aspect.LogExecutionTime)")
     public void setStartTime() {
-        this.testScenario.setStartTime(currentTime.get());
+        this.testScenario.setStartTime(LocalTime.now());
     }
 
     @After("@annotation(nl.altindag.client.aspect.LogExecutionTime)")
     public void setEndTime() {
-        this.testScenario.setEndTime(currentTime.get());
+        this.testScenario.setEndTime(LocalTime.now());
     }
 
 }
