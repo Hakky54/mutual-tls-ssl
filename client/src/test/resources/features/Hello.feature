@@ -21,6 +21,7 @@ Feature: Securing the connection between you and the world
       | JDK HttpClient                  |
       | Jersey HttpClient               |
       | Jetty Reactive HttpClient       |
+      | Kohttp                          |
       | OkHttp                          |
       | Old JDK HttpClient              |
       | Old Jersey HttpClient           |
