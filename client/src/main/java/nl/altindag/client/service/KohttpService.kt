@@ -21,7 +21,7 @@ import java.net.URI
 @Service
 class KohttpService (
         @Qualifier("kohttp")
-        val client: OkHttpClient
+        private val client: OkHttpClient
 ): RequestService {
 
     override fun executeRequest(url: String): ClientResponse {
