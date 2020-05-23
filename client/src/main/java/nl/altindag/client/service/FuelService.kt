@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service
 
 @Service
 @Suppress("UNUSED_VARIABLE")
-class FuelService(@Autowired(required = false) sslFactory: SSLFactory?): RequestService {
+class FuelService(
+        @Autowired(required = false) sslFactory: SSLFactory?
+): RequestService {
 
     init {
         sslFactory?.let { factory ->
