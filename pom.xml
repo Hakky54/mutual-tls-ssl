@@ -48,6 +48,7 @@
         <version.sttp>2.1.1</version.sttp>
         <version.featherbed>0.3.3</version.featherbed>
         <version.requests>0.6.2</version.requests>
+        <version.kohttp>0.12.0</version.kohttp>
         <version.jackson-module-scala>2.11.0</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>2.0.0</version.logcaptor>
@@ -207,6 +208,11 @@
                 <groupId>com.lihaoyi</groupId>
                 <artifactId>requests_${version.scala}</artifactId>
                 <version>${version.requests}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.rybalkinsd</groupId>
+                <artifactId>kohttp</artifactId>
+                <version>${version.kohttp}</version>
             </dependency>
 
             <!--     Apache Utils       -->

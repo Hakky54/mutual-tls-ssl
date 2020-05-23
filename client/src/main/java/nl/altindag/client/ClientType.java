@@ -25,6 +25,7 @@ public enum ClientType {
     STTP("sttp"),
     FEATHERBED("featherbed"),
     REQUESTS_SCALA("requests scala"),
+    KOHTTP("kohttp"),
     NONE("none");
 
     private String value;

@@ -105,6 +105,10 @@
             <groupId>com.lihaoyi</groupId>
             <artifactId>requests_${version.scala}</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.rybalkinsd</groupId>
+            <artifactId>kohttp</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>

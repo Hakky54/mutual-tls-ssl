@@ -62,6 +62,7 @@ The [service directory](client/src/main/java/nl/altindag/client/service) contain
 
 **Kotlin**
 * [Fuel](https://github.com/kittinunf/fuel)
+* [Kohttp](https://github.com/rybalkinsd/kohttp)
 
 **Scala**
 * [Twitter Finagle](https://github.com/twitter/finagle)
