@@ -43,6 +43,7 @@ class KohttpServiceShould {
         verify(client, times(1)).newCall(requestCaptor.capture())
         assertThat(requestCaptor.firstValue.header(HEADER_KEY_CLIENT_TYPE)).isEqualTo("kohttp")
         assertThat(requestCaptor.firstValue.url.toUri().toString()).isEqualTo(HTTP_URL)
+        assertThat(requestCaptor.firstValue.method).isEqualTo("GET")
     }
 
     @Test
