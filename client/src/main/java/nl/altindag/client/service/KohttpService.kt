@@ -46,12 +46,10 @@ class KohttpService (
 }
 
 @Component
-class KohttpClientConfig(
-        var sslFactory: SSLFactory?
-) {
+class KohttpClientConfig {
 
     @Bean("kohttp")
-    fun createKohttpClient() : OkHttpClient {
+    fun createKohttpClient(@Autowired(required = false) sslFactory: SSLFactory?) : OkHttpClient {
         return sslFactory?.let { factory ->
             client {
                 sslConfig = SslConfig().apply {
