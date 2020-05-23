@@ -38,8 +38,8 @@ class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
     when(sslContext.getSocketFactory).thenReturn(socketFactory)
     when(sslFactory.getHostnameVerifier).thenReturn(hostnameVerifier)
 
-    val victim = new ScalaJHttpClientConfiguration(sslFactory)
-    val httpOption = victim.createHttpOption()
+    val victim = new ScalaJHttpClientConfiguration()
+    val httpOption = victim.createHttpOption(sslFactory)
 
     httpOption.apply(httpsURLConnection)
 
@@ -50,8 +50,8 @@ class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
   describe("create http option without ssl material when url is https and sslFactory is absent") {
     val httpsURLConnection = mock[HttpsURLConnection]
 
-    val victim = new ScalaJHttpClientConfiguration(null)
-    val httpOption = victim.createHttpOption()
+    val victim = new ScalaJHttpClientConfiguration()
+    val httpOption = victim.createHttpOption(null)
 
     httpOption.apply(httpsURLConnection)
 
@@ -70,8 +70,8 @@ class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
     when(sslContext.getSocketFactory).thenReturn(socketFactory)
     when(sslFactory.getHostnameVerifier).thenReturn(hostnameVerifier)
 
-    val victim = new ScalaJHttpClientConfiguration(sslFactory)
-    val httpOption = victim.createHttpOption()
+    val victim = new ScalaJHttpClientConfiguration()
+    val httpOption = victim.createHttpOption(sslFactory)
 
     httpOption.apply(httpURLConnection)
 

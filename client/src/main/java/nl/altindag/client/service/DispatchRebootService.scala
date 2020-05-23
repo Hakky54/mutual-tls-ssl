@@ -15,7 +15,7 @@ import org.springframework.stereotype.{Component, Service}
 import scala.language.postfixOps
 
 @Service
-class DispatchRebootService(@Autowired httpClient: Http) extends RequestService {
+class DispatchRebootService(httpClient: Http) extends RequestService {
 
   override def executeRequest(uri: String): ClientResponse = {
     val request: Req = url(uri).GET addHeader (HEADER_KEY_CLIENT_TYPE, getClientType.getValue)

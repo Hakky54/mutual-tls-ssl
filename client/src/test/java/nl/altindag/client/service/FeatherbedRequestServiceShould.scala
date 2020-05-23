@@ -8,7 +8,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.funspec.AnyFunSpec
 
-
 class FeatherbedRequestServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {

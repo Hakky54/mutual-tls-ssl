@@ -1,4 +1,5 @@
 package nl.altindag.client.service
+
 import javax.net.ssl.HttpsURLConnection
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.SCALAJ_HTTP_CLIENT
@@ -12,7 +13,7 @@ import scalaj.http.Http
 import scalaj.http.HttpOptions.HttpOption
 
 @Service
-class ScalaJHttpClientService(@Autowired httpOption: HttpOption) extends RequestService{
+class ScalaJHttpClientService(httpOption: HttpOption) extends RequestService{
 
   override def executeRequest(url: String): ClientResponse = {
     val response = Http(url)
@@ -29,10 +30,10 @@ class ScalaJHttpClientService(@Autowired httpOption: HttpOption) extends Request
 }
 
 @Component
-class ScalaJHttpClientConfiguration(@Autowired(required = false) sslFactory: SSLFactory) {
+class ScalaJHttpClientConfiguration {
 
   @Bean
-  def createHttpOption(): HttpOption = {
+  def createHttpOption(@Autowired(required = false) sslFactory: SSLFactory): HttpOption = {
     case httpsURLConnection: HttpsURLConnection if sslFactory != null =>
       httpsURLConnection.setHostnameVerifier(sslFactory.getHostnameVerifier)
       httpsURLConnection.setSSLSocketFactory(sslFactory.getSslContext.getSocketFactory)

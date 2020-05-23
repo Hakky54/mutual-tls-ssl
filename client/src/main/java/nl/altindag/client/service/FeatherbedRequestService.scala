@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.{Component, Service}
 
 @Service
-class FeatherbedRequestService(@Autowired client: featherbed.Client) extends RequestService {
+class FeatherbedRequestService(client: featherbed.Client) extends RequestService {
 
   private val TIMEOUT_AMOUNT_IN_SECONDS = 5
 
