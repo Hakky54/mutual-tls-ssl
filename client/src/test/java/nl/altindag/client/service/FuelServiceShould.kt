@@ -3,15 +3,12 @@ package nl.altindag.client.service
 import com.github.kittinunf.fuel.core.*
 import com.github.kittinunf.fuel.core.requests.DefaultBody
 import com.nhaarman.mockitokotlin2.*
-import nl.altindag.client.TestConstants
 import nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE
 import nl.altindag.client.TestConstants.HTTP_URL
 import nl.altindag.client.util.SSLFactoryTestHelper
-import nl.altindag.sslcontext.SSLFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.net.URL
-import javax.net.ssl.SSLContext
 
 class FuelServiceShould {
 

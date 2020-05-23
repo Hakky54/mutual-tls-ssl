@@ -1,4 +1,5 @@
 package nl.altindag.client.service
+
 import javax.net.ssl.HttpsURLConnection
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.SCALAJ_HTTP_CLIENT
