@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service
 import java.net.URI
 
 @Service
-class KohttpService(
-        @Autowired
+class KohttpService (
         @Qualifier("kohttp")
         val client: OkHttpClient
 ): RequestService {
@@ -32,6 +31,7 @@ class KohttpService(
             host = uri.host
             port = uri.port
             path = uri.path
+            scheme = uri.scheme
 
             header {
                 HEADER_KEY_CLIENT_TYPE to clientType.value
@@ -46,7 +46,9 @@ class KohttpService(
 }
 
 @Component
-class KohttpClientConfig(@Autowired(required = false) var sslFactory: SSLFactory?) {
+class KohttpClientConfig(
+        var sslFactory: SSLFactory?
+) {
 
     @Bean("kohttp")
     fun createKohttpClient() : OkHttpClient {
