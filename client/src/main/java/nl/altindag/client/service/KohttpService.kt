@@ -12,18 +12,23 @@ import nl.altindag.client.model.ClientResponse
 import nl.altindag.sslcontext.SSLFactory
 import okhttp3.OkHttpClient
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import java.net.URI
 
 @Service
-class KohttpService(@Autowired val kohttpClient: OkHttpClient): RequestService {
+class KohttpService(
+        @Autowired
+        @Qualifier("kohttp")
+        val client: OkHttpClient
+): RequestService {
 
     override fun executeRequest(url: String): ClientResponse {
         val uri = URI.create(url)
 
-        return httpGet(kohttpClient) {
+        return httpGet(client) {
             host = uri.host
             port = uri.port
             path = uri.path
@@ -43,7 +48,7 @@ class KohttpService(@Autowired val kohttpClient: OkHttpClient): RequestService {
 @Component
 class KohttpClientConfig(@Autowired(required = false) var sslFactory: SSLFactory?) {
 
-    @Bean("kohttpClient")
+    @Bean("kohttp")
     fun createKohttpClient() : OkHttpClient {
         return sslFactory?.let { factory ->
             client {
