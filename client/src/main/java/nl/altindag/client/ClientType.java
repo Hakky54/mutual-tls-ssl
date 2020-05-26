@@ -26,6 +26,8 @@ public enum ClientType {
     FEATHERBED("featherbed"),
     REQUESTS_SCALA("requests scala"),
     KOHTTP("kohttp"),
+    HTTP4S_BLAZE_CLIENT("http4s blaze client"),
+    HTTP4S_JAVA_NET_CLIENT("http4s java net client"),
     NONE("none");
 
     private String value;

@@ -18,6 +18,8 @@ Feature: Securing the connection between you and the world
       | Finagle                         |
       | Fuel                            |
       | Google HttpClient               |
+      | Http4s Blaze Client             |
+      | Http4s Java Net Client          |
       | JDK HttpClient                  |
       | Jersey HttpClient               |
       | Jetty Reactive HttpClient       |

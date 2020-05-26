@@ -49,6 +49,8 @@
         <version.featherbed>0.3.3</version.featherbed>
         <version.requests>0.6.2</version.requests>
         <version.kohttp>0.12.0</version.kohttp>
+        <version.http4s>0.21.4</version.http4s>
+        <version.cats>2.1.1</version.cats>
         <version.jackson-module-scala>2.11.0</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>2.0.0</version.logcaptor>
@@ -214,6 +216,11 @@
                 <artifactId>kohttp</artifactId>
                 <version>${version.kohttp}</version>
             </dependency>
+            <dependency>
+                <groupId>org.http4s</groupId>
+                <artifactId>http4s-blaze-client_${version.scala}</artifactId>
+                <version>${version.http4s}</version>
+            </dependency>
 
             <!--     Apache Utils       -->
             <dependency>
@@ -244,6 +251,11 @@
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-compiler</artifactId>
                 <version>${version.scala-compiler}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.typelevel</groupId>
+                <artifactId>cats-core_${version.scala}</artifactId>
+                <version>${version.cats}</version>
             </dependency>
 
             <!--     Testing libraries       -->
