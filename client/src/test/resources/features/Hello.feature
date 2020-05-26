@@ -34,3 +34,5 @@ Feature: Securing the connection between you and the world
       | Spring WebFlux WebClient Jetty  |
       | Spring WebFlux WebClient Netty  |
       | Unirest                         |
+      | Http4s Blaze Client             |
+      | Http4s Java Net Client          |

@@ -72,6 +72,8 @@ The [service directory](client/src/main/java/nl/altindag/client/service) contain
 * [ScalaJ / Simplified Http Client](https://github.com/scalaj/scalaj-http)
 * [Sttp](https://github.com/softwaremill/sttp)
 * [Requests-Scala](https://github.com/lihaoyi/requests-scala)
+* [Http4s Blaze Client](https://github.com/http4s/http4s)
+* [Http4s Java Net Client](https://github.com/http4s/http4s)
 
 ## Starting the server
 **Minimum requirements:**
