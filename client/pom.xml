@@ -109,6 +109,10 @@
             <groupId>io.github.rybalkinsd</groupId>
             <artifactId>kohttp</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.http4s</groupId>
+            <artifactId>http4s-blaze-client_${version.scala}</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>
@@ -160,6 +164,11 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.typelevel</groupId>
+            <artifactId>cats-core_${version.scala}</artifactId>
         </dependency>
 
         <dependency>
