@@ -29,23 +29,23 @@
         <version.aspectjweaver>1.9.5</version.aspectjweaver>
         <version.maven-cucumber-reporting>5.0.0</version.maven-cucumber-reporting>
         <version.commons-lang3>3.10</version.commons-lang3>
-        <version.commons-io>2.6</version.commons-io>
+        <version.commons-io>2.7</version.commons-io>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
-        <version.okhttp>4.6.0</version.okhttp>
+        <version.okhttp>4.7.2</version.okhttp>
         <version.jetty-reactive-httpclient>1.1.2</version.jetty-reactive-httpclient>
         <version.org.glassfish.jersey.inject>2.30.1</version.org.glassfish.jersey.inject>
         <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
         <version.google.http.client>1.35.0</version.google.http.client>
         <version.unirest>3.7.02</version.unirest>
-        <version.retrofit>2.8.1</version.retrofit>
-        <version.finagle>20.4.1</version.finagle>
+        <version.retrofit>2.9.0</version.retrofit>
+        <version.finagle>20.5.0</version.finagle>
         <version.akka-http>10.1.12</version.akka-http>
         <version.akka-stream>2.6.5</version.akka-stream>
         <version.dispatch-core>1.2.0</version.dispatch-core>
         <version.scalaj-http>2.4.2</version.scalaj-http>
         <version.async-http-client>2.12.1</version.async-http-client>
         <version.fuel>2.2.2</version.fuel>
-        <version.sttp>2.1.1</version.sttp>
+        <version.sttp>2.1.5</version.sttp>
         <version.featherbed>0.3.3</version.featherbed>
         <version.requests>0.6.2</version.requests>
         <version.kohttp>0.12.0</version.kohttp>
@@ -56,7 +56,7 @@
         <version.logcaptor>2.0.0</version.logcaptor>
         <version.byte-buddy>1.10.10</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
-        <version.scalatest>3.1.1</version.scalatest>
+        <version.scalatest>3.1.2</version.scalatest>
         <version.scalatest-maven-plugin>2.0.0</version.scalatest-maven-plugin>
         <version.mockito-scala>1.14.2</version.mockito-scala>
         <version.mockserver>5.10</version.mockserver>
