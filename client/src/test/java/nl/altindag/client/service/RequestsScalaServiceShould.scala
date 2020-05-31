@@ -14,28 +14,28 @@ class RequestsScalaServiceShould extends AnyFunSpec with MockitoSugar {
   describe("execute request") {
     val mockServerTestHelper = new MockServerTestHelper("requests scala")
 
-    val victim = new RequestsScalaService(null)
-    val clientResponse: ClientResponse = victim.executeRequest(HTTP_URL)
+    describe("execute request without ssl material") {
 
-    assertThat(clientResponse.getStatusCode).isEqualTo(200)
-    assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
+      val victim = new RequestsScalaService(null)
+      val clientResponse: ClientResponse = victim.executeRequest(HTTP_URL)
 
-    mockServerTestHelper.stop();
-  }
+      assertThat(clientResponse.getStatusCode).isEqualTo(200)
+      assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
+    }
 
-  describe("execute request with ssl material") {
-    val mockServerTestHelper = new MockServerTestHelper("requests scala")
-    val sslFactory = mock[SSLFactory]
-    val sslContext = mock[SSLContext]
+    describe("execute request with ssl material") {
+      val sslFactory = mock[SSLFactory]
+      val sslContext = mock[SSLContext]
 
-    when(sslFactory.getSslContext).thenReturn(sslContext)
+      when(sslFactory.getSslContext).thenReturn(sslContext)
 
-    val victim = new RequestsScalaService(sslFactory)
-    val clientResponse: ClientResponse = victim.executeRequest(HTTP_URL)
+      val victim = new RequestsScalaService(sslFactory)
+      val clientResponse: ClientResponse = victim.executeRequest(HTTP_URL)
 
-    assertThat(clientResponse.getStatusCode).isEqualTo(200)
-    assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
-    verify(sslFactory, times(1)).getSslContext()
+      assertThat(clientResponse.getStatusCode).isEqualTo(200)
+      assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
+      verify(sslFactory, times(1)).getSslContext()
+    }
 
     mockServerTestHelper.stop();
   }
