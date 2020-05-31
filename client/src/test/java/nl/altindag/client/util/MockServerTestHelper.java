@@ -2,11 +2,10 @@ package nl.altindag.client.util;
 
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
-
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
-import static org.mockserver.matchers.Times.exactly;
-import static org.mockserver.model.HttpRequest.request;
-import static org.mockserver.model.HttpResponse.response;
+import org.mockserver.matchers.TimeToLive;
+import org.mockserver.matchers.Times;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpResponse;
 
 /**
  * Use mock-server during unit test when mocking of certain classes or methods are not possible.
@@ -15,25 +14,31 @@ import static org.mockserver.model.HttpResponse.response;
 public final class MockServerTestHelper {
 
     private ClientAndServer clientAndServer;
+    private MockServerClient mockServerClient;
 
     public MockServerTestHelper(String clientType) {
-        clientAndServer = startClientAndServer(8080);
-        new MockServerClient("127.0.0.1", 8080)
+        clientAndServer = ClientAndServer.startClientAndServer(8080);
+        mockServerClient = new MockServerClient("127.0.0.1", 8080);
+        mockServerClient
                 .when(
-                        request()
+                        HttpRequest.request()
                                 .withMethod("GET")
                                 .withPath("/api/hello")
                                 .withHeader("client-type", clientType),
-                        exactly(1))
+                        Times.unlimited(),
+                        TimeToLive.unlimited())
                 .respond(
-                        response()
+                        HttpResponse.response()
                                 .withBody("Hello")
                                 .withStatusCode(200)
                 );
     }
 
     public void stop() {
+        mockServerClient.stop();
+        mockServerClient.close();
         clientAndServer.stop();
+        clientAndServer.close();
     }
 
 }
