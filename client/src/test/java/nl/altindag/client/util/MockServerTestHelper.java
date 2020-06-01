@@ -13,8 +13,8 @@ import org.mockserver.model.HttpResponse;
  */
 public final class MockServerTestHelper {
 
-    private ClientAndServer clientAndServer;
-    private MockServerClient mockServerClient;
+    private final ClientAndServer clientAndServer;
+    private final MockServerClient mockServerClient;
 
     public MockServerTestHelper(String clientType) {
         clientAndServer = ClientAndServer.startClientAndServer(8080);
