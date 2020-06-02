@@ -44,36 +44,36 @@ Below is a list of already tested clients, plain Java based Http Client configur
 The [service directory](client/src/main/java/nl/altindag/client/service) contains the individual Http Clients with an example requests. Kotlin and Scala based Http Client Configurations are included as nested class, because of language limitation within the ClientConfig class I couldn't include it there.
 
 **Java**
-* [Apache HttpClient](https://github.com/apache/httpcomponents-client)
-* [JDK HttpClient](https://openjdk.java.net/groups/net/httpclient/intro.html)
-* [Old JDK HttpClient](https://docs.oracle.com/javase/tutorial/networking/urls/readingWriting.html)
-* [Netty Reactor](https://github.com/reactor/reactor-netty)
-* [Jetty Reactive HttpClient](https://github.com/jetty-project/jetty-reactive-httpclient)
-* [Spring RestTemplate](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html)
-* [Spring WebFlux WebClient Netty](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
-* [Spring WebFlux WebClient Jetty](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)
-* [OkHttp](https://github.com/square/okhttp)
-* [Jersey Client](https://eclipse-ee4j.github.io/jersey/)
-* Old Jersey Client
-* [Google HttpClient](https://github.com/googleapis/google-http-java-client)
-* [Unirest](https://github.com/Kong/unirest-java)
-* [Retrofit](https://github.com/square/retrofit)
-* [Async Http Client](https://github.com/AsyncHttpClient/async-http-client)
+* [Apache HttpClient](https://github.com/apache/httpcomponents-client) -> [Client configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L86) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ApacheHttpClientService.java)
+* [JDK HttpClient](https://openjdk.java.net/groups/net/httpclient/intro.html) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L98) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/JdkHttpClientService.java)
+* [Old JDK HttpClient](https://docs.oracle.com/javase/tutorial/networking/urls/readingWriting.html) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/OldJdkHttpClientService.java)
+* [Netty Reactor](https://github.com/reactor/reactor-netty) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L131) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ReactorNettyService.java)
+* [Jetty Reactive HttpClient](https://github.com/jetty-project/jetty-reactive-httpclient) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L142) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/JettyReactiveHttpClientService.java)
+* [Spring RestTemplate](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L110) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/SpringRestTemplateService.java)
+* [Spring WebFlux WebClient Netty](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L152) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/SpringWebClientService.java)
+* [Spring WebFlux WebClient Jetty](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L159) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/SpringWebClientService.java)
+* [OkHttp](https://github.com/square/okhttp) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L118) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/OkHttpClientService.java)
+* [Jersey Client](https://eclipse-ee4j.github.io/jersey/) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L166) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/JerseyClientService.java)
+* Old Jersey Client -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L178) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/OldJerseyClientService.java)
+* [Google HttpClient](https://github.com/googleapis/google-http-java-client) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L190) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/GoogleHttpClientService.java)
+* [Unirest](https://github.com/Kong/unirest-java) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L202) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/UnirestService.java)
+* [Retrofit](https://github.com/square/retrofit) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L212) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/RetrofitService.java)
+* [Async Http Client](https://github.com/AsyncHttpClient/async-http-client) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L257) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/AsyncHttpClientService.java)
 
 **Kotlin**
-* [Fuel](https://github.com/kittinunf/fuel)
-* [Kohttp](https://github.com/rybalkinsd/kohttp)
+* [Fuel](https://github.com/kittinunf/fuel) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/FuelService.kt)
+* [Kohttp](https://github.com/rybalkinsd/kohttp) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/KohttpService.kt)
 
 **Scala**
-* [Twitter Finagle](https://github.com/twitter/finagle)
-* [Twitter Finagle Featherbed](https://github.com/finagle/featherbed)
-* [Akka Http Client](https://github.com/akka/akka-http)
-* [Dispatch Reboot](https://github.com/dispatch/reboot)
-* [ScalaJ / Simplified Http Client](https://github.com/scalaj/scalaj-http)
-* [Sttp](https://github.com/softwaremill/sttp)
-* [Requests-Scala](https://github.com/lihaoyi/requests-scala)
-* [Http4s Blaze Client](https://github.com/http4s/http4s)
-* [Http4s Java Net Client](https://github.com/http4s/http4s)
+* [Twitter Finagle](https://github.com/twitter/finagle) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L221) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/FinagleHttpClientService.java)
+* [Twitter Finagle Featherbed](https://github.com/finagle/featherbed) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/FeatherbedRequestService.scala)
+* [Akka Http Client](https://github.com/akka/akka-http) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/941f2f462221aa321d64be060c63a9fc678f689d/client/src/main/java/nl/altindag/client/ClientConfig.java#L241) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/AkkaHttpClientService.java)
+* [Dispatch Reboot](https://github.com/dispatch/reboot) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/DispatchRebootService.scala)
+* [ScalaJ / Simplified Http Client](https://github.com/scalaj/scalaj-http) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ScalaJHttpClientService.scala)
+* [Sttp](https://github.com/softwaremill/sttp) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/SttpHttpClientService.scala)
+* [Requests-Scala](https://github.com/lihaoyi/requests-scala) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/RequestsScalaService.scala)
+* [Http4s Blaze Client](https://github.com/http4s/http4s) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sBlazeClientService.scala) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sService.scala)
+* [Http4s Java Net Client](https://github.com/http4s/http4s) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sJavaNetClientService.scala) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sService.scala)
 
 ## Starting the server
 **Minimum requirements:**
