@@ -18,7 +18,7 @@ public class FinagleHttpClientService implements RequestService {
 
     private static final int TIMEOUT_AMOUNT_IN_SECONDS = 5;
 
-    private com.twitter.finagle.Service<Request, Response> service;
+    private final com.twitter.finagle.Service<Request, Response> service;
 
     @Autowired
     public FinagleHttpClientService(com.twitter.finagle.Service<Request, Response> finagleService) {
@@ -26,9 +26,8 @@ public class FinagleHttpClientService implements RequestService {
     }
 
     @Override
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public ClientResponse executeRequest(String url) throws Exception {
-        Request request = new RequestBuilder()
+        Request request = new RequestBuilder<>()
                 .addHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .url(url)
                 .buildGet(null);
