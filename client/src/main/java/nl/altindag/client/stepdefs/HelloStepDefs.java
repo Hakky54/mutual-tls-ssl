@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
 import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.TestScenario;
@@ -20,6 +21,7 @@ import static nl.altindag.client.Constants.HELLO_ENDPOINT;
 import static nl.altindag.client.Constants.SERVER_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@CucumberContextConfiguration
 public class HelloStepDefs extends BaseStepDefs {
 
     private static final Logger LOGGER = LogManager.getLogger(HelloStepDefs.class);
