@@ -5,7 +5,6 @@ import com.twitter.finagle.http.RequestBuilder;
 import com.twitter.finagle.http.Response;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -20,7 +19,6 @@ public class FinagleHttpClientService implements RequestService {
 
     private final com.twitter.finagle.Service<Request, Response> service;
 
-    @Autowired
     public FinagleHttpClientService(com.twitter.finagle.Service<Request, Response> finagleService) {
         this.service = finagleService;
     }

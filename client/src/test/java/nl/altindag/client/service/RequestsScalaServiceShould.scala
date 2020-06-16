@@ -1,6 +1,7 @@
 package nl.altindag.client.service
 
 import javax.net.ssl.SSLContext
+import nl.altindag.client.ClientType.REQUESTS_SCALA
 import nl.altindag.client.TestConstants.HTTP_URL
 import nl.altindag.client.model.ClientResponse
 import nl.altindag.client.util.MockServerTestHelper
@@ -12,7 +13,7 @@ import org.scalatest.funspec.AnyFunSpec
 class RequestsScalaServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
-    val mockServerTestHelper = new MockServerTestHelper("requests scala")
+    val mockServerTestHelper = new MockServerTestHelper(REQUESTS_SCALA)
 
     describe("execute request without ssl material") {
 

@@ -3,6 +3,7 @@ package nl.altindag.client.service
 import java.net.HttpURLConnection
 
 import javax.net.ssl.{HostnameVerifier, HttpsURLConnection, SSLContext, SSLSocketFactory}
+import nl.altindag.client.ClientType.SCALAJ_HTTP_CLIENT
 import nl.altindag.client.TestConstants.HTTP_URL
 import nl.altindag.client.model.ClientResponse
 import nl.altindag.client.util.MockServerTestHelper
@@ -15,7 +16,7 @@ import scalaj.http.HttpOptions
 class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
-    val mockServerTestHelper = new MockServerTestHelper("scalaj httpclient")
+    val mockServerTestHelper = new MockServerTestHelper(SCALAJ_HTTP_CLIENT)
 
     val dummyHttpOption = HttpOptions.connTimeout(1000)
     val victim = new ScalaJHttpClientService(dummyHttpOption)

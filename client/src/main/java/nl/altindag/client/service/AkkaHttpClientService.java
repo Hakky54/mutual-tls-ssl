@@ -2,7 +2,6 @@ package nl.altindag.client.service;
 
 import static nl.altindag.client.ClientType.AKKA_HTTP_CLIENT;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import akka.actor.ActorSystem;
@@ -22,7 +21,6 @@ public class AkkaHttpClientService implements RequestService {
     private final Http akkaHttpClient;
     private final ActorSystem actorSystem;
 
-    @Autowired
     public AkkaHttpClientService(Http akkaHttpClient, ActorSystem actorSystem) {
         this.akkaHttpClient = akkaHttpClient;
         this.actorSystem = actorSystem;

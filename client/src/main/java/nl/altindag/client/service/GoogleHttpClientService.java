@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.http.GenericUrl;
@@ -23,7 +22,6 @@ public class GoogleHttpClientService implements RequestService {
 
     private final HttpTransport httpTransport;
 
-    @Autowired
     public GoogleHttpClientService(HttpTransport httpTransport) {
         this.httpTransport = httpTransport;
     }

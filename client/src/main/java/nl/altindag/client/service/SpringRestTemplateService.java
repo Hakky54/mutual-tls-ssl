@@ -3,7 +3,6 @@ package nl.altindag.client.service;
 import static nl.altindag.client.ClientType.SPRING_REST_TEMPATE;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,7 +18,6 @@ public class SpringRestTemplateService implements RequestService {
 
     private final RestTemplate restTemplate;
 
-    @Autowired
     public SpringRestTemplateService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }

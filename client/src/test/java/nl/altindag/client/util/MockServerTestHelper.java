@@ -1,5 +1,6 @@
 package nl.altindag.client.util;
 
+import nl.altindag.client.ClientType;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.matchers.TimeToLive;
@@ -16,7 +17,7 @@ public final class MockServerTestHelper {
     private final ClientAndServer clientAndServer;
     private final MockServerClient mockServerClient;
 
-    public MockServerTestHelper(String clientType) {
+    public MockServerTestHelper(ClientType clientType) {
         clientAndServer = ClientAndServer.startClientAndServer(8080);
         mockServerClient = new MockServerClient("127.0.0.1", 8080);
         mockServerClient
@@ -24,7 +25,7 @@ public final class MockServerTestHelper {
                         HttpRequest.request()
                                 .withMethod("GET")
                                 .withPath("/api/hello")
-                                .withHeader("client-type", clientType),
+                                .withHeader("client-type", clientType.getValue()),
                         Times.unlimited(),
                         TimeToLive.unlimited())
                 .respond(
