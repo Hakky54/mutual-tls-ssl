@@ -14,11 +14,11 @@ branches:
 
 jobs:
   include:
-    - stage: "without authentication"
+    - stage: "build"
     - script: "mvn clean verify -P without-authentication"
-    - stage: "one way authentication"
+    - stage: "build"
     - script: "mvn clean verify -P with-one-way-authentication"
-    - stage: "two way authentication by trusting each other"
+    - stage: "build"
     - script: "mvn clean verify -P with-two-way-authentication-by-trusting-each-other"
-    - stage: "two way authentication by trusting root ca"
+    - stage: "build"
     - script: "mvn clean verify -P with-two-way-authentication-by-trusting-root-ca"
