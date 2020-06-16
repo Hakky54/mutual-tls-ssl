@@ -5,7 +5,6 @@ import nl.altindag.client.model.ClientResponse;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.RequestBuilder;
 import org.asynchttpclient.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -20,7 +19,6 @@ public class AsyncHttpClientService implements RequestService {
 
     private final AsyncHttpClient httpClient;
 
-    @Autowired
     public AsyncHttpClientService(AsyncHttpClient httpClient) {
         this.httpClient = httpClient;
     }

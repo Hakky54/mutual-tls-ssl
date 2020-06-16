@@ -1,5 +1,6 @@
 package nl.altindag.client.service
 
+import nl.altindag.client.ClientType.HTTP4S_BLAZE_CLIENT
 import nl.altindag.client.TestConstants
 import nl.altindag.client.util.{MockServerTestHelper, SSLFactoryTestHelper}
 import org.assertj.core.api.Assertions.assertThat
@@ -9,7 +10,7 @@ import org.scalatest.funspec.AnyFunSpec
 class Http4sBlazeClientServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
-    val mockServerTestHelper = new MockServerTestHelper("http4s blaze client")
+    val mockServerTestHelper = new MockServerTestHelper(HTTP4S_BLAZE_CLIENT)
 
     val client = new BlazeClientConfiguration().createBlazeClient(null)
     val victim = new Http4sBlazeClientService(client)

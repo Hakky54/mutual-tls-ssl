@@ -3,7 +3,6 @@ package nl.altindag.client.service;
 import static nl.altindag.client.ClientType.OLD_JERSEY_CLIENT;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sun.jersey.api.client.Client;
@@ -16,7 +15,6 @@ public class OldJerseyClientService implements RequestService {
 
     private final Client client;
 
-    @Autowired
     public OldJerseyClientService(Client client) {
         this.client = client;
     }

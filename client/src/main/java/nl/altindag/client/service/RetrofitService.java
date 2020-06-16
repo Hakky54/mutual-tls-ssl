@@ -3,7 +3,6 @@ package nl.altindag.client.service;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.Constants;
 import nl.altindag.client.model.ClientResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -21,7 +20,6 @@ public class RetrofitService implements RequestService {
 
     private final Retrofit retrofit;
 
-    @Autowired
     public RetrofitService(Retrofit retrofit) {
         this.retrofit = retrofit;
     }

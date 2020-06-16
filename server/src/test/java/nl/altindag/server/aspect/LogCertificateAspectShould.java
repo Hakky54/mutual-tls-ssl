@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class LogCertificateAspectShould {
 
-    private LogCertificateAspect logCertificateAspect = new LogCertificateAspect();
+    private final LogCertificateAspect logCertificateAspect = new LogCertificateAspect();
 
     @Test
     public void logDetailedClientCertificate() {

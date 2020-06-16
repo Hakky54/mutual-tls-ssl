@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LogClientTypeAspectShould {
 
-    private LogClientTypeAspect logClientTypeAspect = new LogClientTypeAspect();
+    private final LogClientTypeAspect logClientTypeAspect = new LogClientTypeAspect();
 
     @Test
     public void logClientTypeIfPresent() {

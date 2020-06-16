@@ -2,6 +2,7 @@ package nl.altindag.client.service
 
 import java.net.URI
 
+import nl.altindag.client.ClientType.FEATHERBED
 import nl.altindag.client.TestConstants.HTTP_URL
 import nl.altindag.client.util.{MockServerTestHelper, SSLFactoryTestHelper}
 import org.assertj.core.api.Assertions.assertThat
@@ -11,7 +12,7 @@ import org.scalatest.funspec.AnyFunSpec
 class FeatherbedRequestServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
-    val mockServerTestHelper = new MockServerTestHelper("featherbed")
+    val mockServerTestHelper = new MockServerTestHelper(FEATHERBED)
 
     val client = new featherbed.Client(URI.create("http://localhost:8080/").toURL)
     val victim = new FeatherbedRequestService(client)

@@ -1,5 +1,6 @@
 package nl.altindag.client.service
 
+import nl.altindag.client.ClientType.HTTP4S_JAVA_NET_CLIENT
 import nl.altindag.client.TestConstants
 import nl.altindag.client.util.{MockServerTestHelper, SSLFactoryTestHelper}
 import org.assertj.core.api.Assertions.assertThat
@@ -9,7 +10,7 @@ import org.scalatest.funspec.AnyFunSpec
 class Http4sJavaNetClientServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
-    val mockServerTestHelper = new MockServerTestHelper("http4s java net client")
+    val mockServerTestHelper = new MockServerTestHelper(HTTP4S_JAVA_NET_CLIENT)
 
     val client = new JavaNetClientConfiguration().createJavaNetClient(null)
     val victim = new Http4sJavaNetClientService(client)

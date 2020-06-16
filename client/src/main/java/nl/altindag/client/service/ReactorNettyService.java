@@ -2,7 +2,6 @@ package nl.altindag.client.service;
 
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
@@ -15,7 +14,6 @@ public class ReactorNettyService implements RequestService {
 
     private final HttpClient httpClient;
 
-    @Autowired
     public ReactorNettyService(HttpClient httpClient) {
         this.httpClient = httpClient;
     }

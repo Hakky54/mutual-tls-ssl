@@ -9,7 +9,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nl.altindag.client.ClientType;
@@ -20,7 +19,6 @@ public class JdkHttpClientService implements RequestService {
 
     private final HttpClient httpClient;
 
-    @Autowired
     public JdkHttpClientService(HttpClient httpClient) {
         this.httpClient = httpClient;
     }
