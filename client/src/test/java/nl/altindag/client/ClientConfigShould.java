@@ -37,7 +37,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class ClientConfigShould {
 
-    private ClientConfig victim = new ClientConfig();
+    private final ClientConfig victim = new ClientConfig();
 
     @Test
     public void createSslFactoryWithOneWayAuthentication() {

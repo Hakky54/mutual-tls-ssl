@@ -71,12 +71,12 @@ public class ClientConfig {
                 .withProtocol("TLSv1.3");
 
         if (oneWayAuthenticationEnabled) {
-            sslFactoryBuilder.withTrustStore(trustStorePath, trustStorePassword);
+            sslFactoryBuilder.withTrustMaterial(trustStorePath, trustStorePassword);
         }
 
         if (twoWayAuthenticationEnabled) {
-            sslFactoryBuilder.withIdentity(keyStorePath, keyStorePassword)
-                    .withTrustStore(trustStorePath, trustStorePassword);
+            sslFactoryBuilder.withIdentityMaterial(keyStorePath, keyStorePassword)
+                    .withTrustMaterial(trustStorePath, trustStorePassword);
         }
         return sslFactoryBuilder.build();
     }
