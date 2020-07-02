@@ -1,2 +1,2 @@
 tasks:
-  - init: ./mvnw install -DskipTests=false
+  - init: ./mvnw clean verify
