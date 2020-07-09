@@ -22,7 +22,7 @@
         <version.sslcontext-kickstart>4.0.0</version.sslcontext-kickstart>
         <version.spring>2.3.1.RELEASE</version.spring>
         <version.apache.httpclient>4.5.12</version.apache.httpclient>
-        <version.cucumber>6.1.1</version.cucumber>
+        <version.cucumber>6.2.1</version.cucumber>
         <version.junit>4.13</version.junit>
         <version.maven-fail-safe>2.22.2</version.maven-fail-safe>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
@@ -35,8 +35,8 @@
         <version.jetty-reactive-httpclient>1.1.4</version.jetty-reactive-httpclient>
         <version.org.glassfish.jersey.inject>2.31</version.org.glassfish.jersey.inject>
         <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
-        <version.google.http.client>1.35.0</version.google.http.client>
-        <version.unirest>3.7.04</version.unirest>
+        <version.google.http.client>1.36.0</version.google.http.client>
+        <version.unirest>3.8.06</version.unirest>
         <version.retrofit>2.9.0</version.retrofit>
         <version.finagle>20.6.0</version.finagle>
         <version.akka-http>10.1.12</version.akka-http>
@@ -51,15 +51,15 @@
         <version.kohttp>0.12.0</version.kohttp>
         <version.http4s>0.21.4</version.http4s>
         <version.cats>2.1.1</version.cats>
-        <version.jackson-module-scala>2.11.0</version.jackson-module-scala>
+        <version.jackson-module-scala>2.11.1</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.logcaptor>2.0.1</version.logcaptor>
-        <version.byte-buddy>1.10.12</version.byte-buddy>
+        <version.byte-buddy>1.10.13</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
         <version.scalatest>3.1.2</version.scalatest>
         <version.scalatest-maven-plugin>2.0.0</version.scalatest-maven-plugin>
         <version.mockito-scala>1.14.8</version.mockito-scala>
-        <version.mockserver>5.10</version.mockserver>
+        <version.mockserver>5.11.0</version.mockserver>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.2</version.maven-shade-plugin>
         <version.scala-maven-plugin>4.3.1</version.scala-maven-plugin>
