@@ -40,53 +40,6 @@ public class ClientConfigShould {
     private final ClientConfig victim = new ClientConfig();
 
     @Test
-    public void createSslFactoryWithOneWayAuthentication() {
-        String trustStorePath = "keystores-for-unit-tests/truststore.jks";
-        String trustStorePassword = "secret";
-
-        SSLFactory sslFactory = victim.sslFactory(true, false,
-                EMPTY, EMPTY.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
-
-        assertThat(sslFactory).isNotNull();
-        assertThat(sslFactory.getSslContext()).isNotNull();
-        assertThat(sslFactory.getKeyManager()).isNotPresent();
-        assertThat(sslFactory.getTrustManager()).isNotNull();
-        assertThat(sslFactory.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
-        assertThat(sslFactory.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
-    }
-
-    @Test
-    public void createSslFactoryWithTwoWayAuthentication() {
-        String keyStorePath = "keystores-for-unit-tests/identity.jks";
-        String keyStorePassword = "secret";
-        String trustStorePath = "keystores-for-unit-tests/truststore.jks";
-        String trustStorePassword = "secret";
-
-        SSLFactory sslFactory = victim.sslFactory(false, true,
-                keyStorePath, keyStorePassword.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
-
-        assertThat(sslFactory).isNotNull();
-        assertThat(sslFactory.getSslContext()).isNotNull();
-        assertThat(sslFactory.getKeyManager()).isPresent();
-        assertThat(sslFactory.getTrustManager()).isNotNull();
-        assertThat(sslFactory.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
-        assertThat(sslFactory.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
-    }
-
-    @Test
-    public void notCreateSslFactoryWhenOneWayAuthenticationAndTwoWayAuthenticationIsDisabled() {
-        String keyStorePath = "keystores-for-unit-tests/identity.jks";
-        String keyStorePassword = "secret";
-        String trustStorePath = "keystores-for-unit-tests/truststore.jks";
-        String trustStorePassword = "secret";
-
-        SSLFactory sslFactory = victim.sslFactory(false, false,
-                keyStorePath, keyStorePassword.toCharArray(), trustStorePath, trustStorePassword.toCharArray());
-
-        assertThat(sslFactory).isNull();
-    }
-
-    @Test
     public void createApacheHttpClientWithoutSecurity() {
         HttpClient httpClient = victim.apacheHttpClient(null);
 
@@ -94,7 +47,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createApacheHttpClientWithSecurity() throws NoSuchAlgorithmException {
+    public void createApacheHttpClientWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         HttpClient httpClient = victim.apacheHttpClient(sslFactory);

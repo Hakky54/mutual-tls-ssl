@@ -15,7 +15,7 @@ import nl.altindag.client.service.RequestService;
 public class BaseStepDefs extends SpringBootHelper {
 
     protected TestScenario testScenario;
-    private Map<ClientType, RequestService> requestServices;
+    private final Map<ClientType, RequestService> requestServices;
 
     public BaseStepDefs(TestScenario testScenario, List<RequestService> requestServices) {
         this.testScenario = testScenario;

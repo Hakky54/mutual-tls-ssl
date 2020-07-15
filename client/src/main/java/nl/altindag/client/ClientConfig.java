@@ -19,15 +19,14 @@ import nl.altindag.sslcontext.SSLFactory;
 import nl.altindag.sslcontext.util.JettySslContextUtils;
 import nl.altindag.sslcontext.util.NettySslContextUtils;
 import okhttp3.OkHttpClient;
-import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.impl.client.HttpClients;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 import org.asynchttpclient.Dsl;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -51,35 +50,8 @@ import static java.util.Objects.nonNull;
 import static nl.altindag.client.Constants.SERVER_URL;
 
 @Configuration
+@ComponentScan(basePackageClasses = SSLConfig.class)
 public class ClientConfig {
-
-    @Bean
-    @Scope("prototype")
-    public SSLFactory sslFactory(
-            @Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
-            @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
-            @Value("${client.ssl.key-store:}") String keyStorePath,
-            @Value("${client.ssl.key-store-password:}") char[] keyStorePassword,
-            @Value("${client.ssl.trust-store:}") String trustStorePath,
-            @Value("${client.ssl.trust-store-password:}") char[] trustStorePassword) {
-        if (!oneWayAuthenticationEnabled && !twoWayAuthenticationEnabled) {
-            return null;
-        }
-
-        SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder()
-                .withHostnameVerifier(new DefaultHostnameVerifier())
-                .withProtocol("TLSv1.3");
-
-        if (oneWayAuthenticationEnabled) {
-            sslFactoryBuilder.withTrustMaterial(trustStorePath, trustStorePassword);
-        }
-
-        if (twoWayAuthenticationEnabled) {
-            sslFactoryBuilder.withIdentityMaterial(keyStorePath, keyStorePassword)
-                    .withTrustMaterial(trustStorePath, trustStorePassword);
-        }
-        return sslFactoryBuilder.build();
-    }
 
     @Bean
     @Scope("prototype")

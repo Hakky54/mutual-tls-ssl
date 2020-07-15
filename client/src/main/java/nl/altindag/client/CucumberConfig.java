@@ -5,6 +5,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan
-public class CucumberConfiguration {
+public class CucumberConfig {
 
 }
