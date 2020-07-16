@@ -26,12 +26,11 @@ import org.asynchttpclient.Dsl;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.reactive.JettyClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import retrofit2.Retrofit;
@@ -49,8 +48,7 @@ import java.util.Optional;
 import static java.util.Objects.nonNull;
 import static nl.altindag.client.Constants.SERVER_URL;
 
-@Configuration
-@ComponentScan(basePackageClasses = SSLConfig.class)
+@Component
 public class ClientConfig {
 
     @Bean
