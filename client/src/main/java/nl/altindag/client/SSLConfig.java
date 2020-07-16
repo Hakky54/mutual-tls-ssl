@@ -1,7 +1,6 @@
 package nl.altindag.client;
 
 import nl.altindag.sslcontext.SSLFactory;
-import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +27,6 @@ public class SSLConfig {
         if (oneWayAuthenticationEnabled) {
             sslFactory = SSLFactory.builder()
                     .withTrustMaterial(trustStorePath, trustStorePassword)
-                    .withHostnameVerifier(new DefaultHostnameVerifier())
                     .withProtocol("TLSv1.3")
                     .build();
         }
@@ -37,7 +35,6 @@ public class SSLConfig {
             sslFactory = SSLFactory.builder()
                     .withIdentityMaterial(keyStorePath, keyStorePassword)
                     .withTrustMaterial(trustStorePath, trustStorePassword)
-                    .withHostnameVerifier(new DefaultHostnameVerifier())
                     .withProtocol("TLSv1.3")
                     .build();
         }

@@ -1,7 +1,6 @@
 package nl.altindag.client;
 
 import nl.altindag.sslcontext.SSLFactory;
-import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.junit.Test;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -23,7 +22,6 @@ public class SSLConfigShould {
         assertThat(sslFactory.getSslContext()).isNotNull();
         assertThat(sslFactory.getKeyManager()).isNotPresent();
         assertThat(sslFactory.getTrustManager()).isNotNull();
-        assertThat(sslFactory.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
         assertThat(sslFactory.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
     }
 
@@ -41,7 +39,6 @@ public class SSLConfigShould {
         assertThat(sslFactory.getSslContext()).isNotNull();
         assertThat(sslFactory.getKeyManager()).isPresent();
         assertThat(sslFactory.getTrustManager()).isNotNull();
-        assertThat(sslFactory.getHostnameVerifier()).isInstanceOf(DefaultHostnameVerifier.class);
         assertThat(sslFactory.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
     }
 
