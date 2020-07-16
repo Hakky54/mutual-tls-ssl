@@ -18,10 +18,6 @@ public class SSLConfig {
             @Value("${client.ssl.key-store-password:}") char[] keyStorePassword,
             @Value("${client.ssl.trust-store:}") String trustStorePath,
             @Value("${client.ssl.trust-store-password:}") char[] trustStorePassword) {
-        if (!oneWayAuthenticationEnabled && !twoWayAuthenticationEnabled) {
-            return null;
-        }
-
         SSLFactory sslFactory = null;
 
         if (oneWayAuthenticationEnabled) {
