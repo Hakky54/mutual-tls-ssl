@@ -22,7 +22,7 @@ public class FeignService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws Exception {
-        String hello = feign.target(Server.class, url)
+        String hello = feign.target(Server.class, Constants.SERVER_URL)
                 .getHello();
 
         return new ClientResponse(hello, 200);

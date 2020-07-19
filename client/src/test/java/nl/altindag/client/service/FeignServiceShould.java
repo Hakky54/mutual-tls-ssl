@@ -27,10 +27,10 @@ public class FeignServiceShould {
     public void executeRequest() throws Exception {
         FeignService.Server server = mock(FeignService.Server.class);
 
-        doReturn(server).when(feignBuilder).target(FeignService.Server.class, TestConstants.HTTP_URL);
+        doReturn(server).when(feignBuilder).target(FeignService.Server.class, TestConstants.SERVER_URL);
         when(server.getHello()).thenReturn("Hello");
 
-        ClientResponse clientResponse = victim.executeRequest(TestConstants.HTTP_URL);
+        ClientResponse clientResponse = victim.executeRequest(null);
 
         assertThat(clientResponse.getStatusCode()).isEqualTo(200);
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
