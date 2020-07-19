@@ -44,7 +44,7 @@ Beware that the client module contains quite some http clients and therefor the 
 
 ### Tested clients
 Below is a list of already tested clients, plain Java based Http Client configurations can be found at the [ClientConfig class](client/src/main/java/nl/altindag/client/ClientConfig.java).
-The [service directory](client/src/main/java/nl/altindag/client/service) contains the individual Http Clients with an example requests. Kotlin and Scala based Http Client Configurations are included as nested class, because of language limitation within the ClientConfig class I couldn't include it there.
+The [service directory](client/src/main/java/nl/altindag/client/service) contains the individual Http Clients with an example requests. Kotlin and Scala based Http Client Configurations are included as nested class, because of language limitation within the ClientConfig class I couldn't include it there. All client examples use the same base ssl configuration created within the [SSLConfig class](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/SSLConfig.java).
 
 **Java**
 * [Apache HttpClient](https://github.com/apache/httpcomponents-client) -> [Client configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/38bfdab8b176de447d0864a9b9bfc7a2f83d3b28/client/src/main/java/nl/altindag/client/ClientConfig.java#L57) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ApacheHttpClientService.java)
