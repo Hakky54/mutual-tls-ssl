@@ -113,6 +113,10 @@
             <groupId>org.http4s</groupId>
             <artifactId>http4s-blaze-client_${version.scala}</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>

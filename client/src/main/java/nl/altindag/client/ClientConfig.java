@@ -13,6 +13,7 @@ import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
+import feign.Feign;
 import io.netty.handler.ssl.SslContext;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
@@ -234,6 +235,16 @@ public class ClientConfig {
             return Dsl.asyncHttpClient(clientConfigBuilder);
         } else {
             return Dsl.asyncHttpClient();
+        }
+    }
+
+    @Bean
+    public Feign.Builder feign(@Autowired(required = false) SSLFactory sslFactory) {
+        if (nonNull(sslFactory)) {
+            return Feign.builder()
+                    .client(new feign.Client.Default(sslFactory.getSslContext().getSocketFactory(), sslFactory.getHostnameVerifier()));
+        } else {
+            return Feign.builder();
         }
     }
 

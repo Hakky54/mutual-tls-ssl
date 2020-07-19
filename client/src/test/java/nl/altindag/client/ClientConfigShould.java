@@ -6,11 +6,11 @@ import com.google.api.client.http.HttpTransport;
 import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
+import feign.Feign;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
 import okhttp3.OkHttpClient;
 import org.apache.http.client.HttpClient;
-import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.asynchttpclient.AsyncHttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,12 +23,10 @@ import javax.net.ssl.SSLException;
 import javax.ws.rs.client.Client;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.security.NoSuchAlgorithmException;
 
 import static nl.altindag.client.util.SSLFactoryTestHelper.createSSLFactory;
 import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
 import static nl.altindag.client.util.AssertJCustomConditions.SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -363,6 +361,35 @@ public class ClientConfigShould {
         verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManager();
         verify(sslFactory, times(1)).getTrustManager();
+    }
+
+    @Test
+    public void createFeignWithoutSecurity() throws SSLException {
+        Feign.Builder feignBuilder = victim.feign(null);
+
+        assertThat(feignBuilder).isNotNull();
+    }
+
+    @Test
+    public void createFeignWithOneWayAuthentication() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(true, false);
+
+        Feign.Builder feignBuilder = victim.feign(sslFactory);
+
+        assertThat(feignBuilder).isNotNull();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
+    }
+
+    @Test
+    public void createFeignWithTwoWayAuthentication() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(true, false);
+
+        Feign.Builder feignBuilder = victim.feign(sslFactory);
+
+        assertThat(feignBuilder).isNotNull();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
     }
 
 }

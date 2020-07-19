@@ -28,9 +28,10 @@ public enum ClientType {
     KOHTTP("kohttp"),
     HTTP4S_BLAZE_CLIENT("http4s blaze client"),
     HTTP4S_JAVA_NET_CLIENT("http4s java net client"),
+    FEIGN("feign"),
     NONE("none");
 
-    private String value;
+    private final String value;
 
     ClientType(String value) {
         this.value = value;
