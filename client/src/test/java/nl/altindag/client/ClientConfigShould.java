@@ -2,6 +2,7 @@ package nl.altindag.client;
 
 import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
+import com.github.mizosoft.methanol.Methanol;
 import com.google.api.client.http.HttpTransport;
 import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
@@ -32,6 +33,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 @RunWith(MockitoJUnitRunner.class)
 public class ClientConfigShould {
 
@@ -371,8 +373,8 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createFeignWithOneWayAuthentication() throws SSLException {
-        SSLFactory sslFactory = createSSLFactory(true, false);
+    public void createFeignWithSecurity() throws SSLException {
+        SSLFactory sslFactory = createSSLFactory(true, true);
 
         Feign.Builder feignBuilder = victim.feign(sslFactory);
 
@@ -382,14 +384,20 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createFeignWithTwoWayAuthentication() throws SSLException {
-        SSLFactory sslFactory = createSSLFactory(true, false);
+    public void createMethanolWithoutSecurity() {
+        Methanol httpClient = victim.methanol(null);
 
-        Feign.Builder feignBuilder = victim.feign(sslFactory);
+        assertThat(httpClient).isNotNull();
+    }
 
-        assertThat(feignBuilder).isNotNull();
-        verify(sslFactory, times(1)).getSslContext();
-        verify(sslFactory, times(1)).getHostnameVerifier();
+    @Test
+    public void createMethanolWithSecurity() {
+        SSLFactory sslFactory = createSSLFactory(true, true);
+
+        Methanol httpClient = victim.methanol(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        verify(sslFactory, times(2)).getSslContext();
     }
 
 }

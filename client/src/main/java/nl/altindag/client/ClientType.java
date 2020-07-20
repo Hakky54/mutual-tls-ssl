@@ -29,6 +29,7 @@ public enum ClientType {
     HTTP4S_BLAZE_CLIENT("http4s blaze client"),
     HTTP4S_JAVA_NET_CLIENT("http4s java net client"),
     FEIGN("feign"),
+    METHANOL("methanol"),
     NONE("none");
 
     private final String value;

@@ -3,6 +3,7 @@ package nl.altindag.client;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectionContext;
 import akka.http.javadsl.HttpsConnectionContext;
+import com.github.mizosoft.methanol.Methanol;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.GsonBuilder;
@@ -245,6 +246,18 @@ public class ClientConfig {
                     .client(new feign.Client.Default(sslFactory.getSslContext().getSocketFactory(), sslFactory.getHostnameVerifier()));
         } else {
             return Feign.builder();
+        }
+    }
+
+    @Bean
+    public Methanol methanol(@Autowired(required = false) SSLFactory sslFactory) {
+        if (nonNull(sslFactory)) {
+            return Methanol.newBuilder()
+                    .sslContext(sslFactory.getSslContext())
+                    .sslParameters(sslFactory.getSslContext().getDefaultSSLParameters())
+                    .build();
+        } else {
+            return Methanol.create();
         }
     }
 

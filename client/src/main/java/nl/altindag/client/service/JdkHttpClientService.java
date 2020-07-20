@@ -9,6 +9,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import nl.altindag.client.ClientType;
@@ -19,7 +20,7 @@ public class JdkHttpClientService implements RequestService {
 
     private final HttpClient httpClient;
 
-    public JdkHttpClientService(HttpClient httpClient) {
+    public JdkHttpClientService(@Qualifier("jdkHttpClient") HttpClient httpClient) {
         this.httpClient = httpClient;
     }
 

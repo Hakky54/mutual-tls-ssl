@@ -23,6 +23,7 @@ Feature: Securing the connection between you and the world
       | Jersey HttpClient               |
       | Jetty Reactive HttpClient       |
       | Kohttp                          |
+      | Methanol                        |
       | OkHttp                          |
       | Old JDK HttpClient              |
       | Old Jersey HttpClient           |
