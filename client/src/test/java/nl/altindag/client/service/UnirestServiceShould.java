@@ -60,7 +60,7 @@ public class UnirestServiceShould {
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
 
         verify(httpClient, times(1)).execute(httpRequestBaseArgumentCaptor.capture());
-        assertThat(httpRequestBaseArgumentCaptor.getValue().getURI().toString()).isEqualTo(HTTP_URL);
+        assertThat(httpRequestBaseArgumentCaptor.getValue().getURI()).hasToString(HTTP_URL);
         assertThat(httpRequestBaseArgumentCaptor.getValue().getFirstHeader(HEADER_KEY_CLIENT_TYPE).getValue()).isEqualTo(UNIREST.getValue());
         assertThat(httpRequestBaseArgumentCaptor.getValue().getMethod()).isEqualTo(HttpMethod.GET.toString());
     }

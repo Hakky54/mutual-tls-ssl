@@ -52,8 +52,9 @@ public class HelloStepDefsShould {
 
         List<String> logs = logCaptor.getDebugLogs();
 
-        assertThat(logs).hasSize(1);
-        assertThat(logs).containsExactly("Assuming the server is up and running");
+        assertThat(logs)
+                .hasSize(1)
+                .contains("Assuming the server is up and running");
     }
 
     @Test
@@ -129,8 +130,9 @@ public class HelloStepDefsShould {
         victim.iDisplayTheTimeItTookToGetTheMessage();
 
         List<String> logs = logCaptor.getInfoLogs();
-        assertThat(logs).hasSize(1);
-        assertThat(logs).containsExactly("Executed request within 134 milliseconds");
+        assertThat(logs)
+                .hasSize(1)
+                .contains("Executed request within 134 milliseconds");
 
         verify(testScenario, times(1)).getExecutionTimeInMilliSeconds();
     }

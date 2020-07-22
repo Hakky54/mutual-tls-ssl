@@ -58,7 +58,7 @@ public class ApacheHttpClientServiceShould {
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
 
         verify(httpClient, times(1)).execute(httpGetArgumentCaptor.capture());
-        assertThat(httpGetArgumentCaptor.getValue().getURI().toString()).isEqualTo(HTTP_URL);
+        assertThat(httpGetArgumentCaptor.getValue().getURI()).hasToString(HTTP_URL);
         assertThat(httpGetArgumentCaptor.getValue().getMethod()).isEqualTo(GET_METHOD);
         assertThat(httpGetArgumentCaptor.getValue().getAllHeaders()).hasSize(1);
         assertThat(httpGetArgumentCaptor.getValue().getFirstHeader(HEADER_KEY_CLIENT_TYPE).getValue()).isEqualTo(APACHE_HTTP_CLIENT.getValue());

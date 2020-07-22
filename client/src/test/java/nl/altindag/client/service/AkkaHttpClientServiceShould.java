@@ -56,7 +56,7 @@ public class AkkaHttpClientServiceShould {
         verify(akkaHttpClient, times(1)).singleRequest(httpRequestArgumentCaptor.capture());
         assertThat(httpRequestArgumentCaptor.getValue().method().value()).isEqualTo("GET");
         assertThat(httpRequestArgumentCaptor.getValue().getHeaders()).containsExactly(HttpHeader.parse(TestConstants.HEADER_KEY_CLIENT_TYPE, AKKA_HTTP_CLIENT.getValue()));
-        assertThat(httpRequestArgumentCaptor.getValue().getUri().toString()).isEqualTo(HTTP_URL);
+        assertThat(httpRequestArgumentCaptor.getValue().getUri()).hasToString(HTTP_URL);
     }
 
 }

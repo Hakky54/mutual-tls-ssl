@@ -63,8 +63,8 @@ public class GoogleHttpClientServiceShould {
         assertThat(httpHeadersArgumentCaptor.getValue().get(HEADER_KEY_CLIENT_TYPE)).isEqualTo(GOOGLE_HTTP_CLIENT.getValue());
 
         verify(httpRequestFactory, times(1)).buildGetRequest(genericUrlArgumentCaptor.capture());
-        assertThat(genericUrlArgumentCaptor.getValue().toString()).isEqualTo(HTTP_URL);
-        assertThat(genericUrlArgumentCaptor.getValue().toString()).isEqualTo(HTTP_URL);
+        assertThat(genericUrlArgumentCaptor.getValue()).hasToString(HTTP_URL);
+        assertThat(genericUrlArgumentCaptor.getValue()).hasToString(HTTP_URL);
     }
 
 }

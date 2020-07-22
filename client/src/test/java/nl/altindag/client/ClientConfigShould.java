@@ -288,7 +288,7 @@ public class ClientConfigShould {
         Service<Request, Response> service = victim.finagle(null);
 
         assertThat(service.isAvailable()).isTrue();
-        assertThat(service.status().toString()).isEqualTo("Open");
+        assertThat(service.status()).hasToString("Open");
 
         service.close();
     }
@@ -302,7 +302,7 @@ public class ClientConfigShould {
         verify(sslFactory, times(1)).getSslContext();
 
         assertThat(service.isAvailable()).isTrue();
-        assertThat(service.status().toString()).isEqualTo("Open");
+        assertThat(service.status()).hasToString("Open");
 
         service.close();
     }

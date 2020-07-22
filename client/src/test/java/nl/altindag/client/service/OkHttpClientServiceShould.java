@@ -53,7 +53,7 @@ public class OkHttpClientServiceShould {
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
 
         verify(okHttpClient, times(1)).newCall(requestArgumentCaptor.capture());
-        assertThat(requestArgumentCaptor.getValue().url().toString()).isEqualTo(HTTP_URL);
+        assertThat(requestArgumentCaptor.getValue().url()).hasToString(HTTP_URL);
         assertThat(requestArgumentCaptor.getValue().method()).isEqualTo(GET_METHOD);
         assertThat(requestArgumentCaptor.getValue().headers()).hasSize(1);
         assertThat(requestArgumentCaptor.getValue().header(HEADER_KEY_CLIENT_TYPE)).isEqualTo(OK_HTTP.getValue());

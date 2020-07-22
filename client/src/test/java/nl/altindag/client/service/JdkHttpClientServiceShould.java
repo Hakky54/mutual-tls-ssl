@@ -50,7 +50,7 @@ public class JdkHttpClientServiceShould {
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
 
         verify(httpClient, times(1)).send(httpRequestArgumentCaptor.capture(), bodyHandlerArgumentCaptor.capture());
-        assertThat(httpRequestArgumentCaptor.getValue().uri().toString()).isEqualTo(HTTP_URL);
+        assertThat(httpRequestArgumentCaptor.getValue().uri()).hasToString(HTTP_URL);
         assertThat(httpRequestArgumentCaptor.getValue().method()).isEqualTo(GET_METHOD);
         assertThat(httpRequestArgumentCaptor.getValue().headers().map()).containsExactly(Assertions.entry(HEADER_KEY_CLIENT_TYPE, Collections.singletonList(JDK_HTTP_CLIENT.getValue())));
         assertThat(bodyHandlerArgumentCaptor.getValue()).isEqualTo(HttpResponse.BodyHandlers.ofString());
