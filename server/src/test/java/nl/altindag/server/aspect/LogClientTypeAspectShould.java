@@ -16,7 +16,7 @@ public class LogClientTypeAspectShould {
 
     @Test
     public void logClientTypeIfPresent() {
-        LogCaptor<LogClientTypeAspect> logCaptor = LogCaptor.forClass(LogClientTypeAspect.class);
+        LogCaptor logCaptor = LogCaptor.forClass(LogClientTypeAspect.class);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader("client-type", "okhttp");
@@ -30,7 +30,7 @@ public class LogClientTypeAspectShould {
 
     @Test
     public void notLogClientTypeIfAbsent() {
-        LogCaptor<LogClientTypeAspect> logCaptor = LogCaptor.forClass(LogClientTypeAspect.class);
+        LogCaptor logCaptor = LogCaptor.forClass(LogClientTypeAspect.class);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));

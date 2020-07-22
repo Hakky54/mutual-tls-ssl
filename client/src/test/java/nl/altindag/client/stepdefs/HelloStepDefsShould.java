@@ -46,7 +46,7 @@ public class HelloStepDefsShould {
 
     @Test
     public void logDebugMessageWhenCallingServerIsAlive() {
-        LogCaptor<HelloStepDefs> logCaptor = LogCaptor.forClass(HelloStepDefs.class);
+        LogCaptor logCaptor = LogCaptor.forClass(HelloStepDefs.class);
 
         victim.serverIsAlive();
 
@@ -58,7 +58,7 @@ public class HelloStepDefsShould {
 
     @Test
     public void notLogDebugMessageWhenLogLevelIsInfoWhileCallingServerIsAlive() {
-        LogCaptor<HelloStepDefs> logCaptor = LogCaptor.forClass(HelloStepDefs.class);
+        LogCaptor logCaptor = LogCaptor.forClass(HelloStepDefs.class);
         logCaptor.setLogLevelToInfo();
 
         victim.serverIsAlive();
@@ -122,7 +122,7 @@ public class HelloStepDefsShould {
 
     @Test
     public void iDisplayTheTimeItTookToGetTheMessage() {
-        LogCaptor<HelloStepDefs> logCaptor = LogCaptor.forClass(HelloStepDefs.class);
+        LogCaptor logCaptor = LogCaptor.forClass(HelloStepDefs.class);
 
         when(testScenario.getExecutionTimeInMilliSeconds()).thenReturn(134L);
 

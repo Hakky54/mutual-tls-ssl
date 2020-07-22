@@ -55,7 +55,7 @@
         <version.cats>2.1.1</version.cats>
         <version.jackson-module-scala>2.11.1</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
-        <version.logcaptor>2.0.1</version.logcaptor>
+        <version.logcaptor>2.1.0</version.logcaptor>
         <version.byte-buddy>1.10.13</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
         <version.scalatest>3.1.2</version.scalatest>

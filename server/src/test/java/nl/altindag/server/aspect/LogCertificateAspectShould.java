@@ -24,7 +24,7 @@ public class LogCertificateAspectShould {
 
     @Test
     public void logDetailedClientCertificate() {
-        LogCaptor<LogCertificateAspect> logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
+        LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
 
         X509Certificate x509Certificate = mock(X509Certificate.class);
         X509Certificate[] x509Certificates = new X509Certificate[]{x509Certificate};
@@ -44,7 +44,7 @@ public class LogCertificateAspectShould {
 
     @Test
     public void logLessDetailedClientCertificate() {
-        LogCaptor<LogCertificateAspect> logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
+        LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
 
         X509Certificate x509Certificate = mock(X509Certificate.class);
         X509Certificate[] x509Certificates = new X509Certificate[]{x509Certificate};
@@ -66,7 +66,7 @@ public class LogCertificateAspectShould {
 
     @Test
     public void notLogCertificateWhenNotPresent() {
-        LogCaptor<LogCertificateAspect> logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
+        LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));

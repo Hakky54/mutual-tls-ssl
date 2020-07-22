@@ -14,7 +14,7 @@ public class PropertyResolverShould {
     @Test
     @SuppressWarnings("AccessStaticViaInstance")
     public void loadProperties() {
-        LogCaptor<YamlPropertiesFactoryBean> logCaptor = LogCaptor.forClass(YamlPropertiesFactoryBean.class);
+        LogCaptor logCaptor = LogCaptor.forClass(YamlPropertiesFactoryBean.class);
         PropertySourcesPlaceholderConfigurer properties = new PropertyResolver().properties();
 
         assertThat(properties).isNotNull();
