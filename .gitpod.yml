@@ -1,2 +1,2 @@
 tasks:
-  - init: mvn clean verify
+  - init: mvn install
