@@ -128,7 +128,7 @@ Date: Sun, 11 Nov 2018 14:21:50 GMT
 Hello
 ```
 
-You can also call the server with the provided client in the client directory. The client depends on the other components of the project, so run `mvn compile` in the root directory first.
+You can also call the server with the provided client in the client directory. The client depends on the other components of the project, so run `mvn install` in the root directory first.
 
 The client is an integration test based on Cucumber, and you can start it by running the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class from your IDE or by running the following command from the terminal in the root directory `cd client/ && mvn exec:java` or with the maven wrapper `cd client/ && ./../mvnw exec:java`. 
 
