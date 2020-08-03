@@ -40,10 +40,10 @@ public class App {
 
     private static HttpServer startServer(ApplicationProperty applicationProperty) {
         ResourceConfig resourceConfig = new ResourceConfig().packages(HelloWorldController.class.getPackageName());
-        String baseUrl = String.format("http://localhost:%s/api", applicationProperty.getServerHttpPort());
+        String baseUrl = String.format("http://localhost:%s/api", applicationProperty.getServerPort());
 
         if (applicationProperty.isSslEnabled()) {
-            baseUrl = String.format("https://localhost:%s/api", applicationProperty.getServerHttpsPort());
+            baseUrl = String.format("https://localhost:%s/api", applicationProperty.getServerPort());
             SSLFactory sslFactory = createSSLFactory(applicationProperty);
 
             SSLEngineConfigurator sslEngineConfigurator = new SSLEngineConfigurator(
@@ -66,7 +66,7 @@ public class App {
         }
 
         if (nonNull(applicationProperty.getTruststorePath())) {
-            sslFactoryBuilder.withIdentityMaterial(applicationProperty.getTruststorePath(), applicationProperty.getTruststorePassword());
+            sslFactoryBuilder.withTrustMaterial(applicationProperty.getTruststorePath(), applicationProperty.getTruststorePassword());
         }
 
         return sslFactoryBuilder.build();

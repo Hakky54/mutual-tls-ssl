@@ -2,8 +2,7 @@ package nl.altindag.server.model;
 
 public class ApplicationProperty {
 
-    private String serverHttpPort;
-    private String serverHttpsPort;
+    private String serverPort;
     private boolean sslEnabled;
     private boolean sslClientAuth;
     private String keystorePath;
@@ -11,12 +10,8 @@ public class ApplicationProperty {
     private String truststorePath;
     private char[] truststorePassword;
 
-    public void setServerHttpPort(String serverHttpPort) {
-        this.serverHttpPort = serverHttpPort;
-    }
-
-    public void setServerHttpsPort(String serverHttpsPort) {
-        this.serverHttpsPort = serverHttpsPort;
+    public void setServerPort(String serverPort) {
+        this.serverPort = serverPort;
     }
 
     public void setSslEnabled(boolean sslEnabled) {
@@ -43,12 +38,8 @@ public class ApplicationProperty {
         this.truststorePassword = truststorePassword;
     }
 
-    public String getServerHttpPort() {
-        return serverHttpPort;
-    }
-
-    public String getServerHttpsPort() {
-        return serverHttpsPort;
+    public String getServerPort() {
+        return serverPort;
     }
 
     public boolean isSslEnabled() {

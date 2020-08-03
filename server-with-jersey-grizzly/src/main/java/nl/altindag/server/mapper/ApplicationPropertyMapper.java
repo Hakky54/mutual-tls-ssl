@@ -18,7 +18,7 @@ public class ApplicationPropertyMapper {
 
     public static ApplicationProperty apply(Properties properties) {
         ApplicationProperty applicationProperty = new ApplicationProperty();
-        applicationProperty.setServerHttpPort(properties.getProperty(SERVER_PORT));
+        applicationProperty.setServerPort(properties.getProperty(SERVER_PORT));
         applicationProperty.setSslEnabled(Boolean.parseBoolean(properties.getProperty(SSL_ENABLED, Boolean.FALSE.toString())));
         applicationProperty.setSslClientAuth(Boolean.parseBoolean(properties.getProperty(SSL_CLIENT_AUTH, Boolean.FALSE.toString())));
         applicationProperty.setKeystorePath(properties.getProperty(KEYSTORE_PATH));
