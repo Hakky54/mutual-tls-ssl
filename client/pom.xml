@@ -181,7 +181,7 @@
 
         <dependency>
             <groupId>nl.altindag</groupId>
-            <artifactId>server</artifactId>
+            <artifactId>server-with-spring-boot</artifactId>
             <version>${project.version}</version>
         </dependency>
 
