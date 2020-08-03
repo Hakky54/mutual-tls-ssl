@@ -260,7 +260,7 @@
                             <goal>start</goal>
                         </goals>
                         <configuration>
-                            <classesDirectory>../server/target/classes</classesDirectory>
+                            <classesDirectory>../server-with-spring-boot/target/classes</classesDirectory>
                         </configuration>
                     </execution>
                     <execution>

@@ -54,7 +54,7 @@ class KohttpClientConfig {
             client {
                 sslConfig = SslConfig().apply {
                     sslSocketFactory = factory.sslContext.socketFactory
-                    trustManager = factory.trustManager
+                    trustManager = factory.trustManager.orElseThrow()
                     hostnameVerifier = factory.hostnameVerifier
                 }
             }
