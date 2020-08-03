@@ -35,8 +35,8 @@
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <version.okhttp>4.8.0</version.okhttp>
         <version.jetty-reactive-httpclient>1.1.4</version.jetty-reactive-httpclient>
-        <version.org.glassfish.jersey.inject>2.31</version.org.glassfish.jersey.inject>
-        <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
+        <version.jersey1>1.19.4</version.jersey1>
+        <version.jersey2>2.31</version.jersey2>
         <version.google.http.client>1.36.0</version.google.http.client>
         <version.unirest>3.8.06</version.unirest>
         <version.retrofit>2.9.0</version.retrofit>
@@ -123,17 +123,17 @@
             <dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
                 <artifactId>jersey-client</artifactId>
-                <version>${version.org.glassfish.jersey.inject}</version>
+                <version>${version.jersey2}</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.jersey.inject</groupId>
                 <artifactId>jersey-hk2</artifactId>
-                <version>${version.org.glassfish.jersey.inject}</version>
+                <version>${version.jersey2}</version>
             </dependency>
             <dependency>
                 <groupId>com.sun.jersey</groupId>
                 <artifactId>jersey-client</artifactId>
-                <version>${version.com.sun.jersey}</version>
+                <version>${version.jersey1}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.http-client</groupId>
@@ -229,6 +229,15 @@
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-core</artifactId>
                 <version>${version.feign}</version>
+            </dependency>
+
+            <!--     Servers       -->
+            <dependency>
+                <groupId>org.glassfish.jersey</groupId>
+                <artifactId>jersey-bom</artifactId>
+                <version>${version.jersey2}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <!--     Apache Utils       -->
