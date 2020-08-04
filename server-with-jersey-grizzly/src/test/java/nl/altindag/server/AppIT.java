@@ -39,7 +39,11 @@ class AppIT {
 
         assertThat(httpResponse.body()).isEqualTo("Hello");
         assertThat(httpResponse.statusCode()).isEqualTo(200);
-        assertThat(logCaptor.getInfoLogs()).containsExactly("Loading the following application properties: [application-without-authentication.properties]");
+        assertThat(logCaptor.getDebugLogs()).containsExactly(
+                "Loading the following application properties: [ApplicationProperty{" +
+                        "serverPort='8080', sslEnabled=false, sslClientAuth=false, keystorePath='null', " +
+                        "keystorePassword=[], truststorePath='null', truststorePassword=[]}]"
+        );
 
         cleanUp();
     }
@@ -69,7 +73,12 @@ class AppIT {
 
         assertThat(httpResponse.body()).isEqualTo("Hello");
         assertThat(httpResponse.statusCode()).isEqualTo(200);
-        assertThat(logCaptor.getInfoLogs()).containsExactly("Loading the following application properties: [application-one-way-authentication.properties]");
+        assertThat(logCaptor.getDebugLogs()).containsExactly(
+                "Loading the following application properties: [ApplicationProperty{" +
+                        "serverPort='8443', sslEnabled=true, sslClientAuth=false, keystorePath='identity.jks', " +
+                        "keystorePassword=[s, e, c, r, e, t], truststorePath='null', truststorePassword=[]}]"
+        );
+
         assertThat(compositeTrustManagerLogCaptor.getDebugLogs()).containsExactly("Received the following server certificate: [CN=Hakan, OU=Amsterdam, O=Thunderberry, C=NL]");
         assertThat(unsafeTrustManagerLogCaptor.getDebugLogs()).containsExactly("Accepting a server certificate: [CN=Hakan, OU=Amsterdam, O=Thunderberry, C=NL]");
     }
@@ -99,7 +108,12 @@ class AppIT {
 
         assertThat(httpResponse.body()).isEqualTo("Hello");
         assertThat(httpResponse.statusCode()).isEqualTo(200);
-        assertThat(logCaptor.getInfoLogs()).containsExactly("Loading the following application properties: [application-two-way-authentication.properties]");
+        assertThat(logCaptor.getDebugLogs()).containsExactly(
+                "Loading the following application properties: [ApplicationProperty{serverPort='8443', " +
+                        "sslEnabled=true, sslClientAuth=true, keystorePath='identity.jks', keystorePassword=[s, e, c, r, e, t], " +
+                        "truststorePath='truststore.jks', truststorePassword=[s, e, c, r, e, t]}]"
+        );
+
         assertThat(compositeTrustManagerLogCaptor.getDebugLogs())
                 .containsExactly(
                         "Received the following server certificate: [CN=Hakan, OU=Amsterdam, O=Thunderberry, C=NL]",

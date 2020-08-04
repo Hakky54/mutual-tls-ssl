@@ -27,23 +27,22 @@ public final class App {
     private static final String APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION = "application-without-authentication.properties";
     private static final String APPLICATION_PROPERTIES_WITH_ONE_WAY_AUTHENTICATION = "application-one-way-authentication.properties";
     private static final String APPLICATION_PROPERTIES_WITH_TWO_WAY_AUTHENTICATION = "application-two-way-authentication.properties";
-    private static String defaultProperties;
 
     private static HttpServer httpServer = null;
 
     private App() {}
 
     public static void main(String[] args) throws IOException {
-        defaultProperties = System.getProperty("properties", APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION);
+        String defaultPropertiesPath = System.getProperty("properties", APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION);
 
-        ApplicationProperty applicationProperty = readApplicationProperties();
+        ApplicationProperty applicationProperty = readApplicationProperties(defaultPropertiesPath);
         httpServer = startServer(applicationProperty);
     }
 
-    private static ApplicationProperty readApplicationProperties() throws IOException {
+    private static ApplicationProperty readApplicationProperties(String propertyPath) throws IOException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Properties properties = new Properties();
-        try (InputStream inputStream = classLoader.getResourceAsStream(defaultProperties)) {
+        try (InputStream inputStream = classLoader.getResourceAsStream(propertyPath)) {
             properties.load(inputStream);
         }
         return ApplicationPropertyMapper.apply(properties);
@@ -57,7 +56,7 @@ public final class App {
     }
 
     private static HttpServer startServer(ApplicationProperty applicationProperty) {
-        LOGGER.info("Loading the following application properties: [{}]", defaultProperties);
+        LOGGER.debug("Loading the following application properties: [{}]", applicationProperty);
 
         ResourceConfig resourceConfig = new ResourceConfig().packages(HelloWorldController.class.getPackageName());
         String baseUrl = String.format("http://localhost:%s/api", applicationProperty.getServerPort());

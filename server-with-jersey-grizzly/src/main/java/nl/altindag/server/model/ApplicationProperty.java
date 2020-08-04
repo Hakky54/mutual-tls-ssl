@@ -1,5 +1,7 @@
 package nl.altindag.server.model;
 
+import java.util.Arrays;
+
 public class ApplicationProperty {
 
     private String serverPort;
@@ -65,4 +67,18 @@ public class ApplicationProperty {
     public char[] getTruststorePassword() {
         return truststorePassword;
     }
+
+    @Override
+    public String toString() {
+        return "ApplicationProperty{" +
+                "serverPort='" + serverPort + '\'' +
+                ", sslEnabled=" + sslEnabled +
+                ", sslClientAuth=" + sslClientAuth +
+                ", keystorePath='" + keystorePath + '\'' +
+                ", keystorePassword=" + Arrays.toString(keystorePassword) +
+                ", truststorePath='" + truststorePath + '\'' +
+                ", truststorePassword=" + Arrays.toString(truststorePassword) +
+                '}';
+    }
+
 }
