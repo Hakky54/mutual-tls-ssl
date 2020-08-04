@@ -98,7 +98,7 @@ public class ClientConfigShould {
 
         assertThat(okHttpClient).isNotNull();
         verify(sslFactory, times(1)).getSslContext();
-        verify(sslFactory, times(2)).getTrustManager();
+        verify(sslFactory, times(1)).getTrustManager();
         verify(sslFactory, times(1)).getHostnameVerifier();
 
         assertThat(sslFactory.getTrustManager()).isPresent();

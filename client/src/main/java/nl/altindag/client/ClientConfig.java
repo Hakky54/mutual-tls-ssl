@@ -88,9 +88,9 @@ public class ClientConfig {
     @Bean
     @Scope("prototype")
     public OkHttpClient okHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory) && sslFactory.getTrustManager().isPresent()) {
+        if (nonNull(sslFactory)) {
             return new OkHttpClient.Builder()
-                    .sslSocketFactory(sslFactory.getSslContext().getSocketFactory(), sslFactory.getTrustManager().get())
+                    .sslSocketFactory(sslFactory.getSslContext().getSocketFactory(), sslFactory.getTrustManager().orElseThrow())
                     .hostnameVerifier(sslFactory.getHostnameVerifier())
                     .build();
         } else {

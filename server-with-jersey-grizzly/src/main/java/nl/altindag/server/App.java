@@ -79,10 +79,8 @@ public final class App {
     }
 
     private static SSLFactory createSSLFactory(ApplicationProperty applicationProperty) {
-        SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder();
-        if (nonNull(applicationProperty.getKeystorePath())) {
-            sslFactoryBuilder.withIdentityMaterial(applicationProperty.getKeystorePath(), applicationProperty.getKeystorePassword());
-        }
+        SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder()
+                .withIdentityMaterial(applicationProperty.getKeystorePath(), applicationProperty.getKeystorePassword());
 
         if (nonNull(applicationProperty.getTruststorePath())) {
             sslFactoryBuilder.withTrustMaterial(applicationProperty.getTruststorePath(), applicationProperty.getTruststorePassword());

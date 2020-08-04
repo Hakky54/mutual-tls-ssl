@@ -12,6 +12,10 @@
     <artifactId>server-with-spring-boot</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <sonar.exclusions>**nl/altindag/server/App.java</sonar.exclusions>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>nl.altindag</groupId>
