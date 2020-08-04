@@ -13,7 +13,7 @@ Run one of these commands to run the scripts:
 
 ### Starting the server
 1. Initially run `mvn clean install` from the root directory
-2. Either start the with `mvn exec:java`, `java -jar target/server.jar` or by running the main method within your IDE from the [App](src/main/java/nl/altindag/server/App.java)
+2. Either start the server with `mvn exec:java`, `java -jar target/server.jar` or by running the main method within your IDE from the [App class](src/main/java/nl/altindag/server/App.java)
 
 ### Loading the correct application properties
 The server has three predefined application properties which can be used straight away for the following use cases:
