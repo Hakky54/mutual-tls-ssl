@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>nl.altindag</groupId>
-            <artifactId>server-shared-resources</artifactId>
+            <artifactId>shared-server-resources</artifactId>
             <version>${project.version}</version>
         </dependency>
 

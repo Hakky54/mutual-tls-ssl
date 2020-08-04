@@ -10,7 +10,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>server-shared-resources</artifactId>
+    <artifactId>shared-server-resources</artifactId>
     <packaging>jar</packaging>
 
 </project>

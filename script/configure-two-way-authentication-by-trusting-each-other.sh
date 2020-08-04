@@ -15,14 +15,14 @@ cleanUpExistingCertificatesAndKeystores() {
     rm -fv root-ca/root-ca.p12
     rm -fv root-ca/root-ca.pem
     rm -fv root-ca/root-ca.srl
-    rm -fv server-shared-resources/src/main/resources/identity.jks
-    rm -fv server-shared-resources/src/main/resources/server.cer
-    rm -fv server-shared-resources/src/main/resources/server.csr
-    rm -fv server-shared-resources/src/main/resources/server.p12
-    rm -fv server-shared-resources/src/main/resources/server-private.key
-    rm -fv server-shared-resources/src/main/resources/server-signed.cer
-    rm -fv server-shared-resources/src/main/resources/server-signed.p12
-    rm -fv server-shared-resources/src/main/resources/truststore.jks
+    rm -fv shared-server-resources/src/main/resources/identity.jks
+    rm -fv shared-server-resources/src/main/resources/server.cer
+    rm -fv shared-server-resources/src/main/resources/server.csr
+    rm -fv shared-server-resources/src/main/resources/server.p12
+    rm -fv shared-server-resources/src/main/resources/server-private.key
+    rm -fv shared-server-resources/src/main/resources/server-signed.cer
+    rm -fv shared-server-resources/src/main/resources/server-signed.p12
+    rm -fv shared-server-resources/src/main/resources/truststore.jks
 
     echo 'Finished cleanup'
 }
@@ -30,12 +30,12 @@ cleanUpExistingCertificatesAndKeystores() {
 createCertificates() {
     echo 'Starting to create certificates...'
 
-    keytool -genkeypair -keyalg RSA -keysize 2048 -alias server -dname "CN=Hakan,OU=Amsterdam,O=Thunderberry,C=NL" -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -validity 3650 -keystore server-shared-resources/src/main/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
+    keytool -genkeypair -keyalg RSA -keysize 2048 -alias server -dname "CN=Hakan,OU=Amsterdam,O=Thunderberry,C=NL" -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -validity 3650 -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
     keytool -genkeypair -keyalg RSA -keysize 2048 -alias client -dname "CN=$1,OU=Altindag,O=Altindag,C=NL" -validity 3650 -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
     keytool -exportcert -keystore client/src/test/resources/identity.jks -storepass secret -alias client -rfc -file client/src/test/resources/client.cer
-    keytool -exportcert -keystore server-shared-resources/src/main/resources/identity.jks -storepass secret -alias server -rfc -file server-shared-resources/src/main/resources/server.cer
-    keytool -keystore client/src/test/resources/truststore.jks -importcert -file server-shared-resources/src/main/resources/server.cer -alias server -storepass secret -noprompt
-    keytool -keystore server-shared-resources/src/main/resources/truststore.jks -importcert -file client/src/test/resources/client.cer -alias client -storepass secret -noprompt
+    keytool -exportcert -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -alias server -rfc -file shared-server-resources/src/main/resources/server.cer
+    keytool -keystore client/src/test/resources/truststore.jks -importcert -file shared-server-resources/src/main/resources/server.cer -alias server -storepass secret -noprompt
+    keytool -keystore shared-server-resources/src/main/resources/truststore.jks -importcert -file client/src/test/resources/client.cer -alias client -storepass secret -noprompt
 }
 
 configureApplicationProperties() {
