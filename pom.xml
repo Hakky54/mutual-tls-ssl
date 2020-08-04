@@ -10,8 +10,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>server</module>
         <module>client</module>
+        <module>server-with-spring-boot</module>
+        <module>server-with-jersey-grizzly</module>
+        <module>server-shared-resources</module>
     </modules>
 
     <properties>
@@ -19,8 +21,9 @@
         <version.scala>2.12</version.scala>
         <version.scala-compiler>2.12.12</version.scala-compiler>
         <version.kotlin>1.3.72</version.kotlin>
-        <version.sslcontext-kickstart>4.0.0</version.sslcontext-kickstart>
+        <version.sslcontext-kickstart>5.0.0</version.sslcontext-kickstart>
         <version.spring>2.3.1.RELEASE</version.spring>
+        <version.slf4j>1.7.30</version.slf4j>
         <version.apache.httpclient>4.5.12</version.apache.httpclient>
         <version.cucumber>6.3.0</version.cucumber>
         <version.junit>4.13</version.junit>
@@ -33,8 +36,8 @@
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <version.okhttp>4.8.0</version.okhttp>
         <version.jetty-reactive-httpclient>1.1.4</version.jetty-reactive-httpclient>
-        <version.org.glassfish.jersey.inject>2.31</version.org.glassfish.jersey.inject>
-        <version.com.sun.jersey>1.19.4</version.com.sun.jersey>
+        <version.jersey1>1.19.4</version.jersey1>
+        <version.jersey2>2.31</version.jersey2>
         <version.google.http.client>1.36.0</version.google.http.client>
         <version.unirest>3.8.06</version.unirest>
         <version.retrofit>2.9.0</version.retrofit>
@@ -55,6 +58,8 @@
         <version.cats>2.1.1</version.cats>
         <version.jackson-module-scala>2.11.1</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
+        <version.junit-jupiter>5.6.2</version.junit-jupiter>
+        <version.assertj-core>3.16.1</version.assertj-core>
         <version.logcaptor>2.1.0</version.logcaptor>
         <version.byte-buddy>1.10.13</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
@@ -121,17 +126,12 @@
             <dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
                 <artifactId>jersey-client</artifactId>
-                <version>${version.org.glassfish.jersey.inject}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.jersey.inject</groupId>
-                <artifactId>jersey-hk2</artifactId>
-                <version>${version.org.glassfish.jersey.inject}</version>
+                <version>${version.jersey2}</version>
             </dependency>
             <dependency>
                 <groupId>com.sun.jersey</groupId>
                 <artifactId>jersey-client</artifactId>
-                <version>${version.com.sun.jersey}</version>
+                <version>${version.jersey1}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.http-client</groupId>
@@ -229,6 +229,15 @@
                 <version>${version.feign}</version>
             </dependency>
 
+            <!--     Servers       -->
+            <dependency>
+                <groupId>org.glassfish.jersey</groupId>
+                <artifactId>jersey-bom</artifactId>
+                <version>${version.jersey2}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!--     Apache Utils       -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -270,11 +279,41 @@
                 <version>${version.cats}</version>
             </dependency>
 
+            <!--     Logging libraries       -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${version.slf4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${version.slf4j}</version>
+            </dependency>
+
             <!--     Testing libraries       -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${version.spring}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${version.junit-jupiter}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${version.junit-jupiter}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${version.assertj-core}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>io.cucumber</groupId>
@@ -418,13 +457,29 @@
                     <version>${version.jacoco-maven-plugin}</version>
                     <executions>
                         <execution>
+                            <id>pre-unit-test</id>
                             <goals>
                                 <goal>prepare-agent</goal>
                             </goals>
                         </execution>
                         <execution>
-                            <id>report</id>
+                            <id>unit-test-report</id>
                             <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>pre-integration-test</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>integration-testreport</id>
+                            <phase>post-integration-test</phase>
                             <goals>
                                 <goal>report</goal>
                             </goals>

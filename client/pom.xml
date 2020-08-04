@@ -128,6 +128,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
         </dependency>
@@ -181,7 +186,7 @@
 
         <dependency>
             <groupId>nl.altindag</groupId>
-            <artifactId>server</artifactId>
+            <artifactId>server-with-spring-boot</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -260,7 +265,7 @@
                             <goal>start</goal>
                         </goals>
                         <configuration>
-                            <classesDirectory>../server/target/classes</classesDirectory>
+                            <classesDirectory>../server-with-spring-boot/target/classes</classesDirectory>
                         </configuration>
                     </execution>
                     <execution>

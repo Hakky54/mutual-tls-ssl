@@ -4,8 +4,8 @@ cleanUpExistingCertificatesAndKeystores() {
     echo 'Cleaning up existing certificates and keystores'
 
     rm -fv client/src/test/resources/truststore.jks
-    rm -fv server/src/main/resources/identity.jks
-    rm -fv server/src/main/resources/server.cer
+    rm -fv server-shared-resources/src/main/resources/identity.jks
+    rm -fv server-shared-resources/src/main/resources/server.cer
 
     echo 'Finished cleanup'
 }
@@ -13,16 +13,16 @@ cleanUpExistingCertificatesAndKeystores() {
 createCertificates() {
     echo 'Starting to create certificates...'
 
-    keytool -genkeypair -keyalg RSA -keysize 2048 -alias server -dname "CN=Hakan,OU=Amsterdam,O=Thunderberry,C=NL" -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -validity 3650 -keystore server/src/main/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
-    keytool -exportcert -keystore server/src/main/resources/identity.jks -storepass secret -alias server -rfc -file server/src/main/resources/server.cer
-    keytool -keystore client/src/test/resources/truststore.jks -importcert -file server/src/main/resources/server.cer -alias server -storepass secret -noprompt
+    keytool -genkeypair -keyalg RSA -keysize 2048 -alias server -dname "CN=Hakan,OU=Amsterdam,O=Thunderberry,C=NL" -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -validity 3650 -keystore server-shared-resources/src/main/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
+    keytool -exportcert -keystore server-shared-resources/src/main/resources/identity.jks -storepass secret -alias server -rfc -file server-shared-resources/src/main/resources/server.cer
+    keytool -keystore client/src/test/resources/truststore.jks -importcert -file server-shared-resources/src/main/resources/server.cer -alias server -storepass secret -noprompt
 }
 
 configureApplicationProperties() {
     echo
     echo 'Configuring application properties of the server'
-    rm server/src/main/resources/application.yml
-    echo -e 'spring:\n  banner:\n    location: classpath:banner.txt\n\nserver:\n  port: 8443\n  ssl:\n    enabled: true\n    key-store: classpath:identity.jks\n    key-password: secret\n    key-store-password: secret'  >> server/src/main/resources/application.yml
+    rm server-with-spring-boot/src/main/resources/application.yml
+    echo -e 'spring:\n  banner:\n    location: classpath:banner.txt\n\nserver:\n  port: 8443\n  ssl:\n    enabled: true\n    key-store: classpath:identity.jks\n    key-password: secret\n    key-store-password: secret'  >> server-with-spring-boot/src/main/resources/application.yml
 
     echo 'Configuring application properties of the client'
     rm client/src/test/resources/application.yml
