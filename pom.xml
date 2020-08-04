@@ -457,13 +457,29 @@
                     <version>${version.jacoco-maven-plugin}</version>
                     <executions>
                         <execution>
+                            <id>pre-unit-test</id>
                             <goals>
                                 <goal>prepare-agent</goal>
                             </goals>
                         </execution>
                         <execution>
-                            <id>report</id>
+                            <id>unit-test-report</id>
                             <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>pre-integration-test</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>integration-testreport</id>
+                            <phase>post-integration-test</phase>
                             <goals>
                                 <goal>report</goal>
                             </goals>

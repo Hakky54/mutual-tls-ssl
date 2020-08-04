@@ -7,7 +7,7 @@ import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HelloWorldControllerShould {
+class HelloWorldControllerShould {
 
     private static HelloWorldController victim;
 

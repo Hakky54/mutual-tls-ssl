@@ -15,7 +15,7 @@ import java.net.http.HttpResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AppIT {
+class AppIT {
 
     private final LogCaptor logCaptor = LogCaptor.forClass(App.class);
 
