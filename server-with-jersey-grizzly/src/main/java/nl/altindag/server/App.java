@@ -8,6 +8,8 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,10 +21,12 @@ import static java.util.Objects.nonNull;
 @SuppressWarnings("unused")
 public class App {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+
     private static final String APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION = "application-without-authentication.properties";
     private static final String APPLICATION_PROPERTIES_WITH_ONE_WAY_AUTHENTICATION = "application-one-way-authentication.properties";
     private static final String APPLICATION_PROPERTIES_WITH_TWO_WAY_AUTHENTICATION = "application-two-way-authentication.properties";
-    private static final String DEFAULT_PROPERTIES = APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION;
+    private static final String DEFAULT_PROPERTIES = System.getProperty("properties", APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION);
 
     public static void main(String[] args) throws IOException {
         ApplicationProperty applicationProperty = readApplicationProperties();
@@ -39,6 +43,8 @@ public class App {
     }
 
     private static HttpServer startServer(ApplicationProperty applicationProperty) {
+        LOGGER.info("Loading the following application properties: [{}]", DEFAULT_PROPERTIES);
+
         ResourceConfig resourceConfig = new ResourceConfig().packages(HelloWorldController.class.getPackageName());
         String baseUrl = String.format("http://localhost:%s/api", applicationProperty.getServerPort());
 

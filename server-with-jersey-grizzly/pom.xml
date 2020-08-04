@@ -11,6 +11,10 @@
     <artifactId>server-with-jersey</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <main-class-server>nl.altindag.server.App</main-class-server>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>nl.altindag</groupId>
@@ -22,6 +26,7 @@
             <groupId>io.github.hakky54</groupId>
             <artifactId>sslcontext-kickstart</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-grizzly2-http</artifactId>
@@ -31,6 +36,31 @@
             <artifactId>jersey-hk2</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.hakky54</groupId>
+            <artifactId>logcaptor</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -47,9 +77,32 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>nl.altindag.server.App</mainClass>
+                    <mainClass>${version.maven-shade-plugin}</mainClass>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${version.maven-shade-plugin}</version>
+                <configuration>
+                    <finalName>server</finalName>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>${main-class-server}</mainClass>
+                        </transformer>
+                    </transformers>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
