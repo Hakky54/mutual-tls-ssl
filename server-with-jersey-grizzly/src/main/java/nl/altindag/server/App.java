@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.util.Objects;
 import java.util.Properties;
 
 import static java.util.Objects.nonNull;
@@ -26,11 +27,15 @@ public class App {
     private static final String APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION = "application-without-authentication.properties";
     private static final String APPLICATION_PROPERTIES_WITH_ONE_WAY_AUTHENTICATION = "application-one-way-authentication.properties";
     private static final String APPLICATION_PROPERTIES_WITH_TWO_WAY_AUTHENTICATION = "application-two-way-authentication.properties";
-    private static final String DEFAULT_PROPERTIES = System.getProperty("properties", APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION);
+    private static String DEFAULT_PROPERTIES;
+
+    private static HttpServer httpServer = null;
 
     public static void main(String[] args) throws IOException {
+        DEFAULT_PROPERTIES = System.getProperty("properties", APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION);
+
         ApplicationProperty applicationProperty = readApplicationProperties();
-        startServer(applicationProperty);
+        httpServer = startServer(applicationProperty);
     }
 
     private static ApplicationProperty readApplicationProperties() throws IOException {
@@ -40,6 +45,13 @@ public class App {
             properties.load(inputStream);
         }
         return ApplicationPropertyMapper.apply(properties);
+    }
+
+    static void stopServerIfRunning() {
+        if (Objects.nonNull(httpServer)) {
+            httpServer.shutdownNow();
+            httpServer = null;
+        }
     }
 
     private static HttpServer startServer(ApplicationProperty applicationProperty) {
