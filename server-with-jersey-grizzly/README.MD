@@ -26,3 +26,10 @@ These properties can be injected by using for example the following commands:
 java -Dproperties="application-one-way-authentication.properties" -jar target/server.jar
 ```
 or by running the main method from your IDE while adjusting the location of the properties.
+
+### Reloading keystores into executable jar
+Make sure to rebuild the project if you're using the jar to run the server and if you plan to adjusting the keystores within the shared server resources.
+Below is an example command to build with the minimum required maven commands:
+```
+mvn -pl shared-server-resources,server-with-jersey-grizzly install
+```
