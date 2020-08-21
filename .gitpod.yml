@@ -1,2 +1,3 @@
+image: adoptopenjdk/maven-openjdk11:latest
 tasks:
   - init: mvn install
