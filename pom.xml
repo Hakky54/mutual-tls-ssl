@@ -247,17 +247,7 @@
             </dependency>
             <dependency>
                 <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-cio</artifactId>
-                <version>${version.ktor}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ktor</groupId>
                 <artifactId>ktor-client-android</artifactId>
-                <version>${version.ktor}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-jetty</artifactId>
                 <version>${version.ktor}</version>
             </dependency>
 

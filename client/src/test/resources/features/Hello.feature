@@ -25,7 +25,6 @@ Feature: Securing the connection between you and the world
       | Kohttp                          |
       | Ktor Android HttpClient         |
       | Ktor Apache HttpClient          |
-      | Ktor Jetty HttpClient           |
       | Ktor Okhttp HttpClient          |
       | Methanol                        |
       | OkHttp                          |

@@ -1,7 +1,3 @@
 spring:
   banner:
     location: classpath:banner.txt
-
-server:
-  http2:
-    enabled: true
