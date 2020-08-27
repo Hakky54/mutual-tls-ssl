@@ -19,7 +19,7 @@ class KtorJettyHttpClient(
             engine {
                 sslContextFactory = sslFactory?.let { factory ->
                     JettySslContextUtils.forClient(factory)
-                } ?: SslContextFactory.Client()
+                } ?: SslContextFactory.Client(true)
             }
         }
 ) {
