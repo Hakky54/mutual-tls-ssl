@@ -24,6 +24,8 @@ Feature: Securing the connection between you and the world
       | Jetty Reactive HttpClient       |
       | Kohttp                          |
       | Ktor Android HttpClient         |
+      | Ktor Apache HttpClient          |
+      | Ktor Okhttp HttpClient          |
       | Methanol                        |
       | OkHttp                          |
       | Old JDK HttpClient              |
