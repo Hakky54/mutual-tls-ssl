@@ -42,7 +42,7 @@ configureApplicationProperties() {
     echo
     echo 'Configuring application properties of the server'
     rm server-with-spring-boot/src/main/resources/application.yml
-    echo -e 'spring:\n  banner:\n    location: classpath:banner.txt\n\nserver:\n  port: 8443\n  ssl:\n    enabled: true\n    key-store: classpath:identity.jks\n    key-password: secret\n    key-store-password: secret\n    trust-store: classpath:truststore.jks\n    trust-store-password: secret\n    client-auth: need'  >> server-with-spring-boot/src/main/resources/application.yml
+    echo -e 'spring:\n  banner:\n    location: classpath:banner.txt\n\nserver:\n  http2:\n    enabled: true\n  port: 8443\n  ssl:\n    enabled: true\n    key-store: classpath:identity.jks\n    key-password: secret\n    key-store-password: secret\n    trust-store: classpath:truststore.jks\n    trust-store-password: secret\n    client-auth: need'  >> server-with-spring-boot/src/main/resources/application.yml
 
     echo 'Configuring application properties of the client'
     rm client/src/test/resources/application.yml

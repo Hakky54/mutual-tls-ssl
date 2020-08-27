@@ -6,6 +6,7 @@ import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.KTOR_JETTY_HTTP_CLIENT
 import nl.altindag.sslcontext.SSLFactory
 import nl.altindag.sslcontext.util.JettySslContextUtils
+import org.eclipse.jetty.util.ssl.SslContextFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -15,11 +16,10 @@ class KtorJettyHttpClient(
         sslFactory: SSLFactory?
 ): KtorHttpClientService(
         HttpClient(Jetty) {
-            //todo can't send request to http because of missing support for http v1.x
-            sslFactory?.let { factory ->
-                engine {
-                    sslContextFactory = JettySslContextUtils.forClient(factory)
-                }
+            engine {
+                sslContextFactory = sslFactory?.let { factory ->
+                    JettySslContextUtils.forClient(factory)
+                } ?: SslContextFactory.Client()
             }
         }
 ) {
