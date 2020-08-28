@@ -32,7 +32,6 @@ public enum ClientType {
     METHANOL("methanol"),
     KTOR_APACHE_HTTP_CLIENT("ktor apache httpclient"),
     KTOR_OK_HTTP("ktor okhttp httpclient"),
-    KTOR_CIO_HTTP_CLIENT("ktor cio httpclient"),
     KTOR_ANDROID_HTTP_CLIENT("ktor android httpclient"),
     NONE("none");
 
