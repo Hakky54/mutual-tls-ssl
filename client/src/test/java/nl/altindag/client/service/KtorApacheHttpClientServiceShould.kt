@@ -9,12 +9,12 @@ import nl.altindag.client.util.SSLFactoryTestHelper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
-class KtorApacheHttpClientShould {
+class KtorApacheHttpClientServiceShould {
 
     @Test
     fun executeRequest() {
         val mockServerTestHelper = MockServerTestHelper(KTOR_APACHE_HTTP_CLIENT)
-        val client = KtorApacheHttpClient(null)
+        val client = KtorApacheHttpClientService(null)
 
         val clientResponse = client.executeRequest(HTTP_URL)
 
@@ -28,7 +28,7 @@ class KtorApacheHttpClientShould {
     fun createClientWithSslMaterial() {
         val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
 
-        KtorApacheHttpClient(sslFactory)
+        KtorApacheHttpClientService(sslFactory)
 
         verify(sslFactory, times(1)).sslContext
     }
