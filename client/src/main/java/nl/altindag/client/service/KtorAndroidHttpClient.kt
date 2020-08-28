@@ -14,14 +14,16 @@ class KtorAndroidHttpClient(
         @Autowired(required = false)
         sslFactory: SSLFactory?
 ): KtorHttpClientService(
-        HttpClient(Android.config {
+        HttpClient(Android) {
             sslFactory?.let { factory ->
-                sslManager = { httpsURLConnection ->
-                    httpsURLConnection.hostnameVerifier = factory.hostnameVerifier
-                    httpsURLConnection.sslSocketFactory = factory.sslContext.socketFactory
+                engine {
+                    sslManager = { httpsURLConnection ->
+                        httpsURLConnection.hostnameVerifier = factory.hostnameVerifier
+                        httpsURLConnection.sslSocketFactory = factory.sslContext.socketFactory
+                    }
                 }
             }
-        })
+        }
 ) {
 
     override fun getClientType(): ClientType = KTOR_ANDROID_HTTP_CLIENT
