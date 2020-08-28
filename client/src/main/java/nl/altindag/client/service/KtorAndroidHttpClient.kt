@@ -2,7 +2,6 @@ package nl.altindag.client.service
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
-import io.ktor.client.engine.config
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.KTOR_ANDROID_HTTP_CLIENT
 import nl.altindag.sslcontext.SSLFactory
