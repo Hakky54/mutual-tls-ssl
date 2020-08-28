@@ -121,6 +121,22 @@
             <groupId>com.github.mizosoft.methanol</groupId>
             <artifactId>methanol</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-apache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-okhttp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-android</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>

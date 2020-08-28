@@ -30,6 +30,9 @@ public enum ClientType {
     HTTP4S_JAVA_NET_CLIENT("http4s java net client"),
     FEIGN("feign"),
     METHANOL("methanol"),
+    KTOR_APACHE_HTTP_CLIENT("ktor apache httpclient"),
+    KTOR_OK_HTTP("ktor okhttp httpclient"),
+    KTOR_ANDROID_HTTP_CLIENT("ktor android httpclient"),
     NONE("none");
 
     private final String value;
