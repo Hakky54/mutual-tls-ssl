@@ -17,7 +17,7 @@ class KtorOkHttpClient(
             sslFactory?.let { factory ->
                 engine {
                     config {
-                        sslSocketFactory(factory.sslContext.socketFactory, factory.trustManager.get())
+                        sslSocketFactory(factory.sslContext.socketFactory, factory.trustManager.orElseThrow())
                         hostnameVerifier(factory.hostnameVerifier)
                     }
                 }
