@@ -4,38 +4,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Method;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
 import nl.altindag.server.aspect.LogCertificate;
 import nl.altindag.server.aspect.LogClientType;
 
-public class HelloWorldControllerShould {
+class HelloWorldControllerShould {
 
     private HelloWorldController victim;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         victim = new HelloWorldController();
     }
 
     @Test
-    public void returnHelloMessage() {
+    void returnHelloMessage() {
         ResponseEntity<String> response = victim.hello();
 
         assertThat(response.getBody()).isEqualTo("Hello");
     }
 
     @Test
-    public void returnStatusCode200() {
+    void returnStatusCode200() {
         ResponseEntity<String> response = victim.hello();
 
         assertThat(response.getStatusCode().value()).isEqualTo(200);
     }
 
     @Test
-    public void annotatedWithLogCertificate() throws NoSuchMethodException {
+    void annotatedWithLogCertificate() throws NoSuchMethodException {
         Method helloMethod = HelloWorldController.class.getMethod("hello");
         LogCertificate annotation = helloMethod.getAnnotation(LogCertificate.class);
 
@@ -43,7 +43,7 @@ public class HelloWorldControllerShould {
     }
 
     @Test
-    public void annotatedWithLogClientType() throws NoSuchMethodException {
+    void annotatedWithLogClientType() throws NoSuchMethodException {
         Method helloMethod = HelloWorldController.class.getMethod("hello");
         LogClientType annotation = helloMethod.getAnnotation(LogClientType.class);
 

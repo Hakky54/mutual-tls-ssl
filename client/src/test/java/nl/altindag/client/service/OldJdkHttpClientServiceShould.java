@@ -19,19 +19,19 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import nl.altindag.client.ClientException;
 import nl.altindag.client.model.ClientResponse;
 import nl.altindag.sslcontext.SSLFactory;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class OldJdkHttpClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class OldJdkHttpClientServiceShould {
 
     @Test
-    public void executeHttpRequest() throws Exception {
+    void executeHttpRequest() throws Exception {
         OldJdkHttpClientService victim = spy(new OldJdkHttpClientService(null));
 
         HttpsURLConnection connection = mock(HttpsURLConnection.class);
@@ -50,7 +50,7 @@ public class OldJdkHttpClientServiceShould {
     }
 
     @Test
-    public void executeHttpsRequest() throws Exception {
+    void executeHttpsRequest() throws Exception {
         SSLFactory sslFactory = mock(SSLFactory.class);
         OldJdkHttpClientService victim = spy(new OldJdkHttpClientService(sslFactory));
 
@@ -76,7 +76,7 @@ public class OldJdkHttpClientServiceShould {
     }
 
     @Test
-    public void throwClientExceptionWhenProvidedUrlDoesNotContainHttpOrHttps() {
+    void throwClientExceptionWhenProvidedUrlDoesNotContainHttpOrHttps() {
         SSLFactory sslFactory = mock(SSLFactory.class);
         OldJdkHttpClientService victim = spy(new OldJdkHttpClientService(sslFactory));
 

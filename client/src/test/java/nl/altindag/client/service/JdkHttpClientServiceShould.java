@@ -2,12 +2,12 @@ package nl.altindag.client.service;
 
 import nl.altindag.client.model.ClientResponse;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -25,8 +25,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JdkHttpClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class JdkHttpClientServiceShould {
 
     @InjectMocks
     private JdkHttpClientService victim;
@@ -35,7 +35,7 @@ public class JdkHttpClientServiceShould {
 
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         HttpResponse httpResponse = mock(HttpResponse.class);
         when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class))).thenReturn(httpResponse);
         when(httpResponse.statusCode()).thenReturn(200);

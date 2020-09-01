@@ -12,17 +12,17 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JerseyClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class JerseyClientServiceShould {
 
     @InjectMocks
     private JerseyClientService victim;
@@ -30,7 +30,7 @@ public class JerseyClientServiceShould {
     private Client client;
 
     @Test
-    public void executeRequest() {
+    void executeRequest() {
         WebTarget webTarget = mock(WebTarget.class);
         Invocation.Builder requestBuilder = mock(Invocation.Builder.class);
         Response response = mock(Response.class);

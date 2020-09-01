@@ -7,7 +7,8 @@ import nl.altindag.client.TestConstants.HTTP_URL
 import nl.altindag.client.util.MockServerTestHelper
 import nl.altindag.client.util.SSLFactoryTestHelper
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
+
 
 class KtorApacheHttpClientServiceShould {
 

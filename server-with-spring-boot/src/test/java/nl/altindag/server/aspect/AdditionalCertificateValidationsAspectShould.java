@@ -1,9 +1,9 @@
 package nl.altindag.server.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -20,13 +20,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("rawtypes")
-@RunWith(MockitoJUnitRunner.class)
-public class AdditionalCertificateValidationsAspectShould {
+@ExtendWith(MockitoExtension.class)
+class AdditionalCertificateValidationsAspectShould {
 
     AdditionalCertificateValidationsAspect victim = new AdditionalCertificateValidationsAspect();
 
     @Test
-    public void validateCertificateForAllowedCommonNameContinuesTheFlowWithProceedingJoinPoint() throws Throwable {
+    void validateCertificateForAllowedCommonNameContinuesTheFlowWithProceedingJoinPoint() throws Throwable {
         var proceedingJoinPoint = mock(ProceedingJoinPoint.class);
         var additionalCertificateValidations = createAdditionalCertificateValidations();
 
@@ -47,7 +47,7 @@ public class AdditionalCertificateValidationsAspectShould {
     }
 
     @Test
-    public void validateCertificateForNotAllowedCommonNameReturnsBadRequestHttpStatus() throws Throwable {
+    void validateCertificateForNotAllowedCommonNameReturnsBadRequestHttpStatus() throws Throwable {
         var proceedingJoinPoint = mock(ProceedingJoinPoint.class);
         var additionalCertificateValidations = createAdditionalCertificateValidations();
 
@@ -73,7 +73,7 @@ public class AdditionalCertificateValidationsAspectShould {
     }
 
     @Test
-    public void validateCertificateForUnrecognizedCommonNameReturnsBadRequestHttpStatus() throws Throwable {
+    void validateCertificateForUnrecognizedCommonNameReturnsBadRequestHttpStatus() throws Throwable {
         var proceedingJoinPoint = mock(ProceedingJoinPoint.class);
         var additionalCertificateValidations = createAdditionalCertificateValidations();
 

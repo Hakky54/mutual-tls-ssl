@@ -1,11 +1,11 @@
 package nl.altindag.client.service;
 
 import nl.altindag.client.model.ClientResponse;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -17,8 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class SpringWebClientJettyServiceShould {
+@ExtendWith(MockitoExtension.class)
+class SpringWebClientJettyServiceShould {
 
     @InjectMocks
     private SpringWebClientJettyService victim;
@@ -26,13 +26,13 @@ public class SpringWebClientJettyServiceShould {
     private WebClient webClient;
 
     @Test
-    public void getClientType() {
+    void getClientType() {
         assertThat(victim.getClientType()).isEqualTo(SPRING_WEB_CLIENT_JETTY);
     }
 
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void executeRequest() {
+    void executeRequest() {
         WebClient.RequestHeadersUriSpec requestHeadersUriSpec = mock(WebClient.RequestHeadersUriSpec.class);
         org.springframework.web.reactive.function.client.ClientResponse response = mock(org.springframework.web.reactive.function.client.ClientResponse.class);
         Mono<org.springframework.web.reactive.function.client.ClientResponse> clientResponseMono = Mono.just(response);

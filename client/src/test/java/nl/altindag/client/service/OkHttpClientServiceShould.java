@@ -11,12 +11,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.altindag.client.model.ClientResponse;
 import okhttp3.Call;
@@ -24,9 +23,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class OkHttpClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class OkHttpClientServiceShould {
 
     @InjectMocks
     private OkHttpClientService victim;
@@ -34,7 +34,7 @@ public class OkHttpClientServiceShould {
     private OkHttpClient okHttpClient;
 
     @Test
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         Call call = mock(Call.class);
         Response response = mock(Response.class);
         ResponseBody responseBody = mock(ResponseBody.class);

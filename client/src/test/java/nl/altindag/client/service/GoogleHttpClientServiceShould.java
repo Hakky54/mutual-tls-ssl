@@ -13,12 +13,11 @@ import static org.mockito.Mockito.when;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpHeaders;
@@ -28,9 +27,10 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 
 import nl.altindag.client.model.ClientResponse;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class GoogleHttpClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class GoogleHttpClientServiceShould {
 
     @InjectMocks
     private GoogleHttpClientService victim;
@@ -38,7 +38,7 @@ public class GoogleHttpClientServiceShould {
     private HttpTransport httpTransport;
 
     @Test
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         HttpRequestFactory httpRequestFactory = mock(HttpRequestFactory.class);
         HttpRequest httpRequest = mock(HttpRequest.class);
         HttpResponse httpResponse = mock(HttpResponse.class);

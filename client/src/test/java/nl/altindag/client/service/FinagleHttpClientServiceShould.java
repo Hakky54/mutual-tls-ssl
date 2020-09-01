@@ -10,13 +10,12 @@ import static org.mockito.Mockito.when;
 
 import java.net.URI;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Method;
@@ -26,10 +25,11 @@ import com.twitter.util.Future;
 
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
+import org.mockito.junit.jupiter.MockitoExtension;
 import scala.Tuple2;
 
-@RunWith(MockitoJUnitRunner.class)
-public class FinagleHttpClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class FinagleHttpClientServiceShould {
 
     @InjectMocks
     private FinagleHttpClientService victim;
@@ -37,7 +37,7 @@ public class FinagleHttpClientServiceShould {
     private Service<Request, Response> finagleService;
 
     @Test
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         Response response = mock(Response.class);
 
         when(finagleService.apply(Mockito.any(Request.class))).thenReturn(Future.value(response));

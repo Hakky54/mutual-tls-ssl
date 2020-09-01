@@ -9,11 +9,11 @@ import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.StatusCodes;
 import nl.altindag.client.TestConstants;
 import nl.altindag.client.model.ClientResponse;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -26,20 +26,20 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class AkkaHttpClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class AkkaHttpClientServiceShould {
 
     private AkkaHttpClientService victim;
     private Http akkaHttpClient;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         akkaHttpClient = mock(Http.class);
         victim = new AkkaHttpClientService(akkaHttpClient, ActorSystem.create());
     }
 
     @Test
-    public void executeRequest() {
+    void executeRequest() {
         HttpResponse httpResponse = HttpResponse.create()
                 .withEntity(ContentTypes.TEXT_PLAIN_UTF8, "Hello")
                 .withStatus(StatusCodes.OK);

@@ -7,11 +7,11 @@ import nl.altindag.client.aspect.LogExecutionTime;
 import nl.altindag.client.model.ClientResponse;
 import nl.altindag.client.service.RequestService;
 import nl.altindag.log.LogCaptor;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -26,16 +26,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class HelloStepDefsShould {
+class HelloStepDefsShould {
 
     private HelloStepDefs victim;
     private TestScenario testScenario;
     private RequestService requestService;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         testScenario = mock(TestScenario.class);
         requestService = mock(RequestService.class);
 
@@ -45,7 +45,7 @@ public class HelloStepDefsShould {
     }
 
     @Test
-    public void logDebugMessageWhenCallingServerIsAlive() {
+    void logDebugMessageWhenCallingServerIsAlive() {
         LogCaptor logCaptor = LogCaptor.forClass(HelloStepDefs.class);
 
         victim.serverIsAlive();
@@ -58,7 +58,7 @@ public class HelloStepDefsShould {
     }
 
     @Test
-    public void notLogDebugMessageWhenLogLevelIsInfoWhileCallingServerIsAlive() {
+    void notLogDebugMessageWhenLogLevelIsInfoWhileCallingServerIsAlive() {
         LogCaptor logCaptor = LogCaptor.forClass(HelloStepDefs.class);
         logCaptor.setLogLevelToInfo();
 
@@ -70,7 +70,7 @@ public class HelloStepDefsShould {
     }
 
     @Test
-    public void iSayHelloWithClientApacheHttpClient() throws Exception {
+    void iSayHelloWithClientApacheHttpClient() throws Exception {
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
         victim.iSayHelloWithClient("Apache HttpClient");
@@ -80,7 +80,7 @@ public class HelloStepDefsShould {
     }
 
     @Test
-    public void iSayHelloWithClientIsAnnotatedWithLogExecutionTime() throws NoSuchMethodException {
+    void iSayHelloWithClientIsAnnotatedWithLogExecutionTime() throws NoSuchMethodException {
         Method method = victim.getClass().getMethod("iSayHelloWithClient", String.class);
         LogExecutionTime annotation = method.getAnnotation(LogExecutionTime.class);
 
@@ -88,21 +88,21 @@ public class HelloStepDefsShould {
     }
 
     @Test
-    public void throwExceptionWhenISayHelloWithClientUnknownClient() {
+    void throwExceptionWhenISayHelloWithClientUnknownClient() {
         assertThatThrownBy(() -> victim.iSayHelloWithClient("some dirty client"))
                 .isInstanceOf(ClientException.class)
                 .hasMessage("Could not find the provided [some dirty client] client type");
     }
 
     @Test
-    public void throwExceptionWhenISayHelloWithClientUnsupportedClient() {
+    void throwExceptionWhenISayHelloWithClientUnsupportedClient() {
         assertThatThrownBy(() -> victim.iSayHelloWithClient("none"))
                 .isInstanceOf(ClientException.class)
                 .hasMessage("Received a not supported [none] client type");
     }
 
     @Test
-    public void iExpectToReceiveStatusCode200() {
+    void iExpectToReceiveStatusCode200() {
         ClientResponse clientResponse = new ClientResponse("Hello", 200);
         when(testScenario.getClientResponse()).thenReturn(clientResponse);
 
@@ -112,7 +112,7 @@ public class HelloStepDefsShould {
     }
 
     @Test
-    public void iExpectToReceiveBodyHello() {
+    void iExpectToReceiveBodyHello() {
         ClientResponse clientResponse = new ClientResponse("Hello", 200);
         when(testScenario.getClientResponse()).thenReturn(clientResponse);
 
@@ -122,7 +122,7 @@ public class HelloStepDefsShould {
     }
 
     @Test
-    public void iDisplayTheTimeItTookToGetTheMessage() {
+    void iDisplayTheTimeItTookToGetTheMessage() {
         LogCaptor logCaptor = LogCaptor.forClass(HelloStepDefs.class);
 
         when(testScenario.getExecutionTimeInMilliSeconds()).thenReturn(134L);

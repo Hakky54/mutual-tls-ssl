@@ -7,19 +7,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
 import nl.altindag.client.model.ClientResponse;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class OldJerseyClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class OldJerseyClientServiceShould {
 
     @InjectMocks
     private OldJerseyClientService victim;
@@ -27,7 +27,7 @@ public class OldJerseyClientServiceShould {
     private Client client;
 
     @Test
-    public void executeRequest() {
+    void executeRequest() {
         WebResource webResource = mock(WebResource.class);
         WebResource.Builder builder = mock(WebResource.Builder.class);
         com.sun.jersey.api.client.ClientResponse response = mock(com.sun.jersey.api.client.ClientResponse.class);

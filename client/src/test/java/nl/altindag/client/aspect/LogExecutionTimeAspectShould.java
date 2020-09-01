@@ -4,18 +4,18 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.altindag.client.TestScenario;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
 
-@RunWith(MockitoJUnitRunner.class)
-public class LogExecutionTimeAspectShould {
+@ExtendWith(MockitoExtension.class)
+class LogExecutionTimeAspectShould {
 
     @InjectMocks
     private LogExecutionTimeAspect logExecutionTimeAspect;
@@ -23,14 +23,14 @@ public class LogExecutionTimeAspectShould {
     private TestScenario testScenario;
 
     @Test
-    public void setStartTime() {
+    void setStartTime() {
         logExecutionTimeAspect.setStartTime();
 
         verify(testScenario, times(1)).setStartTime(any(LocalTime.class));
     }
 
     @Test
-    public void setEndTime() {
+    void setEndTime() {
         logExecutionTimeAspect.setEndTime();
 
         verify(testScenario, times(1)).setEndTime(any(LocalTime.class));

@@ -9,7 +9,8 @@ import nl.altindag.client.util.MockServerTestHelper
 import nl.altindag.client.util.SSLFactoryTestHelper
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.Test
+import org.junit.jupiter.api.Test
+
 
 class KtorAndroidHttpClientServiceShould {
 

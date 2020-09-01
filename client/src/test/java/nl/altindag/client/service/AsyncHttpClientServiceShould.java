@@ -6,12 +6,12 @@ import org.asynchttpclient.ListenableFuture;
 import org.asynchttpclient.Request;
 import org.asynchttpclient.RequestBuilder;
 import org.asynchttpclient.Response;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -26,8 +26,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class AsyncHttpClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class AsyncHttpClientServiceShould {
 
     @InjectMocks
     private AsyncHttpClientService victim;
@@ -36,7 +36,7 @@ public class AsyncHttpClientServiceShould {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         Response response = mock(Response.class);
         ListenableFuture<Response> listenableFuture = mock(ListenableFuture.class);
 

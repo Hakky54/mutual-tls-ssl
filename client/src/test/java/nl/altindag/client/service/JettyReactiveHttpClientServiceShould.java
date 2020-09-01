@@ -5,12 +5,12 @@ import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
 import org.eclipse.jetty.http.HttpMethod;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static nl.altindag.client.ClientType.JETTY_REACTIVE_HTTP_CLIENT;
 import static nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE;
@@ -23,8 +23,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JettyReactiveHttpClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class JettyReactiveHttpClientServiceShould {
 
     @InjectMocks
     private JettyReactiveHttpClientService victim;
@@ -32,7 +32,7 @@ public class JettyReactiveHttpClientServiceShould {
     private HttpClient httpClient;
 
     @Test
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         Request request = mock(Request.class);
         ContentResponse contentResponse = mock(ContentResponse.class);
 

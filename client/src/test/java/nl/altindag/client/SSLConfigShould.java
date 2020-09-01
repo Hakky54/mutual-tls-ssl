@@ -1,17 +1,17 @@
 package nl.altindag.client;
 
 import nl.altindag.sslcontext.SSLFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SSLConfigShould {
+class SSLConfigShould {
 
     private final SSLConfig victim = new SSLConfig();
 
     @Test
-    public void createSslFactoryWithOneWayAuthentication() {
+    void createSslFactoryWithOneWayAuthentication() {
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
         String trustStorePassword = "secret";
 
@@ -26,7 +26,7 @@ public class SSLConfigShould {
     }
 
     @Test
-    public void createSslFactoryWithTwoWayAuthentication() {
+    void createSslFactoryWithTwoWayAuthentication() {
         String keyStorePath = "keystores-for-unit-tests/identity.jks";
         String keyStorePassword = "secret";
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";
@@ -43,7 +43,7 @@ public class SSLConfigShould {
     }
 
     @Test
-    public void notCreateSslFactoryWhenOneWayAuthenticationAndTwoWayAuthenticationIsDisabled() {
+    void notCreateSslFactoryWhenOneWayAuthenticationAndTwoWayAuthenticationIsDisabled() {
         String keyStorePath = "keystores-for-unit-tests/identity.jks";
         String keyStorePassword = "secret";
         String trustStorePath = "keystores-for-unit-tests/truststore.jks";

@@ -13,9 +13,9 @@ import nl.altindag.sslcontext.SSLFactory;
 import okhttp3.OkHttpClient;
 import org.apache.http.client.HttpClient;
 import org.asynchttpclient.AsyncHttpClient;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import retrofit2.Retrofit;
@@ -34,20 +34,20 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-@RunWith(MockitoJUnitRunner.class)
-public class ClientConfigShould {
+@ExtendWith(MockitoExtension.class)
+class ClientConfigShould {
 
     private final ClientConfig victim = new ClientConfig();
 
     @Test
-    public void createApacheHttpClientWithoutSecurity() {
+    void createApacheHttpClientWithoutSecurity() {
         HttpClient httpClient = victim.apacheHttpClient(null);
 
         assertThat(httpClient).isNotNull();
     }
 
     @Test
-    public void createApacheHttpClientWithSecurity() {
+    void createApacheHttpClientWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         HttpClient httpClient = victim.apacheHttpClient(sslFactory);
@@ -58,14 +58,14 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createJdkHttpClientWithoutSecurity() {
+    void createJdkHttpClientWithoutSecurity() {
         java.net.http.HttpClient httpClient = victim.jdkHttpClient(null);
 
         assertThat(httpClient).isNotNull();
     }
 
     @Test
-    public void createJdkHttpClientWithSecurity() {
+    void createJdkHttpClientWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         java.net.http.HttpClient httpClient = victim.jdkHttpClient(sslFactory);
@@ -75,7 +75,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createRestTemplate() {
+    void createRestTemplate() {
         HttpClient httpClient = mock(HttpClient.class);
 
         RestTemplate restTemplate = victim.restTemplate(httpClient);
@@ -84,14 +84,14 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createOkHttpClientWithoutSecurity() {
+    void createOkHttpClientWithoutSecurity() {
         OkHttpClient okHttpClient = victim.okHttpClient(null);
 
         assertThat(okHttpClient).isNotNull();
     }
 
     @Test
-    public void createOkHttpClientWithSecurity() {
+    void createOkHttpClientWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         OkHttpClient okHttpClient = victim.okHttpClient(sslFactory);
@@ -107,14 +107,14 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createNettyHttpClientWithoutSecurity() throws SSLException {
+    void createNettyHttpClientWithoutSecurity() throws SSLException {
         reactor.netty.http.client.HttpClient httpClient = victim.nettyHttpClient(null);
 
         assertThat(httpClient).isNotNull();
     }
 
     @Test
-    public void createNettyHttpClientWithOneWayAuthentication() throws SSLException {
+    void createNettyHttpClientWithOneWayAuthentication() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(true, false);
 
         reactor.netty.http.client.HttpClient httpClient = victim.nettyHttpClient(sslFactory);
@@ -125,7 +125,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createNettyHttpClientWithTwoWayAuthentication() throws SSLException {
+    void createNettyHttpClientWithTwoWayAuthentication() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         reactor.netty.http.client.HttpClient httpClient = victim.nettyHttpClient(sslFactory);
@@ -137,7 +137,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createWebClientWithNetty() {
+    void createWebClientWithNetty() {
         reactor.netty.http.client.HttpClient httpClient = mock(reactor.netty.http.client.HttpClient.class);
         WebClient webClient = victim.webClientWithNetty(httpClient);
 
@@ -145,14 +145,14 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createJettyHttpClientWithoutSecurity() {
+    void createJettyHttpClientWithoutSecurity() {
         org.eclipse.jetty.client.HttpClient httpClient = victim.jettyHttpClient(null);
 
         assertThat(httpClient).isNotNull();
     }
 
     @Test
-    public void createJettyHttpClientWithOneWayAuthentication() {
+    void createJettyHttpClientWithOneWayAuthentication() {
         SSLFactory sslFactory = createSSLFactory(true, false);
 
         org.eclipse.jetty.client.HttpClient httpClient = victim.jettyHttpClient(sslFactory);
@@ -165,7 +165,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createJettyHttpClientWithTwoWayAuthentication() {
+    void createJettyHttpClientWithTwoWayAuthentication() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         org.eclipse.jetty.client.HttpClient httpClient = victim.jettyHttpClient(sslFactory);
@@ -178,7 +178,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createWebClientWithJetty() {
+    void createWebClientWithJetty() {
         org.eclipse.jetty.client.HttpClient httpClient = mock(org.eclipse.jetty.client.HttpClient.class);
         WebClient webClient = victim.webClientWithJetty(httpClient);
 
@@ -186,7 +186,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createJerseyClientWithoutSecurity() {
+    void createJerseyClientWithoutSecurity() {
         Client client = victim.jerseyClient(null);
 
         assertThat(client).isNotNull();
@@ -195,7 +195,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createJerseyClientWithSecurity() {
+    void createJerseyClientWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         Client client = victim.jerseyClient(sslFactory);
@@ -208,7 +208,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createOldJerseyClientWithoutSecurity() {
+    void createOldJerseyClientWithoutSecurity() {
         com.sun.jersey.api.client.Client client = victim.oldJerseyClient(null);
 
         assertThat(client).isNotNull();
@@ -217,7 +217,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createOldJerseyClientWithSecurity() {
+    void createOldJerseyClientWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         com.sun.jersey.api.client.Client client = victim.oldJerseyClient(sslFactory);
@@ -230,7 +230,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createGoogleHttpClientWithoutSecurity() throws IOException {
+    void createGoogleHttpClientWithoutSecurity() throws IOException {
         HttpTransport httpTransport = victim.googleHttpClient(null);
 
         assertThat(httpTransport).isNotNull();
@@ -239,7 +239,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createGoogleHttpClientWithSecurity() throws IOException {
+    void createGoogleHttpClientWithSecurity() throws IOException {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         HttpTransport httpTransport = victim.googleHttpClient(sslFactory);
@@ -252,7 +252,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createUnirestWithoutSecurity() {
+    void createUnirestWithoutSecurity() {
         victim.unirest(null);
 
         assertThat(Unirest.primaryInstance().config().getSslContext()).isNull();
@@ -261,7 +261,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createUnirestWithSecurity() {
+    void createUnirestWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         victim.unirest(sslFactory);
@@ -275,7 +275,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createRetrofitWithProvidedOkHttpClient() {
+    void createRetrofitWithProvidedOkHttpClient() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
         Retrofit retrofit = victim.retrofit(okHttpClient);
 
@@ -285,7 +285,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createFinagleClientWithoutSecurity() throws URISyntaxException {
+    void createFinagleClientWithoutSecurity() throws URISyntaxException {
         Service<Request, Response> service = victim.finagle(null);
 
         assertThat(service.isAvailable()).isTrue();
@@ -295,7 +295,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createFinagleClientWithSecurity() throws URISyntaxException {
+    void createFinagleClientWithSecurity() throws URISyntaxException {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         Service<Request, Response> service = victim.finagle(sslFactory);
@@ -309,14 +309,14 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createAkkaHttpClientWithoutSecurity() {
+    void createAkkaHttpClientWithoutSecurity() {
         Http http = victim.akkaHttpClient(null, ActorSystem.create());
 
         assertThat(http).isNotNull();
     }
 
     @Test
-    public void createAkkaHttpClientWithSecurity() {
+    void createAkkaHttpClientWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         Http http = victim.akkaHttpClient(sslFactory, ActorSystem.create());
@@ -326,7 +326,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createActorSystem() {
+    void createActorSystem() {
         ActorSystem actorSystem = victim.actorSystem();
 
         assertThat(actorSystem).isNotNull();
@@ -334,7 +334,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createAsyncHttpClientWithoutSecurity() throws SSLException {
+    void createAsyncHttpClientWithoutSecurity() throws SSLException {
         AsyncHttpClient httpClient = victim.asyncHttpClient(null);
 
         assertThat(httpClient).isNotNull();
@@ -342,7 +342,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createAsyncHttpClientWithOneWayAuthentication() throws SSLException {
+    void createAsyncHttpClientWithOneWayAuthentication() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(true, false);
 
         AsyncHttpClient httpClient = victim.asyncHttpClient(sslFactory);
@@ -354,7 +354,7 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createAsyncHttpClientWithTwoWayAuthentication() throws SSLException {
+    void createAsyncHttpClientWithTwoWayAuthentication() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         AsyncHttpClient httpClient = victim.asyncHttpClient(sslFactory);
@@ -367,14 +367,14 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createFeignWithoutSecurity() throws SSLException {
+    void createFeignWithoutSecurity() {
         Feign.Builder feignBuilder = victim.feign(null);
 
         assertThat(feignBuilder).isNotNull();
     }
 
     @Test
-    public void createFeignWithSecurity() throws SSLException {
+    void createFeignWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(true, true);
 
         Feign.Builder feignBuilder = victim.feign(sslFactory);
@@ -385,14 +385,14 @@ public class ClientConfigShould {
     }
 
     @Test
-    public void createMethanolWithoutSecurity() {
+    void createMethanolWithoutSecurity() {
         Methanol httpClient = victim.methanol(null);
 
         assertThat(httpClient).isNotNull();
     }
 
     @Test
-    public void createMethanolWithSecurity() {
+    void createMethanolWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(true, true);
 
         Methanol httpClient = victim.methanol(sslFactory);

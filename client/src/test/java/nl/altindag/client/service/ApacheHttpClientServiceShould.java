@@ -19,17 +19,17 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import nl.altindag.client.model.ClientResponse;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ApacheHttpClientServiceShould {
+@ExtendWith(MockitoExtension.class)
+class ApacheHttpClientServiceShould {
 
     @InjectMocks
     private ApacheHttpClientService victim;
@@ -37,7 +37,7 @@ public class ApacheHttpClientServiceShould {
     private HttpClient httpClient;
 
     @Test
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         HttpResponse httpResponse = mock(HttpResponse.class);
         StatusLine statusLine = mock(StatusLine.class);
         HttpEntity entity = mock(HttpEntity.class);

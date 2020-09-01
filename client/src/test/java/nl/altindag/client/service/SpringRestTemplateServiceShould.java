@@ -3,12 +3,12 @@ package nl.altindag.client.service;
 import nl.altindag.client.TestConstants;
 import nl.altindag.client.model.ClientResponse;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +27,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class SpringRestTemplateServiceShould {
+@ExtendWith(MockitoExtension.class)
+class SpringRestTemplateServiceShould {
 
     @InjectMocks
     private SpringRestTemplateService victim;
@@ -37,7 +37,7 @@ public class SpringRestTemplateServiceShould {
 
     @Test
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public void executeRequest() {
+    void executeRequest() {
         ResponseEntity<String> responseEntity = mock(ResponseEntity.class);
         ArgumentCaptor<HttpEntity> httpEntityArgumentCaptor = ArgumentCaptor.forClass(HttpEntity.class);
         ArgumentCaptor<HttpMethod> httpMethodArgumentCaptor = ArgumentCaptor.forClass(HttpMethod.class);

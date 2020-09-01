@@ -4,19 +4,19 @@ import feign.Feign;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.TestConstants;
 import nl.altindag.client.model.ClientResponse;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class FeignServiceShould {
+@ExtendWith(MockitoExtension.class)
+class FeignServiceShould {
 
     @InjectMocks
     private FeignService victim;
@@ -24,7 +24,7 @@ public class FeignServiceShould {
     private Feign.Builder feignBuilder;
 
     @Test
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         FeignService.Server server = mock(FeignService.Server.class);
 
         Mockito.lenient().doReturn(server).when(feignBuilder).target(FeignService.Server.class, TestConstants.HTTP_SERVER_URL);
@@ -38,7 +38,7 @@ public class FeignServiceShould {
     }
 
     @Test
-    public void getClientType() {
+    void getClientType() {
         assertThat(victim.getClientType()).isEqualTo(ClientType.FEIGN);
     }
 

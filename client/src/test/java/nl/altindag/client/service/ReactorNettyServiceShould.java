@@ -4,12 +4,12 @@ import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.HttpHeaders;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 import reactor.util.function.Tuple2;
@@ -27,8 +27,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ReactorNettyServiceShould {
+@ExtendWith(MockitoExtension.class)
+class ReactorNettyServiceShould {
 
     @InjectMocks
     private ReactorNettyService reactorNettyService;
@@ -37,7 +37,7 @@ public class ReactorNettyServiceShould {
 
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         HttpClient.ResponseReceiver responseReceiver = mock(HttpClient.ResponseReceiver.class);
         Tuple2<String, Integer> collection = mock(Tuple2.class);
 

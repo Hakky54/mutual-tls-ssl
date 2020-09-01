@@ -21,12 +21,12 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.message.BasicHeader;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpMethod;
 
 import kong.unirest.Unirest;
@@ -34,14 +34,14 @@ import kong.unirest.apache.ApacheClient;
 import nl.altindag.client.model.ClientResponse;
 
 @SuppressWarnings("SameParameterValue")
-@RunWith(MockitoJUnitRunner.class)
-public class UnirestServiceShould {
+@ExtendWith(MockitoExtension.class)
+class UnirestServiceShould {
 
     private UnirestService victim;
     private HttpClient httpClient;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         victim = new UnirestService();
 
         httpClient = mock(HttpClient.class);
@@ -50,7 +50,7 @@ public class UnirestServiceShould {
     }
 
     @Test
-    public void executeRequest() throws IOException {
+    void executeRequest() throws IOException {
         mockUnirest("Hello", 200);
 
         ArgumentCaptor<HttpRequestBase> httpRequestBaseArgumentCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
@@ -79,8 +79,8 @@ public class UnirestServiceShould {
         when(httpResponse.getAllHeaders()).thenReturn(new Header[]{new BasicHeader(EMPTY, EMPTY)});
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         Unirest.shutDown();
     }
 

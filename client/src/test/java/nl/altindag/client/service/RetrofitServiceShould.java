@@ -2,11 +2,11 @@ package nl.altindag.client.service;
 
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -16,8 +16,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
-@RunWith(MockitoJUnitRunner.class)
-public class RetrofitServiceShould {
+@ExtendWith(MockitoExtension.class)
+class RetrofitServiceShould {
 
     @InjectMocks
     private RetrofitService victim;
@@ -25,7 +25,7 @@ public class RetrofitServiceShould {
     private Retrofit retrofit;
 
     @Test
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         RetrofitService.Server server = mock(RetrofitService.Server.class);
         Call<String> helloCall = mock(Call.class);
         Response<String> response = mock(Response.class);
@@ -43,7 +43,7 @@ public class RetrofitServiceShould {
     }
 
     @Test
-    public void getClientType() {
+    void getClientType() {
         assertThat(victim.getClientType()).isEqualTo(ClientType.RETROFIT);
     }
 

@@ -4,12 +4,12 @@ import com.github.mizosoft.methanol.Methanol;
 import com.github.mizosoft.methanol.MutableRequest;
 import nl.altindag.client.model.ClientResponse;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.net.http.HttpResponse;
 import java.util.Collections;
@@ -25,8 +25,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class MethanolServiceShould {
+@ExtendWith(MockitoExtension.class)
+class MethanolServiceShould {
 
     @InjectMocks
     private MethanolService victim;
@@ -35,7 +35,7 @@ public class MethanolServiceShould {
 
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void executeRequest() throws Exception {
+    void executeRequest() throws Exception {
         HttpResponse httpResponse = mock(HttpResponse.class);
         when(httpClient.send(any(MutableRequest.class), any(HttpResponse.BodyHandler.class))).thenReturn(httpResponse);
         when(httpResponse.statusCode()).thenReturn(200);

@@ -1,9 +1,9 @@
 package nl.altindag.server.aspect;
 
 import nl.altindag.log.LogCaptor;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -17,13 +17,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class LogCertificateAspectShould {
+@ExtendWith(MockitoExtension.class)
+class LogCertificateAspectShould {
 
     private final LogCertificateAspect logCertificateAspect = new LogCertificateAspect();
 
     @Test
-    public void logDetailedClientCertificate() {
+    void logDetailedClientCertificate() {
         LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
 
         X509Certificate x509Certificate = mock(X509Certificate.class);
@@ -43,7 +43,7 @@ public class LogCertificateAspectShould {
     }
 
     @Test
-    public void logLessDetailedClientCertificate() {
+    void logLessDetailedClientCertificate() {
         LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
 
         X509Certificate x509Certificate = mock(X509Certificate.class);
@@ -65,7 +65,7 @@ public class LogCertificateAspectShould {
     }
 
     @Test
-    public void notLogCertificateWhenNotPresent() {
+    void notLogCertificateWhenNotPresent() {
         LogCaptor logCaptor = LogCaptor.forClass(LogCertificateAspect.class);
 
         MockHttpServletRequest request = new MockHttpServletRequest();

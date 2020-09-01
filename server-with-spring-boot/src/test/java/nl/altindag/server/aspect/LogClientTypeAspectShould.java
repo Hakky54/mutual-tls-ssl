@@ -1,7 +1,7 @@
 package nl.altindag.server.aspect;
 
 import nl.altindag.log.LogCaptor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -10,12 +10,12 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LogClientTypeAspectShould {
+class LogClientTypeAspectShould {
 
     private final LogClientTypeAspect logClientTypeAspect = new LogClientTypeAspect();
 
     @Test
-    public void logClientTypeIfPresent() {
+    void logClientTypeIfPresent() {
         LogCaptor logCaptor = LogCaptor.forClass(LogClientTypeAspect.class);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -29,7 +29,7 @@ public class LogClientTypeAspectShould {
     }
 
     @Test
-    public void notLogClientTypeIfAbsent() {
+    void notLogClientTypeIfAbsent() {
         LogCaptor logCaptor = LogCaptor.forClass(LogClientTypeAspect.class);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
