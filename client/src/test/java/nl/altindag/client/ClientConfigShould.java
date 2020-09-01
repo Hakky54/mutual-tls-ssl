@@ -21,7 +21,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import retrofit2.Retrofit;
 
 import javax.net.ssl.SSLException;
-import javax.ws.rs.client.Client;
+import jakarta.ws.rs.client.Client;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -322,7 +322,7 @@ public class ClientConfigShould {
         Http http = victim.akkaHttpClient(sslFactory, ActorSystem.create());
 
         assertThat(http).isNotNull();
-        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).getSslContext();
     }
 
     @Test

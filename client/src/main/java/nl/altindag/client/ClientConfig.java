@@ -16,6 +16,8 @@ import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
 import feign.Feign;
 import io.netty.handler.ssl.SslContext;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
 import nl.altindag.sslcontext.util.JettySslContextUtils;
@@ -40,12 +42,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLException;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
-import java.util.Optional;
 
 import static java.util.Objects.nonNull;
 import static nl.altindag.client.Constants.SERVER_URL;
@@ -214,12 +213,7 @@ public class ClientConfig {
                                                  ActorSystem actorSystem) {
         akka.http.javadsl.Http http = akka.http.javadsl.Http.get(actorSystem);
         if (nonNull(sslFactory)) {
-            HttpsConnectionContext httpsContext = ConnectionContext.https(
-                    sslFactory.getSslContext(),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.of(sslFactory.getSslContext().getDefaultSSLParameters()));
+            HttpsConnectionContext httpsContext = ConnectionContext.httpsClient(sslFactory.getSslContext());
             http.setDefaultClientHttpsContext(httpsContext);
         }
         return http;

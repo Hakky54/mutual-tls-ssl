@@ -3,9 +3,9 @@ package nl.altindag.client.service;
 import static nl.altindag.client.ClientType.JERSEY_CLIENT;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.springframework.stereotype.Service;
 

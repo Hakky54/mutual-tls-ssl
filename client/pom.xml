@@ -200,6 +200,20 @@
             <artifactId>cats-core_${version.scala}</artifactId>
         </dependency>
 
+        <!--     temporally added to fix javax/jakarta imports       -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>nl.altindag</groupId>
             <artifactId>server-with-spring-boot</artifactId>
