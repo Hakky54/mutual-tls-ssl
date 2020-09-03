@@ -43,6 +43,12 @@
             <groupId>io.github.hakky54</groupId>
             <artifactId>logcaptor</artifactId>
         </dependency>
+
+        <!--     temporally added to fix javax/jakarta imports       -->
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

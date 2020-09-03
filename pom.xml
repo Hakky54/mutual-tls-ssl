@@ -49,7 +49,7 @@
         <version.scalaj-http>2.4.2</version.scalaj-http>
         <version.async-http-client>2.12.1</version.async-http-client>
         <version.fuel>2.2.3</version.fuel>
-        <version.sttp>2.2.3</version.sttp>
+        <version.sttp>3.0.0-RC1</version.sttp>
         <version.featherbed>0.3.3</version.featherbed>
         <version.requests>0.6.5</version.requests>
         <version.kohttp>0.12.0</version.kohttp>
@@ -65,7 +65,7 @@
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.junit-jupiter>5.7.0-RC1</version.junit-jupiter>
         <version.assertj-core>3.17.1</version.assertj-core>
-        <version.logcaptor>2.1.0</version.logcaptor>
+        <version.logcaptor>2.1.1</version.logcaptor>
         <version.byte-buddy>1.10.14</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
         <version.scalatest>3.2.0</version.scalatest>

@@ -15,9 +15,9 @@ import sttp.client._
 import sttp.model._
 
 @Service
-class SttpHttpClientService(sttpBackend: SttpBackend[Identity, Nothing, NothingT]) extends RequestService {
+class SttpHttpClientService(sttpBackend: SttpBackend[Identity, Any]) extends RequestService {
 
-  implicit val backend: SttpBackend[Identity, Nothing, NothingT] = sttpBackend;
+  implicit val backend: SttpBackend[Identity, Any] = sttpBackend;
 
   override def executeRequest(url: String): ClientResponse = {
     val request = basicRequest.get(uri = Uri(javaUri = URI.create(url)))
@@ -35,7 +35,7 @@ class SttpHttpClientService(sttpBackend: SttpBackend[Identity, Nothing, NothingT
 class SttpHttpClientConfiguration {
 
   @Bean
-  def createSttpBackendClient(@Autowired(required = false) sslFactory: SSLFactory): SttpBackend[Identity, Nothing, NothingT] = {
+  def createSttpBackendClient(@Autowired(required = false) sslFactory: SSLFactory): SttpBackend[Identity, Any] = {
     HttpURLConnectionBackend(customizeConnection = {
       case httpsConnection: HttpsURLConnection if sslFactory != null =>
         httpsConnection.setHostnameVerifier(sslFactory.getHostnameVerifier)
