@@ -15,12 +15,10 @@ import org.mockserver.model.HttpResponse;
 public final class MockServerTestHelper {
 
     private final ClientAndServer clientAndServer;
-    private final MockServerClient mockServerClient;
 
     public MockServerTestHelper(ClientType clientType) {
         clientAndServer = ClientAndServer.startClientAndServer(8080);
-        mockServerClient = new MockServerClient("127.0.0.1", 8080);
-        mockServerClient
+        clientAndServer
                 .when(
                         HttpRequest.request()
                                 .withMethod("GET")
@@ -36,10 +34,7 @@ public final class MockServerTestHelper {
     }
 
     public void stop() {
-        mockServerClient.stop();
-        mockServerClient.close();
         clientAndServer.stop();
-        clientAndServer.close();
     }
 
 }
