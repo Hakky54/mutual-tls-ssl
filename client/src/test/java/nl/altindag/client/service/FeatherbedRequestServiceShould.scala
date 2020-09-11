@@ -12,7 +12,7 @@ import org.scalatest.funspec.AnyFunSpec
 class FeatherbedRequestServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
-    val mockServerTestHelper = new MockServerTestHelper(FEATHERBED)
+    MockServerTestHelper.mockResponseForClient(FEATHERBED)
 
     val client = new featherbed.Client(URI.create("http://localhost:8080/").toURL)
     val victim = new FeatherbedRequestService(client)
@@ -20,8 +20,6 @@ class FeatherbedRequestServiceShould extends AnyFunSpec with MockitoSugar {
 
     assertThat(clientResponse.getStatusCode).isEqualTo(200)
     assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
-
-    mockServerTestHelper.stop()
   }
 
   describe("create custom instance of featherbed client without ssl") {

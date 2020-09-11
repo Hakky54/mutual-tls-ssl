@@ -10,7 +10,7 @@ import org.scalatest.funspec.AnyFunSpec
 class Http4sBlazeClientServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
-    val mockServerTestHelper = new MockServerTestHelper(HTTP4S_BLAZE_CLIENT)
+    MockServerTestHelper.mockResponseForClient(HTTP4S_BLAZE_CLIENT)
 
     val client = new BlazeClientConfiguration().createBlazeClient(null)
     val victim = new Http4sBlazeClientService(client)
@@ -19,8 +19,6 @@ class Http4sBlazeClientServiceShould extends AnyFunSpec with MockitoSugar {
 
     assertThat(clientResponse.getStatusCode).isEqualTo(200)
     assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
-
-    mockServerTestHelper.stop();
   }
 
   describe("create blaze client with ssl material") {

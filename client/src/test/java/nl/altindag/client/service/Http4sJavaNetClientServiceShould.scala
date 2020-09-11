@@ -10,7 +10,7 @@ import org.scalatest.funspec.AnyFunSpec
 class Http4sJavaNetClientServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
-    val mockServerTestHelper = new MockServerTestHelper(HTTP4S_JAVA_NET_CLIENT)
+    MockServerTestHelper.mockResponseForClient(HTTP4S_JAVA_NET_CLIENT)
 
     val client = new JavaNetClientConfiguration().createJavaNetClient(null)
     val victim = new Http4sJavaNetClientService(client)
@@ -19,8 +19,6 @@ class Http4sJavaNetClientServiceShould extends AnyFunSpec with MockitoSugar {
 
     assertThat(clientResponse.getStatusCode).isEqualTo(200)
     assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
-
-    mockServerTestHelper.stop();
   }
 
   describe("create java net client with ssl material") {

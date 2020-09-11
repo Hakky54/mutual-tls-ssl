@@ -16,15 +16,13 @@ class KtorAndroidHttpClientServiceShould {
 
     @Test
     fun executeRequest() {
-        val mockServerTestHelper = MockServerTestHelper(KTOR_ANDROID_HTTP_CLIENT)
+        MockServerTestHelper.mockResponseForClient(KTOR_ANDROID_HTTP_CLIENT)
         val client = KtorAndroidHttpClientService(null)
 
         val clientResponse = client.executeRequest(HTTP_URL)
 
         assertThat(clientResponse.statusCode).isEqualTo(200)
         assertThat(clientResponse.responseBody).isEqualTo("Hello")
-
-        mockServerTestHelper.stop()
     }
 
     @Test

@@ -16,15 +16,13 @@ class KtorOkHttpClientServiceShould {
 
     @Test
     fun executeRequest() {
-        val mockServerTestHelper = MockServerTestHelper(KTOR_OK_HTTP)
+        MockServerTestHelper.mockResponseForClient(KTOR_OK_HTTP)
         val client = KtorOkHttpClientService(null)
 
         val clientResponse = client.executeRequest(HTTP_URL)
 
         assertThat(clientResponse.statusCode).isEqualTo(200)
         assertThat(clientResponse.responseBody).isEqualTo("Hello")
-
-        mockServerTestHelper.stop()
     }
 
     @Test

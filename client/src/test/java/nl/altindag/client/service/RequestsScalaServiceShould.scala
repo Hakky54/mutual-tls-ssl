@@ -13,7 +13,7 @@ import org.scalatest.funspec.AnyFunSpec
 class RequestsScalaServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
-    val mockServerTestHelper = new MockServerTestHelper(REQUESTS_SCALA)
+    MockServerTestHelper.mockResponseForClient(REQUESTS_SCALA)
 
     describe("execute request without ssl material") {
 
@@ -37,8 +37,6 @@ class RequestsScalaServiceShould extends AnyFunSpec with MockitoSugar {
       assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
       verify(sslFactory, times(1)).getSslContext()
     }
-
-    mockServerTestHelper.stop();
   }
 
 }

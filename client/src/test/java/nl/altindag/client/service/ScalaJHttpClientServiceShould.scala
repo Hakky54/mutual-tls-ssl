@@ -16,7 +16,7 @@ import scalaj.http.HttpOptions
 class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
-    val mockServerTestHelper = new MockServerTestHelper(SCALAJ_HTTP_CLIENT)
+    MockServerTestHelper.mockResponseForClient(SCALAJ_HTTP_CLIENT)
 
     val dummyHttpOption = HttpOptions.connTimeout(1000)
     val victim = new ScalaJHttpClientService(dummyHttpOption)
@@ -24,8 +24,6 @@ class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
 
     assertThat(clientResponse.getStatusCode).isEqualTo(200)
     assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
-
-    mockServerTestHelper.stop();
   }
 
   describe("create http option with ssl material when url is https and sslFactory is present") {

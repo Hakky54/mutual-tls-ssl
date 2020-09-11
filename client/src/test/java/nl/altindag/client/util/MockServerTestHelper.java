@@ -14,10 +14,14 @@ import org.mockserver.model.HttpResponse;
  */
 public final class MockServerTestHelper {
 
-    private final ClientAndServer clientAndServer;
+    private static final ClientAndServer clientAndServer;
 
-    public MockServerTestHelper(ClientType clientType) {
+    static {
         clientAndServer = ClientAndServer.startClientAndServer(8080);
+        Runtime.getRuntime().addShutdownHook(new Thread(clientAndServer::stop));
+    }
+
+    public static void mockResponseForClient(ClientType clientType) {
         clientAndServer
                 .when(
                         HttpRequest.request()
@@ -31,10 +35,6 @@ public final class MockServerTestHelper {
                                 .withBody("Hello")
                                 .withStatusCode(200)
                 );
-    }
-
-    public void stop() {
-        clientAndServer.stop();
     }
 
 }

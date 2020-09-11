@@ -14,15 +14,13 @@ class KtorApacheHttpClientServiceShould {
 
     @Test
     fun executeRequest() {
-        val mockServerTestHelper = MockServerTestHelper(KTOR_APACHE_HTTP_CLIENT)
+        MockServerTestHelper.mockResponseForClient(KTOR_APACHE_HTTP_CLIENT)
         val client = KtorApacheHttpClientService(null)
 
         val clientResponse = client.executeRequest(HTTP_URL)
 
         assertThat(clientResponse.statusCode).isEqualTo(200)
         assertThat(clientResponse.responseBody).isEqualTo("Hello")
-
-        mockServerTestHelper.stop()
     }
 
     @Test
