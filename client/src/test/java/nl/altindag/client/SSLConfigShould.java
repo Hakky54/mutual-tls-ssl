@@ -22,7 +22,7 @@ class SSLConfigShould {
         assertThat(sslFactory.getSslContext()).isNotNull();
         assertThat(sslFactory.getKeyManager()).isNotPresent();
         assertThat(sslFactory.getTrustManager()).isNotNull();
-        assertThat(sslFactory.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
+        assertThat(sslFactory.getProtocols()).contains("TLSv1.3");
     }
 
     @Test
@@ -39,7 +39,7 @@ class SSLConfigShould {
         assertThat(sslFactory.getSslContext()).isNotNull();
         assertThat(sslFactory.getKeyManager()).isPresent();
         assertThat(sslFactory.getTrustManager()).isNotNull();
-        assertThat(sslFactory.getSslContext().getProtocol()).isEqualTo("TLSv1.3");
+        assertThat(sslFactory.getProtocols()).contains("TLSv1.3");
     }
 
     @Test

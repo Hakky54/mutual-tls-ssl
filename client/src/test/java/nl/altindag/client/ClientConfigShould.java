@@ -120,8 +120,9 @@ class ClientConfigShould {
         reactor.netty.http.client.HttpClient httpClient = victim.nettyHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getTrustManager();
+        verify(sslFactory, times(1)).getCiphers();
+        verify(sslFactory, times(1)).getProtocols();
     }
 
     @Test
@@ -131,9 +132,10 @@ class ClientConfigShould {
         reactor.netty.http.client.HttpClient httpClient = victim.nettyHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManager();
         verify(sslFactory, times(1)).getTrustManager();
+        verify(sslFactory, times(1)).getCiphers();
+        verify(sslFactory, times(1)).getProtocols();
     }
 
     @Test
@@ -158,8 +160,10 @@ class ClientConfigShould {
         org.eclipse.jetty.client.HttpClient httpClient = victim.jettyHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(3)).getSslContext();
+        verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(1)).getProtocols();
+        verify(sslFactory, times(1)).getCiphers();
         verify(sslFactory, times(0)).getTrustStores();
         verify(sslFactory, times(0)).getIdentities();
     }
@@ -171,8 +175,10 @@ class ClientConfigShould {
         org.eclipse.jetty.client.HttpClient httpClient = victim.jettyHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(3)).getSslContext();
+        verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(1)).getProtocols();
+        verify(sslFactory, times(1)).getCiphers();
         verify(sslFactory, times(0)).getTrustStores();
         verify(sslFactory, times(0)).getIdentities();
     }
@@ -349,8 +355,9 @@ class ClientConfigShould {
 
         assertThat(httpClient).isNotNull();
         assertThat(httpClient.getConfig().getSslContext()).isNotNull();
-        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getTrustManager();
+        verify(sslFactory, times(1)).getCiphers();
+        verify(sslFactory, times(1)).getProtocols();
     }
 
     @Test
@@ -361,9 +368,10 @@ class ClientConfigShould {
 
         assertThat(httpClient).isNotNull();
         assertThat(httpClient.getConfig().getSslContext()).isNotNull();
-        verify(sslFactory, times(2)).getSslContext();
         verify(sslFactory, times(1)).getKeyManager();
         verify(sslFactory, times(1)).getTrustManager();
+        verify(sslFactory, times(1)).getProtocols();
+        verify(sslFactory, times(1)).getCiphers();
     }
 
     @Test

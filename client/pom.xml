@@ -234,6 +234,10 @@
         </dependency>
         <dependency>
             <groupId>io.github.hakky54</groupId>
+            <artifactId>sslcontext-kickstart-for-apache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.hakky54</groupId>
             <artifactId>sslcontext-kickstart-for-netty</artifactId>
         </dependency>
         <dependency>

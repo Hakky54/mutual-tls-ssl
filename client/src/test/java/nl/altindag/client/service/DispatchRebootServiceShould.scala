@@ -43,9 +43,10 @@ class DispatchRebootServiceShould extends AnyFunSpec with MockitoSugar {
       .createDispatchRebootHttpClient(sslFactory)
 
     assertThat(client).isNotNull
-    verify(sslFactory, times(2)).getSslContext
     verify(sslFactory, times(1)).getKeyManager
     verify(sslFactory, times(1)).getTrustManager
+    verify(sslFactory, times(1)).getProtocols
+    verify(sslFactory, times(1)).getCiphers
   }
 
 }

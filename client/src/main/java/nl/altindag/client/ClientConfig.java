@@ -20,9 +20,11 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
+import nl.altindag.sslcontext.util.ApacheSslContextUtils;
 import nl.altindag.sslcontext.util.JettySslContextUtils;
 import nl.altindag.sslcontext.util.NettySslContextUtils;
 import okhttp3.OkHttpClient;
+import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClients;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
@@ -56,9 +58,9 @@ public class ClientConfig {
     @Scope("prototype")
     public org.apache.http.client.HttpClient apacheHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
+            LayeredConnectionSocketFactory socketFactory = ApacheSslContextUtils.toLayeredConnectionSocketFactory(sslFactory);
             return HttpClients.custom()
-                    .setSSLContext(sslFactory.getSslContext())
-                    .setSSLHostnameVerifier(sslFactory.getHostnameVerifier())
+                    .setSSLSocketFactory(socketFactory)
                     .build();
         } else {
             return HttpClients.createMinimal();
