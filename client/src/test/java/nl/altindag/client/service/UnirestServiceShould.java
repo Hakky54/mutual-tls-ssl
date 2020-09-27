@@ -11,7 +11,6 @@ import static nl.altindag.client.ClientType.UNIREST;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SuppressWarnings("SameParameterValue")
 class UnirestServiceShould {
 
     private UnirestService victim;
