@@ -1,5 +1,6 @@
 package nl.altindag.server.aspect;
 
+import nl.altindag.log.LogCaptor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -96,6 +97,22 @@ class AdditionalCertificateValidationsAspectShould {
         ResponseEntity responseEntity = (ResponseEntity) response;
         assertThat(responseEntity.getStatusCode().value()).isEqualTo(400);
         assertThat(responseEntity.getBody()).isEqualTo("This certificate is not a valid one");
+    }
+
+    @Test
+    void ignoreCertificateValidationWhenThereIsNoCertificate() throws Throwable {
+        LogCaptor logCaptor = LogCaptor.forClass(AdditionalCertificateValidationsAspect.class);
+
+        var proceedingJoinPoint = mock(ProceedingJoinPoint.class);
+        var additionalCertificateValidations = createAdditionalCertificateValidations();
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        victim.validate(proceedingJoinPoint, additionalCertificateValidations);
+
+        verify(proceedingJoinPoint, times(1)).proceed();
+        assertThat(logCaptor.getInfoLogs()).containsExactly("Skipping common name validation because certificate is not present within the request");
     }
 
     private AdditionalCertificateValidations createAdditionalCertificateValidations() {

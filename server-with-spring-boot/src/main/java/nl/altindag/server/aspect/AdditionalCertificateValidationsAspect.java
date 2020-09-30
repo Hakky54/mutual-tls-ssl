@@ -1,5 +1,7 @@
 package nl.altindag.server.aspect;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,12 +25,18 @@ import java.util.stream.Stream;
 @EnableAspectJAutoProxy
 public class AdditionalCertificateValidationsAspect {
 
+    private static final Logger LOGGER = LogManager.getLogger(AdditionalCertificateValidationsAspect.class);
     private static final String KEY_CERTIFICATE_ATTRIBUTE = "javax.servlet.request.X509Certificate";
     private static final Pattern COMMON_NAME_PATTERN = Pattern.compile("(?<=CN=)(.*?)(?=,)");
 
     @Around("@annotation(certificateValidations)")
     public Object validate(ProceedingJoinPoint joinPoint,
                            AdditionalCertificateValidations certificateValidations) throws Throwable {
+
+        if (getCertificatesFromRequest().isEmpty()) {
+            LOGGER.info("Skipping common name validation because certificate is not present within the request");
+            return joinPoint.proceed();
+        }
 
         List<String> allowedCommonNames = Arrays.asList(certificateValidations.allowedCommonNames());
         List<String> notAllowedCommonNames = Arrays.asList(certificateValidations.notAllowedCommonNames());
