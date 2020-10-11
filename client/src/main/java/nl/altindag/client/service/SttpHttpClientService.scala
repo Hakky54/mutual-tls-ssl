@@ -17,13 +17,11 @@ import sttp.model._
 @Service
 class SttpHttpClientService(sttpBackend: SttpBackend[Identity, Any]) extends RequestService {
 
-  implicit val backend: SttpBackend[Identity, Any] = sttpBackend;
-
   override def executeRequest(url: String): ClientResponse = {
     val request = basicRequest.get(uri = Uri(javaUri = URI.create(url)))
                               .header(HEADER_KEY_CLIENT_TYPE, getClientType.getValue)
 
-    val response = request.send()
+    val response = request.send(sttpBackend)
     new ClientResponse(response.body.toOption.orNull, response.code.code)
   }
 

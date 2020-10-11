@@ -20,7 +20,7 @@ abstract class Http4sService(client: Resource[IO, Client[IO]]) extends RequestSe
       .unsafeRunSync()
 
     // the client will throw a runtime exception for any other status code than 2xx
-    // therefor it won't even reach to this point if it gets a non 2xx status code.
+    // therefore it won't even reach to this point if it gets a non 2xx status code.
     // If it is getting this far it is safe to assume that the status code is 200
     new ClientResponse(responseBody, 200)
   }

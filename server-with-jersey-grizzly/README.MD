@@ -1,4 +1,4 @@
-# Example server configuration with Jersey (JAX RS) and Gizzly
+# Example server configuration with Jersey (JAX RS) and Grizzly
 
 ## Introduction
 The main tutorial demonstrates various http clients with a spring-boot server. However not everyone is using spring-boot and therefore it is also good to have examples for other servers. 
