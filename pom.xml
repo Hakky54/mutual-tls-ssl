@@ -25,8 +25,8 @@
         <version.sslcontext-kickstart>5.2.3</version.sslcontext-kickstart>
         <version.spring>2.3.4.RELEASE</version.spring>
         <version.slf4j>1.7.30</version.slf4j>
-        <version.apache.httpclient>4.5.12</version.apache.httpclient>
-        <version.cucumber>6.8.0</version.cucumber>
+        <version.apache.httpclient>4.5.13</version.apache.httpclient>
+        <version.cucumber>6.8.1</version.cucumber>
         <version.junit>4.13</version.junit>
         <version.maven-fail-safe>2.22.2</version.maven-fail-safe>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
@@ -40,11 +40,11 @@
         <version.jersey1>1.19.4</version.jersey1>
         <version.jersey2>3.0.0-M6</version.jersey2>
         <version.google.http.client>1.36.0</version.google.http.client>
-        <version.unirest>3.11.00</version.unirest>
+        <version.unirest>3.11.01</version.unirest>
         <version.retrofit>2.9.0</version.retrofit>
         <version.finagle>20.9.0</version.finagle>
-        <version.akka-http>10.2.0</version.akka-http>
-        <version.akka-stream>2.6.9</version.akka-stream>
+        <version.akka-http>10.2.1</version.akka-http>
+        <version.akka-stream>2.6.10</version.akka-stream>
         <version.dispatch-core>1.2.0</version.dispatch-core>
         <version.scalaj-http>2.4.2</version.scalaj-http>
         <version.async-http-client>2.12.1</version.async-http-client>
@@ -61,12 +61,12 @@
         <version.jakarta.xml.bind-api>3.0.0-RC3</version.jakarta.xml.bind-api>
         <version.jakarta.annotation-api>2.0.0-RC1</version.jakarta.annotation-api>
         <version.cats>2.2.0</version.cats>
-        <version.jackson-module-scala>2.11.2</version.jackson-module-scala>
+        <version.jackson-module-scala>2.11.3</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         <version.junit-jupiter>5.7.0</version.junit-jupiter>
         <version.assertj-core>3.17.2</version.assertj-core>
         <version.logcaptor>2.1.1</version.logcaptor>
-        <version.byte-buddy>1.10.16</version.byte-buddy>
+        <version.byte-buddy>1.10.17</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
         <version.scalatest>3.2.0</version.scalatest>
         <version.scalatest-maven-plugin>2.0.0</version.scalatest-maven-plugin>
