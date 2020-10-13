@@ -27,7 +27,6 @@
         <version.slf4j>1.7.30</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
         <version.cucumber>6.8.1</version.cucumber>
-        <version.junit>4.13</version.junit>
         <version.maven-fail-safe>2.22.2</version.maven-fail-safe>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
         <version.aspectjweaver>1.9.6</version.aspectjweaver>
@@ -391,11 +390,6 @@
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-spring</artifactId>
                 <version>${version.cucumber}</version>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${version.junit}</version>
             </dependency>
             <dependency>
                 <groupId>net.bytebuddy</groupId>
