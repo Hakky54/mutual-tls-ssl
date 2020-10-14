@@ -151,6 +151,7 @@ class AdditionalCertificateValidationsAspectShould {
     @Test
     void ignoreCertificateValidationWhenThereIsNoCertificate() throws Throwable {
         LogCaptor logCaptor = LogCaptor.forClass(AdditionalCertificateValidationsAspect.class);
+        logCaptor.setLogLevelToDebug();
 
         var proceedingJoinPoint = mock(ProceedingJoinPoint.class);
         var additionalCertificateValidations = createAdditionalCertificateValidations(Collections.emptyList(), Collections.emptyList());
@@ -161,7 +162,7 @@ class AdditionalCertificateValidationsAspectShould {
         victim.validate(proceedingJoinPoint, additionalCertificateValidations);
 
         verify(proceedingJoinPoint, times(1)).proceed();
-        assertThat(logCaptor.getInfoLogs()).containsExactly("Skipping common name validation because certificate is not present within the request");
+        assertThat(logCaptor.getDebugLogs()).containsExactly("Skipping common name validation because certificate is not present within the request");
     }
 
     private AdditionalCertificateValidations createAdditionalCertificateValidations(List<String> allowedCommonNames, List<String> notAllowedCommonNames) {

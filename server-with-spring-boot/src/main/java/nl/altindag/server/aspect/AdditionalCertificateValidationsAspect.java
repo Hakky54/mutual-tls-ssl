@@ -34,7 +34,7 @@ public class AdditionalCertificateValidationsAspect {
                            AdditionalCertificateValidations certificateValidations) throws Throwable {
 
         if (getCertificatesFromRequest().isEmpty()) {
-            LOGGER.info("Skipping common name validation because certificate is not present within the request");
+            LOGGER.debug("Skipping common name validation because certificate is not present within the request");
             return joinPoint.proceed();
         }
 
