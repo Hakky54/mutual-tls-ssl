@@ -71,7 +71,7 @@ public class ClientConfig {
     public HttpClient jdkHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
             return HttpClient.newBuilder()
-                    .sslParameters(sslFactory.getSslContext().getDefaultSSLParameters())
+                    .sslParameters(sslFactory.getSslParameters())
                     .sslContext(sslFactory.getSslContext())
                     .build();
         } else {
@@ -250,7 +250,7 @@ public class ClientConfig {
         if (nonNull(sslFactory)) {
             return Methanol.newBuilder()
                     .sslContext(sslFactory.getSslContext())
-                    .sslParameters(sslFactory.getSslContext().getDefaultSSLParameters())
+                    .sslParameters(sslFactory.getSslParameters())
                     .build();
         } else {
             return Methanol.create();

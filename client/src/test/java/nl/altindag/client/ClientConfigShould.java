@@ -71,7 +71,8 @@ class ClientConfigShould {
         java.net.http.HttpClient httpClient = victim.jdkHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getSslParameters();
     }
 
     @Test
@@ -406,7 +407,8 @@ class ClientConfigShould {
         Methanol httpClient = victim.methanol(sslFactory);
 
         assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getSslParameters();
     }
 
 }
