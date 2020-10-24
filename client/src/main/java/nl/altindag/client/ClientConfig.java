@@ -92,15 +92,15 @@ public class ClientConfig {
     @Scope("prototype")
     public OkHttpClient okHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
+            ConnectionSpec connectionSpec = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
+                    .cipherSuites(sslFactory.getSslParameters().getCipherSuites())
+                    .tlsVersions(sslFactory.getSslParameters().getProtocols())
+                    .build();
+
             return new OkHttpClient.Builder()
                     .sslSocketFactory(sslFactory.getSslContext().getSocketFactory(), sslFactory.getTrustManager().orElseThrow())
                     .hostnameVerifier(sslFactory.getHostnameVerifier())
-                    .connectionSpecs(Collections.singletonList(
-                            new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
-                                    .cipherSuites(sslFactory.getSslParameters().getCipherSuites())
-                                    .tlsVersions(sslFactory.getSslParameters().getProtocols())
-                                    .build()
-                    ))
+                    .connectionSpecs(Collections.singletonList(connectionSpec))
                     .build();
         } else {
             return new OkHttpClient();
