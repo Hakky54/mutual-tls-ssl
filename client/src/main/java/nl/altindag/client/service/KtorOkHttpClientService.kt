@@ -5,6 +5,7 @@ import io.ktor.client.engine.okhttp.OkHttp
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.KTOR_OK_HTTP
 import nl.altindag.sslcontext.SSLFactory
+import okhttp3.ConnectionSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -17,6 +18,15 @@ class KtorOkHttpClientService(
             sslFactory?.let { factory ->
                 engine {
                     config {
+                        connectionSpecs(
+                                listOf(
+                                        ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS).apply {
+                                            cipherSuites(*factory.sslParameters.cipherSuites)
+                                            tlsVersions(*factory.sslParameters.protocols)
+                                        }.build()
+                                )
+                        )
+
                         sslSocketFactory(factory.sslContext.socketFactory, factory.trustManager.orElseThrow())
                         hostnameVerifier(factory.hostnameVerifier)
                     }

@@ -11,7 +11,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
-
 class KtorOkHttpClientServiceShould {
 
     @Test
@@ -35,6 +34,7 @@ class KtorOkHttpClientServiceShould {
         verify(sslFactory, times(1)).sslContext
         verify(sslFactory, times(1)).trustManager
         verify(sslFactory, times(1)).hostnameVerifier
+        verify(sslFactory, times(2)).sslParameters
     }
 
 }

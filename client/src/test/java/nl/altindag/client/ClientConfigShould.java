@@ -10,7 +10,9 @@ import com.twitter.finagle.http.Response;
 import feign.Feign;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
+import okhttp3.CipherSuite;
 import okhttp3.OkHttpClient;
+import okhttp3.TlsVersion;
 import org.apache.http.client.HttpClient;
 import org.asynchttpclient.AsyncHttpClient;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,9 @@ import javax.net.ssl.SSLException;
 import jakarta.ws.rs.client.Client;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static nl.altindag.client.util.SSLFactoryTestHelper.createSSLFactory;
 import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
@@ -101,10 +106,23 @@ class ClientConfigShould {
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getTrustManager();
         verify(sslFactory, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(2)).getSslParameters();
 
         assertThat(sslFactory.getTrustManager()).isPresent();
         assertThat(okHttpClient.x509TrustManager()).isEqualTo(sslFactory.getTrustManager().get());
         assertThat(okHttpClient.hostnameVerifier()).isEqualTo(sslFactory.getHostnameVerifier());
+        assertThat(okHttpClient.connectionSpecs()).hasSize(1);
+
+        List<String> ciphers = Objects.requireNonNull(okHttpClient.connectionSpecs().get(0).cipherSuites()).stream()
+                .map(CipherSuite::javaName)
+                .collect(Collectors.toList());
+
+        List<String> protocols = Objects.requireNonNull(okHttpClient.connectionSpecs().get(0).tlsVersions()).stream()
+                .map(TlsVersion::javaName)
+                .collect(Collectors.toList());
+
+        assertThat(ciphers).containsExactlyInAnyOrder(sslFactory.getSslParameters().getCipherSuites());
+        assertThat(protocols).containsExactlyInAnyOrder(sslFactory.getSslParameters().getProtocols());
     }
 
     @Test

@@ -23,6 +23,7 @@ import nl.altindag.sslcontext.SSLFactory;
 import nl.altindag.sslcontext.util.ApacheSslContextUtils;
 import nl.altindag.sslcontext.util.JettySslContextUtils;
 import nl.altindag.sslcontext.util.NettySslContextUtils;
+import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
 import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClients;
@@ -47,6 +48,7 @@ import javax.net.ssl.SSLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
+import java.util.Collections;
 
 import static java.util.Objects.nonNull;
 import static nl.altindag.client.Constants.SERVER_URL;
@@ -93,6 +95,12 @@ public class ClientConfig {
             return new OkHttpClient.Builder()
                     .sslSocketFactory(sslFactory.getSslContext().getSocketFactory(), sslFactory.getTrustManager().orElseThrow())
                     .hostnameVerifier(sslFactory.getHostnameVerifier())
+                    .connectionSpecs(Collections.singletonList(
+                            new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
+                                    .cipherSuites(sslFactory.getSslParameters().getCipherSuites())
+                                    .tlsVersions(sslFactory.getSslParameters().getProtocols())
+                                    .build()
+                    ))
                     .build();
         } else {
             return new OkHttpClient();
