@@ -42,7 +42,7 @@ public class OldJdkHttpClientService implements RequestService {
         } else if (url.contains(HTTPS_REQUEST)) {
             HttpsURLConnection httpsURLConnection = createHttpsURLConnection(url);
             httpsURLConnection.setHostnameVerifier(sslFactory.getHostnameVerifier());
-            httpsURLConnection.setSSLSocketFactory(sslFactory.getSslContext().getSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(sslFactory.getSslSocketFactory());
             connection = httpsURLConnection;
         } else {
             throw new ClientException("Could not create a http client for one of these reasons: "

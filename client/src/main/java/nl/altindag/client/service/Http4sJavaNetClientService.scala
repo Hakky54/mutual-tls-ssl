@@ -26,10 +26,10 @@ class JavaNetClientConfiguration extends IOApp {
   @Bean(name = Array("javaNetClient"))
   def createJavaNetClient(@Autowired(required = false) sslFactory: SSLFactory): Resource[IO, Client[IO]] = {
     val executorService = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
-    val client = JavaNetClientBuilder[IO](Blocker.liftExecutionContext(executorService))
+    var client = JavaNetClientBuilder[IO](Blocker.liftExecutionContext(executorService))
 
     if (nonNull(sslFactory)) {
-      client.withSslSocketFactory(sslFactory.getSslContext.getSocketFactory)
+      client = client.withSslSocketFactory(sslFactory.getSslSocketFactory)
         .withHostnameVerifier(sslFactory.getHostnameVerifier)
     }
 

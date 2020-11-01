@@ -32,7 +32,7 @@ class KtorAndroidHttpClientServiceShould {
 
         assertThatThrownBy { client.executeRequest(HTTPS_URL) }
 
-        verify(sslFactory, times(1)).sslContext
+        verify(sslFactory, times(1)).sslSocketFactory
         verify(sslFactory, times(1)).hostnameVerifier
     }
 

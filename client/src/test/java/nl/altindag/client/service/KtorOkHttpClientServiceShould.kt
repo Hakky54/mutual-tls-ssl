@@ -31,10 +31,9 @@ class KtorOkHttpClientServiceShould {
         val client = KtorOkHttpClientService(sslFactory)
         assertThatThrownBy { client.executeRequest(HTTPS_URL) }
 
-        verify(sslFactory, times(1)).sslContext
+        verify(sslFactory, times(1)).sslSocketFactory
         verify(sslFactory, times(1)).trustManager
         verify(sslFactory, times(1)).hostnameVerifier
-        verify(sslFactory, times(2)).sslParameters
     }
 
 }

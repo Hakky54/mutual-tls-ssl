@@ -37,7 +37,7 @@ class SttpHttpClientConfiguration {
     HttpURLConnectionBackend(customizeConnection = {
       case httpsConnection: HttpsURLConnection if sslFactory != null =>
         httpsConnection.setHostnameVerifier(sslFactory.getHostnameVerifier)
-        httpsConnection.setSSLSocketFactory(sslFactory.getSslContext.getSocketFactory)
+        httpsConnection.setSSLSocketFactory(sslFactory.getSslSocketFactory)
       case _ =>
     })
   }

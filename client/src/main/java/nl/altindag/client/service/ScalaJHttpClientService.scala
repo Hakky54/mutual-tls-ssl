@@ -36,7 +36,7 @@ class ScalaJHttpClientConfiguration {
   def createHttpOption(@Autowired(required = false) sslFactory: SSLFactory): HttpOption = {
     case httpsURLConnection: HttpsURLConnection if sslFactory != null =>
       httpsURLConnection.setHostnameVerifier(sslFactory.getHostnameVerifier)
-      httpsURLConnection.setSSLSocketFactory(sslFactory.getSslContext.getSocketFactory)
+      httpsURLConnection.setSSLSocketFactory(sslFactory.getSslSocketFactory)
     case _ =>
   }
 

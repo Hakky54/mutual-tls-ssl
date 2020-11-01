@@ -29,12 +29,10 @@ class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
   describe("create http option with ssl material when url is https and sslFactory is present") {
     val httpsURLConnection = mock[HttpsURLConnection]
     val sslFactory = mock[SSLFactory]
-    val sslContext = mock[SSLContext]
     val socketFactory = mock[SSLSocketFactory]
     val hostnameVerifier = mock[HostnameVerifier]
 
-    when(sslFactory.getSslContext).thenReturn(sslContext)
-    when(sslContext.getSocketFactory).thenReturn(socketFactory)
+    when(sslFactory.getSslSocketFactory).thenReturn(socketFactory)
     when(sslFactory.getHostnameVerifier).thenReturn(hostnameVerifier)
 
     val victim = new ScalaJHttpClientConfiguration()
@@ -43,7 +41,7 @@ class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
     httpOption.apply(httpsURLConnection)
 
     verify(httpsURLConnection, times(1)).setHostnameVerifier(sslFactory.getHostnameVerifier)
-    verify(httpsURLConnection, times(1)).setSSLSocketFactory(sslFactory.getSslContext.getSocketFactory)
+    verify(httpsURLConnection, times(1)).setSSLSocketFactory(sslFactory.getSslSocketFactory)
   }
 
   describe("create http option without ssl material when url is https and sslFactory is absent") {
@@ -61,12 +59,10 @@ class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
   describe("create http option without ssl material when url is http and sslFactory is present") {
     val httpURLConnection = mock[HttpURLConnection]
     val sslFactory = mock[SSLFactory]
-    val sslContext = mock[SSLContext]
     val socketFactory = mock[SSLSocketFactory]
     val hostnameVerifier = mock[HostnameVerifier]
 
-    when(sslFactory.getSslContext).thenReturn(sslContext)
-    when(sslContext.getSocketFactory).thenReturn(socketFactory)
+    when(sslFactory.getSslSocketFactory).thenReturn(socketFactory)
     when(sslFactory.getHostnameVerifier).thenReturn(hostnameVerifier)
 
     val victim = new ScalaJHttpClientConfiguration()
@@ -75,7 +71,7 @@ class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
     httpOption.apply(httpURLConnection)
 
     verify(sslFactory, times(0)).getHostnameVerifier
-    verify(sslFactory, times(0)).getSslContext
+    verify(sslFactory, times(0)).getSslSocketFactory
   }
 
 }

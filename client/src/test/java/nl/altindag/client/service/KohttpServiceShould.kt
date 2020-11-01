@@ -11,7 +11,6 @@ import okhttp3.ResponseBody
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-
 class KohttpServiceShould {
 
     @Test
@@ -63,18 +62,9 @@ class KohttpServiceShould {
         val client = victim.createKohttpClient(sslFactory)
 
         assertThat(client).isNotNull
-        verify(sslFactory, times(1)).sslContext
+        verify(sslFactory, times(1)).sslSocketFactory
         verify(sslFactory, times(1)).trustManager
         verify(sslFactory, times(1)).hostnameVerifier
-        verify(sslFactory, times(2)).sslParameters
-
-        assertThat(client.connectionSpecs).hasSize(1)
-
-        val ciphers = client.connectionSpecs[0].cipherSuites?.map { it.javaName }.orEmpty()
-        val protocols = client.connectionSpecs[0].tlsVersions?.map { it.javaName }.orEmpty()
-
-        assertThat(ciphers).containsExactlyInAnyOrder(*sslFactory.sslParameters.cipherSuites)
-        assertThat(protocols).containsExactlyInAnyOrder(*sslFactory.sslParameters.protocols)
     }
 
 }

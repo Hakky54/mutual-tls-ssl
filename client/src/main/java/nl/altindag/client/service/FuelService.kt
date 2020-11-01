@@ -19,7 +19,7 @@ class FuelService(
     init {
         sslFactory?.let { factory ->
             FuelManager.instance.hostnameVerifier = factory.hostnameVerifier
-            FuelManager.instance.socketFactory = factory.sslContext.socketFactory
+            FuelManager.instance.socketFactory = factory.sslSocketFactory
         }
     }
 

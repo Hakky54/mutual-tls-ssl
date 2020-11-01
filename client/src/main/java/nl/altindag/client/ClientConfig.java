@@ -23,7 +23,6 @@ import nl.altindag.sslcontext.SSLFactory;
 import nl.altindag.sslcontext.util.ApacheSslContextUtils;
 import nl.altindag.sslcontext.util.JettySslContextUtils;
 import nl.altindag.sslcontext.util.NettySslContextUtils;
-import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
 import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClients;
@@ -43,12 +42,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
-import java.util.Collections;
 
 import static java.util.Objects.nonNull;
 import static nl.altindag.client.Constants.SERVER_URL;
@@ -92,15 +89,9 @@ public class ClientConfig {
     @Scope("prototype")
     public OkHttpClient okHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
-            ConnectionSpec connectionSpec = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
-                    .cipherSuites(sslFactory.getSslParameters().getCipherSuites())
-                    .tlsVersions(sslFactory.getSslParameters().getProtocols())
-                    .build();
-
             return new OkHttpClient.Builder()
-                    .sslSocketFactory(sslFactory.getSslContext().getSocketFactory(), sslFactory.getTrustManager().orElseThrow())
+                    .sslSocketFactory(sslFactory.getSslSocketFactory(), sslFactory.getTrustManager().orElseThrow())
                     .hostnameVerifier(sslFactory.getHostnameVerifier())
-                    .connectionSpecs(Collections.singletonList(connectionSpec))
                     .build();
         } else {
             return new OkHttpClient();
@@ -158,7 +149,6 @@ public class ClientConfig {
     @Bean
     public com.sun.jersey.api.client.Client oldJerseyClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
-            HttpsURLConnection.setDefaultSSLSocketFactory(sslFactory.getSslContext().getSocketFactory());
             DefaultClientConfig clientConfig = new DefaultClientConfig();
             clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(sslFactory.getHostnameVerifier(), sslFactory.getSslContext()));
             return com.sun.jersey.api.client.Client.create(clientConfig);
@@ -171,7 +161,7 @@ public class ClientConfig {
     public HttpTransport googleHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
             return new NetHttpTransport.Builder()
-                    .setSslSocketFactory(sslFactory.getSslContext().getSocketFactory())
+                    .setSslSocketFactory(sslFactory.getSslSocketFactory())
                     .setHostnameVerifier(sslFactory.getHostnameVerifier())
                     .build();
         } else {
@@ -247,7 +237,7 @@ public class ClientConfig {
     public Feign.Builder feign(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
             return Feign.builder()
-                    .client(new feign.Client.Default(sslFactory.getSslContext().getSocketFactory(), sslFactory.getHostnameVerifier()));
+                    .client(new feign.Client.Default(sslFactory.getSslSocketFactory(), sslFactory.getHostnameVerifier()));
         } else {
             return Feign.builder();
         }

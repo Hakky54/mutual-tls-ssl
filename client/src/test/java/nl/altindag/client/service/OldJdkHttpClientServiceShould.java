@@ -56,14 +56,12 @@ class OldJdkHttpClientServiceShould {
 
         HttpsURLConnection connection = mock(HttpsURLConnection.class);
         InputStream stream = new ByteArrayInputStream("Hello".getBytes());
-        SSLContext sslContext = mock(SSLContext.class);
         SSLSocketFactory sslSocketFactory = mock(SSLSocketFactory.class);
 
         when(victim.createHttpsURLConnection(HTTPS_URL)).thenReturn(connection);
         when(connection.getInputStream()).thenReturn(stream);
         when(connection.getResponseCode()).thenReturn(200);
-        when(sslFactory.getSslContext()).thenReturn(sslContext);
-        when(sslContext.getSocketFactory()).thenReturn(sslSocketFactory);
+        when(sslFactory.getSslSocketFactory()).thenReturn(sslSocketFactory);
 
         ClientResponse clientResponse = victim.executeRequest(HTTPS_URL);
 

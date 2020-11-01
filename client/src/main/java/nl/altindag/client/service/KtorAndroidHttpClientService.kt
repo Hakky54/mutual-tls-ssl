@@ -18,7 +18,7 @@ class KtorAndroidHttpClientService(
                 engine {
                     sslManager = { httpsURLConnection ->
                         httpsURLConnection.hostnameVerifier = factory.hostnameVerifier
-                        httpsURLConnection.sslSocketFactory = factory.sslContext.socketFactory
+                        httpsURLConnection.sslSocketFactory = factory.sslSocketFactory
                     }
                 }
             }

@@ -10,9 +10,7 @@ import com.twitter.finagle.http.Response;
 import feign.Feign;
 import kong.unirest.Unirest;
 import nl.altindag.sslcontext.SSLFactory;
-import okhttp3.CipherSuite;
 import okhttp3.OkHttpClient;
-import okhttp3.TlsVersion;
 import org.apache.http.client.HttpClient;
 import org.asynchttpclient.AsyncHttpClient;
 import org.junit.jupiter.api.Test;
@@ -26,9 +24,6 @@ import javax.net.ssl.SSLException;
 import jakarta.ws.rs.client.Client;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static nl.altindag.client.util.SSLFactoryTestHelper.createSSLFactory;
 import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
@@ -103,26 +98,14 @@ class ClientConfigShould {
         OkHttpClient okHttpClient = victim.okHttpClient(sslFactory);
 
         assertThat(okHttpClient).isNotNull();
-        verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getTrustManager();
         verify(sslFactory, times(1)).getHostnameVerifier();
-        verify(sslFactory, times(2)).getSslParameters();
+        verify(sslFactory, times(1)).getSslSocketFactory();
 
         assertThat(sslFactory.getTrustManager()).isPresent();
         assertThat(okHttpClient.x509TrustManager()).isEqualTo(sslFactory.getTrustManager().get());
+        assertThat(okHttpClient.sslSocketFactory()).isEqualTo(sslFactory.getSslSocketFactory());
         assertThat(okHttpClient.hostnameVerifier()).isEqualTo(sslFactory.getHostnameVerifier());
-        assertThat(okHttpClient.connectionSpecs()).hasSize(1);
-
-        List<String> ciphers = Objects.requireNonNull(okHttpClient.connectionSpecs().get(0).cipherSuites()).stream()
-                .map(CipherSuite::javaName)
-                .collect(Collectors.toList());
-
-        List<String> protocols = Objects.requireNonNull(okHttpClient.connectionSpecs().get(0).tlsVersions()).stream()
-                .map(TlsVersion::javaName)
-                .collect(Collectors.toList());
-
-        assertThat(ciphers).containsExactlyInAnyOrder(sslFactory.getSslParameters().getCipherSuites());
-        assertThat(protocols).containsExactlyInAnyOrder(sslFactory.getSslParameters().getProtocols());
     }
 
     @Test
@@ -181,10 +164,6 @@ class ClientConfigShould {
         assertThat(httpClient).isNotNull();
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
-        verify(sslFactory, times(1)).getProtocols();
-        verify(sslFactory, times(1)).getCiphers();
-        verify(sslFactory, times(0)).getTrustStores();
-        verify(sslFactory, times(0)).getIdentities();
     }
 
     @Test
@@ -196,10 +175,6 @@ class ClientConfigShould {
         assertThat(httpClient).isNotNull();
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
-        verify(sslFactory, times(1)).getProtocols();
-        verify(sslFactory, times(1)).getCiphers();
-        verify(sslFactory, times(0)).getTrustStores();
-        verify(sslFactory, times(0)).getIdentities();
     }
 
     @Test
@@ -248,7 +223,7 @@ class ClientConfigShould {
         com.sun.jersey.api.client.Client client = victim.oldJerseyClient(sslFactory);
 
         assertThat(client).isNotNull();
-        verify(sslFactory, times(2)).getSslContext();
+        verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
 
         client.destroy();
@@ -270,7 +245,7 @@ class ClientConfigShould {
         HttpTransport httpTransport = victim.googleHttpClient(sslFactory);
 
         assertThat(httpTransport).isNotNull();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getSslSocketFactory();
         verify(sslFactory, times(1)).getHostnameVerifier();
 
         httpTransport.shutdown();
@@ -407,7 +382,7 @@ class ClientConfigShould {
         Feign.Builder feignBuilder = victim.feign(sslFactory);
 
         assertThat(feignBuilder).isNotNull();
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getSslSocketFactory();
         verify(sslFactory, times(1)).getHostnameVerifier();
     }
 
