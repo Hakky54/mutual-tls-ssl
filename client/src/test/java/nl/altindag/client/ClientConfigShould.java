@@ -267,6 +267,7 @@ class ClientConfigShould {
         victim.unirest(sslFactory);
 
         verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(2)).getSslParameters();
         verify(sslFactory, times(1)).getHostnameVerifier();
 
         assertThat(Unirest.primaryInstance().config().getSslContext()).isEqualTo(sslFactory.getSslContext());

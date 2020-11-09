@@ -175,6 +175,8 @@ public class ClientConfig {
             Unirest.primaryInstance()
                    .config()
                    .sslContext(sslFactory.getSslContext())
+                   .protocols(sslFactory.getSslParameters().getProtocols())
+                   .ciphers(sslFactory.getSslParameters().getCipherSuites())
                    .hostnameVerifier(sslFactory.getHostnameVerifier());
         }
     }
