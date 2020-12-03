@@ -37,7 +37,7 @@ public class AkkaHttpClientService implements RequestService {
     private String extractBody(HttpResponse httpResponse) {
         return httpResponse.entity()
                 .getDataBytes()
-                .fold(ByteString.empty(), ByteString::concat)
+                .fold(ByteString.emptyByteString(), ByteString::concat)
                 .map(ByteString::utf8String)
                 .runWith(Sink.head(), actorSystem)
                 .toCompletableFuture()

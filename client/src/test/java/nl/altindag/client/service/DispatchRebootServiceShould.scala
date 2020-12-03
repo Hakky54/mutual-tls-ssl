@@ -15,7 +15,7 @@ class DispatchRebootServiceShould extends AnyFunSpec with MockitoSugar {
   describe("execute request") {
     val client = mock[Http]
     val response = mock[Res]
-    implicit val executionContext = any[ExecutionContext]
+    implicit val executionContext: ExecutionContext = any[ExecutionContext]
 
     when(client(any[Req])).thenReturn(Future.fromTry(Try(response)))
     when(response.getResponseBody).thenReturn("Hello")

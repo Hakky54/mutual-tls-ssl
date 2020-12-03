@@ -14,7 +14,6 @@ Feature: Securing the connection between you and the world
       | Apache HttpClient               |
       | Async HttpClient                |
       | Dispatch Reboot HttpClient      |
-      | Featherbed                      |
       | Feign                           |
       | Finagle                         |
       | Fuel                            |

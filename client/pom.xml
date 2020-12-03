@@ -98,10 +98,6 @@
             <artifactId>core_${version.scala}</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.finagle</groupId>
-            <artifactId>featherbed_${version.scala}</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.lihaoyi</groupId>
             <artifactId>requests_${version.scala}</artifactId>
         </dependency>
@@ -167,6 +163,10 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
         </dependency>
         <dependency>
             <groupId>io.github.hakky54</groupId>
@@ -251,8 +251,8 @@
             </plugin>
 
             <plugin>
-                <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${version.kotlin}</version>
             </plugin>
 

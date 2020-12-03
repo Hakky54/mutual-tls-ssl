@@ -23,7 +23,6 @@ public enum ClientType {
     JETTY_REACTIVE_HTTP_CLIENT("jetty reactive httpclient"),
     FUEL("fuel"),
     STTP("sttp"),
-    FEATHERBED("featherbed"),
     REQUESTS_SCALA("requests scala"),
     KOHTTP("kohttp"),
     HTTP4S_BLAZE_CLIENT("http4s blaze client"),

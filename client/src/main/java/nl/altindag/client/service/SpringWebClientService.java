@@ -19,8 +19,7 @@ public abstract class SpringWebClientService implements RequestService {
         return webClient.get()
                         .uri(url)
                         .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
-                        .exchange()
-                        .flatMap(clientResponse -> clientResponse.toEntity(String.class))
+                        .exchangeToMono(clientResponse -> clientResponse.toEntity(String.class))
                         .map(responseEntity -> new ClientResponse(responseEntity.getBody(), responseEntity.getStatusCodeValue()))
                         .block();
     }

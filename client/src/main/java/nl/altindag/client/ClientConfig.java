@@ -57,7 +57,7 @@ public class ClientConfig {
     @Scope("prototype")
     public org.apache.http.client.HttpClient apacheHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
-            LayeredConnectionSocketFactory socketFactory = ApacheSslContextUtils.toLayeredConnectionSocketFactory(sslFactory);
+            LayeredConnectionSocketFactory socketFactory = ApacheSslContextUtils.toSocketFactory(sslFactory);
             return HttpClients.custom()
                     .setSSLSocketFactory(socketFactory)
                     .build();

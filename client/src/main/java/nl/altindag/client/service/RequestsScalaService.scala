@@ -1,4 +1,5 @@
 package nl.altindag.client.service
+
 import nl.altindag.client.ClientType
 import nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE
 import nl.altindag.client.model.ClientResponse
