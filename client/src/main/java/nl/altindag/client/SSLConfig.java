@@ -24,6 +24,7 @@ public class SSLConfig {
             sslFactory = SSLFactory.builder()
                     .withTrustMaterial(trustStorePath, trustStorePassword)
                     .withProtocols("TLSv1.3")
+                    .withPasswordCaching()
                     .build();
         }
 
@@ -32,6 +33,7 @@ public class SSLConfig {
                     .withIdentityMaterial(keyStorePath, keyStorePassword)
                     .withTrustMaterial(trustStorePath, trustStorePassword)
                     .withProtocols("TLSv1.3")
+                    .withPasswordCaching()
                     .build();
         }
 

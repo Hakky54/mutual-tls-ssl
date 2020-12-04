@@ -15,13 +15,15 @@ public final class SSLFactoryTestHelper {
         SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder();
         if (oneWayAuthenticationEnabled) {
             sslFactoryBuilder.withTrustMaterial(trustStorePath, trustStorePassword.toCharArray())
-                    .withHostnameVerifier(new DefaultHostnameVerifier());
+                    .withHostnameVerifier(new DefaultHostnameVerifier())
+                    .withPasswordCaching();
         }
 
         if (twoWayAuthenticationEnabled) {
             sslFactoryBuilder.withIdentityMaterial(keyStorePath, keyStorePassword.toCharArray())
                     .withTrustMaterial(trustStorePath, trustStorePassword.toCharArray())
-                    .withHostnameVerifier(new DefaultHostnameVerifier());
+                    .withHostnameVerifier(new DefaultHostnameVerifier())
+                    .withPasswordCaching();
         }
         return Mockito.spy(sslFactoryBuilder.build());
     }
