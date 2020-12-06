@@ -24,7 +24,6 @@ public class SSLConfig {
             sslFactory = SSLFactory.builder()
                     .withTrustMaterial(trustStorePath, trustStorePassword)
                     .withProtocols("TLSv1.3")
-                    .withPasswordCaching() // <--- this option is only required for the ktor http client with cio engine
                     .build();
         }
 
