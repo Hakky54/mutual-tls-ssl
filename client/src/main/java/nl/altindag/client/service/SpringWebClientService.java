@@ -10,7 +10,7 @@ public abstract class SpringWebClientService implements RequestService {
 
     private final WebClient webClient;
 
-    public SpringWebClientService(WebClient webClient) {
+    protected SpringWebClientService(WebClient webClient) {
         this.webClient = webClient;
     }
 
