@@ -27,7 +27,7 @@
         <version.slf4j>1.7.30</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
         <version.cucumber>6.9.0</version.cucumber>
-        <version.maven-fail-safe>2.22.2</version.maven-fail-safe>
+        <version.maven-fail-safe>3.0.0-M5</version.maven-fail-safe>
         <version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
         <version.aspectjweaver>1.9.6</version.aspectjweaver>
         <version.maven-cucumber-reporting>5.4.0</version.maven-cucumber-reporting>
@@ -578,6 +578,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${version.maven-fail-safe}</version>
+                    <configuration>
+                        <useModulePath>false</useModulePath>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>integration-test</id>
