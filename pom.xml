@@ -20,10 +20,10 @@
         <version.java>11</version.java>
         <version.scala>2.13</version.scala>
         <version.scala-compiler>2.13.4</version.scala-compiler>
-        <version.kotlin>1.4.20</version.kotlin>
+        <version.kotlin>1.4.21</version.kotlin>
         <version.kotlinx-coroutines-core>1.4.2-native-mt</version.kotlinx-coroutines-core>
         <version.sslcontext-kickstart>5.4.0</version.sslcontext-kickstart>
-        <version.spring>2.4.0</version.spring>
+        <version.spring>2.4.1</version.spring>
         <version.slf4j>1.7.30</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
         <version.cucumber>6.9.0</version.cucumber>
@@ -35,14 +35,14 @@
         <version.commons-io>2.8.0</version.commons-io>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <version.okhttp>4.10.0-RC1</version.okhttp>
-        <version.jetty-reactive-httpclient>1.1.4</version.jetty-reactive-httpclient>
+        <version.jetty-reactive-httpclient>1.1.5</version.jetty-reactive-httpclient>
         <version.jersey1>1.19.4</version.jersey1>
-        <version.jersey2>3.0.0-RC2</version.jersey2>
+        <version.jersey2>3.0.0</version.jersey2>
         <version.google.http.client>1.38.0</version.google.http.client>
         <version.unirest>3.11.05</version.unirest>
         <version.retrofit>2.9.0</version.retrofit>
-        <version.finagle>20.10.0</version.finagle>
-        <version.akka-http>10.2.1</version.akka-http>
+        <version.finagle>20.12.0</version.finagle>
+        <version.akka-http>10.2.2</version.akka-http>
         <version.akka-stream>2.6.10</version.akka-stream>
         <version.dispatch-core>1.2.0</version.dispatch-core>
         <version.scalaj-http>2.4.2</version.scalaj-http>
@@ -67,7 +67,7 @@
         <version.logcaptor>2.2.0</version.logcaptor>
         <version.byte-buddy>1.10.18</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
-        <version.scalatest>3.3.0-SNAP2</version.scalatest>
+        <version.scalatest>3.2.3</version.scalatest>
         <version.scalatest-maven-plugin>2.0.2</version.scalatest-maven-plugin>
         <version.mockito-scala>1.16.3</version.mockito-scala>
         <version.mockserver>5.11.2</version.mockserver>
