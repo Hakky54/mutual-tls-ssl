@@ -56,6 +56,7 @@
         <version.feign>11.0</version.feign>
         <version.methanol>1.4.1</version.methanol>
         <version.ktor>1.4.3</version.ktor>
+        <version.http4k>3.283.0</version.http4k>
         <version.javax.annotation-api>1.3.2</version.javax.annotation-api>
         <version.jakarta.xml.bind-api>3.0.0</version.jakarta.xml.bind-api>
         <version.jakarta.annotation-api>2.0.0</version.jakarta.annotation-api>
@@ -256,6 +257,46 @@
                 <groupId>io.ktor</groupId>
                 <artifactId>ktor-client-android</artifactId>
                 <version>${version.ktor}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.http4k</groupId>
+                <artifactId>http4k-core</artifactId>
+                <version>${version.http4k}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.http4k</groupId>
+                <artifactId>http4k-client-apache</artifactId>
+                <version>${version.http4k}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.http4k</groupId>
+                <artifactId>http4k-client-okhttp</artifactId>
+                <version>${version.http4k}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.http4k</groupId>
+                <artifactId>http4k-client-apache</artifactId>
+                <version>${version.http4k}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.http4k</groupId>
+                <artifactId>http4k-client-apache-async</artifactId>
+                <version>${version.http4k}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.http4k</groupId>
+                <artifactId>http4k-client-apache4</artifactId>
+                <version>${version.http4k}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.http4k</groupId>
+                <artifactId>http4k-client-apache4-async</artifactId>
+                <version>${version.http4k}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.http4k</groupId>
+                <artifactId>http4k-client-jetty</artifactId>
+                <version>${version.http4k}</version>
             </dependency>
 
             <!--     Servers       -->
