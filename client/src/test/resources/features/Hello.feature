@@ -23,7 +23,7 @@ Feature: Securing the connection between you and the world
       | Http4k Apache5 Http Client        |
       | Http4k Apache5 Async Http Client  |
       | Http4k Java Http Client           |
-#      | Http4k Jetty Http Client          |
+      | Http4k Jetty Http Client          |
       | Http4k OkHttp Client              |
       | Http4s Blaze Client               |
       | Http4s Java Net Client            |
