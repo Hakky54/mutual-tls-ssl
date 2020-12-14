@@ -8,7 +8,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>server-with-jersey</artifactId>
+    <artifactId>server-with-jersey-grizzly</artifactId>
     <packaging>jar</packaging>
 
     <properties>
