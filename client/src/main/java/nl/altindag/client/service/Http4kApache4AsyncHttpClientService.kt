@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 @Service
 class Http4kApache4AsyncHttpClientService(
         @Autowired(required = false)
-        val sslFactory: SSLFactory?
+        sslFactory: SSLFactory?
 ) : Http4kAsyncClientService(
         Apache4AsyncClient(
                 client = sslFactory?.let { factory ->

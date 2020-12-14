@@ -11,7 +11,7 @@ import java.net.http.HttpClient
 @Service
 class Http4kJavaHttpClientService(
         @Autowired(required = false)
-        val sslFactory: SSLFactory?
+        sslFactory: SSLFactory?
 ) : Http4kClientService(
         JavaHttpClient(
                 httpClient = sslFactory?.let { factory ->

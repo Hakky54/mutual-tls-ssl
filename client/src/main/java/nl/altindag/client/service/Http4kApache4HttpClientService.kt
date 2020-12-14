@@ -12,14 +12,12 @@ import org.springframework.stereotype.Service
 @Service
 class Http4kApache4HttpClientService(
         @Autowired(required = false)
-        val sslFactory: SSLFactory?
+        sslFactory: SSLFactory?
 ) : Http4kClientService(
         Apache4Client(
                 client = sslFactory?.let {
-                    ApacheSslContextUtils.toSocketFactory(it)
-                }?.let { socketFactory ->
                     HttpClients.custom()
-                            .setSSLSocketFactory(socketFactory)
+                            .setSSLSocketFactory(ApacheSslContextUtils.toSocketFactory(it))
                             .build()
                 } ?: HttpClients.createDefault()
         )

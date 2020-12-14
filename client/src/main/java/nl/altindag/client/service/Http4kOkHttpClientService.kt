@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 @Service
 class Http4kOkHttpClientService(
         @Autowired(required = false)
-        val sslFactory: SSLFactory?
+        sslFactory: SSLFactory?
 ) : Http4kClientService(
         OkHttp(
                 client = sslFactory?.let { factory ->

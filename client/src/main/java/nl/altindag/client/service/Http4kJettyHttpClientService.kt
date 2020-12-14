@@ -12,13 +12,11 @@ import org.springframework.stereotype.Service
 @Service
 class Http4kJettyHttpClientService(
         @Autowired(required = false)
-        val sslFactory: SSLFactory?
+        sslFactory: SSLFactory?
 ) : Http4kClientService(
         JettyClient(
                 client = sslFactory?.let { factory ->
-                    JettySslContextUtils.forClient(factory)
-                }?.let { sslContextFactory ->
-                    HttpClient(sslContextFactory)
+                    HttpClient(JettySslContextUtils.forClient(factory))
                 } ?: HttpClient()
         )
 ) {

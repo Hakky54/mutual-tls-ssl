@@ -26,12 +26,11 @@ class Http4kApache5AsyncHttpClientConfiguration {
     @Bean
     fun createClient(@Autowired(required = false) sslFactory: SSLFactory?) : AsyncHttpClient {
         val client = sslFactory?.let { factory ->
-            PoolingAsyncClientConnectionManagerBuilder.create()
-                    .setTlsStrategy(BasicClientTlsStrategy(factory.sslContext))
-                    .build()
-        }?.let { connectionManager ->
             HttpAsyncClients.custom()
-                    .setConnectionManager(connectionManager)
+                    .setConnectionManager(
+                            PoolingAsyncClientConnectionManagerBuilder.create()
+                                    .setTlsStrategy(BasicClientTlsStrategy(factory.sslContext))
+                                    .build())
                     .build()
         } ?: HttpAsyncClients.createDefault()
 
