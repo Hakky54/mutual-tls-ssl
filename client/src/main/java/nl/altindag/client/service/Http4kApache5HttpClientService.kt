@@ -17,15 +17,18 @@ class Http4kApache5HttpClientService(
 ) : Http4kClientService(
         ApacheClient(
                 client = sslFactory?.let { factory ->
+                    val connectionFactory = SSLConnectionSocketFactory(
+                            factory.sslContext,
+                            factory.sslParameters.protocols,
+                            factory.sslParameters.cipherSuites,
+                            factory.hostnameVerifier)
+
+                    val connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+                            .setSSLSocketFactory(connectionFactory)
+                            .build()
+
                     HttpClients.custom()
-                            .setConnectionManager(
-                                    PoolingHttpClientConnectionManagerBuilder.create()
-                                            .setSSLSocketFactory(SSLConnectionSocketFactory(
-                                                    factory.sslContext,
-                                                    factory.sslParameters.protocols,
-                                                    factory.sslParameters.cipherSuites,
-                                                    factory.hostnameVerifier))
-                                            .build())
+                            .setConnectionManager(connectionManager)
                             .build()
                 } ?: HttpClients.createDefault()
         )
