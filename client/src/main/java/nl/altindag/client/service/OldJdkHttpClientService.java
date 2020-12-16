@@ -20,7 +20,7 @@ import com.google.common.annotations.VisibleForTesting;
 import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
-import nl.altindag.sslcontext.SSLFactory;
+import nl.altindag.ssl.SSLFactory;
 
 @Service
 public class OldJdkHttpClientService implements RequestService {

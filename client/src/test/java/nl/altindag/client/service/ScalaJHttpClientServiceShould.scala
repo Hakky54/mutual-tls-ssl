@@ -7,7 +7,7 @@ import nl.altindag.client.ClientType.SCALAJ_HTTP_CLIENT
 import nl.altindag.client.TestConstants.HTTP_URL
 import nl.altindag.client.model.ClientResponse
 import nl.altindag.client.util.MockServerTestHelper
-import nl.altindag.sslcontext.SSLFactory
+import nl.altindag.ssl.SSLFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.funspec.AnyFunSpec

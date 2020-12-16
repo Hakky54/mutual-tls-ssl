@@ -1,6 +1,6 @@
 package nl.altindag.client.util;
 
-import nl.altindag.sslcontext.SSLFactory;
+import nl.altindag.ssl.SSLFactory;
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.mockito.Mockito;
 

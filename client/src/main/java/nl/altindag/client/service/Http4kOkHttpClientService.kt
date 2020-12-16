@@ -2,7 +2,7 @@ package nl.altindag.client.service
 
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.HTTP4K_OK_HTTP_CLIENT
-import nl.altindag.sslcontext.SSLFactory
+import nl.altindag.ssl.SSLFactory
 import okhttp3.OkHttpClient
 import org.http4k.client.OkHttp
 import org.springframework.beans.factory.annotation.Autowired

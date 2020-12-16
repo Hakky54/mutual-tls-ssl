@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import nl.altindag.client.ClientException;
 import nl.altindag.client.model.ClientResponse;
-import nl.altindag.sslcontext.SSLFactory;
+import nl.altindag.ssl.SSLFactory;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)

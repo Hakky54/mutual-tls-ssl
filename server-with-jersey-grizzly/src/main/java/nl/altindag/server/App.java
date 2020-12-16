@@ -3,7 +3,7 @@ package nl.altindag.server;
 import nl.altindag.server.controller.HelloWorldController;
 import nl.altindag.server.mapper.ApplicationPropertyMapper;
 import nl.altindag.server.model.ApplicationProperty;
-import nl.altindag.sslcontext.SSLFactory;
+import nl.altindag.ssl.SSLFactory;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;

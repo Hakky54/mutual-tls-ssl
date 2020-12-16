@@ -9,7 +9,7 @@ import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import feign.Feign;
 import kong.unirest.Unirest;
-import nl.altindag.sslcontext.SSLFactory;
+import nl.altindag.ssl.SSLFactory;
 import okhttp3.OkHttpClient;
 import org.apache.http.client.HttpClient;
 import org.asynchttpclient.AsyncHttpClient;

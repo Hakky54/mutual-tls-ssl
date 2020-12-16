@@ -22,7 +22,7 @@
         <version.scala-compiler>2.13.4</version.scala-compiler>
         <version.kotlin>1.4.21</version.kotlin>
         <version.kotlinx-coroutines-core>1.4.2-native-mt</version.kotlinx-coroutines-core>
-        <version.sslcontext-kickstart>5.4.0</version.sslcontext-kickstart>
+        <version.sslcontext-kickstart>6.0.0</version.sslcontext-kickstart>
         <version.spring>2.4.1</version.spring>
         <version.slf4j>1.7.30</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
@@ -87,7 +87,12 @@
             </dependency>
             <dependency>
                 <groupId>io.github.hakky54</groupId>
-                <artifactId>sslcontext-kickstart-for-apache</artifactId>
+                <artifactId>sslcontext-kickstart-for-apache4</artifactId>
+                <version>${version.sslcontext-kickstart}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.hakky54</groupId>
+                <artifactId>sslcontext-kickstart-for-apache5</artifactId>
                 <version>${version.sslcontext-kickstart}</version>
             </dependency>
             <dependency>

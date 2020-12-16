@@ -5,7 +5,7 @@ import io.ktor.client.engine.cio.*
 import io.ktor.network.tls.*
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.KTOR_CIO_HTTP_CLIENT
-import nl.altindag.sslcontext.SSLFactory
+import nl.altindag.ssl.SSLFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

@@ -19,10 +19,10 @@ import io.netty.handler.ssl.SslContext;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import kong.unirest.Unirest;
-import nl.altindag.sslcontext.SSLFactory;
-import nl.altindag.sslcontext.util.ApacheSslContextUtils;
-import nl.altindag.sslcontext.util.JettySslContextUtils;
-import nl.altindag.sslcontext.util.NettySslContextUtils;
+import nl.altindag.ssl.SSLFactory;
+import nl.altindag.ssl.util.Apache4SslUtils;
+import nl.altindag.ssl.util.JettySslUtils;
+import nl.altindag.ssl.util.NettySslUtils;
 import okhttp3.OkHttpClient;
 import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClients;
@@ -57,7 +57,7 @@ public class ClientConfig {
     @Scope("prototype")
     public org.apache.http.client.HttpClient apacheHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
-            LayeredConnectionSocketFactory socketFactory = ApacheSslContextUtils.toSocketFactory(sslFactory);
+            LayeredConnectionSocketFactory socketFactory = Apache4SslUtils.toSocketFactory(sslFactory);
             return HttpClients.custom()
                     .setSSLSocketFactory(socketFactory)
                     .build();
@@ -103,7 +103,7 @@ public class ClientConfig {
     public reactor.netty.http.client.HttpClient nettyHttpClient(@Autowired(required = false) SSLFactory sslFactory) throws SSLException {
         reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
         if (nonNull(sslFactory)) {
-            SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
+            SslContext sslContext = NettySslUtils.forClient(sslFactory).build();
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContext));
         }
         return httpClient;
@@ -113,7 +113,7 @@ public class ClientConfig {
     @Scope("prototype")
     public org.eclipse.jetty.client.HttpClient jettyHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
-            SslContextFactory.Client sslContextFactory = JettySslContextUtils.forClient(sslFactory);
+            SslContextFactory.Client sslContextFactory = JettySslUtils.forClient(sslFactory);
             return new org.eclipse.jetty.client.HttpClient(sslContextFactory);
         } else {
             return new org.eclipse.jetty.client.HttpClient();
@@ -224,7 +224,7 @@ public class ClientConfig {
     @Bean
     public AsyncHttpClient asyncHttpClient(@Autowired(required = false) SSLFactory sslFactory) throws SSLException {
         if (nonNull(sslFactory)) {
-            SslContext sslContext = NettySslContextUtils.forClient(sslFactory).build();
+            SslContext sslContext = NettySslUtils.forClient(sslFactory).build();
 
             DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
                     .setSslContext(sslContext);

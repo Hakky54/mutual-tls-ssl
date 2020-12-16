@@ -1,9 +1,9 @@
 package nl.altindag.server;
 
 import nl.altindag.log.LogCaptor;
-import nl.altindag.sslcontext.SSLFactory;
-import nl.altindag.sslcontext.trustmanager.CompositeX509ExtendedTrustManager;
-import nl.altindag.sslcontext.trustmanager.UnsafeX509ExtendedTrustManager;
+import nl.altindag.ssl.SSLFactory;
+import nl.altindag.ssl.trustmanager.CompositeX509ExtendedTrustManager;
+import nl.altindag.ssl.trustmanager.UnsafeX509ExtendedTrustManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

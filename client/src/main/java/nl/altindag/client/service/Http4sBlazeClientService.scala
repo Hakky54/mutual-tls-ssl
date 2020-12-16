@@ -4,7 +4,7 @@ import java.util.Objects.nonNull
 import cats.effect.{ExitCode, IO, IOApp, Resource}
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.HTTP4S_BLAZE_CLIENT
-import nl.altindag.sslcontext.SSLFactory
+import nl.altindag.ssl.SSLFactory
 import org.http4s.client.Client
 import org.http4s.client.blaze.BlazeClientBuilder
 import org.springframework.beans.factory.annotation.{Autowired, Qualifier}

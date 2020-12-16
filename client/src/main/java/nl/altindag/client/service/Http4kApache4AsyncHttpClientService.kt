@@ -1,7 +1,7 @@
 package nl.altindag.client.service
 
 import nl.altindag.client.ClientType
-import nl.altindag.sslcontext.SSLFactory
+import nl.altindag.ssl.SSLFactory
 import org.apache.http.impl.nio.client.HttpAsyncClients
 import org.http4k.client.Apache4AsyncClient
 import org.springframework.beans.factory.annotation.Autowired

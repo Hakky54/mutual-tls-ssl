@@ -4,7 +4,7 @@ import java.util.Objects.nonNull
 import cats.effect.{Blocker, ExitCode, IO, IOApp, Resource}
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.HTTP4S_JAVA_NET_CLIENT
-import nl.altindag.sslcontext.SSLFactory
+import nl.altindag.ssl.SSLFactory
 import org.http4s.client.{Client, JavaNetClientBuilder}
 import org.springframework.beans.factory.annotation.{Autowired, Qualifier}
 import org.springframework.context.annotation.Bean

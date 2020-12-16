@@ -2,8 +2,8 @@ package nl.altindag.client.service
 
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.HTTP4K_APACHE4_HTTP_CLIENT
-import nl.altindag.sslcontext.SSLFactory
-import nl.altindag.sslcontext.util.ApacheSslContextUtils
+import nl.altindag.ssl.SSLFactory
+import nl.altindag.ssl.util.Apache4SslUtils
 import org.apache.http.impl.client.HttpClients
 import org.http4k.client.Apache4Client
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,7 +17,7 @@ class Http4kApache4HttpClientService(
         Apache4Client(
                 client = sslFactory?.let {
                     HttpClients.custom()
-                            .setSSLSocketFactory(ApacheSslContextUtils.toSocketFactory(it))
+                            .setSSLSocketFactory(Apache4SslUtils.toSocketFactory(it))
                             .build()
                 } ?: HttpClients.createDefault()
         )
