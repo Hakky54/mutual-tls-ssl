@@ -6,8 +6,8 @@ import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 import java.io.IOException;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +17,9 @@ import nl.altindag.client.model.ClientResponse;
 @Service
 public class ApacheHttpClientService implements RequestService {
 
-    private final HttpClient httpClient;
+    private final CloseableHttpClient httpClient;
 
-    public ApacheHttpClientService(HttpClient httpClient) {
+    public ApacheHttpClientService(CloseableHttpClient httpClient) {
         this.httpClient = httpClient;
     }
 

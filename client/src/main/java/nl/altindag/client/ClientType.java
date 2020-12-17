@@ -3,6 +3,9 @@ package nl.altindag.client;
 public enum ClientType {
 
     APACHE_HTTP_CLIENT("apache httpclient"),
+    APACHE_HTTP_ASYNC_CLIENT("apache http async client"),
+    APACHE5_HTTP_CLIENT("Apache 5 Http Client"),
+    APACHE5_HTTP_ASYNC_CLIENT("Apache 5 Http Async Client"),
     JDK_HTTP_CLIENT("jdk httpclient"),
     OLD_JDK_HTTP_CLIENT("old jdk httpclient"),
     SPRING_REST_TEMPATE("spring resttemplate"),

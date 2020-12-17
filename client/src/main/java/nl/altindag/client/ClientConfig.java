@@ -21,9 +21,15 @@ import jakarta.ws.rs.client.ClientBuilder;
 import kong.unirest.Unirest;
 import nl.altindag.ssl.SSLFactory;
 import nl.altindag.ssl.util.Apache4SslUtils;
+import nl.altindag.ssl.util.Apache5SslUtils;
 import nl.altindag.ssl.util.JettySslUtils;
 import nl.altindag.ssl.util.NettySslUtils;
 import okhttp3.OkHttpClient;
+import org.apache.hc.client5.http.impl.async.HttpAsyncClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
+import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
+import org.apache.hc.client5.http.io.HttpClientConnectionManager;
+import org.apache.hc.client5.http.nio.AsyncClientConnectionManager;
 import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClients;
 import org.asynchttpclient.AsyncHttpClient;
@@ -55,15 +61,64 @@ public class ClientConfig {
 
     @Bean
     @Scope("prototype")
-    public org.apache.http.client.HttpClient apacheHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
+    public org.apache.http.impl.client.CloseableHttpClient apacheHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
             LayeredConnectionSocketFactory socketFactory = Apache4SslUtils.toSocketFactory(sslFactory);
             return HttpClients.custom()
                     .setSSLSocketFactory(socketFactory)
                     .build();
         } else {
-            return HttpClients.createMinimal();
+            return HttpClients.createDefault();
         }
+    }
+
+    @Bean
+    public org.apache.http.impl.nio.client.CloseableHttpAsyncClient apacheHttpAsyncClient(@Autowired(required = false) SSLFactory sslFactory) {
+        org.apache.http.impl.nio.client.CloseableHttpAsyncClient client;
+        if (nonNull(sslFactory)) {
+            client = org.apache.http.impl.nio.client.HttpAsyncClients.custom()
+                    .setSSLContext(sslFactory.getSslContext())
+                    .setSSLHostnameVerifier(sslFactory.getHostnameVerifier())
+                    .build();
+        } else {
+            client = org.apache.http.impl.nio.client.HttpAsyncClients.createDefault();
+        }
+        client.start();
+        return client;
+    }
+
+    @Bean
+    public org.apache.hc.client5.http.impl.classic.CloseableHttpClient apache5HttpClient(@Autowired(required = false) SSLFactory sslFactory) {
+        if (nonNull(sslFactory)) {
+            HttpClientConnectionManager connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+                    .setSSLSocketFactory(Apache5SslUtils.toSocketFactory(sslFactory))
+                    .build();
+
+            return org.apache.hc.client5.http.impl.classic.HttpClients.custom()
+                    .setConnectionManager(connectionManager)
+                    .build();
+        } else {
+            return org.apache.hc.client5.http.impl.classic.HttpClients.createDefault();
+        }
+    }
+
+    @Bean
+    public org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient apache5HttpAsyncClient(@Autowired(required = false) SSLFactory sslFactory) {
+        org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient client;
+        if (nonNull(sslFactory)) {
+            AsyncClientConnectionManager connectionManager = PoolingAsyncClientConnectionManagerBuilder.create()
+                    .setTlsStrategy(Apache5SslUtils.toTlsStrategy(sslFactory))
+                    .build();
+
+            client = org.apache.hc.client5.http.impl.async.HttpAsyncClients.custom()
+                    .setConnectionManager(connectionManager)
+                    .build();
+        } else {
+            client = HttpAsyncClients.createDefault();
+        }
+
+        client.start();
+        return client;
     }
 
     @Bean
@@ -79,7 +134,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public RestTemplate restTemplate(org.apache.http.client.HttpClient httpClient) {
+    public RestTemplate restTemplate(org.apache.http.impl.client.CloseableHttpClient httpClient) {
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
         requestFactory.setHttpClient(httpClient);
         return new RestTemplate(requestFactory);

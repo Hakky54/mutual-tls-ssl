@@ -15,10 +15,7 @@ class Http4kApache5AsyncHttpClientServiceShould {
     fun executeRequest() {
         MockServerTestHelper.mockResponseForClient(HTTP4K_APACHE5_ASYNC_HTTP_CLIENT)
 
-        val client = Http4kApache5AsyncHttpClientService(
-                Http4kApache5AsyncHttpClientConfiguration()
-                        .createClient(null)
-        )
+        val client = Http4kApache5AsyncHttpClientService(null)
         val response = client.executeRequest(TestConstants.HTTP_URL)
 
         assertThat(response.responseBody).isEqualTo("Hello")
@@ -29,8 +26,7 @@ class Http4kApache5AsyncHttpClientServiceShould {
     fun createClientWithSslMaterial() {
         val sslFactory = SSLFactoryTestHelper.createSSLFactory(false, true)
 
-        Http4kApache5AsyncHttpClientConfiguration()
-                .createClient(sslFactory)
+        Http4kApache5AsyncHttpClientService(sslFactory)
 
         verify(sslFactory, times(1)).sslContext
     }

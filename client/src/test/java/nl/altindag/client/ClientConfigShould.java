@@ -11,7 +11,8 @@ import feign.Feign;
 import kong.unirest.Unirest;
 import nl.altindag.ssl.SSLFactory;
 import okhttp3.OkHttpClient;
-import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.asynchttpclient.AsyncHttpClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +42,7 @@ class ClientConfigShould {
 
     @Test
     void createApacheHttpClientWithoutSecurity() {
-        HttpClient httpClient = victim.apacheHttpClient(null);
+        CloseableHttpClient httpClient = victim.apacheHttpClient(null);
 
         assertThat(httpClient).isNotNull();
     }
@@ -50,11 +51,65 @@ class ClientConfigShould {
     void createApacheHttpClientWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
-        HttpClient httpClient = victim.apacheHttpClient(sslFactory);
+        CloseableHttpClient httpClient = victim.apacheHttpClient(sslFactory);
 
         assertThat(httpClient).isNotNull();
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
+    }
+
+    @Test
+    void createApacheHttpAsyncClientWithoutSecurity() {
+        CloseableHttpAsyncClient httpClient = victim.apacheHttpAsyncClient(null);
+
+        assertThat(httpClient).isNotNull();
+    }
+
+    @Test
+    void createApacheHttpAsyncClientWithSecurity() {
+        SSLFactory sslFactory = createSSLFactory(false, true);
+
+        CloseableHttpAsyncClient httpClient = victim.apacheHttpAsyncClient(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
+    }
+
+    @Test
+    void createApache5HttpClientWithoutSecurity() {
+        org.apache.hc.client5.http.impl.classic.CloseableHttpClient httpClient = victim.apache5HttpClient(null);
+
+        assertThat(httpClient).isNotNull();
+    }
+
+    @Test
+    void createApache5HttpClientWithSecurity() {
+        SSLFactory sslFactory = createSSLFactory(false, true);
+
+        org.apache.hc.client5.http.impl.classic.CloseableHttpClient httpClient = victim.apache5HttpClient(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getHostnameVerifier();
+        verify(sslFactory, times(2)).getSslParameters();
+    }
+
+    @Test
+    void createApache5HttpAsyncClientWithoutSecurity() {
+        org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient httpClient = victim.apache5HttpAsyncClient(null);
+
+        assertThat(httpClient).isNotNull();
+    }
+
+    @Test
+    void createApache5HttpAsyncClientWithSecurity() {
+        SSLFactory sslFactory = createSSLFactory(false, true);
+
+        org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient httpClient = victim.apache5HttpAsyncClient(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        verify(sslFactory, times(1)).getSslContext();
     }
 
     @Test
@@ -77,7 +132,7 @@ class ClientConfigShould {
 
     @Test
     void createRestTemplate() {
-        HttpClient httpClient = mock(HttpClient.class);
+        CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
 
         RestTemplate restTemplate = victim.restTemplate(httpClient);
 

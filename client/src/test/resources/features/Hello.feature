@@ -12,6 +12,9 @@ Feature: Securing the connection between you and the world
       | client                            |
       | Akka HttpClient                   |
       | Apache HttpClient                 |
+      | Apache Http Async Client          |
+      | Apache 5 Http Client              |
+      | Apache 5 Http Async Client        |
       | Async HttpClient                  |
       | Dispatch Reboot HttpClient        |
       | Feign                             |

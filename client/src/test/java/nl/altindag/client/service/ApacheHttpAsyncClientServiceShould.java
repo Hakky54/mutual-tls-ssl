@@ -1,6 +1,23 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.ClientType.APACHE_HTTP_CLIENT;
+import nl.altindag.client.model.ClientResponse;
+import org.apache.http.HttpEntity;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.concurrent.CompletableFuture;
+
+import static nl.altindag.client.ClientType.APACHE_HTTP_ASYNC_CLIENT;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 import static nl.altindag.client.TestConstants.GET_METHOD;
 import static nl.altindag.client.TestConstants.HTTP_URL;
@@ -11,30 +28,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.StatusLine;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-
-import nl.altindag.client.model.ClientResponse;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 @ExtendWith(MockitoExtension.class)
-class ApacheHttpClientServiceShould {
+class ApacheHttpAsyncClientServiceShould {
 
     @InjectMocks
-    private ApacheHttpClientService victim;
+    private ApacheHttpAsyncClientService victim;
     @Mock
-    private CloseableHttpClient httpClient;
+    private CloseableHttpAsyncClient httpClient;
 
     @Test
     void executeRequest() throws Exception {
@@ -43,7 +43,7 @@ class ApacheHttpClientServiceShould {
         HttpEntity entity = mock(HttpEntity.class);
         InputStream stream = new ByteArrayInputStream("Hello".getBytes());
 
-        when(httpClient.execute(any(HttpGet.class))).thenReturn(httpResponse);
+        when(httpClient.execute(any(HttpGet.class), any())).thenReturn(CompletableFuture.completedFuture(httpResponse));
         when(httpResponse.getStatusLine()).thenReturn(statusLine);
         when(statusLine.getStatusCode()).thenReturn(200);
         when(httpResponse.getEntity()).thenReturn(entity);
@@ -57,11 +57,11 @@ class ApacheHttpClientServiceShould {
         assertThat(clientResponse.getStatusCode()).isEqualTo(200);
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
 
-        verify(httpClient, times(1)).execute(httpGetArgumentCaptor.capture());
+        verify(httpClient, times(1)).execute(httpGetArgumentCaptor.capture(), any());
         assertThat(httpGetArgumentCaptor.getValue().getURI()).hasToString(HTTP_URL);
         assertThat(httpGetArgumentCaptor.getValue().getMethod()).isEqualTo(GET_METHOD);
         assertThat(httpGetArgumentCaptor.getValue().getAllHeaders()).hasSize(1);
-        assertThat(httpGetArgumentCaptor.getValue().getFirstHeader(HEADER_KEY_CLIENT_TYPE).getValue()).isEqualTo(APACHE_HTTP_CLIENT.getValue());
+        assertThat(httpGetArgumentCaptor.getValue().getFirstHeader(HEADER_KEY_CLIENT_TYPE).getValue()).isEqualTo(APACHE_HTTP_ASYNC_CLIENT.getValue());
     }
 
 }
