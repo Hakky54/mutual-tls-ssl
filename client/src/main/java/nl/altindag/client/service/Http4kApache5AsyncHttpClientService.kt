@@ -22,8 +22,8 @@ class Http4kApache5AsyncHttpClientService(
 
             HttpAsyncClients.custom()
                     .setConnectionManager(connectionManager)
-                    .build().apply { start() }
-        } ?: HttpAsyncClients.createDefault().apply { start() }
+                    .build()
+        } ?: HttpAsyncClients.createDefault()
 )) {
 
     override fun getClientType(): ClientType = HTTP4K_APACHE5_ASYNC_HTTP_CLIENT

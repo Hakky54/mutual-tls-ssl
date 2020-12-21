@@ -26,7 +26,7 @@
         <version.spring>2.4.1</version.spring>
         <version.slf4j>1.7.30</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
-        <version.cucumber>6.9.0</version.cucumber>
+        <version.cucumber>6.9.1</version.cucumber>
         <version.maven-fail-safe>3.0.0-M5</version.maven-fail-safe>
         <version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
         <version.aspectjweaver>1.9.6</version.aspectjweaver>
@@ -39,7 +39,7 @@
         <version.jersey1>1.19.4</version.jersey1>
         <version.jersey2>3.0.0</version.jersey2>
         <version.google.http.client>1.38.0</version.google.http.client>
-        <version.unirest>3.11.05</version.unirest>
+        <version.unirest>3.11.07</version.unirest>
         <version.retrofit>2.9.0</version.retrofit>
         <version.finagle>20.12.0</version.finagle>
         <version.akka-http>10.2.2</version.akka-http>
@@ -47,7 +47,7 @@
         <version.dispatch-core>1.2.0</version.dispatch-core>
         <version.scalaj-http>2.4.2</version.scalaj-http>
         <version.async-http-client>2.12.1</version.async-http-client>
-        <version.fuel>2.3.0</version.fuel>
+        <version.fuel>2.3.1</version.fuel>
         <version.sttp>3.0.0-RC3</version.sttp>
         <version.featherbed>0.3.3</version.featherbed>
         <version.requests>0.6.5</version.requests>
@@ -55,18 +55,18 @@
         <version.http4s>1.0.0-M8</version.http4s>
         <version.feign>11.0</version.feign>
         <version.methanol>1.4.1</version.methanol>
-        <version.ktor>1.4.3</version.ktor>
-        <version.http4k>3.283.1</version.http4k>
+        <version.ktor>1.5.0</version.ktor>
+        <version.http4k>3.284.0</version.http4k>
         <version.javax.annotation-api>1.3.2</version.javax.annotation-api>
         <version.jakarta.xml.bind-api>3.0.0</version.jakarta.xml.bind-api>
         <version.jakarta.annotation-api>2.0.0</version.jakarta.annotation-api>
-        <version.cats>2.3.0</version.cats>
+        <version.cats>2.3.1</version.cats>
         <version.jackson-module-scala>2.12.0</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.6</version.jacoco-maven-plugin>
         <version.junit-jupiter>5.7.0</version.junit-jupiter>
         <version.assertj-core>3.18.1</version.assertj-core>
-        <version.logcaptor>2.2.0</version.logcaptor>
-        <version.byte-buddy>1.10.18</version.byte-buddy>
+        <version.logcaptor>2.3.1</version.logcaptor>
+        <version.byte-buddy>1.10.19</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
         <version.scalatest>3.2.3</version.scalatest>
         <version.scalatest-maven-plugin>2.0.2</version.scalatest-maven-plugin>
