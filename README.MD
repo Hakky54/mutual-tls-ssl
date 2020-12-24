@@ -406,3 +406,11 @@ You can also automate all the previous steps described above with the provided s
 * One way authentication: `./configure-one-way-authentication`
 * Two way authentication: `./configure-two-way-authentication-by-trusting-each-other my-company-name`
 * Two way authentication by trusting the Certificate Authority: `./configure-two-way-authentication-by-trusting-root-ca my-company-name`
+
+## Contributing
+There are plenty of ways to contribute to this project:
+
+* Give it a star
+* Share it with a [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=If%20you%20are%20interested%20in%20securing%20your%20web%20application,%20you%20might%20want%20to%20read%20the%20tutorial%20Mastering%20two-way%20tls&url=https://github.com/Hakky54/mutual-tls&via=hakky541&hashtags=encryption,security,https,ssl,tls,certificate,developer,java,scala,kotlin)
+* Join the [Gitter room](https://gitter.im/hakky54/mutual-tls-ssl) and leave a feedback or help with answering users questions
+* Submit a PR
