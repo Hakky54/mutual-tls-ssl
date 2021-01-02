@@ -30,8 +30,8 @@ cleanUpExistingCertificatesAndKeystores() {
 createCertificates() {
     echo 'Starting to create certificates...'
 
-    keytool -genkeypair -keyalg RSA -keysize 2048 -alias server -dname "CN=Hakan,OU=Amsterdam,O=Thunderberry,C=NL" -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -validity 3650 -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
-    keytool -genkeypair -keyalg RSA -keysize 2048 -alias client -dname "CN=$1,OU=Altindag,O=Altindag,C=NL" -validity 3650 -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12
+    keytool -genkeypair -keyalg RSA -keysize 2048 -alias server -dname "CN=Hakan,OU=Amsterdam,O=Thunderberry,C=NL" -validity 3650 -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1
+    keytool -genkeypair -keyalg RSA -keysize 2048 -alias client -dname "CN=$1,OU=Altindag,O=Altindag,C=NL" -validity 3650 -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth
     keytool -exportcert -keystore client/src/test/resources/identity.jks -storepass secret -alias client -rfc -file client/src/test/resources/client.cer
     keytool -exportcert -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -alias server -rfc -file shared-server-resources/src/main/resources/server.cer
     keytool -keystore client/src/test/resources/truststore.jks -importcert -file shared-server-resources/src/main/resources/server.cer -alias server -storepass secret -noprompt
