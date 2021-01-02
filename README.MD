@@ -41,7 +41,7 @@ These are the following steps:
 I mostly worked with Apache Http Client and therefore I initially created this project with only a http client from Apache.
 After some time I discovered that there are a lot more Java clients and there also some clients available based on Kotlin and Scala.
 Configuring ssl/tls can be hard and every client requires a different setup. I want to share the knowledge with other developers as every developer will probably work with a different http client.
-I also want to provide a **cheatsheet** for all the developers and the community, see [here](#tested-clients) for a list of [40+ http client]((#tested-clients)) with example client configuration and example http request.
+I also want to provide a **cheatsheet** for all the developers and the community, see [here](#tested-clients) for a list of [40+ http client](#tested-clients)) with example client configuration and example http request.
 
 ## Starting the server
 **Minimum requirements:**
@@ -382,6 +382,7 @@ All client examples use the same base ssl configuration created within the [SSLC
 * [Async Http Client](https://github.com/AsyncHttpClient/async-http-client) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/c2af71bff99d80a02337a6a41fe1eb140d3c305d/client/src/main/java/nl/altindag/client/ClientConfig.java#L280) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/AsyncHttpClientService.java)
 * [Feign](https://github.com/OpenFeign/feign) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/c2af71bff99d80a02337a6a41fe1eb140d3c305d/client/src/main/java/nl/altindag/client/ClientConfig.java#L294) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/FeignService.java)
 * [Methanol](https://github.com/mizosoft/methanol) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/c2af71bff99d80a02337a6a41fe1eb140d3c305d/client/src/main/java/nl/altindag/client/ClientConfig.java#L304) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/MethanolService.java)
+* [Vertx Webclient](https://github.com/vert-x3/vertx-web) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/VertxWebClientService.java)
 
 **Kotlin**
 * [Fuel](https://github.com/kittinunf/fuel) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/FuelService.kt)

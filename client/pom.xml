@@ -169,6 +169,10 @@
             <groupId>org.http4k</groupId>
             <artifactId>http4k-client-jetty</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web-client</artifactId>
+        </dependency>
 
         <!--     Testing libraries       -->
         <dependency>

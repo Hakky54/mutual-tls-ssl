@@ -43,6 +43,7 @@ public enum ClientType {
     KTOR_OK_HTTP("ktor okhttp httpclient"),
     KTOR_ANDROID_HTTP_CLIENT("ktor android httpclient"),
     KTOR_CIO_HTTP_CLIENT("ktor cio httpclient"),
+    VERTX("vertx webclient"),
     NONE("none");
 
     private final String value;

@@ -51,3 +51,4 @@ Feature: Securing the connection between you and the world
       | Spring WebFlux WebClient Jetty    |
       | Spring WebFlux WebClient Netty    |
       | Unirest                           |
+      | Vertx WebClient                   |
