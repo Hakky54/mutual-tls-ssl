@@ -16,7 +16,6 @@ These are the following steps:
 2. Maven 3.5.0
 3. Eclipse, Intellij IDEA (or any other text editor like VIM)
 4. A terminal
-5. Openssl (For Windows users use [Git Bash](https://git-scm.com/))
 
 Start the server by running the main method of the [App Class](server/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
 ```bash
@@ -76,27 +75,9 @@ Normally there is already a Certificate Authority and you need to provide your c
 ##### Signing the certificate with the Certificate Signing Request
 The following commands are given because in a real-life situation you don't need to do the steps of the Certificate Authority.
 
-Up till now you only used the keytool, but for the signing procedure you need openssl. A csr file can be signed with a pem file and the private key of the Certificate Authority. A pem file is a container format that may include just the public certificate and CA certificate files or may include an entire certificate chain including public key, private key, and root certificates. In this example it will only contain the public certificate. You will extract the pem and key file from the identity.jks with the following commands:
-
-##### Convert java keystore to a p12 file 
-```bash
-keytool -importkeystore -srckeystore root-ca/identity.jks -destkeystore root-ca/root-ca.p12 -srcstoretype jks -deststoretype pkcs12 -srcstorepass secret -deststorepass secret
-```
-
-##### Create pem file from a p12 file
-```bash
-openssl pkcs12 -in root-ca/root-ca.p12 -out root-ca/root-ca.pem -nokeys -passin pass:secret -passout pass:secret
-```
-
-##### Create a key file from a p12 file
-```bash
-openssl pkcs12 -in root-ca/root-ca.p12 -out root-ca/root-ca.key -nocerts -passin pass:secret -passout pass:secret
-```
-
-The next step will be signing the certificates. You can sign it with the following commands:
 ##### Signing the client certificate 
 ```bash
-openssl x509 -req -in client/src/test/resources/client.csr -CA root-ca/root-ca.pem -CAkey root-ca/root-ca.key -CAcreateserial -out client/src/test/resources/client-signed.cer -days 1825 -passin pass:secret
+keytool -v -gencert -infile client/src/test/resources/client.csr -outfile client/src/test/resources/client-signed.cer -keystore root-ca/identity.jks -storepass secret -alias root-ca -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth
 ```
 Now you have a signed certificate. Your keystore file has an unsigned certificate with the private key. What you need to do is replace the unsigned certificate in the keystore with your signed one. It is required the preserve the private key. 
 
