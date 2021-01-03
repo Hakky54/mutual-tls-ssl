@@ -8,6 +8,7 @@ import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import feign.Feign;
+import jakarta.ws.rs.client.Client;
 import kong.unirest.Unirest;
 import nl.altindag.ssl.SSLFactory;
 import okhttp3.OkHttpClient;
@@ -22,17 +23,15 @@ import org.springframework.web.reactive.function.client.WebClient;
 import retrofit2.Retrofit;
 
 import javax.net.ssl.SSLException;
-import jakarta.ws.rs.client.Client;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static nl.altindag.client.util.SSLFactoryTestHelper.createSSLFactory;
 import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
 import static nl.altindag.client.util.AssertJCustomConditions.SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL;
+import static nl.altindag.client.util.SSLFactoryTestHelper.createSSLFactory;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 @ExtendWith(MockitoExtension.class)
@@ -245,6 +244,9 @@ class ClientConfigShould {
         Client client = victim.jerseyClient(null);
 
         assertThat(client).isNotNull();
+        assertThat(client.getClass().getPackageName())
+                .as("Jersey JAX-RS implemenatsion is used")
+                .startsWith("org.glassfish.jersey");
 
         client.close();
     }
@@ -256,6 +258,10 @@ class ClientConfigShould {
         Client client = victim.jerseyClient(sslFactory);
 
         assertThat(client).isNotNull();
+        assertThat(client.getClass().getPackageName())
+                .as("Jersey JAX-RS implemenatsion is used")
+                .startsWith("org.glassfish.jersey");
+
         verify(sslFactory, times(1)).getSslContext();
         verify(sslFactory, times(1)).getHostnameVerifier();
 
@@ -282,6 +288,62 @@ class ClientConfigShould {
         verify(sslFactory, times(1)).getHostnameVerifier();
 
         client.destroy();
+    }
+
+    @Test
+    void createCxfJaxRsClientWithoutSecurity() {
+        javax.ws.rs.client.Client client = victim.cxfJaxRsClient(null);
+
+        assertThat(client).isNotNull();
+        assertThat(client.getClass().getPackageName())
+                .as("CXF JAX-RS implemenatsion is used")
+                .startsWith("org.apache.cxf");
+
+        assertThat(client.getSslContext()).isNull();
+        assertThat(client.getHostnameVerifier()).isNull();
+
+        client.close();
+    }
+
+    @Test
+    void createCxfJaxRsClientWithSecurity() {
+         SSLFactory sslFactory = createSSLFactory(false, true);
+
+         javax.ws.rs.client.Client client = victim.cxfJaxRsClient(sslFactory);
+
+         assertThat(client).isNotNull();
+         verify(sslFactory, times(1)).getSslContext();
+         verify(sslFactory, times(1)).getHostnameVerifier();
+
+         assertThat(client.getSslContext()).isNotNull();
+         assertThat(client.getHostnameVerifier()).isNotNull();
+
+
+         client.close();
+    }
+
+    @Test
+    void createCxfWebClientWithoutSecurity() {
+        org.apache.cxf.jaxrs.client.WebClient client = victim.cxfWebClient(null);
+
+         assertThat(client).isNotNull();
+
+         client.close();
+    }
+
+    @Test
+    void createCxfWebClientWithSecurity() {
+        SSLFactory sslFactory = createSSLFactory(false, true);
+
+        org.apache.cxf.jaxrs.client.WebClient client = victim.cxfWebClient(sslFactory);
+
+        assertThat(client).isNotNull();
+        assertThatThrownBy(() -> client.to(TestConstants.HTTPS_URL, false).get());
+
+        verify(sslFactory, times(1)).getSslSocketFactory();
+        verify(sslFactory, times(1)).getHostnameVerifier();
+
+        client.close();
     }
 
     @Test
