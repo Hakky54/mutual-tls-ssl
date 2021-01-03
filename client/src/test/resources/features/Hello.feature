@@ -33,6 +33,8 @@ Feature: Securing the connection between you and the world
       | JDK HttpClient                    |
       | Jersey HttpClient                 |
       | Jetty Reactive HttpClient         |
+      | Apache CXF WebClient              |
+      | Apache CXF JAX-RS                 |
       | Kohttp                            |
       | Ktor Android HttpClient           |
       | Ktor Apache HttpClient            |

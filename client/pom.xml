@@ -46,6 +46,15 @@
             <artifactId>jersey-client</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-client</artifactId>
+        </dependency>
+        <!--  Import JAX-RS v2.0/javax.ws.rs. shared for old jersey and CXF  -->
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.http-client</groupId>
             <artifactId>google-http-client</artifactId>
         </dependency>

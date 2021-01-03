@@ -25,6 +25,11 @@ import nl.altindag.ssl.util.Apache5SslUtils;
 import nl.altindag.ssl.util.JettySslUtils;
 import nl.altindag.ssl.util.NettySslUtils;
 import okhttp3.OkHttpClient;
+
+import org.apache.cxf.bus.CXFBusFactory;
+import org.apache.cxf.configuration.jsse.TLSClientParameters;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
+import org.apache.cxf.transport.http.HTTPConduitConfigurer;
 import org.apache.hc.client5.http.impl.async.HttpAsyncClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
@@ -37,6 +42,7 @@ import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 import org.asynchttpclient.Dsl;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -210,6 +216,41 @@ public class ClientConfig {
         } else {
             return com.sun.jersey.api.client.Client.create();
         }
+    }
+
+    /**
+     * JAX-RS configuration should be identical to {@link #jerseyClient(SSLFactory)} once CXF update to version 3.5.0
+     * But this function is still necessary to create CXF version of client that does not depend on Java SPI (/META-INF/services/javax.ws.rs.client.ClientBuilder)
+     */
+    @Bean
+    @Qualifier("cxf")
+    public javax.ws.rs.client.Client cxfJaxRsClient(@Autowired(required = false) SSLFactory sslFactory) {
+        // One can just use ClientBuilder.newBuilder(), Explicit use here is due to multiple JAX-RS implementations in classpath
+        javax.ws.rs.client.ClientBuilder clientBuilder = new org.apache.cxf.jaxrs.client.spec.ClientBuilderImpl();
+         if (nonNull(sslFactory)) {
+             clientBuilder
+                .sslContext(sslFactory.getSslContext())
+                .hostnameVerifier(sslFactory.getHostnameVerifier());
+         }
+        return clientBuilder.build();
+    }
+
+
+    @Bean
+    public org.apache.cxf.jaxrs.client.WebClient cxfWebClient(@Autowired(required = false) SSLFactory sslFactory) {
+        JAXRSClientFactoryBean factory = new JAXRSClientFactoryBean();
+        factory.setAddress(SERVER_URL);
+        if (nonNull(sslFactory)) {
+            // One can also get conduit from  WebClient.getConfig(webClient).getHttpConduit() and change it directly
+            factory.setBus(new CXFBusFactory().createBus());
+            factory.getBus().setExtension((name, address, httpConduit) -> {
+                TLSClientParameters tls = new TLSClientParameters();
+                tls.setSSLSocketFactory(sslFactory.getSslSocketFactory());
+                tls.setHostnameVerifier(sslFactory.getHostnameVerifier());
+                httpConduit.setTlsClientParameters(tls);
+            }, HTTPConduitConfigurer.class);
+        }
+        return factory.createWebClient();
     }
 
     @Bean
