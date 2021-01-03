@@ -49,7 +49,6 @@ I also want to provide a **cheatsheet** for all the developers and the community
 2. Maven 3.5.0
 3. Eclipse, Intellij IDEA (or any other text editor like VIM)
 4. A terminal
-5. Openssl (For Windows users use [Git Bash](https://git-scm.com/))
 
 If you want to start instantly without installing any software, click the button below to open the project in an online development environment:
 
