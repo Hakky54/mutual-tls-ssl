@@ -120,10 +120,10 @@ To solve this issue, you are going to create a keystore with a public and privat
 
 To create a keystore with a public and private key, execute the following command in your terminal:
 ```bash
-keytool -genkeypair -keyalg RSA -keysize 2048 -alias server -dname "CN=Hakan,OU=Amsterdam,O=Thunderberry,C=NL" -validity 3650 -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1
+keytool -v -genkeypair -dname "CN=Hakan,OU=Amsterdam,O=Thunderberry,C=NL" -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -keypass secret -keyalg RSA -keysize 2048 -alias server -validity 3650 -deststoretype pkcs12 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1
 ```
 
-Now, you need to tell your server where the location of the keystore is and provide the passwords. Paste the following in your  `application.yml` file:
+Now, you need to tell your server where the location of the keystore is and provide the passwords. Paste the following in your `application.yml` file:
 ```yaml
 server:
   port: 8443
@@ -155,12 +155,12 @@ Therefor you also need to create a truststore. A truststore is a suitcase contai
 
 **Export certificate of the server**
 ```bash
-keytool -exportcert -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -alias server -rfc -file shared-server-resources/src/main/resources/server.cer
+keytool -v -exportcert -file shared-server-resources/src/main/resources/server.cer -alias server -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -rfc
 ```
 
 Now, you can create the truststore for the client and import the certificate of the server with the following command:
 ```bash
-keytool -keystore client/src/test/resources/truststore.jks -importcert -file shared-server-resources/src/main/resources/server.cer -alias server -storepass secret
+keytool -v -importcert -file shared-server-resources/src/main/resources/server.cer -alias server -keystore client/src/test/resources/truststore.jks -storepass secret -noprompt
 ```
 
 You created the truststore for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it needs to use the truststore with the correct location and password. You also need to tell the client that authentication is enabled. Provide the following property in the `application.yml` file of the client:
@@ -188,17 +188,17 @@ server:
 
 If you run the client, it will fail with the following error message: `javax.net.ssl.SSLHandshakeException: Received fatal alert: bad_certificate`. This indicates that the certificate of the client is not valid because there is no certificate at all. So, let's create one with the following command
 ```bash
-keytool -genkeypair -keyalg RSA -keysize 2048 -alias client -dname "CN=Suleyman,OU=Altindag,O=Altindag,C=NL" -validity 3650 -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -deststoretype pkcs12 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth
+keytool -v -genkeypair -dname "CN=Suleyman,OU=Altindag,O=Altindag,C=NL" -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -keyalg RSA -keysize 2048 -alias client -validity 3650 -deststoretype pkcs12 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth
 ```
 You also need to create a truststore for the server. Before creating the truststore, you need to have the certificates of the client. You can get it with the following command:
 
 **Export certificate of the client**
 ```bash
-keytool -exportcert -keystore client/src/test/resources/identity.jks -storepass secret -alias client -rfc -file client/src/test/resources/client.cer
+keytool -v -exportcert -file client/src/test/resources/client.cer -alias client -keystore client/src/test/resources/identity.jks -storepass secret -rfc
 ```
 **Create the server truststore with the certificate of the client**
 ```bash
-keytool -keystore shared-server-resources/src/main/resources/truststore.jks -importcert -file client/src/test/resources/client.cer -alias client -storepass secret
+keytool -v -importcert -file client/src/test/resources/client.cer -alias client -keystore shared-server-resources/src/main/resources/truststore.jks -storepass secret -noprompt
 ```
 
 You created the extra keystore for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it also needs to use the keystore with the correct location and password. You also need to tell the client that two-way-authentication is enabled. Provide the following property in the `application.yml` file of the client:
@@ -252,7 +252,7 @@ These are the following steps:
 Normally there is already a Certificate Authority, and you need to provide your certificate to have it signed. Here you will create your own Certificate Authority and sign the Client and Server certificate with it. To create one you can execute the following command:
 
 ```bash
-keytool -genkeypair -keyalg RSA -keysize 2048 -alias root-ca -dname "CN=Root-CA,OU=Certificate Authority,O=Thunderberry,C=NL" -validity 3650 -keystore root-ca/identity.jks -storepass secret -keypass secret -deststoretype pkcs12 -ext KeyUsage=digitalSignature,keyCertSign -ext BasicConstraints=ca:true,PathLen:3
+keytool -v -genkeypair -dname "CN=Root-CA,OU=Certificate Authority,O=Thunderberry,C=NL" -keystore root-ca/identity.jks -storepass secret -keypass secret -keyalg RSA -keysize 2048 -alias root-ca -validity 3650 -deststoretype pkcs12 -ext KeyUsage=digitalSignature,keyCertSign -ext BasicConstraints=ca:true,PathLen:3
 ```
 
 Or you can use the one which is already provided in the repository, see [identity.jks](root-ca/identity.jks)
@@ -262,31 +262,25 @@ To get your certificate signed you need to provide a Certificate Signing Request
 
 ##### Certificate Signing Request for the server
 ```bash
-keytool -certreq -keystore shared-server-resources/src/main/resources/identity.jks -alias server -keypass secret -storepass secret -keyalg rsa -file shared-server-resources/src/main/resources/server.csr
+keytool -v -certreq -file shared-server-resources/src/main/resources/server.csr -keystore shared-server-resources/src/main/resources/identity.jks -alias server -keypass secret -storepass secret -keyalg rsa
 ```
 
 ##### Certificate Signing Request for the client
 ```bash
-keytool -certreq -keystore client/src/test/resources/identity.jks -alias client -keypass secret -storepass secret -keyalg rsa -file client/src/test/resources/client.csr
+keytool -v -certreq -file client/src/test/resources/client.csr -keystore client/src/test/resources/identity.jks -alias client -keypass secret -storepass secret -keyalg rsa
 ```
 
 The Certificate Authority need these csr files to be able to sign it. The next step will be signing the requests.
 
 #### Signing the certificate with the Certificate Signing Request
-##### Create pem file from a jks file
-```bash
-openssl pkcs12 -in root-ca/root-ca.p12 -out root-ca/root-ca.pem -nokeys -passin pass:secret -passout pass:secret
-```
-
-The next step will be signing the certificates. You can sign it with the following commands:
 ##### Signing the client certificate
 ```bash
-keytool -gencert -keystore root-ca/identity.jks -storepass secret -alias root-ca -infile client/src/test/resources/client.csr -outfile client/src/test/resources/client-signed.cer -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth
+keytool -v -gencert -infile client/src/test/resources/client.csr -outfile client/src/test/resources/client-signed.cer -keystore root-ca/identity.jks -storepass secret -alias root-ca -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth
 ```
 
 ##### Signing the server certificate
 ```bash
-keytool -gencert -keystore root-ca/identity.jks -storepass secret -alias root-ca -infile shared-server-resources/src/main/resources/server.csr -outfile shared-server-resources/src/main/resources/server-signed.cer -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1
+keytool -v -gencert -infile shared-server-resources/src/main/resources/server.csr -outfile shared-server-resources/src/main/resources/server-signed.cer -keystore root-ca/identity.jks -storepass secret -alias root-ca -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1
 ```
 
 #### Replace the unsigned certificate with a signed one
@@ -294,21 +288,21 @@ The identity keystore of the server and client still have the unsigned certifica
 
 **Export CA Certificate**
 ```bash
-keytool -exportcert -keystore root-ca/identity.jks -storepass secret -alias root-ca -rfc -file root-ca/root-ca.pem
+keytool -v -exportcert -file root-ca/root-ca.pem -alias root-ca -keystore root-ca/identity.jks -storepass secret -rfc
 ```
 
 **Client**
 ```bash
-keytool -keystore client/src/test/resources/identity.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret -noprompt
-keytool -importcert -keystore client/src/test/resources/identity.jks -storepass secret -file client/src/test/resources/client-signed.cer -alias client
-keytool -delete -keystore client/src/test/resources/identity.jks -alias root-ca -storepass secret
+keytool -v -importcert -file root-ca/root-ca.pem -alias root-ca -keystore client/src/test/resources/identity.jks -storepass secret -noprompt
+keytool -v -importcert -file client/src/test/resources/client-signed.cer -alias client -keystore client/src/test/resources/identity.jks -storepass secret
+keytool -v -delete -alias root-ca -keystore client/src/test/resources/identity.jks -storepass secret
 ```
 
 **Server**
 ```bash
-keytool -keystore shared-server-resources/src/main/resources/identity.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret -noprompt
-keytool -importcert -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -file shared-server-resources/src/main/resources/server-signed.cer -alias server
-keytool -delete -keystore shared-server-resources/src/main/resources/identity.jks -alias root-ca -storepass secret
+keytool -v -importcert -file root-ca/root-ca.pem -alias root-ca -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -noprompt
+keytool -v -importcert -file shared-server-resources/src/main/resources/server-signed.cer -alias server -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret
+keytool -v -delete -alias root-ca -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret
 ```
 
 #### Trusting the Certificate Authority only
@@ -316,24 +310,24 @@ Now you need to configure your client and server to only trust the Certificate A
 
 **Client**
 ```bash
-keytool -keystore client/src/test/resources/truststore.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret
+keytool -v -importcert -file root-ca/root-ca.pem -alias root-ca -keystore client/src/test/resources/truststore.jks -storepass secret -noprompt
 ```
 
 **Server**
 ```bash
-keytool -keystore shared-server-resources/src/main/resources/truststore.jks -importcert -file root-ca/root-ca.pem -alias root-ca -storepass secret
+keytool -v -importcert -file root-ca/root-ca.pem -alias root-ca -keystore shared-server-resources/src/main/resources/truststore.jks -storepass secret -noprompt
 ```
 
 The truststores still contains the client and server specific certificates and that needs to be removed. You can do that with the following command:
 
 **Client**
 ```bash
-keytool -keystore client/src/test/resources/truststore.jks -delete -alias server -storepass secret
+keytool -delete -alias server -keystore client/src/test/resources/truststore.jks -storepass secret
 ```
 
 **Server**
 ```bash
-keytool -keystore shared-server-resources/src/main/resources/truststore.jks -delete -alias client -storepass secret
+keytool -delete -alias client -keystore shared-server-resources/src/main/resources/truststore.jks -storepass secret
 ```
 
 If you run the client again, you will see that the test passed and that the client received the hello message from the server while based on a certificate which is signed by the Certificate Authority.
