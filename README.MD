@@ -322,12 +322,12 @@ The truststores still contains the client and server specific certificates and t
 
 **Client**
 ```bash
-keytool -delete -alias server -keystore client/src/test/resources/truststore.jks -storepass secret
+keytool -v -delete -alias server -keystore client/src/test/resources/truststore.jks -storepass secret
 ```
 
 **Server**
 ```bash
-keytool -delete -alias client -keystore shared-server-resources/src/main/resources/truststore.jks -storepass secret
+keytool -v -delete -alias client -keystore shared-server-resources/src/main/resources/truststore.jks -storepass secret
 ```
 
 If you run the client again, you will see that the test passed and that the client received the hello message from the server while based on a certificate which is signed by the Certificate Authority.
