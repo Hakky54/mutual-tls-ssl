@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo actor
-          run: echo ${{github.actor}}
+        run: echo ${{github.actor}}
 
       - uses: actions/checkout@v1
 
