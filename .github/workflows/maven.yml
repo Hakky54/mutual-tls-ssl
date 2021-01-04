@@ -6,6 +6,9 @@ jobs:
   without-encryption:
     runs-on: ubuntu-latest
     steps:
+      - name: echo actor
+          run: echo ${{github.actor}}
+
       - uses: actions/checkout@v1
 
       - name: Set up JDK 11
@@ -25,11 +28,11 @@ jobs:
         run: mvn clean install sonar:sonar -Pjacoco -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.repository == 'Hakky54/mutual-tls-ssl'
+        if: github.actor == 'Hakky54'
 
       - name: Build and test
         run: mvn clean install --no-transfer-progress
-        if: github.repository != 'Hakky54/mutual-tls-ssl' && github.event_name == 'pull_request'
+        if: github.actor != 'Hakky54'
 
   one-way-authentication:
     runs-on: ubuntu-latest
