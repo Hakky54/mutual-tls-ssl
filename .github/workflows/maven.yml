@@ -25,6 +25,11 @@ jobs:
         run: mvn clean install sonar:sonar -Pjacoco -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.repository == 'Hakky54/mutual-tls-ssl' && github.event_name == 'push'
+
+      - name: Build and test
+        run: mvn clean install --no-transfer-progress
+        if: github.repository != 'Hakky54/mutual-tls-ssl' && github.event_name == 'pull_request'
 
   one-way-authentication:
     runs-on: ubuntu-latest
