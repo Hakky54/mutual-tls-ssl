@@ -281,11 +281,6 @@
             </dependency>
             <dependency>
                 <groupId>org.http4k</groupId>
-                <artifactId>http4k-client-apache</artifactId>
-                <version>${version.http4k}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.http4k</groupId>
                 <artifactId>http4k-client-apache-async</artifactId>
                 <version>${version.http4k}</version>
             </dependency>
