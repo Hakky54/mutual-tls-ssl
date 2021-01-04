@@ -22,7 +22,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build, test and quality scan
-        run: mvn clean install sonar:sonar -Pjacoco -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: mvn clean install sonar:sonar -Pjacoco -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -45,7 +45,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build and test
-        run: mvn clean install -P with-one-way-authentication
+        run: mvn clean install -P with-one-way-authentication --no-transfer-progress
 
   two-way-authentication-by-trusting-root-ca:
     runs-on: ubuntu-latest
@@ -66,7 +66,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build and test
-        run: mvn clean install -P with-two-way-authentication-by-trusting-root-ca
+        run: mvn clean install -P with-two-way-authentication-by-trusting-root-ca --no-transfer-progress
 
   two-way-authentication-by-trusting-each-other:
     runs-on: ubuntu-latest
@@ -87,4 +87,4 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build and test
-        run: mvn clean install -P with-two-way-authentication-by-trusting-each-other
+        run: mvn clean install -P with-two-way-authentication-by-trusting-each-other --no-transfer-progress
