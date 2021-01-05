@@ -49,7 +49,7 @@ Feature: Securing the connection between you and the world
       | Requests Scala                    |
       | ScalaJ HttpClient                 |
       | Sttp                              |
-      | Spring RestTemplate               |
+      | Spring Rest Template              |
       | Spring WebFlux WebClient Jetty    |
       | Spring WebFlux WebClient Netty    |
       | Unirest                           |

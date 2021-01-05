@@ -1,6 +1,6 @@
 package nl.altindag.client.service;
 
-import static nl.altindag.client.ClientType.SPRING_REST_TEMPATE;
+import static nl.altindag.client.ClientType.SPRING_REST_TEMPLATE;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
 import org.springframework.http.HttpEntity;
@@ -34,6 +34,6 @@ public class SpringRestTemplateService implements RequestService {
 
     @Override
     public ClientType getClientType() {
-        return SPRING_REST_TEMPATE;
+        return SPRING_REST_TEMPLATE;
     }
 }

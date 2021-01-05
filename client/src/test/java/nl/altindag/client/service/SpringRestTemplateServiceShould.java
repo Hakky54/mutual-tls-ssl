@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 
-import static nl.altindag.client.ClientType.SPRING_REST_TEMPATE;
+import static nl.altindag.client.ClientType.SPRING_REST_TEMPLATE;
 import static nl.altindag.client.TestConstants.HTTP_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -52,7 +52,7 @@ class SpringRestTemplateServiceShould {
         assertThat(clientResponse.getResponseBody()).isEqualTo("Hello");
 
         verify(restTemplate, times(1)).exchange(anyString(), httpMethodArgumentCaptor.capture(), httpEntityArgumentCaptor.capture(), eq(String.class));
-        assertThat(httpEntityArgumentCaptor.getValue().getHeaders()).containsExactly(Assertions.entry(TestConstants.HEADER_KEY_CLIENT_TYPE, Collections.singletonList(SPRING_REST_TEMPATE.getValue())));
+        assertThat(httpEntityArgumentCaptor.getValue().getHeaders()).containsExactly(Assertions.entry(TestConstants.HEADER_KEY_CLIENT_TYPE, Collections.singletonList(SPRING_REST_TEMPLATE.getValue())));
         assertThat(httpMethodArgumentCaptor.getValue()).isEqualTo(HttpMethod.GET);
     }
 

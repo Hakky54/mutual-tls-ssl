@@ -8,7 +8,7 @@ public enum ClientType {
     APACHE5_HTTP_ASYNC_CLIENT("Apache 5 Http Async Client"),
     JDK_HTTP_CLIENT("jdk httpclient"),
     OLD_JDK_HTTP_CLIENT("old jdk httpclient"),
-    SPRING_REST_TEMPATE("spring resttemplate"),
+    SPRING_REST_TEMPLATE("spring rest template"),
     SPRING_WEB_CLIENT_NETTY("spring webflux webclient netty"),
     SPRING_WEB_CLIENT_JETTY("spring webflux webclient jetty"),
     OK_HTTP("okhttp"),
