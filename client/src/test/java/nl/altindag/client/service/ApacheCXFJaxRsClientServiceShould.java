@@ -36,7 +36,7 @@ class ApacheCXFJaxRsClientServiceShould {
 
         when(client.target(HTTP_URL)).thenReturn(webTarget);
         when(webTarget.request(MediaType.TEXT_PLAIN_TYPE)).thenReturn(requestBuilder);
-        when(requestBuilder.header(HEADER_KEY_CLIENT_TYPE, ClientType.APACHE_CXF_JAXRS.getValue())).thenReturn(requestBuilder);
+        when(requestBuilder.header(HEADER_KEY_CLIENT_TYPE, ClientType.APACHE_CXF_JAX_RS.getValue())).thenReturn(requestBuilder);
         when(requestBuilder.get()).thenReturn(response);
         when(response.readEntity(String.class)).thenReturn("Hello");
         when(response.getStatus()).thenReturn(200);

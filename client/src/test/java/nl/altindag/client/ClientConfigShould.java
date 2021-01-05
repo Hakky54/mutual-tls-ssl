@@ -24,6 +24,7 @@ import retrofit2.Retrofit;
 
 import javax.net.ssl.SSLException;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URISyntaxException;
 
 import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
@@ -338,7 +339,8 @@ class ClientConfigShould {
         org.apache.cxf.jaxrs.client.WebClient client = victim.cxfWebClient(sslFactory);
 
         assertThat(client).isNotNull();
-        assertThatThrownBy(() -> client.to(TestConstants.HTTPS_URL, false).get());
+        assertThatThrownBy(() -> client.to(TestConstants.HTTPS_URL, false).get())
+                .hasRootCauseInstanceOf(ConnectException.class);
 
         verify(sslFactory, times(1)).getSslSocketFactory();
         verify(sslFactory, times(1)).getHostnameVerifier();

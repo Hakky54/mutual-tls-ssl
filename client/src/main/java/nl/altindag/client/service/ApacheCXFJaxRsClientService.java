@@ -9,7 +9,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static nl.altindag.client.ClientType.APACHE_CXF_JAXRS;
+import static nl.altindag.client.ClientType.APACHE_CXF_JAX_RS;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
 /**
@@ -37,7 +37,7 @@ public class ApacheCXFJaxRsClientService implements RequestService {
 
     @Override
     public ClientType getClientType() {
-        return APACHE_CXF_JAXRS;
+        return APACHE_CXF_JAX_RS;
     }
 
 

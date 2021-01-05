@@ -15,7 +15,7 @@ public enum ClientType {
     JERSEY_CLIENT("jersey httpclient"),
     OLD_JERSEY_CLIENT("old jersey httpclient"),
     APACHE_CXF_WEB_CLIENT("Apache CXF WebClient"),
-    APACHE_CXF_JAXRS("Apache CXF JAX-RS"),
+    APACHE_CXF_JAX_RS("Apache CXF JAX-RS"),
     GOOGLE_HTTP_CLIENT("google httpclient"),
     UNIREST("unirest"),
     RETROFIT("retrofit"),
