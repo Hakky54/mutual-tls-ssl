@@ -34,7 +34,7 @@ class ApacheCXFWebClientServiceShould {
 
         when(webClient.to(HTTP_URL, false)).thenReturn(webClient);
         when(webClient.accept(MediaType.TEXT_PLAIN_TYPE)).thenReturn(webClient);
-        when(webClient.header(HEADER_KEY_CLIENT_TYPE, ClientType.APACHE_CXF_WEB_CLIENT)).thenReturn(webClient);
+        when(webClient.header(HEADER_KEY_CLIENT_TYPE, ClientType.APACHE_CXF_WEB_CLIENT.getValue())).thenReturn(webClient);
         when(webClient.get()).thenReturn(response);
 
         ClientResponse clientResponse = victim.executeRequest(HTTP_URL);
