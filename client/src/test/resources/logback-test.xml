@@ -7,6 +7,9 @@
 
     <logger level="DEBUG" name="org.springframework.beans.factory.config"/>
     <logger level="DEBUG" name="nl.altindag"/>
+    <logger level="OFF" name="org.springframework.test.context.support.DefaultTestContextBootstrapper"/>
+    <logger level="OFF" name="org.springframework.http.converter.json.Jackson2ObjectMapperBuilder"/>
+    <logger level="OFF" name="org.springframework.test.context.support.AbstractContextLoader"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />
