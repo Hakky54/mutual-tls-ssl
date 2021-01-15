@@ -1,7 +1,7 @@
 package nl.altindag.client.util;
 
 import nl.altindag.client.ClientType;
-import org.mockserver.client.MockServerClient;
+import nl.altindag.log.LogCaptor;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.matchers.TimeToLive;
 import org.mockserver.matchers.Times;
@@ -19,6 +19,9 @@ public final class MockServerTestHelper {
     static {
         clientAndServer = ClientAndServer.startClientAndServer(8080);
         Runtime.getRuntime().addShutdownHook(new Thread(clientAndServer::stop));
+
+        LogCaptor.forName("org.mockserver.log.MockServerEventLog")
+                .disableLogs();
     }
 
     public static void mockResponseForClient(ClientType clientType) {

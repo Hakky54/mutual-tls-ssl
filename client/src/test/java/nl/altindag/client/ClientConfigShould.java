@@ -10,6 +10,7 @@ import com.twitter.finagle.http.Response;
 import feign.Feign;
 import jakarta.ws.rs.client.Client;
 import kong.unirest.Unirest;
+import nl.altindag.log.LogCaptor;
 import nl.altindag.ssl.SSLFactory;
 import okhttp3.OkHttpClient;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -334,6 +335,9 @@ class ClientConfigShould {
 
     @Test
     void createCxfWebClientWithSecurity() {
+        LogCaptor.forName("org.apache.cxf.phase.PhaseInterceptorChain")
+                .disableLogs();
+
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         org.apache.cxf.jaxrs.client.WebClient client = victim.cxfWebClient(sslFactory);

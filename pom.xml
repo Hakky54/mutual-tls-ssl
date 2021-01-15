@@ -69,7 +69,7 @@
         <version.jacoco-maven-plugin>0.8.6</version.jacoco-maven-plugin>
         <version.junit-jupiter>5.7.0</version.junit-jupiter>
         <version.assertj-core>3.18.1</version.assertj-core>
-        <version.logcaptor>2.3.1</version.logcaptor>
+        <version.logcaptor>2.3.2</version.logcaptor>
         <version.byte-buddy>1.10.19</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
         <version.scalatest>3.2.3</version.scalatest>
