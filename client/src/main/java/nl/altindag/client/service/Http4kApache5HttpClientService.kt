@@ -17,7 +17,7 @@ class Http4kApache5HttpClientService(
 ) : Http4kClientService(
         ApacheClient(
                 client = sslFactory?.let { factory ->
-                    val socketFactory = Apache5SslUtils.toSocketFactory(sslFactory)
+                    val socketFactory = Apache5SslUtils.toSocketFactory(factory)
                     val connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
                             .setSSLSocketFactory(socketFactory)
                             .build()
