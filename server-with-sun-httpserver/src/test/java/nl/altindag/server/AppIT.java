@@ -4,7 +4,7 @@ import nl.altindag.log.LogCaptor;
 import nl.altindag.ssl.SSLFactory;
 import nl.altindag.ssl.trustmanager.CompositeX509ExtendedTrustManager;
 import nl.altindag.ssl.trustmanager.UnsafeX509ExtendedTrustManager;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ class AppIT {
 
     private final LogCaptor logCaptor = LogCaptor.forClass(App.class);
 
-    @BeforeEach
+    @AfterEach
     void cleanUp() {
         logCaptor.clearLogs();
         App.stopServerIfRunning();
