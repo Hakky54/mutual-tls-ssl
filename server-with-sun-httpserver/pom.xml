@@ -22,6 +22,11 @@
             <artifactId>shared-server-resources</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>nl.altindag</groupId>
+            <artifactId>common-server-utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>io.github.hakky54</groupId>
