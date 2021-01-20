@@ -18,8 +18,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static java.util.Objects.nonNull;
-
 @SuppressWarnings({"unused", "java:S1068"})
 public class App {
 
@@ -73,13 +71,11 @@ public class App {
     }
 
     static void stopServerIfRunning() {
-        if (nonNull(httpServer) && nonNull(executorService)) {
-            httpServer.stop(0);
-            executorService.shutdownNow();
+        httpServer.stop(0);
+        executorService.shutdownNow();
 
-            executorService = null;
-            httpServer = null;
-        }
+        executorService = null;
+        httpServer = null;
     }
 
 }
