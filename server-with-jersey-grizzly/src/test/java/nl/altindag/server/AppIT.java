@@ -63,6 +63,7 @@ class AppIT {
 
         SSLFactory sslFactory = SSLFactory.builder()
                 .withTrustingAllCertificatesWithoutValidation()
+                .withDefaultTrustMaterial()
                 .build();
 
         HttpClient httpClient = HttpClient.newBuilder()
@@ -98,6 +99,7 @@ class AppIT {
         SSLFactory sslFactory = SSLFactory.builder()
                 .withIdentityMaterial("client-identity.jks", "secret".toCharArray())
                 .withTrustMaterial("client-truststore.jks", "secret".toCharArray())
+                .withDefaultTrustMaterial()
                 .build();
 
         HttpClient httpClient = HttpClient.newBuilder()

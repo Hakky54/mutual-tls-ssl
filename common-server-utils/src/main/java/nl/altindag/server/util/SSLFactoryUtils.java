@@ -11,7 +11,8 @@ public final class SSLFactoryUtils {
 
     public static SSLFactory createSSLFactory(ApplicationProperty applicationProperty) {
         SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder()
-                .withIdentityMaterial(applicationProperty.getKeystorePath(), applicationProperty.getKeystorePassword());
+                .withIdentityMaterial(applicationProperty.getKeystorePath(), applicationProperty.getKeystorePassword())
+                .withDefaultTrustMaterial();
 
         if (nonNull(applicationProperty.getTruststorePath())) {
             sslFactoryBuilder.withTrustMaterial(applicationProperty.getTruststorePath(), applicationProperty.getTruststorePassword());
