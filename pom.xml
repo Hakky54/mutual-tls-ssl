@@ -22,7 +22,7 @@
         <version.java>11</version.java>
         <version.scala>2.13</version.scala>
         <version.scala-compiler>2.13.4</version.scala-compiler>
-        <version.kotlin>1.4.30-M1</version.kotlin>
+        <version.kotlin>1.4.30-RC</version.kotlin>
         <version.kotlinx-coroutines-core>1.4.2-native-mt</version.kotlinx-coroutines-core>
         <version.sslcontext-kickstart>6.1.1</version.sslcontext-kickstart>
         <version.spring>2.4.2</version.spring>
@@ -39,14 +39,14 @@
         <version.okhttp>4.10.0-RC1</version.okhttp>
         <version.jetty-reactive-httpclient>1.1.5</version.jetty-reactive-httpclient>
         <version.jersey1>1.19.4</version.jersey1>
-        <version.jersey2>3.0.0</version.jersey2>
+        <version.jersey2>3.0.1</version.jersey2>
         <version.apache.cxf>3.4.2</version.apache.cxf>
         <version.google.http.client>1.38.1</version.google.http.client>
         <version.unirest>3.11.10</version.unirest>
         <version.retrofit>2.9.0</version.retrofit>
-        <version.finagle>20.12.0</version.finagle>
-        <version.akka-http>10.2.2</version.akka-http>
-        <version.akka-stream>2.6.11</version.akka-stream>
+        <version.finagle>21.1.0</version.finagle>
+        <version.akka-http>10.2.3</version.akka-http>
+        <version.akka-stream>2.6.12</version.akka-stream>
         <version.dispatch-core>1.2.0</version.dispatch-core>
         <version.scalaj-http>2.4.2</version.scalaj-http>
         <version.async-http-client>2.12.2</version.async-http-client>
@@ -58,7 +58,7 @@
         <version.http4s>1.0-234-d1a2b53</version.http4s>
         <version.feign>11.0</version.feign>
         <version.methanol>1.4.1</version.methanol>
-        <version.ktor>1.5.0</version.ktor>
+        <version.ktor>1.5.1</version.ktor>
         <version.http4k>3.285.1</version.http4k>
         <version.vertx>4.0.0</version.vertx>
         <version.javax.annotation-api>1.3.2</version.javax.annotation-api>
@@ -71,7 +71,7 @@
         <version.jacoco-maven-plugin>0.8.6</version.jacoco-maven-plugin>
         <version.junit-jupiter>5.7.0</version.junit-jupiter>
         <version.mockito>3.7.7</version.mockito>
-        <version.assertj-core>3.18.1</version.assertj-core>
+        <version.assertj-core>3.19.0</version.assertj-core>
         <version.logcaptor>2.3.2</version.logcaptor>
         <version.byte-buddy>1.10.19</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
