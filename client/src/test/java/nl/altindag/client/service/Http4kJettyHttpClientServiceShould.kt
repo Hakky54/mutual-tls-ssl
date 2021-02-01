@@ -29,7 +29,7 @@ class Http4kJettyHttpClientServiceShould {
         Http4kJettyHttpClientService(sslFactory)
 
         verify(sslFactory, times(1)).sslContext
-        verify(sslFactory, times(2)).sslParameters
+        verify(sslFactory, times(1)).sslParameters
         verify(sslFactory, times(1)).hostnameVerifier
     }
 
