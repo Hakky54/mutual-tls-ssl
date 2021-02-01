@@ -24,7 +24,7 @@
         <version.scala-compiler>2.13.4</version.scala-compiler>
         <version.kotlin>1.4.30-RC</version.kotlin>
         <version.kotlinx-coroutines-core>1.4.2-native-mt</version.kotlinx-coroutines-core>
-        <version.sslcontext-kickstart>6.1.1</version.sslcontext-kickstart>
+        <version.sslcontext-kickstart>6.2.0</version.sslcontext-kickstart>
         <version.spring>2.4.2</version.spring>
         <version.slf4j>1.7.30</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
@@ -72,7 +72,7 @@
         <version.junit-jupiter>5.7.0</version.junit-jupiter>
         <version.mockito>3.7.7</version.mockito>
         <version.assertj-core>3.19.0</version.assertj-core>
-        <version.logcaptor>2.3.2</version.logcaptor>
+        <version.logcaptor>2.4.0</version.logcaptor>
         <version.byte-buddy>1.10.19</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
         <version.scalatest>3.2.3</version.scalatest>
