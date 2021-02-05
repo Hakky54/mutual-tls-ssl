@@ -16,6 +16,10 @@ import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
 import feign.Feign;
 import io.netty.handler.ssl.SslContext;
+import io.vertx.core.Vertx;
+import io.vertx.core.net.KeyCertOptions;
+import io.vertx.core.net.TrustOptions;
+import io.vertx.ext.web.client.WebClientOptions;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import kong.unirest.Unirest;
@@ -351,6 +355,28 @@ public class ClientConfig {
         } else {
             return Methanol.create();
         }
+    }
+
+    @Bean
+    public io.vertx.ext.web.client.WebClient vertxWebClient(@Autowired(required = false) SSLFactory sslFactory) {
+        WebClientOptions clientOptions = new WebClientOptions();
+
+        if (nonNull(sslFactory)) {
+            clientOptions.setSsl(true);
+
+            sslFactory.getKeyManager()
+                    .map(KeyCertOptions::wrap)
+                    .ifPresent(clientOptions::setKeyCertOptions);
+
+            sslFactory.getTrustManager()
+                    .map(TrustOptions::wrap)
+                    .ifPresent(clientOptions::setTrustOptions);
+
+            sslFactory.getCiphers().forEach(clientOptions::addEnabledCipherSuite);
+            sslFactory.getProtocols().forEach(clientOptions::addEnabledSecureTransportProtocol);
+        }
+
+        return io.vertx.ext.web.client.WebClient.create(Vertx.vertx(), clientOptions);
     }
 
 }

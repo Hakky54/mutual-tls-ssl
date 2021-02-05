@@ -523,4 +523,24 @@ class ClientConfigShould {
         verify(sslFactory, times(1)).getSslParameters();
     }
 
+    @Test
+    void createVertxWithoutSecurity() {
+        io.vertx.ext.web.client.WebClient webClient = victim.vertxWebClient(null);
+
+        assertThat(webClient).isNotNull();
+    }
+
+    @Test
+    void createVertxWithSecurity() {
+        SSLFactory sslFactory = createSSLFactory(true, true);
+
+        io.vertx.ext.web.client.WebClient httpClient = victim.vertxWebClient(sslFactory);
+
+        assertThat(httpClient).isNotNull();
+        verify(sslFactory, times(1)).getKeyManager();
+        verify(sslFactory, times(1)).getTrustManager();
+        verify(sslFactory, times(1)).getCiphers();
+        verify(sslFactory, times(1)).getProtocols();
+    }
+
 }
