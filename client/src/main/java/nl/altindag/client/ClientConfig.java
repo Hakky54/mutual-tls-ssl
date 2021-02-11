@@ -145,9 +145,7 @@ public class ClientConfig {
 
     @Bean
     public RestTemplate restTemplate(org.apache.http.impl.client.CloseableHttpClient httpClient) {
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-        requestFactory.setHttpClient(httpClient);
-        return new RestTemplate(requestFactory);
+        return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
     }
 
     @Bean
