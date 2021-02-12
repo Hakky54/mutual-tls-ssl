@@ -42,6 +42,8 @@ I mostly worked with Apache Http Client and therefore I initially created this p
 After some time I discovered that there are a lot more Java clients and there also some clients available based on Kotlin and Scala.
 Configuring ssl/tls can be hard and every client requires a different setup. I want to share the knowledge with other developers as every developer will probably work with a different http client.
 I also want to provide a **cheatsheet** for all the developers and the community, see [here](#tested-clients) for a list of [40+ http client](#tested-clients)) with example client configuration and example http request.
+The client module has grown over time and contains a-lot dependencies to test all these http clients for java, scala and kotlin. Therefore client module might look complicated. Beware that for this specific reason it will download a-lot dependencies during the initial build. 
+Also [GitHub - SSLContext Kickstart](https://github.com/Hakky54/sslcontext-kickstart) came into life to easily configure all those clients.
 
 ## Starting the server
 **Minimum requirements:**
