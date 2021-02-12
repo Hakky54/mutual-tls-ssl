@@ -62,7 +62,7 @@ And it is recommended to follow the instruction for that specific version, which
 git checkout tags/java-8-compatible
 ```
 
-Start the server by running the main method of the [App Class](server-with-spring-boot/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
+The server depends on the other components of the project, so run `mvn install` in the root directory first. Start the server by running the main method of the [App Class](server-with-spring-boot/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
 ```bash
 cd server-with-spring-boot/ && mvn spring-boot:run
 ```
@@ -90,9 +90,7 @@ Date: Sun, 11 Nov 2018 14:21:50 GMT
 Hello
 ```
 
-You can also call the server with the provided client in the client directory. The client depends on the other components of the project, so run `mvn install` in the root directory first.
-
-The client is an integration test based on Cucumber, and you can start it by running the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class from your IDE or by running the following command from the terminal in the root directory `cd client/ && mvn exec:java` or with the maven wrapper `cd client/ && ./../mvnw exec:java`. 
+You can also call the server with the provided client in the client directory. The client is an integration test based on Cucumber, and you can start it by running the [ClientRunnerIT](client/src/test/java/nl/altindag/client/ClientRunnerIT.java) class from your IDE or by running the following command from the terminal in the root directory `cd client/ && mvn exec:java` or with the maven wrapper `cd client/ && ./../mvnw exec:java`. 
 
 There is a [Hello.feature](client/src/test/resources/features/Hello.feature) file that describes the steps for the integration test. You can find it in the test resources of the client project.
 There is another way to run both the server and the client and that is with the following command in the root directory: `mvn clean verify` or with the maven wrapper `./mvnw clean verify`.
