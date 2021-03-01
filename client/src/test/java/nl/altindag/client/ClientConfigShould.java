@@ -158,7 +158,6 @@ class ClientConfigShould {
 
         assertThat(sslFactory.getTrustManager()).isPresent();
         assertThat(okHttpClient.x509TrustManager()).isEqualTo(sslFactory.getTrustManager().get());
-        assertThat(okHttpClient.sslSocketFactory()).isEqualTo(sslFactory.getSslSocketFactory());
         assertThat(okHttpClient.hostnameVerifier()).isEqualTo(sslFactory.getHostnameVerifier());
     }
 
