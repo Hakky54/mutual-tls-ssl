@@ -368,6 +368,7 @@ All client examples use the same base ssl configuration created within the [SSLC
 * [Methanol](https://github.com/mizosoft/methanol) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/cad26082c836ab14eaf3f836de9fff026aadf698/client/src/main/java/nl/altindag/client/ClientConfig.java#L349) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/MethanolService.java)
 * [Vertx Webclient](https://github.com/vert-x3/vertx-web) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/cad26082c836ab14eaf3f836de9fff026aadf698/client/src/main/java/nl/altindag/client/ClientConfig.java#L361) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/VertxWebClientService.java)
 * [gRPC](https://grpc.io/) -> [Client/Server Configuration & Example request](https://github.com/Hakky54/java-tutorials)
+* [ElasticSearch](https://www.elastic.co/) -> [RestHighLevelClient Configuration & example request](https://github.com/Hakky54/java-tutorials/blob/33fa9c214a2b7b2a7c8e2a87eb2cf3c6fbafda3d/elasticsearch-with-ssl/src/main/java/nl/altindag/ssl/es/App.java#L26)
 
 **Kotlin**
 * [Fuel](https://github.com/kittinunf/fuel) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/FuelService.kt)
