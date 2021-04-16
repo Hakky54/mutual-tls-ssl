@@ -81,7 +81,7 @@ class AppIT {
         );
 
         assertThat(compositeTrustManagerLogCaptor.getDebugLogs()).containsExactly("Received the following server certificate: [CN=Hakan, OU=Amsterdam, O=Thunderberry, C=NL]");
-        assertThat(unsafeTrustManagerLogCaptor.getDebugLogs()).containsExactly("Accepting a server certificate: [CN=Hakan, OU=Amsterdam, O=Thunderberry, C=NL]");
+        assertThat(unsafeTrustManagerLogCaptor.getWarnLogs()).containsExactly("Accepting the following server certificates without validating: [{CN=Hakan, OU=Amsterdam, O=Thunderberry, C=NL}]");
     }
 
     @Test
