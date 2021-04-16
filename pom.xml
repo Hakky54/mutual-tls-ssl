@@ -22,7 +22,7 @@
         <version.java>11</version.java>
         <version.scala>2.13</version.scala>
         <version.scala-compiler>2.13.5</version.scala-compiler>
-        <version.kotlin>1.5.0-RC</version.kotlin>
+        <version.kotlin>1.4.32</version.kotlin>
         <version.kotlinx-coroutines-core>1.4.3-native-mt</version.kotlinx-coroutines-core>
         <version.sslcontext-kickstart>6.6.0</version.sslcontext-kickstart>
         <version.spring>2.4.5</version.spring>
