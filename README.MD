@@ -16,14 +16,21 @@ This tutorial will walk you through the process of protecting your application w
 
 This sample project demonstrates a basic setup of a server and a client. The communication between the server and client happens through HTTP, so there is no encryption at all yet. The goal is to ensure that all communication will be encrypted.
 
-These are the following steps:
-1. [Starting the server](#starting-the-server)
-2. [Saying hello to the server (without encryption)](#saying-hello-to-the-server-without-encryption)
-3. [Enabling HTTPS on the server (one-way TLS)](#enabling-https-on-the-server-one-way-tls)
-4. [Require the client to identify itself (two way TLS)](#require-the-client-to-identify-itself-two-way-tls)
-5. [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
-6. [Automated script for enabling authentication with TLS](#automated-script-for-enabling-authentication-with-tls)
+# Table of contents
+- [Introduction](#introduction)
+- [Tutorial](#tutorial)
+  - [Starting the server](#starting-the-server)
+  - [Saying hello to the server (without encryption)](#saying-hello-to-the-server-without-encryption)
+  - [Enabling HTTPS on the server (one-way TLS)](#enabling-https-on-the-server-one-way-tls)
+  - [Require the client to identify itself (two way TLS)](#require-the-client-to-identify-itself-two-way-tls)
+  - [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
+  - [Automated script for enabling authentication with TLS](#automated-script-for-enabling-authentication-with-tls)
+- [Automated scripts](#automated-script-for-enabling-authentication-with-tls)
+- [Tested Http Clients](#tested-clients)
+- [Demo and walk-through video](#demo-and-walk-through-video)
+- [Contributing](#contributing)
 
+# Introduction
 **Definition**
 * Identity: A KeyStore which holds the key pair also known as private and public key
 * TrustStore: A KeyStore containing one or more certificates also known as public key. This KeyStore contains a list of trusted certificates
@@ -45,6 +52,7 @@ I also want to provide a **cheatsheet** for all the developers and the community
 The client module has grown over time and contains a-lot dependencies to test all these http clients for java, scala and kotlin. Therefore client module might look complicated. Beware that for this specific reason it will download a-lot dependencies during the initial build. 
 Also [GitHub - SSLContext Kickstart](https://github.com/Hakky54/sslcontext-kickstart) came into life during the lifecycle of this project to easily configure all those clients. Every http client can require a different ssl object to enable ssl and this library ensures it can deliver all the types to configure these clients while having a basic ssl configuration.
 
+# Tutorial
 ## Starting the server
 **Minimum requirements:**
 1. Java 11
@@ -395,6 +403,9 @@ All client examples use the same base ssl configuration created within the [SSLC
 * [Requests-Scala](https://github.com/lihaoyi/requests-scala) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/RequestsScalaService.scala)
 * [Http4s Blaze Client](https://github.com/http4s/http4s) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sBlazeClientService.scala) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sService.scala)
 * [Http4s Java Net Client](https://github.com/http4s/http4s) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sJavaNetClientService.scala) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sService.scala)
+
+## Demo and walk-through video
+[![Java SSL TLS Demo with a server and a client application](https://github.com/Hakky54/mutual-tls-ssl/blob/master/images/demo.png?raw=true "Java SSL TLS Demo with a server and a client application")](https://www.youtube.com/watch?v=4_BHI8GAoMw)
 
 ## Contributing
 There are plenty of ways to contribute to this project:
