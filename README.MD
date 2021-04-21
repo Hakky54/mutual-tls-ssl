@@ -404,7 +404,7 @@ All client examples use the same base ssl configuration created within the [SSLC
 * [Http4s Java Net Client](https://github.com/http4s/http4s) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sJavaNetClientService.scala) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sService.scala)
 
 ## Demo and walk-through video
-[![Java SSL TLS Demo with a server and a client application](https://github.com/Hakky54/mutual-tls-ssl/blob/master/images/demo.png?raw=true "Java SSL TLS Demo with a server and a client application")](https://www.youtube.com/watch?v=4_BHI8GAoMw)
+[![Java SSL TLS Demo with a server and a client application](https://github.com/Hakky54/mutual-tls-ssl/blob/master/images/demo.png?raw=true "Java SSL TLS Demo with a server and a client application")](https://youtu.be/yfOknrCBNbQ)
 
 ## Contributing
 There are plenty of ways to contribute to this project:
