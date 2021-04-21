@@ -24,7 +24,6 @@ This sample project demonstrates a basic setup of a server and a client. The com
   - [Enabling HTTPS on the server (one-way TLS)](#enabling-https-on-the-server-one-way-tls)
   - [Require the client to identify itself (two way TLS)](#require-the-client-to-identify-itself-two-way-tls)
   - [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
-  - [Automated script for enabling authentication with TLS](#automated-script-for-enabling-authentication-with-tls)
 - [Automated scripts](#automated-script-for-enabling-authentication-with-tls)
 - [Tested Http Clients](#tested-clients)
 - [Demo and walk-through video](#demo-and-walk-through-video)
