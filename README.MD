@@ -14,8 +14,6 @@
 
 This tutorial will walk you through the process of protecting your application with TLS authentication, only allowing access for certain users based on their certificates. This means that you can choose which users are allowed to call your application.
 
-This sample project demonstrates a basic setup of a server and a client. The communication between the server and client happens through HTTP, so there is no encryption at all yet. The goal is to ensure that all communication will be encrypted.
-
 # Table of contents
 - [Introduction](#introduction)
 - [Tutorial](#tutorial)
@@ -30,6 +28,9 @@ This sample project demonstrates a basic setup of a server and a client. The com
 - [Contributing](#contributing)
 
 # Introduction
+
+This sample project demonstrates a basic setup of a server and a client. The communication between the server and client happens through HTTP, so there is no encryption at all yet. The goal is to ensure that all communication will be encrypted.
+
 **Definition**
 * Identity: A KeyStore which holds the key pair also known as private and public key
 * TrustStore: A KeyStore containing one or more certificates also known as public key. This KeyStore contains a list of trusted certificates
