@@ -15,17 +15,17 @@
 This tutorial will walk you through the process of protecting your application with TLS authentication, only allowing access for certain users based on their certificates. This means that you can choose which users are allowed to call your application.
 
 # Table of contents
-- [Introduction](#introduction)
-- [Tutorial](#tutorial)
-  - [Starting the server](#starting-the-server)
-  - [Saying hello to the server (without encryption)](#saying-hello-to-the-server-without-encryption)
-  - [Enabling HTTPS on the server (one-way TLS)](#enabling-https-on-the-server-one-way-tls)
-  - [Require the client to identify itself (two way TLS)](#require-the-client-to-identify-itself-two-way-tls)
-  - [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
-- [Automated scripts](#automated-script-for-enabling-authentication-with-tls)
-- [Tested Http Clients](#tested-clients)
-- [Demo and walk-through video](#demo-and-walk-through-video)
-- [Contributing](#contributing)
+1. [Introduction](#introduction)
+2. [Tutorial](#tutorial)
+   - [Starting the server](#starting-the-server)
+   - [Saying hello to the server (without encryption)](#saying-hello-to-the-server-without-encryption)
+   - [Enabling HTTPS on the server (one-way TLS)](#enabling-https-on-the-server-one-way-tls)
+   - [Require the client to identify itself (two way TLS)](#require-the-client-to-identify-itself-two-way-tls)
+   - [Two way TLS based on trusting the Certificate Authority](#two-way-tls-based-on-trusting-the-certificate-authority)
+3. [Automated scripts](#automated-script-for-enabling-authentication-with-tls)
+4. [Tested Http Clients](#tested-clients)
+5. [Demo and walk-through video](#demo-and-walk-through-video)
+6. [Contributing](#contributing)
 
 # Introduction
 
