@@ -282,12 +282,12 @@ The Certificate Authority need these csr files to be able to sign it. The next s
 #### Signing the certificate with the Certificate Signing Request
 ##### Signing the client certificate
 ```bash
-keytool -v -gencert -infile client/src/test/resources/client.csr -outfile client/src/test/resources/client-signed.cer -keystore root-ca/identity.jks -storepass secret -alias root-ca -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth
+keytool -v -gencert -infile client/src/test/resources/client.csr -outfile client/src/test/resources/client-signed.cer -keystore root-ca/identity.jks -storepass secret -alias root-ca -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -rfc
 ```
 
 ##### Signing the server certificate
 ```bash
-keytool -v -gencert -infile shared-server-resources/src/main/resources/server.csr -outfile shared-server-resources/src/main/resources/server-signed.cer -keystore root-ca/identity.jks -storepass secret -alias root-ca -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1
+keytool -v -gencert -infile shared-server-resources/src/main/resources/server.csr -outfile shared-server-resources/src/main/resources/server-signed.cer -keystore root-ca/identity.jks -storepass secret -alias root-ca -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1 -rfc
 ```
 
 #### Replace the unsigned certificate with a signed one
