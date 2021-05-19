@@ -46,7 +46,6 @@ public class SSLConfig {
                     .withIdentityMaterial(keyStorePath, keyStorePassword)
                     .withTrustMaterial(trustStorePath, trustStorePassword)
                     .withProtocols("TLSv1.3")
-                    .withPasswordCaching() // <--- this option is only needed for the ktor http client with cio engine
                     .build();
         }
 
