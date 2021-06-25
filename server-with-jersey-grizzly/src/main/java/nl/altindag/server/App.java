@@ -32,7 +32,7 @@ public final class App {
     public static void main(String[] args) throws IOException {
         String defaultPropertiesPath = System.getProperty("properties", APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION);
 
-        ApplicationProperty applicationProperty = ApplicationPropertyUtils.readApplicationProperties(defaultPropertiesPath);
+        var applicationProperty = ApplicationPropertyUtils.readApplicationProperties(defaultPropertiesPath);
         httpServer = startServer(applicationProperty);
     }
 
@@ -46,14 +46,14 @@ public final class App {
     private static HttpServer startServer(ApplicationProperty applicationProperty) {
         LOGGER.debug("Loading the following application properties: [{}]", applicationProperty);
 
-        ResourceConfig resourceConfig = new ResourceConfig().packages(HelloWorldController.class.getPackageName());
-        String baseUrl = String.format("http://localhost:%s/api", applicationProperty.getServerPort());
+        var resourceConfig = new ResourceConfig().packages(HelloWorldController.class.getPackageName());
+        var baseUrl = String.format("http://localhost:%s/api", applicationProperty.getServerPort());
 
         if (applicationProperty.isSslEnabled()) {
             baseUrl = String.format("https://localhost:%s/api", applicationProperty.getServerPort());
-            SSLFactory sslFactory = SSLFactoryUtils.createSSLFactory(applicationProperty);
+            var sslFactory = SSLFactoryUtils.createSSLFactory(applicationProperty);
 
-            SSLEngineConfigurator sslEngineConfigurator = new SSLEngineConfigurator(
+            var sslEngineConfigurator = new SSLEngineConfigurator(
                     sslFactory.getSslContext(),
                     false,
                     applicationProperty.isSslClientAuth(),

@@ -9,7 +9,6 @@ import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.TestScenario;
 import nl.altindag.client.aspect.LogExecutionTime;
-import nl.altindag.client.model.ClientResponse;
 import nl.altindag.client.service.RequestService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,11 +43,11 @@ public class HelloStepDefs extends BaseStepDefs {
     public void iSayHelloWithClient(String client) throws Exception {
         String url = SERVER_URL + HELLO_ENDPOINT;
 
-        ClientType clientType = ClientType.from(client);
-        RequestService requestService = getRequestService(clientType)
+        var clientType = ClientType.from(client);
+        var requestService = getRequestService(clientType)
                 .orElseThrow(() -> new ClientException(String.format("Received a not supported [%s] client type", clientType.getValue())));
 
-        ClientResponse clientResponse = requestService.executeRequest(url);
+        var clientResponse = requestService.executeRequest(url);
         testScenario.setClientResponse(clientResponse);
     }
 

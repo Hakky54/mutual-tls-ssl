@@ -15,7 +15,7 @@ public class HelloWorldController implements HttpHandler {
 
             exchange.getResponseHeaders().set("Content-Type", "text/plain");
 
-            String payload = "Hello";
+            var payload = "Hello";
             exchange.sendResponseHeaders(200, payload.length());
             responseBody.write(payload.getBytes(StandardCharsets.UTF_8));
         }

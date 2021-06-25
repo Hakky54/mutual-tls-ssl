@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import static nl.altindag.client.ClientType.APACHE_CXF_JAX_RS;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
@@ -27,7 +26,7 @@ public class ApacheCXFJaxRsClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) {
-        Response response = client.target(url)
+        var response = client.target(url)
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .get();

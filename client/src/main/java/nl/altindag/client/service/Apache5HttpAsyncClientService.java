@@ -2,7 +2,6 @@ package nl.altindag.client.service;
 
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
-import org.apache.hc.client5.http.async.methods.SimpleHttpRequest;
 import org.apache.hc.client5.http.async.methods.SimpleHttpRequests;
 import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
@@ -27,7 +26,7 @@ public class Apache5HttpAsyncClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws Exception {
-        SimpleHttpRequest request = SimpleHttpRequests.get(url);
+        var request = SimpleHttpRequests.get(url);
         request.addHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
 
         Future<SimpleHttpResponse> responseFuture = httpClient.execute(request, null);

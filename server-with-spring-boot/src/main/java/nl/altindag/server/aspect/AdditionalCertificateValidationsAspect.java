@@ -16,7 +16,6 @@ import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -68,7 +67,7 @@ public class AdditionalCertificateValidationsAspect {
     }
 
     private Optional<String> getCommonName(String subjectDistinguishedName) {
-        Matcher matcher = COMMON_NAME_PATTERN.matcher(subjectDistinguishedName);
+        var matcher = COMMON_NAME_PATTERN.matcher(subjectDistinguishedName);
 
         if (matcher.find()) {
             return Optional.of(matcher.group());

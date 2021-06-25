@@ -10,7 +10,7 @@ public final class SSLFactoryUtils {
     private SSLFactoryUtils() {}
 
     public static SSLFactory createSSLFactory(ApplicationProperty applicationProperty) {
-        SSLFactory.Builder sslFactoryBuilder = SSLFactory.builder()
+        var sslFactoryBuilder = SSLFactory.builder()
                 .withIdentityMaterial(applicationProperty.getKeystorePath(), applicationProperty.getKeystorePassword())
                 .withDefaultTrustMaterial();
 

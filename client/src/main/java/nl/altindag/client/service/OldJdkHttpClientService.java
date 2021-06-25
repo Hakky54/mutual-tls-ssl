@@ -40,7 +40,7 @@ public class OldJdkHttpClientService implements RequestService {
         if (url.contains(HTTP_REQUEST)) {
             connection = createHttpURLConnection(url);
         } else if (url.contains(HTTPS_REQUEST)) {
-            HttpsURLConnection httpsURLConnection = createHttpsURLConnection(url);
+            var httpsURLConnection = createHttpsURLConnection(url);
             httpsURLConnection.setHostnameVerifier(sslFactory.getHostnameVerifier());
             httpsURLConnection.setSSLSocketFactory(sslFactory.getSslSocketFactory());
             connection = httpsURLConnection;
@@ -53,7 +53,7 @@ public class OldJdkHttpClientService implements RequestService {
 
         connection.setRequestMethod(HttpGet.METHOD_NAME);
         connection.setRequestProperty(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
-        String responseBody = IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
+        var responseBody = IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
         return new ClientResponse(responseBody, connection.getResponseCode());
     }
 

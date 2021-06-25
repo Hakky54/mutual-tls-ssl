@@ -25,11 +25,11 @@ public class ApacheHttpClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws IOException {
-        HttpGet request = new HttpGet(url);
+        var request = new HttpGet(url);
         request.addHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
         HttpResponse response = httpClient.execute(request);
 
-        String responseBody = EntityUtils.toString(response.getEntity());
+        var responseBody = EntityUtils.toString(response.getEntity());
         int statusCode = response.getStatusLine().getStatusCode();
         return new ClientResponse(responseBody, statusCode);
     }

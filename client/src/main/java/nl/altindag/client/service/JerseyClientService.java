@@ -5,7 +5,6 @@ import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class JerseyClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) {
-        Response response = client.target(url)
+        var response = client.target(url)
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .get();

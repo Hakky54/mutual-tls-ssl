@@ -8,7 +8,6 @@ import nl.altindag.server.controller.HelloWorldController;
 import nl.altindag.server.model.ApplicationProperty;
 import nl.altindag.server.util.ApplicationPropertyUtils;
 import nl.altindag.server.util.SSLFactoryUtils;
-import nl.altindag.ssl.SSLFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +34,7 @@ public class App {
     public static void main(String[] args) throws IOException {
         String defaultPropertiesPath = System.getProperty("properties", APPLICATION_PROPERTIES_WITHOUT_AUTHENTICATION);
 
-        ApplicationProperty applicationProperty = ApplicationPropertyUtils.readApplicationProperties(defaultPropertiesPath);
+        var applicationProperty = ApplicationPropertyUtils.readApplicationProperties(defaultPropertiesPath);
         executorService = Executors.newCachedThreadPool();
 
         httpServer = createServer(applicationProperty, executorService);
@@ -46,12 +45,12 @@ public class App {
         LOGGER.debug("Loading the following application properties: [{}]", applicationProperty);
 
         HttpServer httpServer;
-        InetSocketAddress socketAddress = new InetSocketAddress(Integer.parseInt(applicationProperty.getServerPort()));
+        var socketAddress = new InetSocketAddress(Integer.parseInt(applicationProperty.getServerPort()));
 
         if (applicationProperty.isSslEnabled()) {
-            SSLFactory sslFactory = SSLFactoryUtils.createSSLFactory(applicationProperty);
+            var sslFactory = SSLFactoryUtils.createSSLFactory(applicationProperty);
 
-            HttpsServer httpsServer = HttpsServer.create(socketAddress, 0);
+            var httpsServer = HttpsServer.create(socketAddress, 0);
             httpsServer.setHttpsConfigurator(new HttpsConfigurator(sslFactory.getSslContext()) {
                 @Override
                 public void configure(HttpsParameters params) {

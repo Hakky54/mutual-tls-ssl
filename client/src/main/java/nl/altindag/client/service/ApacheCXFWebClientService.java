@@ -6,7 +6,6 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import static nl.altindag.client.ClientType.APACHE_CXF_WEB_CLIENT;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
@@ -25,7 +24,7 @@ public class ApacheCXFWebClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws Exception {
-        Response response = client.to(url, false)
+        var response = client.to(url, false)
                 .accept(MediaType.TEXT_PLAIN_TYPE)
                 .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .get();

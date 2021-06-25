@@ -15,7 +15,6 @@ import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
 import feign.Feign;
-import io.netty.handler.ssl.SslContext;
 import io.vertx.core.Vertx;
 import io.vertx.core.net.KeyCertOptions;
 import io.vertx.core.net.TrustOptions;
@@ -42,9 +41,7 @@ import org.apache.hc.client5.http.nio.AsyncClientConnectionManager;
 import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClients;
 import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 import org.asynchttpclient.Dsl;
-import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -164,9 +161,9 @@ public class ClientConfig {
     @Bean
     @Scope("prototype")
     public reactor.netty.http.client.HttpClient nettyHttpClient(@Autowired(required = false) SSLFactory sslFactory) throws SSLException {
-        reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create();
+        var httpClient = reactor.netty.http.client.HttpClient.create();
         if (nonNull(sslFactory)) {
-            SslContext sslContext = NettySslUtils.forClient(sslFactory).build();
+            var sslContext = NettySslUtils.forClient(sslFactory).build();
             httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContext));
         }
         return httpClient;
@@ -176,7 +173,7 @@ public class ClientConfig {
     @Scope("prototype")
     public org.eclipse.jetty.client.HttpClient jettyHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
-            SslContextFactory.Client sslContextFactory = JettySslUtils.forClient(sslFactory);
+            var sslContextFactory = JettySslUtils.forClient(sslFactory);
             return new org.eclipse.jetty.client.HttpClient(sslContextFactory);
         } else {
             return new org.eclipse.jetty.client.HttpClient();
@@ -212,7 +209,7 @@ public class ClientConfig {
     @Bean
     public com.sun.jersey.api.client.Client oldJerseyClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
-            DefaultClientConfig clientConfig = new DefaultClientConfig();
+            var clientConfig = new DefaultClientConfig();
             clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(sslFactory.getHostnameVerifier(), sslFactory.getSslContext()));
             return com.sun.jersey.api.client.Client.create(clientConfig);
         } else {
@@ -240,13 +237,13 @@ public class ClientConfig {
 
     @Bean
     public org.apache.cxf.jaxrs.client.WebClient cxfWebClient(@Autowired(required = false) SSLFactory sslFactory) {
-        JAXRSClientFactoryBean factory = new JAXRSClientFactoryBean();
+        var factory = new JAXRSClientFactoryBean();
         factory.setAddress(SERVER_URL);
         if (nonNull(sslFactory)) {
             // One can also get conduit from  WebClient.getConfig(webClient).getHttpConduit() and change it directly
             factory.setBus(new CXFBusFactory().createBus());
             factory.getBus().setExtension((name, address, httpConduit) -> {
-                TLSClientParameters tls = new TLSClientParameters();
+                var tls = new TLSClientParameters();
                 tls.setSSLSocketFactory(sslFactory.getSslSocketFactory());
                 tls.setHostnameVerifier(sslFactory.getHostnameVerifier());
                 httpConduit.setTlsClientParameters(tls);
@@ -290,8 +287,8 @@ public class ClientConfig {
 
     @Bean
     public Service<Request, Response> finagle(@Autowired(required = false) SSLFactory sslFactory) throws URISyntaxException {
-        URI uri = new URI(SERVER_URL);
-        Http.Client client = Http.client();
+        var uri = new URI(SERVER_URL);
+        var client = Http.client();
         if (nonNull(sslFactory)) {
             client = client
                     .withTransport()
@@ -311,7 +308,7 @@ public class ClientConfig {
     @Bean
     public akka.http.javadsl.Http akkaHttpClient(@Autowired(required = false) SSLFactory sslFactory,
                                                  ActorSystem actorSystem) {
-        akka.http.javadsl.Http http = akka.http.javadsl.Http.get(actorSystem);
+        var http = akka.http.javadsl.Http.get(actorSystem);
         if (nonNull(sslFactory)) {
             HttpsConnectionContext httpsContext = ConnectionContext.httpsClient(sslFactory.getSslContext());
             http.setDefaultClientHttpsContext(httpsContext);
@@ -322,9 +319,9 @@ public class ClientConfig {
     @Bean
     public AsyncHttpClient asyncHttpClient(@Autowired(required = false) SSLFactory sslFactory) throws SSLException {
         if (nonNull(sslFactory)) {
-            SslContext sslContext = NettySslUtils.forClient(sslFactory).build();
+            var sslContext = NettySslUtils.forClient(sslFactory).build();
 
-            DefaultAsyncHttpClientConfig.Builder clientConfigBuilder = dispatch.Http.defaultClientBuilder()
+            var clientConfigBuilder = dispatch.Http.defaultClientBuilder()
                     .setSslContext(sslContext);
 
             return Dsl.asyncHttpClient(clientConfigBuilder);
@@ -357,7 +354,7 @@ public class ClientConfig {
 
     @Bean
     public io.vertx.ext.web.client.WebClient vertxWebClient(@Autowired(required = false) SSLFactory sslFactory) {
-        WebClientOptions clientOptions = new WebClientOptions();
+        var clientOptions = new WebClientOptions();
 
         if (nonNull(sslFactory)) {
             clientOptions.setSsl(true);
