@@ -68,7 +68,7 @@
         <version.netty-handler>4.1.65.Final</version.netty-handler>
         <version.cats>2.6.1</version.cats>
         <version.jackson-module-scala>2.12.3</version.jackson-module-scala>
-        <version.jacoco-maven-plugin>0.8.6</version.jacoco-maven-plugin>
+        <version.jacoco-maven-plugin>0.8.7</version.jacoco-maven-plugin>
         <version.junit-jupiter>5.8.0-M1</version.junit-jupiter>
         <version.mockito>3.11.2</version.mockito>
         <version.assertj-core>3.20.2</version.assertj-core>
