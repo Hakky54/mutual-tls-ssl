@@ -29,7 +29,7 @@ class KtorCIOHttpClientService(
             } else if (twoWayAuthenticationEnabled) {
                 engine {
                     https {
-                        addKeyStore(KeyStoreUtils.loadKeyStore(keyStorePath, keyStorePassword), keyStorePassword!!)
+                        addKeyStore(KeyStoreUtils.loadKeyStore(keyStorePath, keyStorePassword), keyStorePassword)
                         trustManager = TrustManagerUtils.createTrustManager(KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword))
                     }
                 }
