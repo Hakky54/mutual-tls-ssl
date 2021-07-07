@@ -4,7 +4,6 @@ import nl.altindag.server.controller.HelloWorldController;
 import nl.altindag.server.model.ApplicationProperty;
 import nl.altindag.server.util.ApplicationPropertyUtils;
 import nl.altindag.server.util.SSLFactoryUtils;
-import nl.altindag.ssl.SSLFactory;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
