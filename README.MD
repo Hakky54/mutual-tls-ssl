@@ -379,6 +379,7 @@ All client examples use the same base ssl configuration created within the [SSLC
 * [Vertx Webclient](https://github.com/vert-x3/vertx-web) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/cad26082c836ab14eaf3f836de9fff026aadf698/client/src/main/java/nl/altindag/client/ClientConfig.java#L361) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/VertxWebClientService.java)
 * [gRPC](https://grpc.io/) -> [Client/Server Configuration & Example request](https://github.com/Hakky54/java-tutorials)
 * [ElasticSearch](https://www.elastic.co/) -> [RestHighLevelClient Configuration & example request](https://github.com/Hakky54/java-tutorials/blob/main/elasticsearch-with-ssl/src/main/java/nl/altindag/ssl/es/App.java)
+* [Jetty WebSocket](https://www.eclipse.org/jetty/) -> [Client configuration & example request](https://github.com/Hakky54/java-tutorials/blob/2bf5d975347d500bb9d0aa3b32cbf33b345425ee/websocket-client-with-ssl/src/main/java/nl/altindag/ssl/ws/App.java#L14)
 
 **Kotlin**
 * [Fuel](https://github.com/kittinunf/fuel) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/FuelService.kt)
