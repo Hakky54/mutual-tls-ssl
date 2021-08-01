@@ -8,6 +8,8 @@ import org.mockserver.matchers.Times;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Use mock-server during unit test when mocking of certain classes or methods are not possible.
  * This option is to prevent exposing some static methods of libraries within your service class for enabling mocking
@@ -25,6 +27,10 @@ public final class MockServerTestHelper {
     }
 
     public static void mockResponseForClient(ClientType clientType) {
+        mockResponseForClient(clientType, TimeUnit.NANOSECONDS, 0);
+    }
+
+    public static void mockResponseForClient(ClientType clientType, TimeUnit responseDelayTimeUnit, long responseDelayAmount) {
         clientAndServer
                 .when(
                         HttpRequest.request()
@@ -37,7 +43,12 @@ public final class MockServerTestHelper {
                         HttpResponse.response()
                                 .withBody("Hello")
                                 .withStatusCode(200)
+                                .withDelay(responseDelayTimeUnit, responseDelayAmount)
                 );
+    }
+    
+    public static void reset() {
+        clientAndServer.reset();
     }
 
 }

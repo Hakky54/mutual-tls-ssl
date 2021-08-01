@@ -67,6 +67,7 @@
         <version.jax-rs-v2>2.1.1</version.jax-rs-v2>
         <version.netty-handler>4.1.65.Final</version.netty-handler>
         <version.cats>2.6.1</version.cats>
+        <version.awaitility>4.1.0</version.awaitility>
         <version.jackson-module-scala>2.12.3</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.7</version.jacoco-maven-plugin>
         <version.junit-jupiter>5.8.0-M1</version.junit-jupiter>
@@ -436,6 +437,13 @@
                 <version>${version.slf4j}</version>
             </dependency>
 
+            <!--     Utilities       -->
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>${version.awaitility}</version>
+            </dependency>
+
             <!--     Testing libraries       -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -563,6 +571,9 @@
                     <groupId>org.jetbrains.kotlin</groupId>
                     <artifactId>kotlin-maven-plugin</artifactId>
                     <version>${version.kotlin}</version>
+                    <configuration>
+                        <jvmTarget>1.8</jvmTarget>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>compile</id>

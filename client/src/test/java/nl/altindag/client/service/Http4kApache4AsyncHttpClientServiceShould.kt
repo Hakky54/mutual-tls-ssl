@@ -7,7 +7,10 @@ import nl.altindag.client.TestConstants
 import nl.altindag.client.util.MockServerTestHelper
 import nl.altindag.client.util.SSLFactoryTestHelper
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.awaitility.core.ConditionTimeoutException
 import org.junit.jupiter.api.Test
+import java.util.concurrent.TimeUnit
 
 class Http4kApache4AsyncHttpClientServiceShould {
 
@@ -20,6 +23,20 @@ class Http4kApache4AsyncHttpClientServiceShould {
 
         assertThat(response.responseBody).isEqualTo("Hello")
         assertThat(response.statusCode).isEqualTo(200)
+        
+        MockServerTestHelper.reset();
+    }
+
+    @Test
+    fun throwExceptionWhenClientNeedsToWaitMoreThanOneSecondForServerResponse() {
+        MockServerTestHelper.mockResponseForClient(HTTP4K_APACHE4_ASYNC_HTTP_CLIENT, TimeUnit.SECONDS, 2)
+
+        val client = Http4kApache4AsyncHttpClientService(null)
+
+        assertThatThrownBy { client.executeRequest(TestConstants.HTTP_URL) }
+            .isInstanceOf(ConditionTimeoutException::class.java)
+            
+        MockServerTestHelper.reset();
     }
 
     @Test

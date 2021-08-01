@@ -183,6 +183,12 @@
             <artifactId>netty-handler</artifactId>
         </dependency>
 
+        <!--     Utilities       -->
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+        </dependency>
+
         <!--     Testing libraries       -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
