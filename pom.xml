@@ -84,6 +84,9 @@
         <version.maven-shade-plugin>3.2.4</version.maven-shade-plugin>
         <version.scala-maven-plugin>4.4.0</version.scala-maven-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <skipTests>false</skipTests>
+        <spring-boot.run.skip>${skipTests}</spring-boot.run.skip>
+        <spring-boot.stop.skip>${skipTests}</spring-boot.stop.skip>
     </properties>
 
     <dependencyManagement>
@@ -658,6 +661,7 @@
                         <includes>
                             <include>%regex[.*Should.*]</include>
                         </includes>
+                        <skipTests>${skipTests}</skipTests>
                     </configuration>
                 </plugin>
 
@@ -665,6 +669,9 @@
                     <groupId>org.scalatest</groupId>
                     <artifactId>scalatest-maven-plugin</artifactId>
                     <version>${version.scalatest-maven-plugin}</version>
+                    <configuration>
+                        <skipTests>${skipTests}</skipTests>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>test</id>
@@ -681,6 +688,7 @@
                     <version>${version.maven-fail-safe}</version>
                     <configuration>
                         <useModulePath>false</useModulePath>
+                        <skipITs>${skipTests}</skipITs>
                     </configuration>
                     <executions>
                         <execution>
@@ -716,6 +724,7 @@
                                 <jsonFiles>
                                     <param>**/*.json</param>
                                 </jsonFiles>
+                                <skip>${skipTests}</skip>
                             </configuration>
                         </execution>
                     </executions>
