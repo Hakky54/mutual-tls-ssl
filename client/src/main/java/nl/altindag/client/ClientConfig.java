@@ -227,13 +227,12 @@ public class ClientConfig {
         // One can just use ClientBuilder.newBuilder(), Explicit use here is due to multiple JAX-RS implementations in classpath
         javax.ws.rs.client.ClientBuilder clientBuilder = new org.apache.cxf.jaxrs.client.spec.ClientBuilderImpl();
          if (nonNull(sslFactory)) {
-             clientBuilder
+             clientBuilder = clientBuilder
                 .sslContext(sslFactory.getSslContext())
                 .hostnameVerifier(sslFactory.getHostnameVerifier());
          }
         return clientBuilder.build();
     }
-
 
     @Bean
     public org.apache.cxf.jaxrs.client.WebClient cxfWebClient(@Autowired(required = false) SSLFactory sslFactory) {
