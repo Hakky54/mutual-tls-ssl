@@ -74,7 +74,11 @@ And it is recommended to follow the instruction for that specific version, which
 git checkout tags/java-8-compatible
 ```
 
-The server depends on the other components of the project, so run `mvn install` in the root directory first. Start the server by running the main method of the [App Class](server-with-spring-boot/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
+The server depends on the other components of the project, so run `mvn install` in the root directory first. 
+```bash
+mvn install
+```
+Start the server by running the main method of the [App Class](server-with-spring-boot/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
 ```bash
 cd server-with-spring-boot/ && mvn spring-boot:run
 ```
