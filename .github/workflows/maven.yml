@@ -101,7 +101,7 @@ jobs:
       - name: Build and test
         run: mvn clean install -Pwith-two-way-authentication-by-trusting-each-other -P'!standalone-client' --no-transfer-progress
 
-  build-on-thundra-with-jdk-8:
+  build-on-thundra-with-jdk-11:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
