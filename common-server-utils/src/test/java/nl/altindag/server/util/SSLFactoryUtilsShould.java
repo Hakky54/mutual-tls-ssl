@@ -19,9 +19,6 @@ class SSLFactoryUtilsShould {
 
         assertThat(sslFactory.getKeyManager()).isPresent();
         assertThat(sslFactory.getTrustManager()).isPresent();
-
-        assertThat(sslFactory.getIdentities()).hasSize(1);
-        assertThat(sslFactory.getTrustStores()).hasSize(1);
     }
 
 }
