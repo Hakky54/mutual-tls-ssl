@@ -44,7 +44,7 @@
         <version.google.http.client>1.40.0</version.google.http.client>
         <version.unirest>3.11.13</version.unirest>
         <version.retrofit>2.9.0</version.retrofit>
-        <version.finagle>21.6.0</version.finagle>
+        <version.finagle>21.8.0</version.finagle>
         <version.akka-http>10.2.6</version.akka-http>
         <version.akka-stream>2.6.16</version.akka-stream>
         <version.dispatch-core>1.2.0</version.dispatch-core>
