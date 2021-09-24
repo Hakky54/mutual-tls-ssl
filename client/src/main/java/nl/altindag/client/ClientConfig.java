@@ -290,6 +290,7 @@ public class ClientConfig {
         var client = Http.client();
         if (nonNull(sslFactory)) {
             client = client
+                    .withNoHttp2()
                     .withTransport()
                     .tls(sslFactory.getSslContext());
         }
