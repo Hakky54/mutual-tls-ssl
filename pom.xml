@@ -24,7 +24,7 @@
         <version.scala-compiler>2.13.6</version.scala-compiler>
         <version.kotlin>1.5.30</version.kotlin>
         <version.kotlinx-coroutines-core>1.5.2-native-mt</version.kotlinx-coroutines-core>
-        <version.sslcontext-kickstart>7.0.0</version.sslcontext-kickstart>
+        <version.sslcontext-kickstart>7.0.2</version.sslcontext-kickstart>
         <version.spring>2.5.4</version.spring>
         <version.slf4j>1.7.32</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>

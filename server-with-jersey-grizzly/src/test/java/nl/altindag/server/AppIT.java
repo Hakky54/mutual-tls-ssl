@@ -3,7 +3,6 @@ package nl.altindag.server;
 import nl.altindag.log.LogCaptor;
 import nl.altindag.ssl.SSLFactory;
 import nl.altindag.ssl.trustmanager.CompositeX509ExtendedTrustManager;
-import nl.altindag.ssl.trustmanager.UnsafeX509ExtendedTrustManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +52,6 @@ class AppIT {
         System.setProperty("properties", "application-one-way-authentication.properties");
 
         LogCaptor compositeTrustManagerLogCaptor = LogCaptor.forClass(CompositeX509ExtendedTrustManager.class);
-        LogCaptor unsafeTrustManagerLogCaptor = LogCaptor.forClass(UnsafeX509ExtendedTrustManager.class);
 
         App.main(null);
 
@@ -81,7 +79,6 @@ class AppIT {
         );
 
         assertThat(compositeTrustManagerLogCaptor.getDebugLogs()).containsExactly("Received the following server certificate: [CN=Hakan, OU=Amsterdam, O=Thunderberry, C=NL]");
-        assertThat(unsafeTrustManagerLogCaptor.getWarnLogs()).containsExactly("Accepting the following server certificates without validating: [{CN=Hakan, OU=Amsterdam, O=Thunderberry, C=NL}]");
     }
 
     @Test
