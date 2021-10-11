@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
-import nl.altindag.server.aspect.AdditionalCertificateValidations;
 import nl.altindag.server.aspect.LogCertificate;
 import nl.altindag.server.aspect.LogClientType;
 
@@ -47,14 +46,6 @@ class HelloWorldControllerShould {
     void annotatedWithLogClientType() throws NoSuchMethodException {
         Method helloMethod = HelloWorldController.class.getMethod("hello");
         LogClientType annotation = helloMethod.getAnnotation(LogClientType.class);
-
-        assertThat(annotation).isNotNull();
-    }
-
-    @Test
-    void annotatedWithAdditionalCertificateValidations() throws NoSuchMethodException {
-        Method helloMethod = HelloWorldController.class.getMethod("hello");
-        AdditionalCertificateValidations annotation = helloMethod.getAnnotation(AdditionalCertificateValidations.class);
 
         assertThat(annotation).isNotNull();
     }
