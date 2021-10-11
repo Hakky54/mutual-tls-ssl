@@ -40,7 +40,7 @@ Feature: Securing the connection between you and the world
       | Ktor Apache HttpClient            |
       | Ktor CIO HttpClient               |
       | Ktor Java HttpClient              |
-      | Ktor Jetty HttpClient             |
+#      | Ktor Jetty HttpClient             |
       | Ktor Okhttp HttpClient            |
       | Methanol                          |
       | OkHttp                            |
