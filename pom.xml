@@ -57,7 +57,7 @@
         <version.http4s>1.0-234-d1a2b53</version.http4s>
         <version.feign>11.6</version.feign>
         <version.methanol>1.6.0</version.methanol>
-        <version.ktor>1.6.3</version.ktor>
+        <version.ktor>1.6.4</version.ktor>
         <version.http4k>3.285.1</version.http4k>
         <version.vertx>4.1.3</version.vertx>
         <version.javax.annotation-api>1.3.2</version.javax.annotation-api>
@@ -294,6 +294,16 @@
             <dependency>
                 <groupId>io.ktor</groupId>
                 <artifactId>ktor-client-android</artifactId>
+                <version>${version.ktor}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-client-jetty</artifactId>
+                <version>${version.ktor}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-client-java</artifactId>
                 <version>${version.ktor}</version>
             </dependency>
             <dependency>

@@ -147,6 +147,14 @@
             <artifactId>ktor-client-android</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.http4k</groupId>
             <artifactId>http4k-core</artifactId>
         </dependency>
