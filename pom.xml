@@ -298,11 +298,6 @@
             </dependency>
             <dependency>
                 <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-jetty</artifactId>
-                <version>${version.ktor}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ktor</groupId>
                 <artifactId>ktor-client-java</artifactId>
                 <version>${version.ktor}</version>
             </dependency>
