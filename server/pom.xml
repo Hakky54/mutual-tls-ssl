@@ -9,7 +9,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>server-with-spring-boot</artifactId>
+    <artifactId>server</artifactId>
     <packaging>jar</packaging>
 
     <properties>

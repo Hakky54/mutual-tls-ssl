@@ -79,13 +79,13 @@ The server depends on the other components of the project, so run `mvn install` 
 ```bash
 mvn install
 ```
-Start the server by running the main method of the [App Class](server-with-spring-boot/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
+Start the server by running the main method of the [App Class](server/src/main/java/nl/altindag/server/App.java) in the server project or by running the following command from the terminal in the root directory:
 ```bash
-cd server-with-spring-boot/ && mvn spring-boot:run
+cd server/ && mvn spring-boot:run
 ```
 Or with the maven wrapper
 ```bash
-cd server-with-spring-boot/ && ./../mvnw spring-boot:run
+cd server/ && ./../mvnw spring-boot:run
 ```
 
 ## Saying hello to the server (without encryption)
