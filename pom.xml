@@ -11,7 +11,7 @@
 
     <modules>
         <module>shared-server-resources</module>
-        <module>server-with-spring-boot</module>
+        <module>server</module>
         <module>client</module>
     </modules>
 

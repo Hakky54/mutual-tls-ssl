@@ -283,7 +283,7 @@
 
         <dependency>
             <groupId>nl.altindag</groupId>
-            <artifactId>server-with-spring-boot</artifactId>
+            <artifactId>server</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -370,7 +370,7 @@
                             <goal>start</goal>
                         </goals>
                         <configuration>
-                            <classesDirectory>../server-with-spring-boot/target/classes</classesDirectory>
+                            <classesDirectory>../server/target/classes</classesDirectory>
                         </configuration>
                     </execution>
                     <execution>
