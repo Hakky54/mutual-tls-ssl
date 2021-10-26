@@ -22,10 +22,10 @@
         <version.kotlin>1.5.30</version.kotlin>
         <version.kotlinx-coroutines-core>1.5.2-native-mt</version.kotlinx-coroutines-core>
         <version.sslcontext-kickstart>7.0.2</version.sslcontext-kickstart>
-        <version.spring>2.5.4</version.spring>
+        <version.spring>2.5.6</version.spring>
         <version.slf4j>1.7.32</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
-        <version.cucumber>6.11.0</version.cucumber>
+        <version.cucumber>7.0.0</version.cucumber>
         <version.maven-fail-safe>3.0.0-M5</version.maven-fail-safe>
         <version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
         <version.aspectjweaver>1.9.7</version.aspectjweaver>
@@ -33,17 +33,17 @@
         <version.commons-lang3>3.12.0</version.commons-lang3>
         <version.commons-io>2.11.0</version.commons-io>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
-        <version.okhttp>4.9.1</version.okhttp>
+        <version.okhttp>4.9.2</version.okhttp>
         <version.jetty-reactive-httpclient>1.1.10</version.jetty-reactive-httpclient>
         <version.jersey1>1.19.4</version.jersey1>
-        <version.jersey2>3.0.2</version.jersey2>
-        <version.apache.cxf>3.4.4</version.apache.cxf>
-        <version.google.http.client>1.40.0</version.google.http.client>
-        <version.unirest>3.11.13</version.unirest>
+        <version.jersey2>3.0.3</version.jersey2>
+        <version.apache.cxf>3.4.5</version.apache.cxf>
+        <version.google.http.client>1.40.1</version.google.http.client>
+        <version.unirest>3.13.2</version.unirest>
         <version.retrofit>2.9.0</version.retrofit>
-        <version.finagle>21.8.0</version.finagle>
+        <version.finagle>21.9.0</version.finagle>
         <version.akka-http>10.2.6</version.akka-http>
-        <version.akka-stream>2.6.16</version.akka-stream>
+        <version.akka-stream>2.6.17</version.akka-stream>
         <version.dispatch-core>1.2.0</version.dispatch-core>
         <version.scalaj-http>2.4.2</version.scalaj-http>
         <version.async-http-client>2.12.3</version.async-http-client>
@@ -62,21 +62,21 @@
         <version.jakarta.annotation-api>2.0.0</version.jakarta.annotation-api>
         <version.jakarta.activation-api>2.0.1</version.jakarta.activation-api>
         <version.jax-rs-v2>2.1.1</version.jax-rs-v2>
-        <version.netty-handler>4.1.67.Final</version.netty-handler>
-        <version.netty-tcnative>2.0.41.Final</version.netty-tcnative>
+        <version.netty-handler>4.1.69.Final</version.netty-handler>
+        <version.netty-tcnative>2.0.44.Final</version.netty-tcnative>
         <version.cats>2.6.1</version.cats>
-        <version.awaitility>4.1.0</version.awaitility>
-        <version.jackson-module-scala>2.12.3</version.jackson-module-scala>
+        <version.awaitility>4.1.1</version.awaitility>
+        <version.jackson-module-scala>2.13.0</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.7</version.jacoco-maven-plugin>
-        <version.junit-jupiter>5.8.0-RC1</version.junit-jupiter>
-        <version.mockito>3.12.4</version.mockito>
-        <version.assertj-core>3.20.2</version.assertj-core>
+        <version.junit-jupiter>5.8.1</version.junit-jupiter>
+        <version.mockito>4.0.0</version.mockito>
+        <version.assertj-core>3.21.0</version.assertj-core>
         <version.logcaptor>2.7.0</version.logcaptor>
-        <version.byte-buddy>1.11.15</version.byte-buddy>
+        <version.byte-buddy>1.11.21</version.byte-buddy>
         <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
         <version.scalatest>3.2.3</version.scalatest>
         <version.scalatest-maven-plugin>2.0.2</version.scalatest-maven-plugin>
-        <version.mockito-scala>1.16.39</version.mockito-scala>
+        <version.mockito-scala>1.16.46</version.mockito-scala>
         <version.mockserver>5.11.2</version.mockserver>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.4</version.maven-shade-plugin>
