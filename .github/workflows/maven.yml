@@ -100,18 +100,3 @@ jobs:
 
       - name: Build and test
         run: mvn clean install -Pwith-two-way-authentication-by-trusting-each-other -P'!standalone-client' --no-transfer-progress
-
-  build-on-thundra-with-jdk-11:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
-      - name: Thundra Maven Test Instrumentation
-        uses: thundra-io/thundra-maven-test-action@v1
-        with:
-          apikey: ${{ secrets.THUNDRA_API_KEY }}
-          project_id: ${{ secrets.THUNDRA_PROJECT_ID }}
-          command: mvn clean install -P'!standalone-client' --no-transfer-progress
