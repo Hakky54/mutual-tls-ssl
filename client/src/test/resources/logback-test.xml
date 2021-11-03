@@ -11,6 +11,7 @@
     <logger level="OFF" name="org.springframework.test.context.support.AbstractContextLoader"/>
     <logger level="OFF" name="org.springframework.http.converter.json.Jackson2ObjectMapperBuilder"/>
     <logger level="OFF" name="org.apache.cxf.phase.PhaseInterceptorChain"/>
+    <logger level="OFF" name="io.netty.resolver.dns.DnsServerAddressStreamProviders"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />
