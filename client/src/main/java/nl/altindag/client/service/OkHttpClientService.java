@@ -4,6 +4,7 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,12 +24,12 @@ public class OkHttpClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws IOException {
-        var request = new Request.Builder()
+        Request request = new Request.Builder()
                 .url(url)
                 .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .build();
 
-        var response = okHttpClient.newCall(request).execute();
+        Response response = okHttpClient.newCall(request).execute();
 
         return new ClientResponse(Objects.requireNonNull(response.body()).string(), response.code());
     }

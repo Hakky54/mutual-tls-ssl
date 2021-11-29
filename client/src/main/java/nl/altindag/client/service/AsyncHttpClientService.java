@@ -4,6 +4,7 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.RequestBuilder;
+import org.asynchttpclient.Response;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -24,11 +25,11 @@ public class AsyncHttpClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws Exception {
-        var requestBuilder = new RequestBuilder()
+        RequestBuilder requestBuilder = new RequestBuilder()
                 .setUrl(url)
                 .setHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
 
-        var response = httpClient.executeRequest(requestBuilder)
+        Response response = httpClient.executeRequest(requestBuilder)
                 .toCompletableFuture()
                 .get(TIMEOUT_AMOUNT_IN_SECONDS, TimeUnit.SECONDS);
 

@@ -16,7 +16,7 @@ class Http4kOkHttpClientService(
         OkHttp(
                 client = sslFactory?.let { factory ->
                     OkHttpClient().newBuilder()
-                            .sslSocketFactory(factory.sslSocketFactory, factory.trustManager.orElseThrow())
+                            .sslSocketFactory(factory.sslSocketFactory, factory.trustManager.get())
                             .hostnameVerifier(factory.hostnameVerifier)
                             .build()
                 } ?: OkHttpClient()

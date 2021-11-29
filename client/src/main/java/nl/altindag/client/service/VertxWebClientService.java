@@ -25,7 +25,7 @@ public class VertxWebClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws Exception {
-        var uri = URI.create(url);
+        URI uri = URI.create(url);
 
         HttpResponse<Buffer> response = client.get(uri.getPort(), uri.getHost(), uri.getPath())
                 .putHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())

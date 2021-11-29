@@ -8,7 +8,7 @@
 
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/dashboard?id=nl.altindag%3Amutual-tls-ssl)
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Hakky54/mutual-tls)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Hakky54/mutual-tls/tree/tutorial-for-java-8)
 
 # Mastering two way TLS 🔐 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=If%20you%20are%20interested%20in%20securing%20your%20web%20application,%20you%20might%20want%20to%20read%20the%20tutorial%20Mastering%20two-way%20tls&url=https://github.com/Hakky54/mutual-tls&via=hakky541&hashtags=encryption,security,https,ssl,tls,certificate,developer,java,scala,kotlin,sslcontextkickstart)
 
@@ -57,22 +57,16 @@ Also [GitHub - SSLContext Kickstart](https://github.com/Hakky54/sslcontext-kicks
 # Tutorial
 ## Starting the server
 **Minimum requirements:**
-1. Java 11
+1. Java 8
 2. Maven 3.5.0
 3. Eclipse, Intellij IDEA (or any other text editor like VIM)
 4. A terminal
 
 If you want to start instantly without installing any software, click the button below to open the project in an online development environment:
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Hakky54/mutual-tls)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Hakky54/mutual-tls/tree/tutorial-for-java-8)
 
 This project contains a maven wrapper, so you can run this project without installing maven. The documentation for this tutorial contains next to the default mvn command also the commands for the maven wrapper.
-
-If you want to run this project with Java 8, you can get an older version with the git command below.
-And it is recommended to follow the instruction for that specific version, which is available at this [page](https://github.com/Hakky54/mutual-tls-ssl/tree/java-8-compatible)
-```bash
-git checkout tags/java-8-compatible
-```
 
 The server depends on the other components of the project, so run `mvn install` in the root directory first. 
 ```bash

@@ -25,12 +25,10 @@ Feature: Securing the connection between you and the world
       | Http4k Apache4 Async Http Client  |
       | Http4k Apache5 Http Client        |
       | Http4k Apache5 Async Http Client  |
-      | Http4k Java Http Client           |
       | Http4k Jetty Http Client          |
       | Http4k OkHttp Client              |
       | Http4s Blaze Client               |
       | Http4s Java Net Client            |
-      | JDK HttpClient                    |
       | Jersey HttpClient                 |
       | Jetty Reactive HttpClient         |
       | Apache CXF WebClient              |
@@ -39,9 +37,7 @@ Feature: Securing the connection between you and the world
       | Ktor Android HttpClient           |
       | Ktor Apache HttpClient            |
       | Ktor CIO HttpClient               |
-      | Ktor Java HttpClient              |
       | Ktor Okhttp HttpClient            |
-      | Methanol                          |
       | OkHttp                            |
       | Old JDK HttpClient                |
       | Old Jersey HttpClient             |

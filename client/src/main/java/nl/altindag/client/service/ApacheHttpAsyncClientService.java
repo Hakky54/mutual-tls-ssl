@@ -27,13 +27,13 @@ public class ApacheHttpAsyncClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws Exception {
-        var request = new HttpGet(url);
+        HttpGet request = new HttpGet(url);
         request.addHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
 
         Future<HttpResponse> responseFuture = httpClient.execute(request, null);
         HttpResponse response = responseFuture.get(TIMEOUT_AMOUNT_IN_SECONDS, TimeUnit.SECONDS);
 
-        var responseBody = EntityUtils.toString(response.getEntity());
+        String responseBody = EntityUtils.toString(response.getEntity());
         int statusCode = response.getStatusLine().getStatusCode();
         return new ClientResponse(responseBody, statusCode);
     }

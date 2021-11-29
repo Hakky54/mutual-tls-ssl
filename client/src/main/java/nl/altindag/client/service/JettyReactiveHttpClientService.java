@@ -3,6 +3,7 @@ package nl.altindag.client.service;
 import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 import org.eclipse.jetty.client.HttpClient;
+import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class JettyReactiveHttpClientService implements RequestService {
     public ClientResponse executeRequest(String url) throws Exception {
         httpClient.start();
 
-        var contentResponse = httpClient.newRequest(url)
+        ContentResponse contentResponse = httpClient.newRequest(url)
                 .method(HttpMethod.GET)
                 .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .send();

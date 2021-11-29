@@ -2,13 +2,11 @@ package nl.altindag.client;
 
 import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
-import com.github.mizosoft.methanol.Methanol;
 import com.google.api.client.http.HttpTransport;
 import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import feign.Feign;
-import jakarta.ws.rs.client.Client;
 import kong.unirest.Unirest;
 import nl.altindag.ssl.SSLFactory;
 import okhttp3.OkHttpClient;
@@ -109,24 +107,6 @@ class ClientConfigShould {
 
         assertThat(httpClient).isNotNull();
         verify(sslFactory, times(1)).getSslContext();
-    }
-
-    @Test
-    void createJdkHttpClientWithoutSecurity() {
-        java.net.http.HttpClient httpClient = victim.jdkHttpClient(null);
-
-        assertThat(httpClient).isNotNull();
-    }
-
-    @Test
-    void createJdkHttpClientWithSecurity() {
-        SSLFactory sslFactory = createSSLFactory(false, true);
-
-        java.net.http.HttpClient httpClient = victim.jdkHttpClient(sslFactory);
-
-        assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(1)).getSslContext();
-        verify(sslFactory, times(1)).getSslParameters();
     }
 
     @Test
@@ -239,35 +219,6 @@ class ClientConfigShould {
     }
 
     @Test
-    void createJerseyClientWithoutSecurity() {
-        Client client = victim.jerseyClient(null);
-
-        assertThat(client).isNotNull();
-        assertThat(client.getClass().getPackageName())
-                .as("Jersey JAX-RS implemenatsion is used")
-                .startsWith("org.glassfish.jersey");
-
-        client.close();
-    }
-
-    @Test
-    void createJerseyClientWithSecurity() {
-        SSLFactory sslFactory = createSSLFactory(false, true);
-
-        Client client = victim.jerseyClient(sslFactory);
-
-        assertThat(client).isNotNull();
-        assertThat(client.getClass().getPackageName())
-                .as("Jersey JAX-RS implemenatsion is used")
-                .startsWith("org.glassfish.jersey");
-
-        verify(sslFactory, times(1)).getSslContext();
-        verify(sslFactory, times(1)).getHostnameVerifier();
-
-        client.close();
-    }
-
-    @Test
     void createOldJerseyClientWithoutSecurity() {
         com.sun.jersey.api.client.Client client = victim.oldJerseyClient(null);
 
@@ -287,21 +238,6 @@ class ClientConfigShould {
         verify(sslFactory, times(1)).getHostnameVerifier();
 
         client.destroy();
-    }
-
-    @Test
-    void createCxfJaxRsClientWithoutSecurity() {
-        javax.ws.rs.client.Client client = victim.cxfJaxRsClient(null);
-
-        assertThat(client).isNotNull();
-        assertThat(client.getClass().getPackageName())
-                .as("CXF JAX-RS implemenatsion is used")
-                .startsWith("org.apache.cxf");
-
-        assertThat(client.getSslContext()).isNull();
-        assertThat(client.getHostnameVerifier()).isNull();
-
-        client.close();
     }
 
     @Test
@@ -502,24 +438,6 @@ class ClientConfigShould {
         assertThat(feignBuilder).isNotNull();
         verify(sslFactory, times(1)).getSslSocketFactory();
         verify(sslFactory, times(1)).getHostnameVerifier();
-    }
-
-    @Test
-    void createMethanolWithoutSecurity() {
-        Methanol httpClient = victim.methanol(null);
-
-        assertThat(httpClient).isNotNull();
-    }
-
-    @Test
-    void createMethanolWithSecurity() {
-        SSLFactory sslFactory = createSSLFactory(true, true);
-
-        Methanol httpClient = victim.methanol(sslFactory);
-
-        assertThat(httpClient).isNotNull();
-        verify(sslFactory, times(1)).getSslContext();
-        verify(sslFactory, times(1)).getSslParameters();
     }
 
     @Test

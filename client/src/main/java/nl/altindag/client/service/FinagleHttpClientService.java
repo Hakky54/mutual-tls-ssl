@@ -25,7 +25,7 @@ public class FinagleHttpClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws Exception {
-        var request = new RequestBuilder<>()
+        Request request = new RequestBuilder<>()
                 .addHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
                 .url(url)
                 .buildGet(null);

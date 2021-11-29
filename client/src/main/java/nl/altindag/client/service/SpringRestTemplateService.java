@@ -24,7 +24,7 @@ public class SpringRestTemplateService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) {
-        var headers = new HttpHeaders();
+        HttpHeaders headers = new HttpHeaders();
         headers.add(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 

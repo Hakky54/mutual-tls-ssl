@@ -37,7 +37,7 @@ public class SSLConfig {
         if (oneWayAuthenticationEnabled) {
             sslFactory = SSLFactory.builder()
                     .withTrustMaterial(trustStorePath, trustStorePassword)
-                    .withProtocols("TLSv1.3")
+                    .withProtocols("TLSv1.2")
                     .build();
         }
 
@@ -45,7 +45,7 @@ public class SSLConfig {
             sslFactory = SSLFactory.builder()
                     .withIdentityMaterial(keyStorePath, keyStorePassword)
                     .withTrustMaterial(trustStorePath, trustStorePassword)
-                    .withProtocols("TLSv1.3")
+                    .withProtocols("TLSv1.2")
                     .build();
         }
 

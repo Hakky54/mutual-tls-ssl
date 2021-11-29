@@ -16,7 +16,7 @@
     </modules>
 
     <properties>
-        <version.java>11</version.java>
+        <version.java>1.8</version.java>
         <version.scala>2.13</version.scala>
         <version.scala-compiler>2.13.6</version.scala-compiler>
         <version.kotlin>1.5.30</version.kotlin>
@@ -294,11 +294,6 @@
                 <version>${version.ktor}</version>
             </dependency>
             <dependency>
-                <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-java</artifactId>
-                <version>${version.ktor}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.http4k</groupId>
                 <artifactId>http4k-core</artifactId>
                 <version>${version.http4k}</version>
@@ -368,11 +363,6 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${version.commons-io}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.mizosoft.methanol</groupId>
-                <artifactId>methanol</artifactId>
-                <version>${version.methanol}</version>
             </dependency>
 
             <!--     kotlin       -->

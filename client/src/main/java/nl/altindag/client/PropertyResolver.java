@@ -20,8 +20,8 @@ public class PropertyResolver {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer properties() {
-        var propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-        var yaml = new YamlPropertiesFactoryBean();
+        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+        YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
         yaml.setResources(new ClassPathResource(CLIENT_PROPERTY_FILE));
         propertySourcesPlaceholderConfigurer.setProperties(Objects.requireNonNull(yaml.getObject()));
         return propertySourcesPlaceholderConfigurer;
