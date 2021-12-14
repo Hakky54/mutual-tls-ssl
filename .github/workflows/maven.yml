@@ -1,9 +1,10 @@
-name: Build
+name: Java CI
 
 on: [push, pull_request]
 
 jobs:
-  without-encryption:
+  build:
+
     runs-on: ubuntu-latest
     steps:
       - name: echo actor
@@ -17,104 +18,36 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Cache dependencies
-        uses: actions/cache@v1
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Build, test and quality scan
-        run: mvn clean install sonar:sonar -P'!standalone-client' -Pjacoco -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --no-transfer-progress
+      - name: Build, test and quality scan - Without encryption
+        run: mvn clean install sonar:sonar -Pwithout-authentication -P'!standalone-client' -Pjacoco -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.actor == 'Hakky54'
 
-      - name: Build and test
-        run: mvn clean install -P'!standalone-client' --no-transfer-progress
+      - name: Build and test - Without Encryption
+        run: mvn clean install -Pwithout-authentication -P'!standalone-client' --no-transfer-progress
         if: github.actor != 'Hakky54'
 
-  one-way-authentication:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Build and test
+      - name: Build and test - With one way authentication
         run: mvn clean install -Pwith-one-way-authentication -P'!standalone-client' --no-transfer-progress
 
-  two-way-authentication-by-trusting-root-ca:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Build and test
+      - name: Build and test - With two way authentication by trusting root ca
         run: mvn clean install -Pwith-two-way-authentication-by-trusting-root-ca -P'!standalone-client' --no-transfer-progress
 
-  two-way-authentication-by-trusting-each-other:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Build and test
+      - name: Build and test - With two way authentication by trusting each other
         run: mvn clean install -Pwith-two-way-authentication-by-trusting-each-other -P'!standalone-client' --no-transfer-progress
 
-  build-with-thundra:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
       - name: Thundra Maven Test Instrumentation
         uses: thundra-io/thundra-maven-test-action@v1
         with:
           apikey: ${{ secrets.THUNDRA_API_KEY }}
           project_id: ${{ secrets.THUNDRA_PROJECT_ID }}
-          command: mvn clean install -P'!standalone-client' --no-transfer-progress
-
+          command: mvn clean install -Pwithout-authentication -P'!standalone-client' --no-transfer-progress
