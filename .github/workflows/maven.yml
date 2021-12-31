@@ -4,8 +4,13 @@ on: [push, pull_request]
 
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        java: [ '11', '17' ]
 
-    runs-on: ubuntu-latest
     steps:
       - name: echo actor
         run: echo ${{github.actor}}
@@ -16,7 +21,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: '11'
+          java-version: ${{ matrix.java }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2
