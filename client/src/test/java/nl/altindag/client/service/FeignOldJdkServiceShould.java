@@ -16,10 +16,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class FeignServiceShould {
+class FeignOldJdkServiceShould {
 
     @InjectMocks
-    private FeignService victim;
+    private FeignOldJdkService victim;
     @Mock
     private Feign.Builder feignBuilder;
 
@@ -29,7 +29,7 @@ class FeignServiceShould {
 
         Mockito.lenient().doReturn(server).when(feignBuilder).target(FeignService.Server.class, TestConstants.HTTP_SERVER_URL);
         Mockito.lenient().doReturn(server).when(feignBuilder).target(FeignService.Server.class, TestConstants.HTTPS_SERVER_URL);
-        when(server.getHello()).thenReturn("Hello");
+        when(server.getHello(ClientType.FEIGN_OLD_JDK_HTTP_CLIENT.getValue())).thenReturn("Hello");
 
         ClientResponse clientResponse = victim.executeRequest(null);
 
@@ -39,7 +39,7 @@ class FeignServiceShould {
 
     @Test
     void getClientType() {
-        assertThat(victim.getClientType()).isEqualTo(ClientType.FEIGN);
+        assertThat(victim.getClientType()).isEqualTo(ClientType.FEIGN_OLD_JDK_HTTP_CLIENT);
     }
 
 }

@@ -15,6 +15,10 @@ import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
 import feign.Feign;
+import feign.googlehttpclient.GoogleHttpClient;
+import feign.hc5.ApacheHttp5Client;
+import feign.http2client.Http2Client;
+import feign.httpclient.ApacheHttpClient;
 import io.vertx.core.Vertx;
 import io.vertx.core.net.KeyCertOptions;
 import io.vertx.core.net.TrustOptions;
@@ -331,13 +335,43 @@ public class ClientConfig {
     }
 
     @Bean
-    public Feign.Builder feign(@Autowired(required = false) SSLFactory sslFactory) {
+    public Feign.Builder feignWithOldJdkHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
         if (nonNull(sslFactory)) {
             return Feign.builder()
                     .client(new feign.Client.Default(sslFactory.getSslSocketFactory(), sslFactory.getHostnameVerifier()));
         } else {
             return Feign.builder();
         }
+    }
+
+    @Bean
+    public Feign.Builder feignWithOkHttpClient(OkHttpClient okHttpClient) {
+        return Feign.builder()
+                .client(new feign.okhttp.OkHttpClient(okHttpClient));
+    }
+
+    @Bean
+    public Feign.Builder feignWithApacheHttpClient(org.apache.http.impl.client.CloseableHttpClient httpClient) {
+        return Feign.builder()
+                .client(new ApacheHttpClient(httpClient));
+    }
+
+    @Bean
+    public Feign.Builder feignWithApache5HttpClient(org.apache.hc.client5.http.impl.classic.CloseableHttpClient httpClient) {
+        return Feign.builder()
+                .client(new ApacheHttp5Client(httpClient));
+    }
+
+    @Bean
+    public Feign.Builder feignWithGoogleHttpClient(HttpTransport httpTransport) {
+        return Feign.builder()
+                .client(new GoogleHttpClient(httpTransport));
+    }
+
+    @Bean
+    public Feign.Builder feignWithJdkHttpClient(@Qualifier("jdkHttpClient") HttpClient httpClient) {
+        return Feign.builder()
+                .client(new Http2Client(httpClient));
     }
 
     @Bean

@@ -52,7 +52,7 @@
         <version.requests>0.7.0</version.requests>
         <version.kohttp>0.12.0</version.kohttp>
         <version.http4s>1.0-234-d1a2b53</version.http4s>
-        <version.feign>11.7</version.feign>
+        <version.feign>11.8</version.feign>
         <version.methanol>1.6.0</version.methanol>
         <version.ktor>1.6.7</version.ktor>
         <version.http4k>3.285.1</version.http4k>
@@ -266,6 +266,31 @@
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-core</artifactId>
+                <version>${version.feign}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-okhttp</artifactId>
+                <version>${version.feign}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-hc5</artifactId>
+                <version>${version.feign}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-googlehttpclient</artifactId>
+                <version>${version.feign}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-httpclient</artifactId>
+                <version>${version.feign}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-java11</artifactId>
                 <version>${version.feign}</version>
             </dependency>
             <dependency>

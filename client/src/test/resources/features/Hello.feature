@@ -17,7 +17,12 @@ Feature: Securing the connection between you and the world
       | Apache 5 Http Async Client        |
       | Async HttpClient                  |
       | Dispatch Reboot HttpClient        |
-      | Feign                             |
+      | Feign Apache httpClient           |
+      | Feign Apache 5 httpClient         |
+      | Feign Google httpClient           |
+      | feign JDK Http Client             |
+      | feign Old JDK Http Client         |
+      | Feign OkHttp Client               |
       | Finagle                           |
       | Fuel                              |
       | Google HttpClient                 |

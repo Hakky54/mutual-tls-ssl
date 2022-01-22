@@ -26,6 +26,7 @@ import javax.net.ssl.SSLException;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URISyntaxException;
+import java.net.http.HttpClient;
 
 import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
 import static nl.altindag.client.util.AssertJCustomConditions.SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL;
@@ -488,7 +489,7 @@ class ClientConfigShould {
 
     @Test
     void createFeignWithoutSecurity() {
-        Feign.Builder feignBuilder = victim.feign(null);
+        Feign.Builder feignBuilder = victim.feignWithOldJdkHttpClient(null);
 
         assertThat(feignBuilder).isNotNull();
     }
@@ -497,11 +498,46 @@ class ClientConfigShould {
     void createFeignWithSecurity() {
         SSLFactory sslFactory = createSSLFactory(true, true);
 
-        Feign.Builder feignBuilder = victim.feign(sslFactory);
+        Feign.Builder feignBuilder = victim.feignWithOldJdkHttpClient(sslFactory);
 
         assertThat(feignBuilder).isNotNull();
         verify(sslFactory, times(1)).getSslSocketFactory();
         verify(sslFactory, times(1)).getHostnameVerifier();
+    }
+
+    @Test
+    void createFeignWithOkHttpClient() {
+        Feign.Builder feignBuilder = victim.feignWithOkHttpClient(mock(OkHttpClient.class));
+
+        assertThat(feignBuilder).isNotNull();
+    }
+
+    @Test
+    void createFeignWithApacheHttpClient() {
+        Feign.Builder feignBuilder = victim.feignWithApacheHttpClient(mock(org.apache.http.impl.client.CloseableHttpClient.class));
+
+        assertThat(feignBuilder).isNotNull();
+    }
+
+    @Test
+    void createFeignWithApache5HttpClient() {
+        Feign.Builder feignBuilder = victim.feignWithApache5HttpClient(mock(org.apache.hc.client5.http.impl.classic.CloseableHttpClient.class));
+
+        assertThat(feignBuilder).isNotNull();
+    }
+
+    @Test
+    void createFeignWithGoogleHttpClient() {
+        Feign.Builder feignBuilder = victim.feignWithGoogleHttpClient(mock(HttpTransport.class));
+
+        assertThat(feignBuilder).isNotNull();
+    }
+
+    @Test
+    void createFeignWithJdkHttpClient() {
+        Feign.Builder feignBuilder = victim.feignWithJdkHttpClient(mock(HttpClient.class));
+
+        assertThat(feignBuilder).isNotNull();
     }
 
     @Test
