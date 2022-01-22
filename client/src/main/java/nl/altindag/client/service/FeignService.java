@@ -13,7 +13,7 @@ public abstract class FeignService implements RequestService {
 
     private final Feign.Builder feign;
 
-    public FeignService(Feign.Builder feign) {
+    protected FeignService(Feign.Builder feign) {
         this.feign = feign;
     }
 
