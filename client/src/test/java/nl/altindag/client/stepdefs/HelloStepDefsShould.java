@@ -20,6 +20,7 @@ import java.util.List;
 import static nl.altindag.client.util.AssertJCustomConditions.HTTP_OR_HTTPS_SERVER_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -27,7 +28,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@SuppressWarnings("ResultOfMethodCallIgnored")
 class HelloStepDefsShould {
 
     private HelloStepDefs victim;
@@ -70,12 +70,14 @@ class HelloStepDefsShould {
     }
 
     @Test
-    void iSayHelloWithClientApacheHttpClient() throws Exception {
+    void iSayHelloWithClientApacheHttpClient() {
+        when(requestService.execute(anyString())).thenReturn(new ClientResponse("Hello", 200));
+
         ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
         victim.iSayHelloWithClient("Apache HttpClient");
 
-        verify(requestService, atLeast(1)).executeRequest(urlArgumentCaptor.capture());
+        verify(requestService, atLeast(1)).execute(urlArgumentCaptor.capture());
         assertThat(urlArgumentCaptor.getValue()).is(HTTP_OR_HTTPS_SERVER_URL);
     }
 

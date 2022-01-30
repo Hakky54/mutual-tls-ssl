@@ -40,14 +40,14 @@ public class HelloStepDefs extends BaseStepDefs {
 
     @LogExecutionTime
     @When("I say hello with {string}")
-    public void iSayHelloWithClient(String client) throws Exception {
+    public void iSayHelloWithClient(String client) {
         String url = SERVER_URL + HELLO_ENDPOINT;
 
         var clientType = ClientType.from(client);
-        var requestService = getRequestService(clientType)
+        var clientResponse = getRequestService(clientType)
+                .map(requestService -> requestService.execute(url))
                 .orElseThrow(() -> new ClientException(String.format("Received a not supported [%s] client type", clientType.getValue())));
 
-        var clientResponse = requestService.executeRequest(url);
         testScenario.setClientResponse(clientResponse);
     }
 
