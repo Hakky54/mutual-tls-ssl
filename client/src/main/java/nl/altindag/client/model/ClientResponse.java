@@ -2,8 +2,8 @@ package nl.altindag.client.model;
 
 public class ClientResponse {
 
-    private String responseBody;
-    private int statusCode;
+    private final String responseBody;
+    private final int statusCode;
 
     public ClientResponse(String responseBody, int statusCode) {
         this.responseBody = responseBody;
