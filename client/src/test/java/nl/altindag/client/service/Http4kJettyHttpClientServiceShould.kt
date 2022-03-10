@@ -14,19 +14,13 @@ class Http4kJettyHttpClientServiceShould {
     @Test
     fun executeRequest() {
         MockServerTestHelper.mockResponseForClient(HTTP4K_JETTY_HTTP_CLIENT)
+        val sslFactory = SSLFactoryTestHelper.createSSLFactory(false, true)
 
-        val client = Http4kJettyHttpClientService(null)
+        val client = Http4kJettyHttpClientService(sslFactory)
         val response = client.executeRequest(TestConstants.HTTP_URL)
 
         assertThat(response.responseBody).isEqualTo("Hello")
         assertThat(response.statusCode).isEqualTo(200)
-    }
-
-    @Test
-    fun createClientWithSslMaterial() {
-        val sslFactory = SSLFactoryTestHelper.createSSLFactory(false, true)
-
-        Http4kJettyHttpClientService(sslFactory)
 
         verify(sslFactory, times(1)).sslContext
         verify(sslFactory, times(1)).sslParameters

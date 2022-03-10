@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import nl.altindag.client.ClientException;
 import nl.altindag.client.ClientType;
+import nl.altindag.client.Constants;
 import nl.altindag.client.TestScenario;
 import nl.altindag.client.aspect.LogExecutionTime;
 import nl.altindag.client.service.RequestService;
@@ -17,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 import static nl.altindag.client.Constants.HELLO_ENDPOINT;
-import static nl.altindag.client.Constants.SERVER_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @CucumberContextConfiguration
@@ -41,7 +41,7 @@ public class HelloStepDefs extends BaseStepDefs {
     @LogExecutionTime
     @When("I say hello with {string}")
     public void iSayHelloWithClient(String client) {
-        String url = SERVER_URL + HELLO_ENDPOINT;
+        String url = Constants.getServerUrl() + HELLO_ENDPOINT;
 
         var clientType = ClientType.from(client);
         var clientResponse = getRequestService(clientType)

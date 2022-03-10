@@ -15,20 +15,13 @@ class KtorApacheHttpClientServiceShould {
     @Test
     fun executeRequest() {
         MockServerTestHelper.mockResponseForClient(KTOR_APACHE_HTTP_CLIENT)
-        val client = KtorApacheHttpClientService(null)
+        val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
+        val client = KtorApacheHttpClientService(sslFactory)
 
         val clientResponse = client.executeRequest(HTTP_URL)
 
         assertThat(clientResponse.statusCode).isEqualTo(200)
         assertThat(clientResponse.responseBody).isEqualTo("Hello")
-    }
-
-    @Test
-    fun createClientWithSslMaterial() {
-        val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
-
-        KtorApacheHttpClientService(sslFactory)
-
         verify(sslFactory, times(1)).sslContext
     }
 

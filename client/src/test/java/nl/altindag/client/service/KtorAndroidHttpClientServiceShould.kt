@@ -11,13 +11,12 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
-
 class KtorAndroidHttpClientServiceShould {
 
     @Test
     fun executeRequest() {
         MockServerTestHelper.mockResponseForClient(KTOR_ANDROID_HTTP_CLIENT)
-        val client = KtorAndroidHttpClientService(null)
+        val client = KtorAndroidHttpClientService(SSLFactoryTestHelper.createBasic())
 
         val clientResponse = client.executeRequest(HTTP_URL)
 

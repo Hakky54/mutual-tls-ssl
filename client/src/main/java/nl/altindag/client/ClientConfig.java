@@ -37,7 +37,6 @@ import org.apache.cxf.bus.CXFBusFactory;
 import org.apache.cxf.configuration.jsse.TLSClientParameters;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
 import org.apache.cxf.transport.http.HTTPConduitConfigurer;
-import org.apache.hc.client5.http.impl.async.HttpAsyncClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.io.HttpClientConnectionManager;
@@ -64,84 +63,59 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 
-import static java.util.Objects.nonNull;
-import static nl.altindag.client.Constants.SERVER_URL;
-
 @Component
 public class ClientConfig {
 
     @Bean
     @Scope("prototype")
-    public org.apache.http.impl.client.CloseableHttpClient apacheHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            LayeredConnectionSocketFactory socketFactory = Apache4SslUtils.toSocketFactory(sslFactory);
-            return HttpClients.custom()
-                    .setSSLSocketFactory(socketFactory)
-                    .build();
-        } else {
-            return HttpClients.createDefault();
-        }
+    public org.apache.http.impl.client.CloseableHttpClient apacheHttpClient(SSLFactory sslFactory) {
+        LayeredConnectionSocketFactory socketFactory = Apache4SslUtils.toSocketFactory(sslFactory);
+        return HttpClients.custom()
+                .setSSLSocketFactory(socketFactory)
+                .build();
     }
 
     @Bean
-    public org.apache.http.impl.nio.client.CloseableHttpAsyncClient apacheHttpAsyncClient(@Autowired(required = false) SSLFactory sslFactory) {
-        org.apache.http.impl.nio.client.CloseableHttpAsyncClient client;
-        if (nonNull(sslFactory)) {
-            client = org.apache.http.impl.nio.client.HttpAsyncClients.custom()
+    public org.apache.http.impl.nio.client.CloseableHttpAsyncClient apacheHttpAsyncClient(SSLFactory sslFactory) {
+        org.apache.http.impl.nio.client.CloseableHttpAsyncClient client = org.apache.http.impl.nio.client.HttpAsyncClients.custom()
                     .setSSLContext(sslFactory.getSslContext())
                     .setSSLHostnameVerifier(sslFactory.getHostnameVerifier())
                     .build();
-        } else {
-            client = org.apache.http.impl.nio.client.HttpAsyncClients.createDefault();
-        }
         client.start();
         return client;
     }
 
     @Bean
-    public org.apache.hc.client5.http.impl.classic.CloseableHttpClient apache5HttpClient(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            HttpClientConnectionManager connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
-                    .setSSLSocketFactory(Apache5SslUtils.toSocketFactory(sslFactory))
-                    .build();
+    public org.apache.hc.client5.http.impl.classic.CloseableHttpClient apache5HttpClient(SSLFactory sslFactory) {
+        HttpClientConnectionManager connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+                .setSSLSocketFactory(Apache5SslUtils.toSocketFactory(sslFactory))
+                .build();
 
-            return org.apache.hc.client5.http.impl.classic.HttpClients.custom()
-                    .setConnectionManager(connectionManager)
-                    .build();
-        } else {
-            return org.apache.hc.client5.http.impl.classic.HttpClients.createDefault();
-        }
+        return org.apache.hc.client5.http.impl.classic.HttpClients.custom()
+                .setConnectionManager(connectionManager)
+                .build();
     }
 
     @Bean
-    public org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient apache5HttpAsyncClient(@Autowired(required = false) SSLFactory sslFactory) {
-        org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient client;
-        if (nonNull(sslFactory)) {
-            AsyncClientConnectionManager connectionManager = PoolingAsyncClientConnectionManagerBuilder.create()
-                    .setTlsStrategy(Apache5SslUtils.toTlsStrategy(sslFactory))
-                    .build();
+    public org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient apache5HttpAsyncClient(SSLFactory sslFactory) {
+        AsyncClientConnectionManager connectionManager = PoolingAsyncClientConnectionManagerBuilder.create()
+                .setTlsStrategy(Apache5SslUtils.toTlsStrategy(sslFactory))
+                .build();
 
-            client = org.apache.hc.client5.http.impl.async.HttpAsyncClients.custom()
-                    .setConnectionManager(connectionManager)
-                    .build();
-        } else {
-            client = HttpAsyncClients.createDefault();
-        }
+        org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient client = org.apache.hc.client5.http.impl.async.HttpAsyncClients.custom()
+                .setConnectionManager(connectionManager)
+                .build();
 
         client.start();
         return client;
     }
 
     @Bean
-    public HttpClient jdkHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            return HttpClient.newBuilder()
-                    .sslParameters(sslFactory.getSslParameters())
-                    .sslContext(sslFactory.getSslContext())
-                    .build();
-        } else {
-            return HttpClient.newHttpClient();
-        }
+    public HttpClient jdkHttpClient(SSLFactory sslFactory) {
+        return HttpClient.newBuilder()
+                .sslParameters(sslFactory.getSslParameters())
+                .sslContext(sslFactory.getSslContext())
+                .build();
     }
 
     @Bean
@@ -151,37 +125,26 @@ public class ClientConfig {
 
     @Bean
     @Scope("prototype")
-    public OkHttpClient okHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            return new OkHttpClient.Builder()
-                    .sslSocketFactory(sslFactory.getSslSocketFactory(), sslFactory.getTrustManager().orElseThrow())
-                    .hostnameVerifier(sslFactory.getHostnameVerifier())
-                    .build();
-        } else {
-            return new OkHttpClient();
-        }
+    public OkHttpClient okHttpClient(SSLFactory sslFactory) {
+        return new OkHttpClient.Builder()
+                .sslSocketFactory(sslFactory.getSslSocketFactory(), sslFactory.getTrustManager().orElseThrow())
+                .hostnameVerifier(sslFactory.getHostnameVerifier())
+                .build();
     }
 
     @Bean
     @Scope("prototype")
-    public reactor.netty.http.client.HttpClient nettyHttpClient(@Autowired(required = false) SSLFactory sslFactory) throws SSLException {
-        var httpClient = reactor.netty.http.client.HttpClient.create();
-        if (nonNull(sslFactory)) {
-            var sslContext = NettySslUtils.forClient(sslFactory).build();
-            httpClient = httpClient.secure(sslSpec -> sslSpec.sslContext(sslContext));
-        }
-        return httpClient;
+    public reactor.netty.http.client.HttpClient nettyHttpClient(SSLFactory sslFactory) throws SSLException {
+        var sslContext = NettySslUtils.forClient(sslFactory).build();
+        return reactor.netty.http.client.HttpClient.create()
+                .secure(sslSpec -> sslSpec.sslContext(sslContext));
     }
 
     @Bean
     @Scope("prototype")
-    public org.eclipse.jetty.client.HttpClient jettyHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            var sslContextFactory = JettySslUtils.forClient(sslFactory);
-            return new org.eclipse.jetty.client.HttpClient(sslContextFactory);
-        } else {
-            return new org.eclipse.jetty.client.HttpClient();
-        }
+    public org.eclipse.jetty.client.HttpClient jettyHttpClient(SSLFactory sslFactory) {
+        var sslContextFactory = JettySslUtils.forClient(sslFactory);
+        return new org.eclipse.jetty.client.HttpClient(sslContextFactory);
     }
 
     @Bean
@@ -199,26 +162,18 @@ public class ClientConfig {
     }
 
     @Bean
-    public Client jerseyClient(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            return ClientBuilder.newBuilder()
-                    .sslContext(sslFactory.getSslContext())
-                    .hostnameVerifier(sslFactory.getHostnameVerifier())
-                    .build();
-        } else {
-            return ClientBuilder.newClient();
-        }
+    public Client jerseyClient(SSLFactory sslFactory) {
+        return ClientBuilder.newBuilder()
+                .sslContext(sslFactory.getSslContext())
+                .hostnameVerifier(sslFactory.getHostnameVerifier())
+                .build();
     }
 
     @Bean
-    public com.sun.jersey.api.client.Client oldJerseyClient(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            var clientConfig = new DefaultClientConfig();
-            clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(sslFactory.getHostnameVerifier(), sslFactory.getSslContext()));
-            return com.sun.jersey.api.client.Client.create(clientConfig);
-        } else {
-            return com.sun.jersey.api.client.Client.create();
-        }
+    public com.sun.jersey.api.client.Client oldJerseyClient(SSLFactory sslFactory) {
+        var clientConfig = new DefaultClientConfig();
+        clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(sslFactory.getHostnameVerifier(), sslFactory.getSslContext()));
+        return com.sun.jersey.api.client.Client.create(clientConfig);
     }
 
     /**
@@ -227,74 +182,62 @@ public class ClientConfig {
      */
     @Bean
     @Qualifier("cxf")
-    public javax.ws.rs.client.Client cxfJaxRsClient(@Autowired(required = false) SSLFactory sslFactory) {
+    public javax.ws.rs.client.Client cxfJaxRsClient(SSLFactory sslFactory) {
         // One can just use ClientBuilder.newBuilder(), Explicit use here is due to multiple JAX-RS implementations in classpath
-        javax.ws.rs.client.ClientBuilder clientBuilder = new org.apache.cxf.jaxrs.client.spec.ClientBuilderImpl();
-         if (nonNull(sslFactory)) {
-             clientBuilder = clientBuilder
+        return new org.apache.cxf.jaxrs.client.spec.ClientBuilderImpl()
                 .sslContext(sslFactory.getSslContext())
-                .hostnameVerifier(sslFactory.getHostnameVerifier());
-         }
-        return clientBuilder.build();
+                .hostnameVerifier(sslFactory.getHostnameVerifier())
+                .build();
     }
 
     @Bean
-    public org.apache.cxf.jaxrs.client.WebClient cxfWebClient(@Autowired(required = false) SSLFactory sslFactory) {
+    public org.apache.cxf.jaxrs.client.WebClient cxfWebClient(SSLFactory sslFactory) {
         var factory = new JAXRSClientFactoryBean();
-        factory.setAddress(SERVER_URL);
-        if (nonNull(sslFactory)) {
-            // One can also get conduit from  WebClient.getConfig(webClient).getHttpConduit() and change it directly
-            factory.setBus(new CXFBusFactory().createBus());
-            factory.getBus().setExtension((name, address, httpConduit) -> {
-                var tls = new TLSClientParameters();
-                tls.setSSLSocketFactory(sslFactory.getSslSocketFactory());
-                tls.setHostnameVerifier(sslFactory.getHostnameVerifier());
-                httpConduit.setTlsClientParameters(tls);
-            }, HTTPConduitConfigurer.class);
-        }
+        factory.setAddress(Constants.getServerUrl());
+        // One can also get conduit from  WebClient.getConfig(webClient).getHttpConduit() and change it directly
+        factory.setBus(new CXFBusFactory().createBus());
+        factory.getBus().setExtension((name, address, httpConduit) -> {
+            var tls = new TLSClientParameters();
+            tls.setSSLSocketFactory(sslFactory.getSslSocketFactory());
+            tls.setHostnameVerifier(sslFactory.getHostnameVerifier());
+            httpConduit.setTlsClientParameters(tls);
+        }, HTTPConduitConfigurer.class);
         return factory.createWebClient();
     }
 
     @Bean
-    public HttpTransport googleHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            return new NetHttpTransport.Builder()
-                    .setSslSocketFactory(sslFactory.getSslSocketFactory())
-                    .setHostnameVerifier(sslFactory.getHostnameVerifier())
-                    .build();
-        } else {
-            return new NetHttpTransport();
-        }
+    public HttpTransport googleHttpClient(SSLFactory sslFactory) {
+        return new NetHttpTransport.Builder()
+                .setSslSocketFactory(sslFactory.getSslSocketFactory())
+                .setHostnameVerifier(sslFactory.getHostnameVerifier())
+                .build();
     }
 
     @Autowired
-    public void unirest(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            Unirest.primaryInstance()
-                   .config()
-                   .sslContext(sslFactory.getSslContext())
-                   .protocols(sslFactory.getSslParameters().getProtocols())
-                   .ciphers(sslFactory.getSslParameters().getCipherSuites())
-                   .hostnameVerifier(sslFactory.getHostnameVerifier());
-        }
+    public void unirest(SSLFactory sslFactory) {
+        Unirest.primaryInstance()
+               .config()
+               .sslContext(sslFactory.getSslContext())
+               .protocols(sslFactory.getSslParameters().getProtocols())
+               .ciphers(sslFactory.getSslParameters().getCipherSuites())
+               .hostnameVerifier(sslFactory.getHostnameVerifier());
     }
 
     @Bean
     public Retrofit retrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(SERVER_URL)
+                .baseUrl(Constants.getServerUrl())
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
                 .build();
     }
 
     @Bean
-    public Service<Request, Response> finagle(@Autowired(required = false) SSLFactory sslFactory) throws URISyntaxException {
-        var uri = new URI(SERVER_URL);
+    public Service<Request, Response> finagle(SSLFactory sslFactory) throws URISyntaxException {
+        var uri = new URI(Constants.getServerUrl());
         var client = Http.client();
-        if (nonNull(sslFactory)) {
-            client = client
-                    .withNoHttp2()
+        if (uri.getScheme().equals("https")) {
+            client = client.withNoHttp2()
                     .withTransport()
                     .tls(sslFactory.getSslContext());
         }
@@ -310,38 +253,28 @@ public class ClientConfig {
     }
 
     @Bean
-    public akka.http.javadsl.Http akkaHttpClient(@Autowired(required = false) SSLFactory sslFactory,
+    public akka.http.javadsl.Http akkaHttpClient(SSLFactory sslFactory,
                                                  ActorSystem actorSystem) {
         var http = akka.http.javadsl.Http.get(actorSystem);
-        if (nonNull(sslFactory)) {
-            HttpsConnectionContext httpsContext = ConnectionContext.httpsClient(sslFactory.getSslContext());
-            http.setDefaultClientHttpsContext(httpsContext);
-        }
+        HttpsConnectionContext httpsContext = ConnectionContext.httpsClient(sslFactory.getSslContext());
+        http.setDefaultClientHttpsContext(httpsContext);
         return http;
     }
 
     @Bean
-    public AsyncHttpClient asyncHttpClient(@Autowired(required = false) SSLFactory sslFactory) throws SSLException {
-        if (nonNull(sslFactory)) {
-            var sslContext = NettySslUtils.forClient(sslFactory).build();
+    public AsyncHttpClient asyncHttpClient(SSLFactory sslFactory) throws SSLException {
+        var sslContext = NettySslUtils.forClient(sslFactory).build();
 
-            var clientConfigBuilder = dispatch.Http.defaultClientBuilder()
-                    .setSslContext(sslContext);
+        var clientConfigBuilder = dispatch.Http.defaultClientBuilder()
+                .setSslContext(sslContext);
 
-            return Dsl.asyncHttpClient(clientConfigBuilder);
-        } else {
-            return Dsl.asyncHttpClient();
-        }
+        return Dsl.asyncHttpClient(clientConfigBuilder);
     }
 
     @Bean
-    public Feign.Builder feignWithOldJdkHttpClient(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            return Feign.builder()
-                    .client(new feign.Client.Default(sslFactory.getSslSocketFactory(), sslFactory.getHostnameVerifier()));
-        } else {
-            return Feign.builder();
-        }
+    public Feign.Builder feignWithOldJdkHttpClient(SSLFactory sslFactory) {
+        return Feign.builder()
+                .client(new feign.Client.Default(sslFactory.getSslSocketFactory(), sslFactory.getHostnameVerifier()));
     }
 
     @Bean
@@ -375,22 +308,18 @@ public class ClientConfig {
     }
 
     @Bean
-    public Methanol methanol(@Autowired(required = false) SSLFactory sslFactory) {
-        if (nonNull(sslFactory)) {
-            return Methanol.newBuilder()
-                    .sslContext(sslFactory.getSslContext())
-                    .sslParameters(sslFactory.getSslParameters())
-                    .build();
-        } else {
-            return Methanol.create();
-        }
+    public Methanol methanol(SSLFactory sslFactory) {
+        return Methanol.newBuilder()
+                .sslContext(sslFactory.getSslContext())
+                .sslParameters(sslFactory.getSslParameters())
+                .build();
     }
 
     @Bean
-    public io.vertx.ext.web.client.WebClient vertxWebClient(@Autowired(required = false) SSLFactory sslFactory) {
+    public io.vertx.ext.web.client.WebClient vertxWebClient(SSLFactory sslFactory) {
         var clientOptions = new WebClientOptions();
 
-        if (nonNull(sslFactory)) {
+        if (Constants.getServerUrl().contains("https")) {
             clientOptions.setSsl(true);
 
             sslFactory.getKeyManager()

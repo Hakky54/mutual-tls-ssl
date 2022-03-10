@@ -11,21 +11,15 @@ class Http4sBlazeClientServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
     MockServerTestHelper.mockResponseForClient(HTTP4S_BLAZE_CLIENT)
+    val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
 
-    val client = new BlazeClientConfiguration().createBlazeClient(null)
+    val client = new BlazeClientConfiguration().createBlazeClient(sslFactory)
     val victim = new Http4sBlazeClientService(client)
 
     val clientResponse = victim.executeRequest(TestConstants.HTTP_URL)
 
     assertThat(clientResponse.getStatusCode).isEqualTo(200)
     assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
-  }
-
-  describe("create blaze client with ssl material") {
-    val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
-    val client = new BlazeClientConfiguration().createBlazeClient(sslFactory)
-
-    assertThat(client).isNotNull
     verify(sslFactory, times(1)).getSslContext
   }
 

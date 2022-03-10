@@ -26,4 +26,12 @@ public final class SSLFactoryTestHelper {
         return Mockito.spy(sslFactoryBuilder.build());
     }
 
+    public static SSLFactory createBasic() {
+        return Mockito.spy(
+                SSLFactory.builder()
+                .withDefaultTrustMaterial()
+                .build()
+        );
+    }
+
 }

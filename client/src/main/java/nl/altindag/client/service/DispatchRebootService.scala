@@ -8,7 +8,6 @@ import nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE
 import nl.altindag.client.model.ClientResponse
 import nl.altindag.ssl.SSLFactory
 import nl.altindag.ssl.util.NettySslUtils
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.{Component, Service}
 
@@ -33,13 +32,9 @@ class DispatchRebootService(httpClient: Http) extends RequestService {
 class DispatchRebootHttpClientConfig {
 
   @Bean
-  def createDispatchRebootHttpClient(@Autowired(required = false) sslFactory: SSLFactory): Http = {
-    if (sslFactory != null) {
-      val sslContext = NettySslUtils.forClient(sslFactory).build
-      Http.withConfiguration(builder => builder.setSslContext(sslContext))
-    } else {
-      Http.default
-    }
+  def createDispatchRebootHttpClient(sslFactory: SSLFactory): Http = {
+    val sslContext = NettySslUtils.forClient(sslFactory).build
+    Http.withConfiguration(builder => builder.setSslContext(sslContext))
   }
 
 }

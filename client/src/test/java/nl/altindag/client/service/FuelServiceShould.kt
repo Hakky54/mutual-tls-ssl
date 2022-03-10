@@ -28,11 +28,13 @@ class FuelServiceShould {
             )
         }
 
+        val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
+
         FuelManager.instance.client = mockedClient
 
         val requestCaptor = argumentCaptor<Request>()
 
-        val fuelService = FuelService(null)
+        val fuelService = FuelService(sslFactory)
         val clientResponse = fuelService.executeRequest(HTTP_URL)
 
         assertThat(clientResponse.statusCode).isEqualTo(200)
@@ -42,34 +44,6 @@ class FuelServiceShould {
         assertThat(requestCaptor.firstValue.url.toString()).isEqualTo(HTTP_URL)
         assertThat(requestCaptor.firstValue.method).isEqualTo(Method.GET)
         assertThat(requestCaptor.firstValue.headers[HEADER_KEY_CLIENT_TYPE]).contains("fuel")
-    }
-
-    @Test
-    fun executeRequestWithSslFactory() {
-        val mockedBody = mock<DefaultBody> {
-            onGeneric {
-                toByteArray()
-            } doReturn "Hello".toByteArray()
-        }
-
-        val mockedClient = mock<Client> {
-            onGeneric { executeRequest(any()) } doReturn Response(
-                    statusCode = 200,
-                    responseMessage = "OK",
-                    body = mockedBody,
-                    url = URL(HTTP_URL)
-            )
-        }
-
-        val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
-
-        FuelManager.instance.client = mockedClient
-
-        val fuelService = FuelService(sslFactory)
-        val clientResponse = fuelService.executeRequest(HTTP_URL)
-
-        assertThat(clientResponse.statusCode).isEqualTo(200)
-        assertThat(clientResponse.responseBody).isEqualTo("Hello")
 
         verify(sslFactory, times(1)).sslSocketFactory
         verify(sslFactory, times(1)).hostnameVerifier

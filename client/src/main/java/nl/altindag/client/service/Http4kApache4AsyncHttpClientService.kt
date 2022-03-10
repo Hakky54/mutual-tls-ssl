@@ -4,22 +4,18 @@ import nl.altindag.client.ClientType
 import nl.altindag.ssl.SSLFactory
 import org.apache.http.impl.nio.client.HttpAsyncClients
 import org.http4k.client.Apache4AsyncClient
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class Http4kApache4AsyncHttpClientService(
-        @Autowired(required = false)
-        sslFactory: SSLFactory?
+    sslFactory: SSLFactory
 ) : Http4kAsyncClientService(
-        Apache4AsyncClient(
-                client = sslFactory?.let { factory ->
-                    HttpAsyncClients.custom()
-                            .setSSLContext(factory.sslContext)
-                            .setSSLHostnameVerifier(factory.hostnameVerifier)
-                            .build()
-                } ?: HttpAsyncClients.createDefault()
-        )
+    Apache4AsyncClient(
+        client = HttpAsyncClients.custom()
+            .setSSLContext(sslFactory.sslContext)
+            .setSSLHostnameVerifier(sslFactory.hostnameVerifier)
+            .build()
+    )
 ) {
 
     override fun getClientType(): ClientType = ClientType.HTTP4K_APACHE4_ASYNC_HTTP_CLIENT

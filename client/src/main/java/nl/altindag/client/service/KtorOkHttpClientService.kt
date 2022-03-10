@@ -5,24 +5,20 @@ import io.ktor.client.engine.okhttp.OkHttp
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.KTOR_OK_HTTP
 import nl.altindag.ssl.SSLFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class KtorOkHttpClientService(
-        @Autowired(required = false)
-        sslFactory: SSLFactory?
-): KtorHttpClientService(
-        HttpClient(OkHttp) {
-            sslFactory?.let { factory ->
-                engine {
-                    config {
-                        sslSocketFactory(factory.sslSocketFactory, factory.trustManager.orElseThrow())
-                        hostnameVerifier(factory.hostnameVerifier)
-                    }
-                }
+    sslFactory: SSLFactory
+) : KtorHttpClientService(
+    HttpClient(OkHttp) {
+        engine {
+            config {
+                sslSocketFactory(sslFactory.sslSocketFactory, sslFactory.trustManager.orElseThrow())
+                hostnameVerifier(sslFactory.hostnameVerifier)
             }
         }
+    }
 ) {
 
     override fun getClientType(): ClientType = KTOR_OK_HTTP

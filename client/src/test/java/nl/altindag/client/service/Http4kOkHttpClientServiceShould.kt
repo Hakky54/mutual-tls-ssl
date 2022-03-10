@@ -14,19 +14,13 @@ class Http4kOkHttpClientServiceShould {
     @Test
     fun executeRequest() {
         MockServerTestHelper.mockResponseForClient(HTTP4K_OK_HTTP_CLIENT)
+        val sslFactory = SSLFactoryTestHelper.createSSLFactory(false, true)
 
-        val client = Http4kOkHttpClientService(null)
+        val client = Http4kOkHttpClientService(sslFactory)
         val response = client.executeRequest(TestConstants.HTTP_URL)
 
         assertThat(response.responseBody).isEqualTo("Hello")
         assertThat(response.statusCode).isEqualTo(200)
-    }
-
-    @Test
-    fun createClientWithSslMaterial() {
-        val sslFactory = SSLFactoryTestHelper.createSSLFactory(false, true)
-
-        Http4kOkHttpClientService(sslFactory)
 
         verify(sslFactory, times(1)).sslSocketFactory
         verify(sslFactory, times(1)).trustManager

@@ -32,24 +32,20 @@ public class SSLConfig {
             @Value("${client.ssl.key-store-password:}") char[] keyStorePassword,
             @Value("${client.ssl.trust-store:}") String trustStorePath,
             @Value("${client.ssl.trust-store-password:}") char[] trustStorePassword) {
-        SSLFactory sslFactory = null;
-
         if (oneWayAuthenticationEnabled) {
-            sslFactory = SSLFactory.builder()
+            return SSLFactory.builder()
                     .withTrustMaterial(trustStorePath, trustStorePassword)
-                    .withProtocols("TLSv1.3")
                     .build();
-        }
-
-        if (twoWayAuthenticationEnabled) {
-            sslFactory = SSLFactory.builder()
+        } else if (twoWayAuthenticationEnabled) {
+            return SSLFactory.builder()
                     .withIdentityMaterial(keyStorePath, keyStorePassword)
                     .withTrustMaterial(trustStorePath, trustStorePassword)
-                    .withProtocols("TLSv1.3")
+                    .build();
+        } else {
+            return SSLFactory.builder()
+                    .withDefaultTrustMaterial()
                     .build();
         }
-
-        return sslFactory;
     }
 
 }

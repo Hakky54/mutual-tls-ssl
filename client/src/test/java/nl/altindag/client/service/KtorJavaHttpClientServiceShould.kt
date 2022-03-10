@@ -17,7 +17,7 @@ class KtorJavaHttpClientServiceShould {
     @Test
     fun executeRequest() {
         MockServerTestHelper.mockResponseForClient(KTOR_JAVA_HTTP_CLIENT)
-        val client = KtorJavaHttpClientService(null)
+        val client = KtorJavaHttpClientService(SSLFactoryTestHelper.createBasic())
 
         val clientResponse = client.executeRequest(HTTP_URL)
 

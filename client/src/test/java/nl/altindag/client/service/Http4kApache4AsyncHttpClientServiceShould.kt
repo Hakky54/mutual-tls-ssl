@@ -17,12 +17,16 @@ class Http4kApache4AsyncHttpClientServiceShould {
     @Test
     fun executeRequest() {
         MockServerTestHelper.mockResponseForClient(HTTP4K_APACHE4_ASYNC_HTTP_CLIENT)
+        val sslFactory = SSLFactoryTestHelper.createSSLFactory(false, true)
 
-        val client = Http4kApache4AsyncHttpClientService(null)
+        val client = Http4kApache4AsyncHttpClientService(sslFactory)
         val response = client.executeRequest(TestConstants.HTTP_URL)
 
         assertThat(response.responseBody).isEqualTo("Hello")
         assertThat(response.statusCode).isEqualTo(200)
+
+        verify(sslFactory, times(1)).sslContext
+        verify(sslFactory, times(1)).hostnameVerifier
         
         MockServerTestHelper.reset();
     }
@@ -31,22 +35,12 @@ class Http4kApache4AsyncHttpClientServiceShould {
     fun throwExceptionWhenClientNeedsToWaitMoreThanOneSecondForServerResponse() {
         MockServerTestHelper.mockResponseForClient(HTTP4K_APACHE4_ASYNC_HTTP_CLIENT, TimeUnit.SECONDS, 2)
 
-        val client = Http4kApache4AsyncHttpClientService(null)
+        val client = Http4kApache4AsyncHttpClientService(SSLFactoryTestHelper.createBasic())
 
         assertThatThrownBy { client.executeRequest(TestConstants.HTTP_URL) }
             .isInstanceOf(ConditionTimeoutException::class.java)
             
         MockServerTestHelper.reset();
-    }
-
-    @Test
-    fun createClientWithSslMaterial() {
-        val sslFactory = SSLFactoryTestHelper.createSSLFactory(false, true)
-
-        Http4kApache4AsyncHttpClientService(sslFactory)
-
-        verify(sslFactory, times(1)).sslContext
-        verify(sslFactory, times(1)).hostnameVerifier
     }
 
 }

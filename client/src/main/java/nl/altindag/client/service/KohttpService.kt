@@ -1,7 +1,6 @@
 package nl.altindag.client.service
 
 import io.github.rybalkinsd.kohttp.client.client
-import io.github.rybalkinsd.kohttp.client.defaultHttpClient
 import io.github.rybalkinsd.kohttp.configuration.SslConfig
 import io.github.rybalkinsd.kohttp.dsl.httpGet
 import io.github.rybalkinsd.kohttp.ext.asString
@@ -11,7 +10,6 @@ import nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE
 import nl.altindag.client.model.ClientResponse
 import nl.altindag.ssl.SSLFactory
 import okhttp3.OkHttpClient
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
@@ -19,10 +17,10 @@ import org.springframework.stereotype.Service
 import java.net.URI
 
 @Service
-class KohttpService (
-        @Qualifier("kohttp")
-        private val client: OkHttpClient
-): RequestService {
+class KohttpService(
+    @Qualifier("kohttp")
+    private val client: OkHttpClient
+) : RequestService {
 
     override fun executeRequest(url: String): ClientResponse {
         val uri = URI.create(url)
@@ -49,16 +47,14 @@ class KohttpService (
 class KohttpClientConfig {
 
     @Bean("kohttp")
-    fun createKohttpClient(@Autowired(required = false) sslFactory: SSLFactory?) : OkHttpClient {
-        return sslFactory?.let { factory ->
-            client {
-                sslConfig = SslConfig().apply {
-                    sslSocketFactory = factory.sslSocketFactory
-                    trustManager = factory.trustManager.orElseThrow()
-                    hostnameVerifier = factory.hostnameVerifier
-                }
+    fun createKohttpClient(sslFactory: SSLFactory): OkHttpClient {
+        return client {
+            sslConfig = SslConfig().apply {
+                sslSocketFactory = sslFactory.sslSocketFactory
+                trustManager = sslFactory.trustManager.orElseThrow()
+                hostnameVerifier = sslFactory.hostnameVerifier
             }
-        } ?: defaultHttpClient
+        }
     }
 
 }

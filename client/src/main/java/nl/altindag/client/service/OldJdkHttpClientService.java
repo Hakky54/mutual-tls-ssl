@@ -12,7 +12,6 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.HttpGet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -30,7 +29,7 @@ public class OldJdkHttpClientService implements RequestService {
 
     private final SSLFactory sslFactory;
 
-    public OldJdkHttpClientService(@Autowired(required = false) SSLFactory sslFactory) {
+    public OldJdkHttpClientService(SSLFactory sslFactory) {
         this.sslFactory = sslFactory;
     }
 

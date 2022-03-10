@@ -29,13 +29,6 @@ class DispatchRebootServiceShould extends AnyFunSpec with MockitoSugar {
     assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
   }
 
-  describe("create dispatch reboot http client without ssl") {
-    val client = new DispatchRebootHttpClientConfig()
-      .createDispatchRebootHttpClient(null)
-
-    assertThat(client).isNotNull
-  }
-
   describe("create dispatch reboot http client with ssl") {
     val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
 

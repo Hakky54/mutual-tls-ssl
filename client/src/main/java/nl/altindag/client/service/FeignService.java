@@ -19,7 +19,7 @@ public abstract class FeignService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws Exception {
-        String hello = feign.target(Server.class, Constants.SERVER_URL)
+        String hello = feign.target(Server.class, Constants.getServerUrl())
                 .getHello(getClientType().getValue());
 
         return new ClientResponse(hello, 200);

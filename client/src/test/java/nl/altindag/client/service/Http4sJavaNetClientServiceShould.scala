@@ -11,21 +11,16 @@ class Http4sJavaNetClientServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
     MockServerTestHelper.mockResponseForClient(HTTP4S_JAVA_NET_CLIENT)
+    val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
 
-    val client = new JavaNetClientConfiguration().createJavaNetClient(null)
+    val client = new JavaNetClientConfiguration().createJavaNetClient(sslFactory)
     val victim = new Http4sJavaNetClientService(client)
 
     val clientResponse = victim.executeRequest(TestConstants.HTTP_URL)
 
     assertThat(clientResponse.getStatusCode).isEqualTo(200)
     assertThat(clientResponse.getResponseBody).isEqualTo("Hello")
-  }
 
-  describe("create java net client with ssl material") {
-    val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
-    val client = new JavaNetClientConfiguration().createJavaNetClient(sslFactory)
-
-    assertThat(client).isNotNull
     verify(sslFactory, times(1)).getSslSocketFactory
     verify(sslFactory, times(1)).getHostnameVerifier
   }

@@ -41,14 +41,7 @@ class ClientConfigShould {
     private final ClientConfig victim = new ClientConfig();
 
     @Test
-    void createApacheHttpClientWithoutSecurity() {
-        CloseableHttpClient httpClient = victim.apacheHttpClient(null);
-
-        assertThat(httpClient).isNotNull();
-    }
-
-    @Test
-    void createApacheHttpClientWithSecurity() {
+    void createApacheHttpClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         CloseableHttpClient httpClient = victim.apacheHttpClient(sslFactory);
@@ -59,14 +52,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createApacheHttpAsyncClientWithoutSecurity() {
-        CloseableHttpAsyncClient httpClient = victim.apacheHttpAsyncClient(null);
-
-        assertThat(httpClient).isNotNull();
-    }
-
-    @Test
-    void createApacheHttpAsyncClientWithSecurity() {
+    void createApacheHttpAsyncClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         CloseableHttpAsyncClient httpClient = victim.apacheHttpAsyncClient(sslFactory);
@@ -77,14 +63,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createApache5HttpClientWithoutSecurity() {
-        org.apache.hc.client5.http.impl.classic.CloseableHttpClient httpClient = victim.apache5HttpClient(null);
-
-        assertThat(httpClient).isNotNull();
-    }
-
-    @Test
-    void createApache5HttpClientWithSecurity() {
+    void createApache5HttpClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         org.apache.hc.client5.http.impl.classic.CloseableHttpClient httpClient = victim.apache5HttpClient(sslFactory);
@@ -96,14 +75,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createApache5HttpAsyncClientWithoutSecurity() {
-        org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient httpClient = victim.apache5HttpAsyncClient(null);
-
-        assertThat(httpClient).isNotNull();
-    }
-
-    @Test
-    void createApache5HttpAsyncClientWithSecurity() {
+    void createApache5HttpAsyncClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient httpClient = victim.apache5HttpAsyncClient(sslFactory);
@@ -113,14 +85,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createJdkHttpClientWithoutSecurity() {
-        java.net.http.HttpClient httpClient = victim.jdkHttpClient(null);
-
-        assertThat(httpClient).isNotNull();
-    }
-
-    @Test
-    void createJdkHttpClientWithSecurity() {
+    void createJdkHttpClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         java.net.http.HttpClient httpClient = victim.jdkHttpClient(sslFactory);
@@ -140,14 +105,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createOkHttpClientWithoutSecurity() {
-        OkHttpClient okHttpClient = victim.okHttpClient(null);
-
-        assertThat(okHttpClient).isNotNull();
-    }
-
-    @Test
-    void createOkHttpClientWithSecurity() {
+    void createOkHttpClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         OkHttpClient okHttpClient = victim.okHttpClient(sslFactory);
@@ -160,13 +118,6 @@ class ClientConfigShould {
         assertThat(sslFactory.getTrustManager()).isPresent();
         assertThat(okHttpClient.x509TrustManager()).isEqualTo(sslFactory.getTrustManager().get());
         assertThat(okHttpClient.hostnameVerifier()).isEqualTo(sslFactory.getHostnameVerifier());
-    }
-
-    @Test
-    void createNettyHttpClientWithoutSecurity() throws SSLException {
-        reactor.netty.http.client.HttpClient httpClient = victim.nettyHttpClient(null);
-
-        assertThat(httpClient).isNotNull();
     }
 
     @Test
@@ -203,13 +154,6 @@ class ClientConfigShould {
     }
 
     @Test
-    void createJettyHttpClientWithoutSecurity() {
-        org.eclipse.jetty.client.HttpClient httpClient = victim.jettyHttpClient(null);
-
-        assertThat(httpClient).isNotNull();
-    }
-
-    @Test
     void createJettyHttpClientWithOneWayAuthentication() {
         SSLFactory sslFactory = createSSLFactory(true, false);
 
@@ -240,19 +184,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createJerseyClientWithoutSecurity() {
-        Client client = victim.jerseyClient(null);
-
-        assertThat(client).isNotNull();
-        assertThat(client.getClass().getPackageName())
-                .as("Jersey JAX-RS implemenatsion is used")
-                .startsWith("org.glassfish.jersey");
-
-        client.close();
-    }
-
-    @Test
-    void createJerseyClientWithSecurity() {
+    void createJerseyClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         Client client = victim.jerseyClient(sslFactory);
@@ -269,16 +201,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createOldJerseyClientWithoutSecurity() {
-        com.sun.jersey.api.client.Client client = victim.oldJerseyClient(null);
-
-        assertThat(client).isNotNull();
-
-        client.destroy();
-    }
-
-    @Test
-    void createOldJerseyClientWithSecurity() {
+    void createOldJerseyClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         com.sun.jersey.api.client.Client client = victim.oldJerseyClient(sslFactory);
@@ -291,22 +214,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createCxfJaxRsClientWithoutSecurity() {
-        javax.ws.rs.client.Client client = victim.cxfJaxRsClient(null);
-
-        assertThat(client).isNotNull();
-        assertThat(client.getClass().getPackageName())
-                .as("CXF JAX-RS implemenatsion is used")
-                .startsWith("org.apache.cxf");
-
-        assertThat(client.getSslContext()).isNull();
-        assertThat(client.getHostnameVerifier()).isNull();
-
-        client.close();
-    }
-
-    @Test
-    void createCxfJaxRsClientWithSecurity() {
+    void createCxfJaxRsClient() {
          SSLFactory sslFactory = createSSLFactory(false, true);
 
          javax.ws.rs.client.Client client = victim.cxfJaxRsClient(sslFactory);
@@ -332,7 +240,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createCxfWebClientWithSecurity() {
+    void createCxfWebClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         org.apache.cxf.jaxrs.client.WebClient client = victim.cxfWebClient(sslFactory);
@@ -348,16 +256,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createGoogleHttpClientWithoutSecurity() throws IOException {
-        HttpTransport httpTransport = victim.googleHttpClient(null);
-
-        assertThat(httpTransport).isNotNull();
-
-        httpTransport.shutdown();
-    }
-
-    @Test
-    void createGoogleHttpClientWithSecurity() throws IOException {
+    void createGoogleHttpClient() throws IOException {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         HttpTransport httpTransport = victim.googleHttpClient(sslFactory);
@@ -370,16 +269,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createUnirestWithoutSecurity() {
-        victim.unirest(null);
-
-        assertThat(Unirest.primaryInstance().config().getSslContext()).isNull();
-
-        Unirest.shutDown();
-    }
-
-    @Test
-    void createUnirestWithSecurity() {
+    void createUnirest() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         victim.unirest(sslFactory);
@@ -405,16 +295,19 @@ class ClientConfigShould {
 
     @Test
     void createFinagleClientWithoutSecurity() throws URISyntaxException {
+        System.setProperty("url", TestConstants.HTTP_URL);
         Service<Request, Response> service = victim.finagle(null);
 
         assertThat(service.isAvailable()).isTrue();
         assertThat(service.status()).hasToString("Open");
 
         service.close();
+        System.clearProperty("url");
     }
 
     @Test
     void createFinagleClientWithSecurity() throws URISyntaxException {
+        System.setProperty("url", TestConstants.HTTPS_URL);
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         Service<Request, Response> service = victim.finagle(sslFactory);
@@ -425,17 +318,11 @@ class ClientConfigShould {
         assertThat(service.status()).hasToString("Open");
 
         service.close();
+        System.clearProperty("url");
     }
 
     @Test
-    void createAkkaHttpClientWithoutSecurity() {
-        Http http = victim.akkaHttpClient(null, ActorSystem.create());
-
-        assertThat(http).isNotNull();
-    }
-
-    @Test
-    void createAkkaHttpClientWithSecurity() {
+    void createAkkaHttpClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 
         Http http = victim.akkaHttpClient(sslFactory, ActorSystem.create());
@@ -453,15 +340,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createAsyncHttpClientWithoutSecurity() throws SSLException {
-        AsyncHttpClient httpClient = victim.asyncHttpClient(null);
-
-        assertThat(httpClient).isNotNull();
-        assertThat(httpClient.getConfig().getSslContext()).isNull();
-    }
-
-    @Test
-    void createAsyncHttpClientWithOneWayAuthentication() throws SSLException {
+    void createAsyncHttpClient() throws SSLException {
         SSLFactory sslFactory = createSSLFactory(true, false);
 
         AsyncHttpClient httpClient = victim.asyncHttpClient(sslFactory);
@@ -474,28 +353,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createAsyncHttpClientWithTwoWayAuthentication() throws SSLException {
-        SSLFactory sslFactory = createSSLFactory(false, true);
-
-        AsyncHttpClient httpClient = victim.asyncHttpClient(sslFactory);
-
-        assertThat(httpClient).isNotNull();
-        assertThat(httpClient.getConfig().getSslContext()).isNotNull();
-        verify(sslFactory, times(1)).getKeyManager();
-        verify(sslFactory, times(1)).getTrustManager();
-        verify(sslFactory, times(1)).getProtocols();
-        verify(sslFactory, times(1)).getCiphers();
-    }
-
-    @Test
-    void createFeignWithoutSecurity() {
-        Feign.Builder feignBuilder = victim.feignWithOldJdkHttpClient(null);
-
-        assertThat(feignBuilder).isNotNull();
-    }
-
-    @Test
-    void createFeignWithSecurity() {
+    void createFeign() {
         SSLFactory sslFactory = createSSLFactory(true, true);
 
         Feign.Builder feignBuilder = victim.feignWithOldJdkHttpClient(sslFactory);
@@ -541,14 +399,7 @@ class ClientConfigShould {
     }
 
     @Test
-    void createMethanolWithoutSecurity() {
-        Methanol httpClient = victim.methanol(null);
-
-        assertThat(httpClient).isNotNull();
-    }
-
-    @Test
-    void createMethanolWithSecurity() {
+    void createMethanol() {
         SSLFactory sslFactory = createSSLFactory(true, true);
 
         Methanol httpClient = victim.methanol(sslFactory);
@@ -560,13 +411,17 @@ class ClientConfigShould {
 
     @Test
     void createVertxWithoutSecurity() {
+        System.setProperty("url", TestConstants.HTTP_URL);
+
         io.vertx.ext.web.client.WebClient webClient = victim.vertxWebClient(null);
 
         assertThat(webClient).isNotNull();
+        System.clearProperty("url");
     }
 
     @Test
     void createVertxWithSecurity() {
+        System.setProperty("url", TestConstants.HTTPS_URL);
         SSLFactory sslFactory = createSSLFactory(true, true);
 
         io.vertx.ext.web.client.WebClient httpClient = victim.vertxWebClient(sslFactory);
@@ -576,6 +431,8 @@ class ClientConfigShould {
         verify(sslFactory, times(1)).getTrustManager();
         verify(sslFactory, times(1)).getCiphers();
         verify(sslFactory, times(1)).getProtocols();
+
+        System.clearProperty("url");
     }
 
 }

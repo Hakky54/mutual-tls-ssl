@@ -47,14 +47,6 @@ class KohttpServiceShould {
     }
 
     @Test
-    fun createClientWithoutSslMaterial() {
-        val victim = KohttpClientConfig()
-        val client = victim.createKohttpClient(null)
-
-        assertThat(client).isNotNull
-    }
-
-    @Test
     fun createClientWithSslMaterial() {
         val sslFactory = SSLFactoryTestHelper.createSSLFactory(true, true)
 
