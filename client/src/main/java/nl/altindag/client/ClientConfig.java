@@ -78,9 +78,9 @@ public class ClientConfig {
     @Bean
     public org.apache.http.impl.nio.client.CloseableHttpAsyncClient apacheHttpAsyncClient(SSLFactory sslFactory) {
         org.apache.http.impl.nio.client.CloseableHttpAsyncClient client = org.apache.http.impl.nio.client.HttpAsyncClients.custom()
-                    .setSSLContext(sslFactory.getSslContext())
-                    .setSSLHostnameVerifier(sslFactory.getHostnameVerifier())
-                    .build();
+                .setSSLContext(sslFactory.getSslContext())
+                .setSSLHostnameVerifier(sslFactory.getHostnameVerifier())
+                .build();
         client.start();
         return client;
     }
@@ -216,11 +216,11 @@ public class ClientConfig {
     @Autowired
     public void unirest(SSLFactory sslFactory) {
         Unirest.primaryInstance()
-               .config()
-               .sslContext(sslFactory.getSslContext())
-               .protocols(sslFactory.getSslParameters().getProtocols())
-               .ciphers(sslFactory.getSslParameters().getCipherSuites())
-               .hostnameVerifier(sslFactory.getHostnameVerifier());
+                .config()
+                .sslContext(sslFactory.getSslContext())
+                .protocols(sslFactory.getSslParameters().getProtocols())
+                .ciphers(sslFactory.getSslParameters().getCipherSuites())
+                .hostnameVerifier(sslFactory.getHostnameVerifier());
     }
 
     @Bean
