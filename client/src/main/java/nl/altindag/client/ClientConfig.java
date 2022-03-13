@@ -2,7 +2,6 @@ package nl.altindag.client;
 
 import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectionContext;
-import akka.http.javadsl.HttpsConnectionContext;
 import com.github.mizosoft.methanol.Methanol;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -39,8 +38,6 @@ import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
 import org.apache.cxf.transport.http.HTTPConduitConfigurer;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
-import org.apache.hc.client5.http.io.HttpClientConnectionManager;
-import org.apache.hc.client5.http.nio.AsyncClientConnectionManager;
 import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClients;
 import org.asynchttpclient.AsyncHttpClient;
@@ -77,7 +74,7 @@ public class ClientConfig {
 
     @Bean
     public org.apache.http.impl.nio.client.CloseableHttpAsyncClient apacheHttpAsyncClient(SSLFactory sslFactory) {
-        org.apache.http.impl.nio.client.CloseableHttpAsyncClient client = org.apache.http.impl.nio.client.HttpAsyncClients.custom()
+        var client = org.apache.http.impl.nio.client.HttpAsyncClients.custom()
                 .setSSLContext(sslFactory.getSslContext())
                 .setSSLHostnameVerifier(sslFactory.getHostnameVerifier())
                 .build();
@@ -87,7 +84,7 @@ public class ClientConfig {
 
     @Bean
     public org.apache.hc.client5.http.impl.classic.CloseableHttpClient apache5HttpClient(SSLFactory sslFactory) {
-        HttpClientConnectionManager connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+        var connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
                 .setSSLSocketFactory(Apache5SslUtils.toSocketFactory(sslFactory))
                 .build();
 
@@ -98,11 +95,11 @@ public class ClientConfig {
 
     @Bean
     public org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient apache5HttpAsyncClient(SSLFactory sslFactory) {
-        AsyncClientConnectionManager connectionManager = PoolingAsyncClientConnectionManagerBuilder.create()
+        var connectionManager = PoolingAsyncClientConnectionManagerBuilder.create()
                 .setTlsStrategy(Apache5SslUtils.toTlsStrategy(sslFactory))
                 .build();
 
-        org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient client = org.apache.hc.client5.http.impl.async.HttpAsyncClients.custom()
+        var client = org.apache.hc.client5.http.impl.async.HttpAsyncClients.custom()
                 .setConnectionManager(connectionManager)
                 .build();
 
@@ -256,7 +253,7 @@ public class ClientConfig {
     public akka.http.javadsl.Http akkaHttpClient(SSLFactory sslFactory,
                                                  ActorSystem actorSystem) {
         var http = akka.http.javadsl.Http.get(actorSystem);
-        HttpsConnectionContext httpsContext = ConnectionContext.httpsClient(sslFactory.getSslContext());
+        var httpsContext = ConnectionContext.httpsClient(sslFactory.getSslContext());
         http.setDefaultClientHttpsContext(httpsContext);
         return http;
     }
