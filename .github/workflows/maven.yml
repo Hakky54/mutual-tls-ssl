@@ -8,16 +8,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest ]
+        os: [ ubuntu-latest, macos-latest ]
         java: [ '11', '17' ]
 
     steps:
-      - name: echo actor
-        run: echo ${{github.actor}}
-
       - uses: actions/checkout@v2
 
-      - name: Set up JDK 11
+      - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
@@ -31,15 +28,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Build, test and quality scan - Without encryption
-        run: mvn clean install sonar:sonar -Pwithout-authentication -P'!standalone-client' -Pjacoco -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --no-transfer-progress
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.actor == 'Hakky54'
-
       - name: Build and test - Without Encryption
         run: mvn clean install -Pwithout-authentication -P'!standalone-client' --no-transfer-progress
-        if: github.actor != 'Hakky54'
 
       - name: Build and test - With one way authentication
         run: mvn clean install -Pwith-one-way-authentication -P'!standalone-client' --no-transfer-progress
@@ -56,3 +46,50 @@ jobs:
           apikey: ${{ secrets.THUNDRA_API_KEY }}
           project_id: ${{ secrets.THUNDRA_PROJECT_ID }}
           command: mvn clean install -Pwithout-authentication -P'!standalone-client' --no-transfer-progress
+        if: github.actor == 'Hakky54' && runner.os == 'Linux' && matrix.java == '11'
+
+  build-on-windows:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest ]
+        java: [ '11', '17' ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: ${{ matrix.java }}
+
+      - name: Build and test - Without Encryption
+        run: mvn clean install --no-transfer-progress
+
+  code-quality-scan:
+    if: ${{ (github.actor == 'Hakky54') }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build, test and quality scan
+        run: mvn clean install sonar:sonar -Pwithout-authentication -P'!standalone-client' -Pjacoco -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --no-transfer-progress
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

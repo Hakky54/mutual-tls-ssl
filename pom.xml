@@ -80,7 +80,7 @@
         <version.mockserver>5.11.2</version.mockserver>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.4</version.maven-shade-plugin>
-        <version.scala-maven-plugin>4.4.0</version.scala-maven-plugin>
+        <version.scala-maven-plugin>4.5.6</version.scala-maven-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skipTests>false</skipTests>
         <spring-boot.run.skip>${skipTests}</spring-boot.run.skip>
@@ -640,6 +640,9 @@
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
                     <version>${version.scala-maven-plugin}</version>
+                    <configuration>
+                        <sscalaVersion>${version.scala}</sscalaVersion>
+                    </configuration>
                     <executions>
                         <execution>
                             <goals>
