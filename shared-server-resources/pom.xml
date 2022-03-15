@@ -13,4 +13,18 @@
     <artifactId>shared-server-resources</artifactId>
     <packaging>jar</packaging>
 
+    <!--  needed to correctly package files on Windows  -->
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>identity.jks</include>
+                    <include>truststore.jks</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
+
 </project>
