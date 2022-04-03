@@ -40,14 +40,6 @@ jobs:
       - name: Build and test - With two way authentication by trusting each other
         run: mvn clean install -Pwith-two-way-authentication-by-trusting-each-other -P'!standalone-client' --no-transfer-progress
 
-      - name: Thundra Maven Test Instrumentation
-        uses: thundra-io/thundra-maven-test-action@v1
-        with:
-          apikey: ${{ secrets.THUNDRA_API_KEY }}
-          project_id: ${{ secrets.THUNDRA_PROJECT_ID }}
-          command: mvn clean install -Pwithout-authentication -P'!standalone-client' --no-transfer-progress
-        if: github.actor == 'Hakky54' && runner.os == 'Linux' && matrix.java == '11'
-
   build-on-windows:
     runs-on: ${{ matrix.os }}
     strategy:
