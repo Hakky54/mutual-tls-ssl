@@ -18,7 +18,7 @@
     <properties>
         <version.java>11</version.java>
         <version.scala>2.13</version.scala>
-        <version.scala-compiler>2.13.8</version.scala-compiler>
+        <version.scala-compiler>2.13.9</version.scala-compiler>
         <version.kotlin>1.6.10</version.kotlin>
         <version.kotlinx-coroutines-core>1.6.0-native-mt</version.kotlinx-coroutines-core>
         <version.sslcontext-kickstart>7.2.0</version.sslcontext-kickstart>
