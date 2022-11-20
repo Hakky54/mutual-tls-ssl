@@ -81,7 +81,9 @@
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.4</version.maven-shade-plugin>
         <version.scala-maven-plugin>4.7.2</version.scala-maven-plugin>
+        <version.license-maven-plugin>4.2.rc3</version.license-maven-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <license.git.copyrightYears>2018</license.git.copyrightYears>
         <skipTests>false</skipTests>
         <spring-boot.run.skip>${skipTests}</spring-boot.run.skip>
         <spring-boot.stop.skip>${skipTests}</spring-boot.stop.skip>
@@ -598,6 +600,53 @@
                     <source>${version.java}</source>
                     <target>${version.java}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>${version.license-maven-plugin}</version>
+                <configuration>
+                    <inlineHeader>
+                        <![CDATA[
+Copyright ${license.git.copyrightYears} Thunderberry.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+]]>
+                    </inlineHeader>
+                    <excludes>
+                        <exclude>.gitignore</exclude>
+                        <exclude>**/.idea/**</exclude>
+                        <exclude>**/target/**</exclude>
+                        <exclude>**/resources/**</exclude>
+                        <exclude>LICENSE</exclude>
+                        <exclude>**/*.MD</exclude>
+                        <exclude>**/*.xml</exclude>
+                        <exclude>**/*.sh</exclude>
+                        <exclude>**/*.yml</exclude>
+                    </excludes>
+                    <strictCheck>true</strictCheck>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                    </mapping>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
 
