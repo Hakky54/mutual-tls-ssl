@@ -44,6 +44,7 @@ This sample project demonstrates a basic setup of a server and a client. The com
 **Usefull links**
 * [Keytool Cheatsheet](https://gist.github.com/Hakky54/7a2f0fcbcf5fdf4674d48f1a0b31c862)
 * [Openssl Cheatsheet](https://gist.github.com/Hakky54/b30418b25215ad7d18f978bc0b448d81)
+* [Curl with Java KeyStore](https://gist.github.com/Hakky54/049299f0874fd4b870257c6458e0dcbd)
 * [Http Client Configuration Cheatsheet](#tested-clients)
 * [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
@@ -413,6 +414,12 @@ All client examples use the same base ssl configuration created within the [SSLC
 * [Requests-Scala](https://github.com/lihaoyi/requests-scala) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/RequestsScalaService.scala)
 * [Http4s Blaze Client](https://github.com/http4s/http4s) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sBlazeClientService.scala) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sService.scala)
 * [Http4s Java Net Client](https://github.com/http4s/http4s) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sJavaNetClientService.scala) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sService.scala)
+
+**Other**
+
+This tutorial does not provide examples for the clients listed below, however it is proven to be working with the server provided in this tutorial. To guide you in the right direction you can convert the created java keystore files into pem files which in return can be used with one of the clients listed below. The following Gist page contains the commands to convert a Java keystore to a pem file: [Gist - Curl with Java KeyStore](https://gist.github.com/Hakky54/049299f0874fd4b870257c6458e0dcbd)
+* [curl](https://curl.se/) -> [Client Configuration & Example request](https://gist.github.com/Hakky54/049299f0874fd4b870257c6458e0dcbd)
+* [Postman](https://www.postman.com/)
 
 ## Demo and walk-through video
 [![Java SSL TLS Demo with a server and a client application](https://github.com/Hakky54/mutual-tls-ssl/blob/master/images/demo.png?raw=true "Java SSL TLS Demo with a server and a client application")](https://youtu.be/yfOknrCBNbQ)
