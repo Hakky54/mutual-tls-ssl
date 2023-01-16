@@ -623,16 +623,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ]]>
                     </inlineHeader>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
                     <excludes>
-                        <exclude>.gitignore</exclude>
-                        <exclude>**/.idea/**</exclude>
+                        <exclude>.idea/**</exclude>
+                        <exclude>.mvn/**</exclude>
                         <exclude>**/target/**</exclude>
                         <exclude>**/resources/**</exclude>
-                        <exclude>LICENSE</exclude>
-                        <exclude>**/*.MD</exclude>
-                        <exclude>**/*.xml</exclude>
-                        <exclude>**/*.sh</exclude>
-                        <exclude>**/*.yml</exclude>
                     </excludes>
                     <strictCheck>true</strictCheck>
                     <mapping>
