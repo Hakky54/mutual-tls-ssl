@@ -668,9 +668,6 @@ limitations under the License.
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
                     <version>${version.scala-maven-plugin}</version>
-                    <configuration>
-                        <sscalaVersion>${version.scala}</sscalaVersion>
-                    </configuration>
                     <executions>
                         <execution>
                             <goals>
