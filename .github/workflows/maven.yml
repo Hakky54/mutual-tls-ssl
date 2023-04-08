@@ -23,14 +23,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
-
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          cache: 'maven'
 
       - name: Build and test - Without Encryption
         run: mvn clean install -Pwithout-authentication -P'!standalone-client' --no-transfer-progress
@@ -76,14 +69,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          cache: 'maven'
 
       - name: Build, test and quality scan
         run: mvn clean install sonar:sonar -Pwithout-authentication -P'!standalone-client' -Pjacoco -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --no-transfer-progress
