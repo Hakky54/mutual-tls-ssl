@@ -518,13 +518,11 @@
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy</artifactId>
                 <version>${version.byte-buddy}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy-agent</artifactId>
                 <version>${version.byte-buddy}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>io.github.hakky54</groupId>
