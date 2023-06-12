@@ -18,7 +18,7 @@ package nl.altindag.client.service
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.HTTP4K_APACHE5_ASYNC_HTTP_CLIENT
 import nl.altindag.ssl.SSLFactory
-import nl.altindag.ssl.util.Apache5SslUtils
+import nl.altindag.ssl.apache5.util.Apache5SslUtils
 import org.apache.hc.client5.http.impl.async.HttpAsyncClients
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder
 import org.http4k.client.ApacheAsyncClient

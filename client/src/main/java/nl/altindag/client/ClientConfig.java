@@ -41,12 +41,11 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import kong.unirest.Unirest;
 import nl.altindag.ssl.SSLFactory;
-import nl.altindag.ssl.util.Apache4SslUtils;
-import nl.altindag.ssl.util.Apache5SslUtils;
-import nl.altindag.ssl.util.JettySslUtils;
-import nl.altindag.ssl.util.NettySslUtils;
+import nl.altindag.ssl.apache4.util.Apache4SslUtils;
+import nl.altindag.ssl.apache5.util.Apache5SslUtils;
+import nl.altindag.ssl.jetty.util.JettySslUtils;
+import nl.altindag.ssl.netty.util.NettySslUtils;
 import okhttp3.OkHttpClient;
-
 import org.apache.cxf.bus.CXFBusFactory;
 import org.apache.cxf.configuration.jsse.TLSClientParameters;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;

@@ -22,7 +22,7 @@ import nl.altindag.client.ClientType.DISPATCH_REBOOT_HTTP_CLIENT
 import nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE
 import nl.altindag.client.model.ClientResponse
 import nl.altindag.ssl.SSLFactory
-import nl.altindag.ssl.util.NettySslUtils
+import nl.altindag.ssl.netty.util.NettySslUtils
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.{Component, Service}
 
