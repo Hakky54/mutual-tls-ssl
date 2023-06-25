@@ -62,8 +62,8 @@
         <version.jakarta.annotation-api>2.0.0</version.jakarta.annotation-api>
         <version.jakarta.activation-api>2.0.1</version.jakarta.activation-api>
         <version.jax-rs-v2>2.1.1</version.jax-rs-v2>
-        <version.netty-handler>4.1.67.Final</version.netty-handler>
-        <version.netty-tcnative>2.0.47.Final</version.netty-tcnative>
+        <version.netty-handler>4.1.94.Final</version.netty-handler>
+        <version.netty-tcnative>2.0.61.Final</version.netty-tcnative>
         <version.cats>2.7.0</version.cats>
         <version.awaitility>4.1.1</version.awaitility>
         <version.jackson-module-scala>2.13.1</version.jackson-module-scala>
@@ -354,6 +354,11 @@
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-tcnative</artifactId>
+                <version>${version.netty-tcnative}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-tcnative-boringssl-static</artifactId>
                 <version>${version.netty-tcnative}</version>
             </dependency>
 
