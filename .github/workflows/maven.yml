@@ -5,6 +5,9 @@ on:
     branches:
       - master
   pull_request:
+  schedule:
+#    At 12:00 AM, on day 1 of the month, every 2 months
+    - cron: '0 0 1 */2 *'
 
 jobs:
   build:
@@ -13,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest ]
-        java: [ '11', '17' ]
+        java: [ '11', '17', '21' ]
 
     steps:
       - uses: actions/checkout@v2
@@ -43,7 +46,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ windows-latest ]
-        java: [ '11', '17' ]
+        java: [ '11', '17', '21' ]
 
     steps:
       - uses: actions/checkout@v2
@@ -68,7 +71,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: '11'
+          java-version: '17'
           cache: 'maven'
 
       - name: Build, test and quality scan
