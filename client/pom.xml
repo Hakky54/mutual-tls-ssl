@@ -256,7 +256,7 @@
             <artifactId>logcaptor</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.nhaarman.mockitokotlin2</groupId>
+            <groupId>org.mockito.kotlin</groupId>
             <artifactId>mockito-kotlin</artifactId>
         </dependency>
         <dependency>

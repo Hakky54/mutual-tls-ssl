@@ -18,8 +18,8 @@
     <properties>
         <version.java>11</version.java>
         <version.scala>2.13</version.scala>
-        <version.scala-compiler>2.13.9</version.scala-compiler>
-        <version.kotlin>1.6.10</version.kotlin>
+        <version.scala-compiler>2.13.13</version.scala-compiler>
+        <version.kotlin>1.9.22</version.kotlin>
         <version.kotlinx-coroutines-core>1.6.0-native-mt</version.kotlinx-coroutines-core>
         <version.sslcontext-kickstart>8.1.1</version.sslcontext-kickstart>
         <version.spring>2.7.18</version.spring>
@@ -69,18 +69,18 @@
         <version.jackson-module-scala>2.13.1</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.7</version.jacoco-maven-plugin>
         <version.junit-jupiter>5.8.2</version.junit-jupiter>
-        <version.mockito>4.2.0</version.mockito>
+        <version.mockito>4.8.1</version.mockito>
         <version.assertj-core>3.22.0</version.assertj-core>
         <version.logcaptor>2.7.8</version.logcaptor>
-        <version.byte-buddy>1.12.7</version.byte-buddy>
-        <version.mockito-kotlin>2.2.0</version.mockito-kotlin>
+        <version.byte-buddy>1.14.12</version.byte-buddy>
+        <version.mockito-kotlin>5.2.1</version.mockito-kotlin>
         <version.scalatest>3.2.10</version.scalatest>
         <version.scalatest-maven-plugin>2.0.2</version.scalatest-maven-plugin>
-        <version.mockito-scala>1.17.0</version.mockito-scala>
+        <version.mockito-scala>1.17.30</version.mockito-scala>
         <version.mockserver>5.11.2</version.mockserver>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.4</version.maven-shade-plugin>
-        <version.scala-maven-plugin>4.7.2</version.scala-maven-plugin>
+        <version.scala-maven-plugin>4.8.1</version.scala-maven-plugin>
         <version.license-maven-plugin>4.2.rc3</version.license-maven-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <license.git.copyrightYears>2018</license.git.copyrightYears>
@@ -499,6 +499,12 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${version.mockito}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>${version.assertj-core}</version>
@@ -536,7 +542,7 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>com.nhaarman.mockitokotlin2</groupId>
+                <groupId>org.mockito.kotlin</groupId>
                 <artifactId>mockito-kotlin</artifactId>
                 <version>${version.mockito-kotlin}</version>
                 <scope>test</scope>
@@ -643,7 +649,7 @@ limitations under the License.
                     <artifactId>kotlin-maven-plugin</artifactId>
                     <version>${version.kotlin}</version>
                     <configuration>
-                        <jvmTarget>1.8</jvmTarget>
+                        <jvmTarget>11</jvmTarget>
                     </configuration>
                     <executions>
                         <execution>

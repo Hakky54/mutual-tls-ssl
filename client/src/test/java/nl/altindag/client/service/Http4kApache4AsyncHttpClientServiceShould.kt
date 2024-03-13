@@ -15,8 +15,6 @@
  */
 package nl.altindag.client.service
 
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
 import nl.altindag.client.ClientType.HTTP4K_APACHE4_ASYNC_HTTP_CLIENT
 import nl.altindag.client.TestConstants
 import nl.altindag.client.util.MockServerTestHelper
@@ -25,6 +23,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.awaitility.core.ConditionTimeoutException
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 import java.util.concurrent.TimeUnit
 
 class Http4kApache4AsyncHttpClientServiceShould {

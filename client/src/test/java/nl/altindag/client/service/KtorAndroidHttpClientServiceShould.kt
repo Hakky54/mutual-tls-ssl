@@ -15,8 +15,6 @@
  */
 package nl.altindag.client.service
 
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
 import nl.altindag.client.ClientType.KTOR_ANDROID_HTTP_CLIENT
 import nl.altindag.client.TestConstants.HTTPS_URL
 import nl.altindag.client.TestConstants.HTTP_URL
@@ -25,6 +23,8 @@ import nl.altindag.client.util.SSLFactoryTestHelper
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 
 class KtorAndroidHttpClientServiceShould {
 

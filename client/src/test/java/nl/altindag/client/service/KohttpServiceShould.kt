@@ -15,7 +15,6 @@
  */
 package nl.altindag.client.service
 
-import com.nhaarman.mockitokotlin2.*
 import nl.altindag.client.TestConstants.HEADER_KEY_CLIENT_TYPE
 import nl.altindag.client.TestConstants.HTTP_URL
 import nl.altindag.client.util.SSLFactoryTestHelper
@@ -25,6 +24,7 @@ import okhttp3.Response
 import okhttp3.ResponseBody
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.*
 
 class KohttpServiceShould {
 
