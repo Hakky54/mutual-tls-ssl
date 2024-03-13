@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/Hakky54/mutual-tls-ssl/workflows/Build/badge.svg)](https://github.com/Hakky54/mutual-tls-ssl/actions)
+[![Actions Status](https://github.com/hakky54/mutual-tls-ssl/actions/workflows/maven.yml/badge.svg)](https://github.com/Hakky54/mutual-tls-ssl/actions)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nl.altindag%3Amutual-tls-ssl&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nl.altindag%3Amutual-tls-ssl)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nl.altindag%3Amutual-tls-ssl&metric=alert_status)](https://sonarcloud.io/dashboard?id=nl.altindag%3Amutual-tls-ssl)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=nl.altindag%3Amutual-tls-ssl&metric=coverage)](https://sonarcloud.io/dashboard?id=nl.altindag%3Amutual-tls-ssl)
