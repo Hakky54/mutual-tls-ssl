@@ -10,11 +10,11 @@ cleanUpExistingCertificatesAndKeystores() {
     rm -fv client/src/test/resources/truststore.jks
     rm -fv root-ca/identity.jks
     rm -fv root-ca/root-ca.pem
-    rm -fv shared-server-resources/src/main/resources/identity.jks
-    rm -fv shared-server-resources/src/main/resources/server.cer
-    rm -fv shared-server-resources/src/main/resources/server.csr
-    rm -fv shared-server-resources/src/main/resources/server-signed.cer
-    rm -fv shared-server-resources/src/main/resources/truststore.jks
+    rm -fv server/src/main/resources/identity.jks
+    rm -fv server/src/main/resources/server.cer
+    rm -fv server/src/main/resources/server.csr
+    rm -fv server/src/main/resources/server-signed.cer
+    rm -fv server/src/main/resources/truststore.jks
 
     echo 'Finished cleanup'
 }
@@ -22,23 +22,23 @@ cleanUpExistingCertificatesAndKeystores() {
 createCertificates() {
     echo 'Starting to create certificates...'
     keytool -v -genkeypair -dname "CN=Root-CA,OU=Certificate Authority,O=Thunderberry,C=NL" -keystore root-ca/identity.jks -storepass secret -keypass secret -keyalg RSA -keysize 2048 -alias root-ca -validity 3650 -deststoretype pkcs12 -ext KeyUsage=digitalSignature,keyCertSign -ext BasicConstraints=ca:true,PathLen:3
-    keytool -v -genkeypair -dname "CN=Hakan,OU=Amsterdam,O=Thunderberry,C=NL" -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -keypass secret -keyalg RSA -keysize 2048 -alias server -validity 3650 -deststoretype pkcs12 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1
+    keytool -v -genkeypair -dname "CN=Hakan,OU=Amsterdam,O=Thunderberry,C=NL" -keystore server/src/main/resources/identity.jks -storepass secret -keypass secret -keyalg RSA -keysize 2048 -alias server -validity 3650 -deststoretype pkcs12 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1
     keytool -v -genkeypair -dname "CN=$1,OU=Altindag,O=Altindag,C=NL" -keystore client/src/test/resources/identity.jks -storepass secret -keypass secret -keyalg RSA -keysize 2048 -alias client -validity 3650 -deststoretype pkcs12 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth
     keytool -v -exportcert -file root-ca/root-ca.pem -alias root-ca -keystore root-ca/identity.jks -storepass secret -rfc
     keytool -v -exportcert -file client/src/test/resources/client.cer -alias client -keystore client/src/test/resources/identity.jks -storepass secret -rfc
-    keytool -v -exportcert -file shared-server-resources/src/main/resources/server.cer -alias server -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -rfc
-    keytool -v -certreq -file shared-server-resources/src/main/resources/server.csr -keystore shared-server-resources/src/main/resources/identity.jks -alias server -keypass secret -storepass secret -keyalg rsa
+    keytool -v -exportcert -file server/src/main/resources/server.cer -alias server -keystore server/src/main/resources/identity.jks -storepass secret -rfc
+    keytool -v -certreq -file server/src/main/resources/server.csr -keystore server/src/main/resources/identity.jks -alias server -keypass secret -storepass secret -keyalg rsa
     keytool -v -certreq -file client/src/test/resources/client.csr -keystore client/src/test/resources/identity.jks -alias client -keypass secret -storepass secret -keyalg rsa
     keytool -v -importcert -file root-ca/root-ca.pem -alias root-ca -keystore client/src/test/resources/identity.jks -storepass secret -noprompt
-    keytool -v -importcert -file root-ca/root-ca.pem -alias root-ca -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret -noprompt
+    keytool -v -importcert -file root-ca/root-ca.pem -alias root-ca -keystore server/src/main/resources/identity.jks -storepass secret -noprompt
     keytool -v -gencert -infile client/src/test/resources/client.csr -outfile client/src/test/resources/client-signed.cer -keystore root-ca/identity.jks -storepass secret -alias root-ca -validity 3650 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -rfc
-    keytool -v -gencert -infile shared-server-resources/src/main/resources/server.csr -outfile shared-server-resources/src/main/resources/server-signed.cer -keystore root-ca/identity.jks -storepass secret -alias root-ca -validity 3650 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1 -rfc
+    keytool -v -gencert -infile server/src/main/resources/server.csr -outfile server/src/main/resources/server-signed.cer -keystore root-ca/identity.jks -storepass secret -alias root-ca -validity 3650 -ext KeyUsage=digitalSignature,dataEncipherment,keyEncipherment,keyAgreement -ext ExtendedKeyUsage=serverAuth,clientAuth -ext SubjectAlternativeName:c=DNS:localhost,DNS:raspberrypi.local,IP:127.0.0.1 -rfc
     keytool -v -importcert -file client/src/test/resources/client-signed.cer -alias client -keystore client/src/test/resources/identity.jks -storepass secret
-    keytool -v -importcert -file shared-server-resources/src/main/resources/server-signed.cer -alias server -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret
+    keytool -v -importcert -file server/src/main/resources/server-signed.cer -alias server -keystore server/src/main/resources/identity.jks -storepass secret
     keytool -v -importcert -file root-ca/root-ca.pem -alias root-ca -keystore client/src/test/resources/truststore.jks -storepass secret -noprompt
-    keytool -v -importcert -file root-ca/root-ca.pem -alias root-ca -keystore shared-server-resources/src/main/resources/truststore.jks -storepass secret -noprompt
+    keytool -v -importcert -file root-ca/root-ca.pem -alias root-ca -keystore server/src/main/resources/truststore.jks -storepass secret -noprompt
     keytool -v -delete -alias root-ca -keystore client/src/test/resources/identity.jks -storepass secret
-    keytool -v -delete -alias root-ca -keystore shared-server-resources/src/main/resources/identity.jks -storepass secret
+    keytool -v -delete -alias root-ca -keystore server/src/main/resources/identity.jks -storepass secret
 }
 
 configureApplicationProperties() {

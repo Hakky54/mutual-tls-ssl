@@ -10,7 +10,6 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>shared-server-resources</module>
         <module>server</module>
         <module>client</module>
     </modules>
