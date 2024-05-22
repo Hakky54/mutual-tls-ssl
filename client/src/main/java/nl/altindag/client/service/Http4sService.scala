@@ -15,6 +15,7 @@
  */
 package nl.altindag.client.service
 
+import cats.effect.unsafe.implicits.global
 import cats.effect.{IO, Resource}
 import nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE
 import nl.altindag.client.model.ClientResponse
@@ -32,7 +33,7 @@ abstract class Http4sService(client: Resource[IO, Client[IO]]) extends RequestSe
 
     val responseBody = client
       .use(client => client.expect[String](request))
-      .unsafeRunSync()
+      .unsafeRunSync
 
     // the client will throw a runtime exception for any other status code than 2xx
     // therefore it won't even reach to this point if it gets a non 2xx status code.

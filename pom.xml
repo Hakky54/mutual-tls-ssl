@@ -50,7 +50,7 @@
         <version.sttp>4.0.0-M14</version.sttp>
         <version.requests>0.8.2</version.requests>
         <version.kohttp>0.12.0</version.kohttp>
-        <version.http4s>1.0-234-d1a2b53</version.http4s>
+        <version.http4s>0.23.16</version.http4s>
         <version.feign>11.8</version.feign>
         <version.methanol>1.6.0</version.methanol>
         <version.ktor>2.3.11</version.ktor>
@@ -63,7 +63,7 @@
         <version.jax-rs-v2>2.1.1</version.jax-rs-v2>
         <version.netty-handler>4.1.99.Final</version.netty-handler>
         <version.netty-tcnative>2.0.62.Final</version.netty-tcnative>
-        <version.cats>2.7.0</version.cats>
+        <version.cats>2.10.0</version.cats>
         <version.awaitility>4.1.1</version.awaitility>
         <version.jackson-module-scala>2.13.1</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.7</version.jacoco-maven-plugin>
