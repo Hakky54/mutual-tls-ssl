@@ -63,7 +63,8 @@
         <version.jax-rs-v2>2.1.1</version.jax-rs-v2>
         <version.netty-handler>4.1.99.Final</version.netty-handler>
         <version.netty-tcnative>2.0.62.Final</version.netty-tcnative>
-        <version.cats>2.10.0</version.cats>
+        <version.cats-core>2.10.0</version.cats-core>
+        <version.cats-effect>3.5.4</version.cats-effect>
         <version.awaitility>4.2.1</version.awaitility>
         <version.jackson-module-scala>2.17.1</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.12</version.jacoco-maven-plugin>
@@ -423,7 +424,17 @@
             <dependency>
                 <groupId>org.typelevel</groupId>
                 <artifactId>cats-core_${version.scala}</artifactId>
-                <version>${version.cats}</version>
+                <version>${version.cats-core}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.typelevel</groupId>
+                <artifactId>cats-effect-std_${version.scala}</artifactId>
+                <version>${version.cats-effect}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.typelevel</groupId>
+                <artifactId>cats-effect_${version.scala}</artifactId>
+                <version>${version.cats-effect}</version>
             </dependency>
 
             <!--     temporally added to fix javax/jakarta imports       -->
