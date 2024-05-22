@@ -19,7 +19,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.*
-import io.ktor.utils.io.readUTF8Line
 import kotlinx.coroutines.runBlocking
 import nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE
 import nl.altindag.client.model.ClientResponse
