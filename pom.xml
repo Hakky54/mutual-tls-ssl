@@ -36,7 +36,7 @@
         <version.jetty-reactive-httpclient>1.1.16</version.jetty-reactive-httpclient>
         <version.jersey1>1.19.4</version.jersey1>
         <version.jersey2>3.1.6</version.jersey2>
-        <version.apache.cxf>3.5.0</version.apache.cxf>
+        <version.apache.cxf>4.0.4</version.apache.cxf>
         <version.google.http.client>1.41.1</version.google.http.client>
         <version.unirest>3.13.6</version.unirest>
         <version.retrofit>2.9.0</version.retrofit>
