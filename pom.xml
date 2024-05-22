@@ -25,8 +25,8 @@
         <version.slf4j>1.7.33</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
         <version.cucumber>7.18.0</version.cucumber>
-        <version.maven-fail-safe>3.0.0-M5</version.maven-fail-safe>
-        <version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
+        <version.maven-fail-safe>3.2.5</version.maven-fail-safe>
+        <version.maven-surefire-plugin>3.2.5</version.maven-surefire-plugin>
         <version.aspectjweaver>1.9.7</version.aspectjweaver>
         <version.maven-cucumber-reporting>5.4.0</version.maven-cucumber-reporting>
         <version.commons-lang3>3.12.0</version.commons-lang3>
