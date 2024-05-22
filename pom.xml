@@ -79,7 +79,7 @@
         <version.mockserver>5.11.2</version.mockserver>
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.2.4</version.maven-shade-plugin>
-        <version.scala-maven-plugin>4.8.1</version.scala-maven-plugin>
+        <version.scala-maven-plugin>4.9.1</version.scala-maven-plugin>
         <version.license-maven-plugin>4.2.rc3</version.license-maven-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <license.git.copyrightYears>2018</license.git.copyrightYears>
