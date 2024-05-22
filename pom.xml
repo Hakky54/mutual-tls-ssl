@@ -64,12 +64,12 @@
         <version.netty-handler>4.1.99.Final</version.netty-handler>
         <version.netty-tcnative>2.0.62.Final</version.netty-tcnative>
         <version.cats>2.10.0</version.cats>
-        <version.awaitility>4.1.1</version.awaitility>
-        <version.jackson-module-scala>2.13.1</version.jackson-module-scala>
-        <version.jacoco-maven-plugin>0.8.7</version.jacoco-maven-plugin>
-        <version.junit-jupiter>5.8.2</version.junit-jupiter>
+        <version.awaitility>4.2.1</version.awaitility>
+        <version.jackson-module-scala>2.17.1</version.jackson-module-scala>
+        <version.jacoco-maven-plugin>0.8.12</version.jacoco-maven-plugin>
+        <version.junit-jupiter>5.10.2</version.junit-jupiter>
         <version.mockito>4.8.1</version.mockito>
-        <version.assertj-core>3.22.0</version.assertj-core>
+        <version.assertj-core>3.25.3</version.assertj-core>
         <version.logcaptor>2.7.8</version.logcaptor>
         <version.byte-buddy>1.14.12</version.byte-buddy>
         <version.mockito-kotlin>5.2.1</version.mockito-kotlin>
