@@ -103,7 +103,7 @@
             <artifactId>fuel</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.softwaremill.sttp.client</groupId>
+            <groupId>com.softwaremill.sttp.client4</groupId>
             <artifactId>core_${version.scala}</artifactId>
         </dependency>
         <dependency>
