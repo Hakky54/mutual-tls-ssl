@@ -39,7 +39,7 @@
         <version.apache.cxf>3.5.0</version.apache.cxf> <!--TODO Bump me-->
         <version.google.http.client>1.44.2</version.google.http.client>
         <version.unirest>3.14.5</version.unirest>
-        <version.retrofit>2.9.0</version.retrofit>
+        <version.retrofit>2.11.0</version.retrofit>
         <version.finagle>22.1.0</version.finagle>
         <version.akka-http>10.2.7</version.akka-http>
         <version.akka-stream>2.6.18</version.akka-stream>
