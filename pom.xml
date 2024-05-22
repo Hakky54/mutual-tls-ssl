@@ -53,7 +53,7 @@
         <version.http4s>1.0-234-d1a2b53</version.http4s>
         <version.feign>11.8</version.feign>
         <version.methanol>1.6.0</version.methanol>
-        <version.ktor>1.6.7</version.ktor>
+        <version.ktor>2.3.11</version.ktor>
         <version.http4k>3.285.1</version.http4k>
         <version.vertx>4.2.4</version.vertx>
         <version.javax.annotation-api>1.3.2</version.javax.annotation-api>
@@ -287,22 +287,22 @@
             </dependency>
             <dependency>
                 <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-apache</artifactId>
+                <artifactId>ktor-client-apache-jvm</artifactId>
                 <version>${version.ktor}</version>
             </dependency>
             <dependency>
                 <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-okhttp</artifactId>
+                <artifactId>ktor-client-okhttp-jvm</artifactId>
                 <version>${version.ktor}</version>
             </dependency>
             <dependency>
                 <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-android</artifactId>
+                <artifactId>ktor-client-android-jvm</artifactId>
                 <version>${version.ktor}</version>
             </dependency>
             <dependency>
                 <groupId>io.ktor</groupId>
-                <artifactId>ktor-client-java</artifactId>
+                <artifactId>ktor-client-java-jvm</artifactId>
                 <version>${version.ktor}</version>
             </dependency>
             <dependency>
