@@ -15,7 +15,7 @@
     </modules>
 
     <properties>
-        <version.java>11</version.java>
+        <version.java>17</version.java>
         <version.scala>2.13</version.scala>
         <version.scala-compiler>2.13.14</version.scala-compiler>
         <version.kotlin>2.0.0</version.kotlin>
