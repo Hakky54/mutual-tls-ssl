@@ -12,7 +12,7 @@ These are the following steps:
 
 ## Starting the server
 **Minimum requirements:**
-1. Java 11
+1. Java 17
 2. Maven 3.5.0
 3. Eclipse, Intellij IDEA (or any other text editor like VIM)
 4. A terminal

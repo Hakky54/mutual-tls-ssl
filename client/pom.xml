@@ -103,7 +103,7 @@
             <artifactId>fuel</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.softwaremill.sttp.client</groupId>
+            <groupId>com.softwaremill.sttp.client4</groupId>
             <artifactId>core_${version.scala}</artifactId>
         </dependency>
         <dependency>
@@ -156,19 +156,19 @@
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-apache</artifactId>
+            <artifactId>ktor-client-apache-jvm</artifactId>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-okhttp</artifactId>
+            <artifactId>ktor-client-okhttp-jvm</artifactId>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-android</artifactId>
+            <artifactId>ktor-client-android-jvm</artifactId>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-java</artifactId>
+            <artifactId>ktor-client-java-jvm</artifactId>
         </dependency>
         <dependency>
             <groupId>org.http4k</groupId>
