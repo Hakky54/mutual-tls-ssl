@@ -246,10 +246,9 @@ public class ClientConfig {
     @Bean
     public Service<Request, Response> finagle(SSLFactory sslFactory) throws URISyntaxException {
         var uri = new URI(Constants.getServerUrl());
-        var client = Http.client();
+        var client = Http.client().withNoHttp2();
         if (uri.getScheme().equals("https")) {
-            client = client.withNoHttp2()
-                    .withTransport()
+            client = client.withTransport()
                     .tls(sslFactory.getSslContext());
         }
         return client.newService(uri.getHost() + ":" + uri.getPort());
