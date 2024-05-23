@@ -24,7 +24,7 @@
         <version.spring>2.7.18</version.spring> <!--TODO Bump me-->
         <version.slf4j>1.7.33</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
-        <version.cucumber>7.9.0</version.cucumber> <!--TODO Bump me-->
+        <version.cucumber>7.18.0</version.cucumber>
         <version.maven-fail-safe>3.2.5</version.maven-fail-safe>
         <version.maven-surefire-plugin>3.2.5</version.maven-surefire-plugin>
         <version.aspectjweaver>1.9.22.1</version.aspectjweaver>

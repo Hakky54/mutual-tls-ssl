@@ -13,14 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.altindag.client;
+package nl.altindag.client.stepdefs;
 
+import io.cucumber.spring.CucumberContextConfiguration;
+import nl.altindag.client.CucumberConfig;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
+@CucumberContextConfiguration
 @ContextConfiguration(classes = CucumberConfig.class, loader = SpringBootContextLoader.class)
 public class SpringBootHelper {
 

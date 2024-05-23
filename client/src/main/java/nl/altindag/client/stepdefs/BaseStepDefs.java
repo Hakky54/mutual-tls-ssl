@@ -23,11 +23,10 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import nl.altindag.client.ClientType;
-import nl.altindag.client.SpringBootHelper;
 import nl.altindag.client.TestScenario;
 import nl.altindag.client.service.RequestService;
 
-public class BaseStepDefs extends SpringBootHelper {
+public class BaseStepDefs {
 
     protected TestScenario testScenario;
     private final Map<ClientType, RequestService> requestServices;
