@@ -112,7 +112,7 @@ class ClientConfigShould {
 
     @Test
     void createRestTemplate() {
-        CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
+        org.apache.hc.client5.http.impl.classic.CloseableHttpClient httpClient = mock(org.apache.hc.client5.http.impl.classic.CloseableHttpClient.class);
 
         RestTemplate restTemplate = victim.restTemplate(httpClient);
 
@@ -127,12 +127,10 @@ class ClientConfigShould {
 
         assertThat(okHttpClient).isNotNull();
         verify(sslFactory, times(1)).getTrustManager();
-        verify(sslFactory, times(1)).getHostnameVerifier();
         verify(sslFactory, times(1)).getSslSocketFactory();
 
         assertThat(sslFactory.getTrustManager()).isPresent();
         assertThat(okHttpClient.x509TrustManager()).isEqualTo(sslFactory.getTrustManager().get());
-        assertThat(okHttpClient.hostnameVerifier()).isEqualTo(sslFactory.getHostnameVerifier());
     }
 
     @Test

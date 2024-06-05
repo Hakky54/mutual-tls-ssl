@@ -39,7 +39,7 @@ public class JettyReactiveHttpClientService implements RequestService {
 
         var contentResponse = httpClient.newRequest(url)
                 .method(HttpMethod.GET)
-                .header(HEADER_KEY_CLIENT_TYPE, getClientType().getValue())
+                .headers(header -> header.add(HEADER_KEY_CLIENT_TYPE, getClientType().getValue()))
                 .send();
 
         httpClient.stop();

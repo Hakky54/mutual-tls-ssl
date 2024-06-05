@@ -21,17 +21,25 @@ import nl.altindag.ssl.SSLFactory
 import nl.altindag.ssl.jetty.util.JettySslUtils
 import org.eclipse.jetty.client.HttpClient
 import org.http4k.client.JettyClient
+import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
 
 @Service
 class Http4kJettyHttpClientService(
-        sslFactory: SSLFactory
+        jettyClient: HttpClient
 ) : Http4kClientService(
         JettyClient(
-                client = HttpClient(JettySslUtils.forClient(sslFactory))
+                client = jettyClient
         )
 ) {
 
     override fun getClientType(): ClientType = HTTP4K_JETTY_HTTP_CLIENT
 
+}
+
+@Bean
+fun createClient(sslFactory: SSLFactory): HttpClient {
+    val httpClient = HttpClient()
+    httpClient.sslContextFactory = JettySslUtils.forClient(sslFactory)
+    return httpClient
 }

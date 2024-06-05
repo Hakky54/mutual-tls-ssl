@@ -21,9 +21,10 @@
         <version.kotlin>2.0.0</version.kotlin>
         <version.kotlinx-coroutines-core>1.8.1</version.kotlinx-coroutines-core>
         <version.sslcontext-kickstart>8.3.5</version.sslcontext-kickstart>
-        <version.spring>2.7.18</version.spring> <!--TODO Bump me-->
-        <version.slf4j>1.7.33</version.slf4j>
+        <version.spring>3.2.5</version.spring> <!--TODO Bump me-->
+        <version.slf4j>2.0.13</version.slf4j>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
+        <version.apache.httpclient5>5.3.1</version.apache.httpclient5>
         <version.cucumber>7.18.0</version.cucumber>
         <version.maven-fail-safe>3.2.5</version.maven-fail-safe>
         <version.maven-surefire-plugin>3.2.5</version.maven-surefire-plugin>
@@ -61,8 +62,8 @@
         <version.jakarta.annotation-api>2.0.0</version.jakarta.annotation-api>
         <version.jakarta.activation-api>2.0.1</version.jakarta.activation-api>
         <version.jax-rs-v2>2.1.1</version.jax-rs-v2>
-        <version.netty-handler>4.1.99.Final</version.netty-handler>
-        <version.netty-tcnative>2.0.62.Final</version.netty-tcnative>
+        <version.netty-handler>4.1.108.Final</version.netty-handler>
+        <version.netty-tcnative>2.0.65.Final</version.netty-tcnative>
         <version.cats-core>2.10.0</version.cats-core>
         <version.cats-effect>3.5.4</version.cats-effect>
         <version.awaitility>4.2.1</version.awaitility>
@@ -71,7 +72,7 @@
         <version.junit-jupiter>5.10.2</version.junit-jupiter>
         <version.mockito>5.12.0</version.mockito>
         <version.assertj-core>3.25.3</version.assertj-core>
-        <version.logcaptor>2.7.8</version.logcaptor>
+        <version.logcaptor>2.9.2</version.logcaptor>
         <version.byte-buddy>1.14.15</version.byte-buddy>
         <version.mockito-kotlin>5.3.1</version.mockito-kotlin>
         <version.scalatest>3.2.18</version.scalatest>
@@ -126,9 +127,19 @@
                 <version>${version.apache.httpclient}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>${version.apache.httpclient5}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-reactive-httpclient</artifactId>
                 <version>${version.jetty-reactive-httpclient}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-client</artifactId>
+                <version>12.0.9</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
@@ -353,7 +364,47 @@
             </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
+                <artifactId>netty-resolver-dns</artifactId>
+                <version>${version.netty-handler}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-http2</artifactId>
+                <version>${version.netty-handler}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-http</artifactId>
+                <version>${version.netty-handler}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-socks</artifactId>
+                <version>${version.netty-handler}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-handler-proxy</artifactId>
+                <version>${version.netty-handler}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport-native-epoll</artifactId>
+                <version>${version.netty-handler}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport-native-kqueue</artifactId>
+                <version>${version.netty-handler}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
                 <artifactId>netty-tcnative</artifactId>
+                <version>${version.netty-tcnative}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-tcnative-boringssl-static</artifactId>
                 <version>${version.netty-tcnative}</version>
             </dependency>
             <dependency>
