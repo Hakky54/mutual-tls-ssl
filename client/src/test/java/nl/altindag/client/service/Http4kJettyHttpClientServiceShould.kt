@@ -19,7 +19,9 @@ import nl.altindag.client.ClientType.HTTP4K_JETTY_HTTP_CLIENT
 import nl.altindag.client.TestConstants
 import nl.altindag.client.util.MockServerTestHelper
 import nl.altindag.client.util.SSLFactoryTestHelper
+import nl.altindag.ssl.jetty.util.JettySslUtils
 import org.assertj.core.api.Assertions.assertThat
+import org.eclipse.jetty.client.HttpClient
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -31,7 +33,11 @@ class Http4kJettyHttpClientServiceShould {
         MockServerTestHelper.mockResponseForClient(HTTP4K_JETTY_HTTP_CLIENT)
         val sslFactory = SSLFactoryTestHelper.createSSLFactory(false, true)
 
-        val client = Http4kJettyHttpClientService(sslFactory)
+        val sslContextFactory = JettySslUtils.forClient(sslFactory)
+        val httpClient = HttpClient()
+        httpClient.sslContextFactory = sslContextFactory
+
+        val client = Http4kJettyHttpClientService(httpClient)
         val response = client.executeRequest(TestConstants.HTTP_URL)
 
         assertThat(response.responseBody).isEqualTo("Hello")

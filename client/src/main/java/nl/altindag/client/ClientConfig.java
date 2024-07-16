@@ -130,16 +130,15 @@ public class ClientConfig {
     }
 
     @Bean
-    public RestTemplate restTemplate(org.apache.http.impl.client.CloseableHttpClient httpClient) {
+    public RestTemplate restTemplate(org.apache.hc.client5.http.impl.classic.CloseableHttpClient httpClient) {
         return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
     }
 
-    @Bean
+    @Bean("okHttpClient")
     @Scope("prototype")
     public OkHttpClient okHttpClient(SSLFactory sslFactory) {
         return new OkHttpClient.Builder()
                 .sslSocketFactory(sslFactory.getSslSocketFactory(), sslFactory.getTrustManager().orElseThrow())
-                .hostnameVerifier(sslFactory.getHostnameVerifier())
                 .build();
     }
 
@@ -155,17 +154,19 @@ public class ClientConfig {
     @Scope("prototype")
     public org.eclipse.jetty.client.HttpClient jettyHttpClient(SSLFactory sslFactory) {
         var sslContextFactory = JettySslUtils.forClient(sslFactory);
-        return new org.eclipse.jetty.client.HttpClient(sslContextFactory);
+        org.eclipse.jetty.client.HttpClient httpClient = new org.eclipse.jetty.client.HttpClient();
+        httpClient.setSslContextFactory(sslContextFactory);
+        return httpClient;
     }
 
-    @Bean
+    @Bean("webClientWithNetty")
     public WebClient webClientWithNetty(reactor.netty.http.client.HttpClient httpClient) {
         return WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
     }
 
-    @Bean
+    @Bean("webClientWithJetty")
     public WebClient webClientWithJetty(org.eclipse.jetty.client.HttpClient httpClient) {
         return WebClient.builder()
                 .clientConnector(new JettyClientHttpConnector(httpClient))
@@ -235,7 +236,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public Retrofit retrofit(OkHttpClient okHttpClient) {
+    public Retrofit retrofit(@Qualifier("okHttpClient") OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .client(okHttpClient)
                 .baseUrl(Constants.getServerUrl())
@@ -288,7 +289,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public Feign.Builder feignWithOkHttpClient(OkHttpClient okHttpClient) {
+    public Feign.Builder feignWithOkHttpClient(@Qualifier("okHttpClient") OkHttpClient okHttpClient) {
         return Feign.builder()
                 .client(new feign.okhttp.OkHttpClient(okHttpClient));
     }

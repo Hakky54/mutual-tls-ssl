@@ -19,6 +19,7 @@ import nl.altindag.client.ClientType;
 import nl.altindag.client.model.ClientResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class OkHttpClientService implements RequestService {
 
     private final OkHttpClient okHttpClient;
 
-    public OkHttpClientService(OkHttpClient okHttpClient) {
+    public OkHttpClientService(@Qualifier("okHttpClient") OkHttpClient okHttpClient) {
         this.okHttpClient = okHttpClient;
     }
 
