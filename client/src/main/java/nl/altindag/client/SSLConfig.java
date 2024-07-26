@@ -18,7 +18,6 @@ package nl.altindag.client;
 import nl.altindag.ssl.SSLFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,7 +38,6 @@ import org.springframework.stereotype.Component;
 public class SSLConfig {
 
     @Bean
-    @Scope("prototype")
     public SSLFactory sslFactory(
             @Value("${client.ssl.one-way-authentication-enabled:false}") boolean oneWayAuthenticationEnabled,
             @Value("${client.ssl.two-way-authentication-enabled:false}") boolean twoWayAuthenticationEnabled,
