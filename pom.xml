@@ -64,7 +64,7 @@
         <version.jakarta.annotation-api>2.0.0</version.jakarta.annotation-api>
         <version.jakarta.activation-api>2.0.1</version.jakarta.activation-api>
         <version.jax-rs-v2>2.1.1</version.jax-rs-v2>
-        <version.netty-handler>4.1.108.Final</version.netty-handler>
+        <version.netty-handler>4.1.112.Final</version.netty-handler>
         <version.netty-tcnative>2.0.65.Final</version.netty-tcnative>
         <version.cats-core>2.10.0</version.cats-core>
         <version.cats-effect>3.5.4</version.cats-effect>
@@ -392,6 +392,11 @@
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-transport-native-epoll</artifactId>
+                <version>${version.netty-handler}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport-classes-epoll</artifactId>
                 <version>${version.netty-handler}</version>
             </dependency>
             <dependency>
