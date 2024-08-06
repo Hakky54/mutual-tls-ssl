@@ -45,7 +45,6 @@ This sample project demonstrates a basic setup of a server and a client. The com
 * [Openssl Cheatsheet](https://gist.github.com/Hakky54/b30418b25215ad7d18f978bc0b448d81)
 * [Curl with Java KeyStore](https://gist.github.com/Hakky54/049299f0874fd4b870257c6458e0dcbd)
 * [Http Client Configuration Cheatsheet](#tested-clients)
-* [Spring application properties overview](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
 **Some History**
 
