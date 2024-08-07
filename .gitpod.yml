@@ -1,4 +1,4 @@
-image:
-  file: .gitpod.Dockerfile
 tasks:
-  - init: mvn install
+  - name: Setup development environment
+    init: yes | sdk install java 21.0.4-oracle
+    command: mvn clean install
