@@ -192,8 +192,7 @@ public class ClientConfig {
      * JAX-RS configuration should be identical to {@link #jerseyClient(SSLFactory)} once CXF update to version 3.5.0
      * But this function is still necessary to create CXF version of client that does not depend on Java SPI (/META-INF/services/javax.ws.rs.client.ClientBuilder)
      */
-    @Bean
-    @Qualifier("cxf")
+    @Bean("cxf")
     public javax.ws.rs.client.Client cxfJaxRsClient(SSLFactory sslFactory) {
         // One can just use ClientBuilder.newBuilder(), Explicit use here is due to multiple JAX-RS implementations in classpath
         return new org.apache.cxf.jaxrs.client.spec.ClientBuilderImpl()
