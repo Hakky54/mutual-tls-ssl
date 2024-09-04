@@ -31,7 +31,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
 import org.junit.jupiter.api.Test;
