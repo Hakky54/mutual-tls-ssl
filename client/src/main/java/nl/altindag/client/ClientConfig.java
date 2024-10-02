@@ -99,7 +99,7 @@ public class ClientConfig {
     @Bean
     public org.apache.hc.client5.http.impl.classic.CloseableHttpClient apache5HttpClient(SSLFactory sslFactory) {
         var connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
-                .setSSLSocketFactory(Apache5SslUtils.toSocketFactory(sslFactory))
+                .setTlsSocketStrategy(Apache5SslUtils.toTlsSocketStrategy(sslFactory))
                 .build();
 
         return org.apache.hc.client5.http.impl.classic.HttpClients.custom()
