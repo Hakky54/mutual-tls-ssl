@@ -69,11 +69,9 @@ If you want to start instantly without installing any software, click the button
 
 This project contains a maven wrapper, so you can run this project without installing maven. The documentation for this tutorial contains next to the default mvn command also the commands for the maven wrapper.
 
-If you want to run this project with Java 8, you can get an older version with the git command below.
-And it is recommended to follow the instruction for that specific version, which is available at this [page](https://github.com/Hakky54/mutual-tls-ssl/tree/java-8-compatible)
-```bash
-git checkout tags/java-8-compatible
-```
+If you want to run this project with Java 8 or Java 11, you can get an older version with the git command below.
+- `git checkout tags/java-8-compatible`
+- `git checkout tags/java-11-compatible`
 
 The server depends on the other components of the project, so run `mvn install` in the root directory first. 
 ```bash
