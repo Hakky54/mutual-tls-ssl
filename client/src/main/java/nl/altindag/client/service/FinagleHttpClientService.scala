@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit
 import scala.jdk.javaapi.OptionConverters
 
 @stereotype.Service
-class FinagleHttpClientService2(@Qualifier("finagleClient") service: Service[Request, Response]) extends RequestService {
+class FinagleHttpClientService(@Qualifier("finagleClient") service: Service[Request, Response]) extends RequestService {
 
   private val TIMEOUT_AMOUNT_IN_SECONDS = 5
 

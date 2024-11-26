@@ -35,7 +35,7 @@ class FinagleHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
     when(response.statusCode).thenReturn(200)
     when(response.contentString).thenReturn("Hello")
 
-    val victim = new FinagleHttpClientService2(finagleService)
+    val victim = new FinagleHttpClientService(finagleService)
     val clientResponse = victim.executeRequest(HTTP_URL)
 
     assertThat(clientResponse.getStatusCode).isEqualTo(200)
