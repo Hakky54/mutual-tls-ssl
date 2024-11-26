@@ -325,7 +325,10 @@ class ClientConfigShould {
 
         Service<Request, Response> service = victim.finagle(sslFactory);
 
-        verify(sslFactory, times(1)).getSslContext();
+        verify(sslFactory, times(1)).getKeyManagerFactory();
+        verify(sslFactory, times(1)).getTrustManagerFactory();
+        verify(sslFactory, times(1)).getCiphers();
+        verify(sslFactory, times(1)).getProtocols();
 
         assertThat(service.isAvailable()).isTrue();
         assertThat(service.status()).hasToString("Open");
