@@ -307,37 +307,6 @@ class ClientConfigShould {
     }
 
     @Test
-    void createFinagleClientWithoutSecurity() throws URISyntaxException {
-        System.setProperty("url", TestConstants.HTTP_URL);
-        Service<Request, Response> service = victim.finagle(null);
-
-        assertThat(service.isAvailable()).isTrue();
-        assertThat(service.status()).hasToString("Open");
-
-        service.close();
-        System.clearProperty("url");
-    }
-
-    @Test
-    void createFinagleClientWithSecurity() throws URISyntaxException {
-        System.setProperty("url", TestConstants.HTTPS_URL);
-        SSLFactory sslFactory = createSSLFactory(false, true);
-
-        Service<Request, Response> service = victim.finagle(sslFactory);
-
-        verify(sslFactory, times(1)).getKeyManagerFactory();
-        verify(sslFactory, times(1)).getTrustManagerFactory();
-        verify(sslFactory, times(1)).getCiphers();
-        verify(sslFactory, times(1)).getProtocols();
-
-        assertThat(service.isAvailable()).isTrue();
-        assertThat(service.status()).hasToString("Open");
-
-        service.close();
-        System.clearProperty("url");
-    }
-
-    @Test
     void createAkkaHttpClient() {
         SSLFactory sslFactory = createSSLFactory(false, true);
 

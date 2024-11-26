@@ -23,16 +23,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
-import com.twitter.finagle.Http;
-import com.twitter.finagle.Service;
-import com.twitter.finagle.http.Request;
-import com.twitter.finagle.http.Response;
-import com.twitter.finagle.ssl.ApplicationProtocols;
-import com.twitter.finagle.ssl.CipherSuites;
-import com.twitter.finagle.ssl.KeyCredentials;
-import com.twitter.finagle.ssl.Protocols;
-import com.twitter.finagle.ssl.TrustCredentials;
-import com.twitter.finagle.ssl.client.SslClientConfiguration;
 import com.typesafe.config.ConfigFactory;
 import feign.Feign;
 import feign.googlehttpclient.GoogleHttpClient;
@@ -74,15 +64,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import scala.Option;
-import scala.jdk.javaapi.CollectionConverters;
 
 import javax.net.ssl.SSLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class ClientConfig {
@@ -251,54 +235,6 @@ public class ClientConfig {
                 .baseUrl(Constants.getServerUrl())
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
                 .build();
-    }
-
-    @Bean
-    public Service<Request, Response> finagle(SSLFactory sslFactory) throws URISyntaxException {
-        var uri = new URI(Constants.getServerUrl());
-        var client = Http.client().withNoHttp2();
-        if (uri.getScheme().equals("https")) {
-
-            List<String> excludedCiphers = List.of(
-                    "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384",
-                    "TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
-                    "TLS_DHE_DSS_WITH_AES_256_GCM_SHA384",
-                    "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256",
-                    "TLS_DHE_DSS_WITH_AES_128_GCM_SHA256",
-                    "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384",
-                    "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384",
-                    "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256",
-                    "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
-                    "TLS_DHE_RSA_WITH_AES_256_CBC_SHA256",
-                    "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256",
-                    "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256",
-                    "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256",
-                    "TLS_DHE_RSA_WITH_AES_256_CBC_SHA",
-                    "TLS_DHE_DSS_WITH_AES_256_CBC_SHA",
-                    "TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
-                    "TLS_DHE_DSS_WITH_AES_128_CBC_SHA",
-                    "TLS_RSA_WITH_AES_256_CBC_SHA256",
-                    "TLS_RSA_WITH_AES_128_CBC_SHA256",
-                    "TLS_EMPTY_RENEGOTIATION_INFO_SCSV"
-            );
-
-            List<String> filteredCiphers = sslFactory.getCiphers()
-                    .stream()
-                    .filter(cipher -> !excludedCiphers.contains(cipher))
-                    .collect(Collectors.toList());
-
-            SslClientConfiguration sslClientConfiguration = new SslClientConfiguration(
-                    Option.empty(),
-                    Option.empty(),
-                    sslFactory.getKeyManagerFactory().map(KeyCredentials.KeyManagerFactory::new).orElseThrow(),
-                    sslFactory.getTrustManagerFactory().map(TrustCredentials.TrustManagerFactory::new).orElseThrow(),
-                    new CipherSuites.Enabled(CollectionConverters.asScala(filteredCiphers).toSeq()),
-                    new Protocols.Enabled(CollectionConverters.asScala(sslFactory.getProtocols()).toSeq()),
-                    ApplicationProtocols.fromString(""));
-
-            client = client.withTransport().tls(sslClientConfiguration);
-        }
-        return client.newService(uri.getHost() + ":" + uri.getPort());
     }
 
     @Bean
