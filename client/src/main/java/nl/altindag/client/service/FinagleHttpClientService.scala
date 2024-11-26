@@ -59,9 +59,9 @@ class FinagleHttpClientConfiguration {
   @Bean(name = Array("finagleClient"))
   def createFinagle(sslFactory: SSLFactory): Service[Request, Response] = {
     val uri = new URI(Constants.getServerUrl)
-    var client = Http.client.withNoHttp2
+    var client = Http.client
 
-    if (uri.getScheme == "https") {
+    if ("https".equals(uri.getScheme)) {
       val sslClientConfiguration = SslClientConfiguration(
         keyCredentials = OptionConverters.toScala(sslFactory.getKeyManagerFactory)
           .map(kmf => KeyCredentials.KeyManagerFactory(kmf))
