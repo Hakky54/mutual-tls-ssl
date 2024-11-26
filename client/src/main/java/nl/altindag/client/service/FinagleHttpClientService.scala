@@ -63,8 +63,12 @@ class FinagleHttpClientConfiguration {
 
     if (uri.getScheme == "https") {
       val sslClientConfiguration = SslClientConfiguration(
-        keyCredentials = OptionConverters.toScala(sslFactory.getKeyManagerFactory).map(kmf => KeyCredentials.KeyManagerFactory(kmf)).getOrElse(KeyCredentials.Unspecified),
-        trustCredentials = OptionConverters.toScala(sslFactory.getTrustManagerFactory).map(tmf => TrustCredentials.TrustManagerFactory(tmf)).getOrElse(TrustCredentials.Unspecified)
+        keyCredentials = OptionConverters.toScala(sslFactory.getKeyManagerFactory)
+          .map(kmf => KeyCredentials.KeyManagerFactory(kmf))
+          .getOrElse(KeyCredentials.Unspecified),
+        trustCredentials = OptionConverters.toScala(sslFactory.getTrustManagerFactory)
+          .map(tmf => TrustCredentials.TrustManagerFactory(tmf))
+          .getOrElse(TrustCredentials.Unspecified)
       )
 
       client = client.withTransport.tls(sslClientConfiguration)
