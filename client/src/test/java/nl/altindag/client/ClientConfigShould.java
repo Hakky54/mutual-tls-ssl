@@ -19,9 +19,6 @@ import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
 import com.github.mizosoft.methanol.Methanol;
 import com.google.api.client.http.HttpTransport;
-import com.twitter.finagle.Service;
-import com.twitter.finagle.http.Request;
-import com.twitter.finagle.http.Response;
 import feign.Feign;
 import jakarta.ws.rs.client.Client;
 import kong.unirest.Unirest;
@@ -40,7 +37,6 @@ import retrofit2.Retrofit;
 import javax.net.ssl.SSLException;
 import java.io.IOException;
 import java.net.ConnectException;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 
 import static nl.altindag.client.util.AssertJCustomConditions.GSON_CONVERTER_FACTORY;
@@ -48,7 +44,9 @@ import static nl.altindag.client.util.AssertJCustomConditions.SUBSTRING_OF_HTTP_
 import static nl.altindag.client.util.SSLFactoryTestHelper.createSSLFactory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class ClientConfigShould {
@@ -304,34 +302,6 @@ class ClientConfigShould {
         assertThat(retrofit).isNotNull();
         assertThat(retrofit.baseUrl().toString()).has(SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL);
         assertThat(retrofit.converterFactories()).has(GSON_CONVERTER_FACTORY);
-    }
-
-    @Test
-    void createFinagleClientWithoutSecurity() throws URISyntaxException {
-        System.setProperty("url", TestConstants.HTTP_URL);
-        Service<Request, Response> service = victim.finagle(null);
-
-        assertThat(service.isAvailable()).isTrue();
-        assertThat(service.status()).hasToString("Open");
-
-        service.close();
-        System.clearProperty("url");
-    }
-
-    @Test
-    void createFinagleClientWithSecurity() throws URISyntaxException {
-        System.setProperty("url", TestConstants.HTTPS_URL);
-        SSLFactory sslFactory = createSSLFactory(false, true);
-
-        Service<Request, Response> service = victim.finagle(sslFactory);
-
-        verify(sslFactory, times(1)).getSslContext();
-
-        assertThat(service.isAvailable()).isTrue();
-        assertThat(service.status()).hasToString("Open");
-
-        service.close();
-        System.clearProperty("url");
     }
 
     @Test

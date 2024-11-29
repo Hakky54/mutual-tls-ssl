@@ -23,10 +23,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
-import com.twitter.finagle.Http;
-import com.twitter.finagle.Service;
-import com.twitter.finagle.http.Request;
-import com.twitter.finagle.http.Response;
 import com.typesafe.config.ConfigFactory;
 import feign.Feign;
 import feign.googlehttpclient.GoogleHttpClient;
@@ -70,8 +66,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import javax.net.ssl.SSLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 
 @Component
@@ -241,17 +235,6 @@ public class ClientConfig {
                 .baseUrl(Constants.getServerUrl())
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
                 .build();
-    }
-
-    @Bean
-    public Service<Request, Response> finagle(SSLFactory sslFactory) throws URISyntaxException {
-        var uri = new URI(Constants.getServerUrl());
-        var client = Http.client().withNoHttp2();
-        if (uri.getScheme().equals("https")) {
-            client = client.withTransport()
-                    .tls(sslFactory.getSslContext());
-        }
-        return client.newService(uri.getHost() + ":" + uri.getPort());
     }
 
     @Bean
