@@ -175,7 +175,7 @@ Now, you can create the truststore for the client and import the certificate of 
 keytool -v -importcert -file server/src/main/resources/server.cer -alias server -keystore client/src/test/resources/truststore.jks -storepass secret -noprompt
 ```
 
-You created the truststore for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it needs to use the truststore with the correct location and password. You also need to tell the client that authentication is enabled. Provide the following property in the `application.yml` file of the client:
+You created the truststore for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it needs to use the truststore with the correct location and password. You also need to tell the client that authentication is enabled. Provide the following property in the `client/src/test/resources/application.yml` file of the client:
 ```yaml
 client:
   ssl:
