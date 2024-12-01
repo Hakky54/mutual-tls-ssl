@@ -175,7 +175,7 @@ Now, you can create the truststore for the client and import the certificate of 
 keytool -v -importcert -file server/src/main/resources/server.cer -alias server -keystore client/src/test/resources/truststore.jks -storepass secret -noprompt
 ```
 
-You created the truststore for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it needs to use the truststore with the correct location and password. You also need to tell the client that authentication is enabled. Provide the following property in the `application.yml` file of the client:
+You created the truststore for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it needs to use the truststore with the correct location and password. You also need to tell the client that authentication is enabled. Provide the following property in the `client/src/test/resources/application.yml` file of the client:
 ```yaml
 client:
   ssl:
@@ -213,7 +213,7 @@ keytool -v -exportcert -file client/src/test/resources/client.cer -alias client 
 keytool -v -importcert -file client/src/test/resources/client.cer -alias client -keystore server/src/main/resources/truststore.jks -storepass secret -noprompt
 ```
 
-You created the extra keystore for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it also needs to use the keystore with the correct location and password. You also need to tell the client that two-way-authentication is enabled. Provide the following property in the `application.yml` file of the client:
+You created the extra keystore for the client. Unfortunately, the client is not aware of this. Now, you need to tell that it also needs to use the keystore with the correct location and password. You also need to tell the client that two-way-authentication is enabled. Provide the following property in the `application.yml` file of the client i.e. `client/src/test/resources/application.yml`:
 ```yaml
 client:
   ssl:
