@@ -48,7 +48,7 @@
         <version.akka-stream>2.8.5</version.akka-stream>
         <version.dispatch-core>1.2.0</version.dispatch-core>
         <version.scalaj-http>2.4.2</version.scalaj-http>
-        <version.async-http-client>2.12.3</version.async-http-client>
+        <version.async-http-client>3.0.1</version.async-http-client>
         <version.fuel>2.3.1</version.fuel>
         <version.sttp>4.0.0-M14</version.sttp>
         <version.requests>0.8.2</version.requests>
