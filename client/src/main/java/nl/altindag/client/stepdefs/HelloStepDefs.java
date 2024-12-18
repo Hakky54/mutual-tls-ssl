@@ -71,7 +71,7 @@ public class HelloStepDefs extends BaseStepDefs {
 
     @Then("I expect to receive {string} message")
     public void iExpectToReceiveBody(String body) {
-        assertThat(testScenario.getClientResponse().getResponseBody()).isEqualTo(body);
+        assertThat(testScenario.getClientResponse().getResponseBody()).contains(body);
     }
 
     @And("I display the time it took to get the message")

@@ -37,21 +37,28 @@ class HelloWorldControllerShould {
 
     @Test
     void returnHelloMessage() {
-        ResponseEntity<String> response = victim.hello();
+        ResponseEntity<String> response = victim.hello(null);
 
         assertThat(response.getBody()).isEqualTo("Hello");
     }
 
     @Test
+    void returnHelloWithFromHeaderValueMessage() {
+        ResponseEntity<String> response = victim.hello("Foo");
+
+        assertThat(response.getBody()).isEqualTo("Hello Foo!");
+    }
+
+    @Test
     void returnStatusCode200() {
-        ResponseEntity<String> response = victim.hello();
+        ResponseEntity<String> response = victim.hello(null);
 
         assertThat(response.getStatusCode().value()).isEqualTo(200);
     }
 
     @Test
     void annotatedWithLogCertificate() throws NoSuchMethodException {
-        Method helloMethod = HelloWorldController.class.getMethod("hello");
+        Method helloMethod = HelloWorldController.class.getMethod("hello", String.class);
         LogCertificate annotation = helloMethod.getAnnotation(LogCertificate.class);
 
         assertThat(annotation).isNotNull();
@@ -59,7 +66,7 @@ class HelloWorldControllerShould {
 
     @Test
     void annotatedWithLogClientType() throws NoSuchMethodException {
-        Method helloMethod = HelloWorldController.class.getMethod("hello");
+        Method helloMethod = HelloWorldController.class.getMethod("hello", String.class);
         LogClientType annotation = helloMethod.getAnnotation(LogClientType.class);
 
         assertThat(annotation).isNotNull();
