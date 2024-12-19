@@ -15,7 +15,7 @@
  */
 package nl.altindag.client.service
 
-import cats.effect.{ExitCode, IO, IOApp, Resource}
+import cats.effect.{IO, Resource}
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.HTTP4S_BLAZE_CLIENT
 import nl.altindag.ssl.SSLFactory
@@ -33,7 +33,7 @@ class Http4sBlazeClientService(@Qualifier("blazeClient") client: Resource[IO, Cl
 }
 
 @Component
-class BlazeClientConfiguration extends IOApp {
+class BlazeClientConfiguration {
 
   @Bean(name = Array("blazeClient"))
   def createBlazeClient(sslFactory: SSLFactory): Resource[IO, Client[IO]] = {
@@ -41,7 +41,5 @@ class BlazeClientConfiguration extends IOApp {
         .withSslContext(sslFactory.getSslContext)
         .resource
   }
-
-  override def run(args: List[String]): IO[ExitCode] = null
 
 }

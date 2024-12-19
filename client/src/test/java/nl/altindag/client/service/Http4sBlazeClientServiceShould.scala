@@ -38,9 +38,4 @@ class Http4sBlazeClientServiceShould extends AnyFunSpec with MockitoSugar {
     verify(sslFactory, times(1)).getSslContext
   }
 
-  describe("blaze io app run function should do nothing") {
-    val any = new BlazeClientConfiguration().run(null)
-    assertThat(any).isNull()
-  }
-
 }

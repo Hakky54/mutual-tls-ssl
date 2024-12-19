@@ -15,7 +15,7 @@
  */
 package nl.altindag.client.service
 
-import cats.effect.{ExitCode, IO, IOApp, Resource}
+import cats.effect.{IO, Resource}
 import nl.altindag.client.ClientType
 import nl.altindag.client.ClientType.HTTP4S_JAVA_NET_CLIENT
 import nl.altindag.ssl.SSLFactory
@@ -32,7 +32,7 @@ class Http4sJavaNetClientService(@Qualifier("javaNetClient") client: Resource[IO
 }
 
 @Component
-class JavaNetClientConfiguration extends IOApp {
+class JavaNetClientConfiguration {
 
   @Bean(name = Array("javaNetClient"))
   def createJavaNetClient(sslFactory: SSLFactory): Resource[IO, Client[IO]] = {
@@ -41,7 +41,5 @@ class JavaNetClientConfiguration extends IOApp {
       .withHostnameVerifier(sslFactory.getHostnameVerifier)
       .resource
   }
-
-  override def run(args: List[String]): IO[ExitCode] = null
 
 }

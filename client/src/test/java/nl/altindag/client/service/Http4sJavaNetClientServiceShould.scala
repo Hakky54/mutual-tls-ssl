@@ -40,9 +40,4 @@ class Http4sJavaNetClientServiceShould extends AnyFunSpec with MockitoSugar {
     verify(sslFactory, times(1)).getHostnameVerifier
   }
 
-  describe("java net io app run function should do nothing") {
-    val any = new JavaNetClientConfiguration().run(null)
-    assertThat(any).isNull()
-  }
-
 }
