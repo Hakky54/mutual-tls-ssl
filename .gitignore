@@ -4,6 +4,7 @@
 *.theia
 *.classpath
 *.DS_Store
+**/dependency-reduced-pom.xml
 
 .settings/
 client/target/
