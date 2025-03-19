@@ -20,9 +20,10 @@ import nl.altindag.client.model.ClientResponse;
 import org.apache.hc.client5.http.classic.methods.ClassicHttpRequests;
 import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.springframework.stereotype.Service;
+
+import java.net.URI;
 
 import static nl.altindag.client.ClientType.APACHE5_HTTP_CLIENT;
 import static nl.altindag.client.Constants.HEADER_KEY_CLIENT_TYPE;
@@ -38,12 +39,10 @@ public class Apache5HttpClientService implements RequestService {
 
     @Override
     public ClientResponse executeRequest(String url) throws Exception {
-        HttpUriRequest request = ClassicHttpRequests.get(url);
+        HttpUriRequest request = ClassicHttpRequests.get(URI.create(url));
         request.addHeader(HEADER_KEY_CLIENT_TYPE, getClientType().getValue());
 
-        CloseableHttpResponse response = httpClient.execute(request);
-
-        return new ClientResponse(EntityUtils.toString(response.getEntity()), response.getCode());
+        return httpClient.execute(request, response -> new ClientResponse(EntityUtils.toString(response.getEntity()), response.getCode()));
     }
 
     @Override
