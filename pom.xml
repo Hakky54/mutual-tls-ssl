@@ -25,7 +25,7 @@
         <version.slf4j>2.0.13</version.slf4j>
         <version.logback>1.5.6</version.logback>
         <version.apache.httpclient>4.5.13</version.apache.httpclient>
-        <version.apache.httpclient5>5.4</version.apache.httpclient5>
+        <version.apache.httpclient5>5.4.3</version.apache.httpclient5>
         <version.cucumber>7.18.0</version.cucumber>
         <version.maven-fail-safe>3.2.5</version.maven-fail-safe>
         <version.maven-surefire-plugin>3.2.5</version.maven-surefire-plugin>
