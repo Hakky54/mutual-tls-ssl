@@ -13,7 +13,13 @@
 
 # Mastering two way TLS 🔐 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=If%20you%20are%20interested%20in%20securing%20your%20web%20application,%20you%20might%20want%20to%20read%20the%20tutorial%20Mastering%20two-way%20tls&url=https://github.com/Hakky54/mutual-tls&via=hakky541&hashtags=encryption,security,https,ssl,tls,certificate,developer,java,scala,kotlin,sslcontextkickstart)
 
-Hey, hello there 👋 welcome to this tutorial! I hope you will like it ❤️
+Hey, hello there 👋 welcome to this tutorial! I hope you will like it.
+
+This tutorial came to life when I initially wanted to learn mutual authentication based on TLS. So it was not a tutorial at all, but just a pet project. 
+I wanted to learn how to set it up locally and what commands I need to use. As I got it working I assumed it might be useful for others, so I have refactored to make it easily repeatable and have it as a tutorial at this page so others can learn from it.
+
+I have created this tutorial with ❤️ and passion, mostly during evening and night hours. If you use my tutorial and want to appreciate the work I have done, please consider to sponsor this project as a way to contribute back to the community.
+There are 3 options available to pick from: [GitHub](https://github.com/sponsors/Hakky54), [Ko-fi](https://ko-fi.com/hakky54) and [Open Collective](https://opencollective.com/hakky54)
 
 This tutorial will walk you through the process of protecting your application with TLS authentication, only allowing access for certain users based on their certificates. This means that you can choose which users are allowed to call your application.
 
@@ -424,7 +430,7 @@ This tutorial does not provide examples for the clients listed below, however it
 There are plenty of ways to contribute to this project:
 
 * Give it a star
-* Make a donation through [GitHub](https://github.com/sponsors/Hakky54) or [open collective](https://opencollective.com/hakky54)
+* Make a donation through [GitHub](https://github.com/sponsors/Hakky54), [Ko-fi](https://ko-fi.com/hakky54) or [open collective](https://opencollective.com/hakky54)
 * Share it with a [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=If%20you%20are%20interested%20in%20securing%20your%20web%20application,%20you%20might%20want%20to%20read%20the%20tutorial%20Mastering%20two-way%20tls&url=https://github.com/Hakky54/mutual-tls&via=hakky541&hashtags=encryption,security,https,ssl,tls,certificate,developer,java,scala,kotlin,sslcontextkickstart)
 * Join the [Gitter room](https://gitter.im/hakky54/mutual-tls-ssl) and leave a feedback or help with answering users questions
 * Submit a PR
