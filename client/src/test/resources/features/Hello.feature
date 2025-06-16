@@ -60,3 +60,5 @@ Feature: Securing the connection between you and the world
       | Spring WebFlux WebClient Netty    |
       | Unirest                           |
       | Vertx WebClient                   |
+      | Groovy Java Net Client            |
+      | HyperPoet Client                  |

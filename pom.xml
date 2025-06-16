@@ -20,6 +20,7 @@
         <version.scala-compiler>2.13.14</version.scala-compiler>
         <version.kotlin>2.0.0</version.kotlin>
         <version.kotlinx-coroutines-core>1.8.1</version.kotlinx-coroutines-core>
+        <version.groovy>4.0.27</version.groovy>
         <version.sslcontext-kickstart>9.0.0</version.sslcontext-kickstart>
         <version.spring>3.4.5</version.spring>
         <version.slf4j>2.0.13</version.slf4j>
@@ -68,6 +69,7 @@
         <version.netty-tcnative>2.0.66.Final</version.netty-tcnative>
         <version.cats-core>2.10.0</version.cats-core>
         <version.cats-effect>3.5.4</version.cats-effect>
+        <version.hyperpoet-groovy>1.4.0</version.hyperpoet-groovy>
         <version.awaitility>4.3.0</version.awaitility>
         <version.jackson-module-scala>2.17.1</version.jackson-module-scala>
         <version.jacoco-maven-plugin>0.8.12</version.jacoco-maven-plugin>
@@ -84,6 +86,7 @@
         <version.maven-compiler-plugin>3.13.0</version.maven-compiler-plugin>
         <version.maven-shade-plugin>3.5.3</version.maven-shade-plugin>
         <version.scala-maven-plugin>4.9.1</version.scala-maven-plugin>
+        <version.gmavenplus-plugin>4.2.0</version.gmavenplus-plugin>
         <version.license-maven-plugin>4.5</version.license-maven-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <license.git.copyrightYears>2018</license.git.copyrightYears>
@@ -490,6 +493,17 @@
                 <version>${version.cats-effect}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.groovy</groupId>
+                <artifactId>groovy</artifactId>
+                <version>${version.groovy}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tambapps.http</groupId>
+                <artifactId>hyperpoet-groovy</artifactId>
+                <version>${version.hyperpoet-groovy}</version>
+            </dependency>
+
             <!--     temporally added to fix javax/jakarta imports       -->
             <dependency>
                 <groupId>jakarta.xml.bind</groupId>
@@ -757,6 +771,45 @@ limitations under the License.
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>${version.gmavenplus-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>groovy</id>
+                            <goals>
+                                <goal>addSources</goal>
+                                <goal>addTestSources</goal>
+                                <goal>generateStubs</goal>
+                                <goal>compile</goal>
+                                <goal>generateTestStubs</goal>
+                                <goal>compileTests</goal>
+                                <goal>removeStubs</goal>
+                                <goal>removeTestStubs</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <sources>
+                            <source>
+                                <directory>${project.basedir}/src/main/java</directory>
+                                <includes>
+                                    <include>**/*.groovy</include>
+                                </includes>
+                            </source>
+                        </sources>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.groovy</groupId>
+                            <artifactId>groovy</artifactId>
+                            <version>${version.groovy}</version>
+                            <scope>runtime</scope>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>
