@@ -29,7 +29,7 @@ import javax.net.ssl.HttpsURLConnection
 
 class ScalaJHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
 
-  describe("execute request bla") {
+  describe("execute request") {
     MockServerTestHelper.mockResponseForClient(SCALAJ_HTTP_CLIENT)
 
     val dummyHttpOption = HttpOptions.connTimeout(1000)

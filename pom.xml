@@ -647,6 +647,11 @@
                 <version>${version.mockserver}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.apache.groovy</groupId>
+                <artifactId>groovy-test</artifactId>
+                <version>${version.groovy}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -801,6 +806,14 @@ limitations under the License.
                                 </includes>
                             </source>
                         </sources>
+                        <testSources>
+                            <testSource>
+                                <directory>${project.basedir}/src/test/java</directory>
+                                <includes>
+                                    <include>**/*.groovy</include>
+                                </includes>
+                            </testSource>
+                        </testSources>
                     </configuration>
                     <dependencies>
                         <dependency>

@@ -24,7 +24,7 @@ class HyperPoetService implements RequestService {
     @Override
     ClientResponse executeRequest(String url) throws Exception {
         def headers = [:]
-        headers[HEADER_KEY_CLIENT_TYPE] = getClientType()
+        headers[HEADER_KEY_CLIENT_TYPE] = getClientType().value
 
         poet.get(url, headers: headers) {
             new ClientResponse(it.body().string(), it.code())
