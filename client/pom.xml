@@ -219,6 +219,15 @@
             <artifactId>netty-tcnative</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.tambapps.http</groupId>
+            <artifactId>hyperpoet-groovy</artifactId>
+        </dependency>
+
         <!--     Utilities       -->
         <dependency>
             <groupId>org.awaitility</groupId>
@@ -278,6 +287,10 @@
         <dependency>
             <groupId>org.mock-server</groupId>
             <artifactId>mockserver-netty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy-test</artifactId>
         </dependency>
 
         <!--     Apache Utils       -->
@@ -349,6 +362,12 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${version.kotlin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>${version.gmavenplus-plugin}</version>
             </plugin>
 
             <plugin>

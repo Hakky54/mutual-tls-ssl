@@ -417,6 +417,10 @@ All client examples use the same base ssl configuration created within the [SSLC
 * [Http4s Blaze Client](https://github.com/http4s/http4s) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sBlazeClientService.scala) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sService.scala)
 * [Http4s Java Net Client](https://github.com/http4s/http4s) -> [Client Configuration](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sJavaNetClientService.scala) | [Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/Http4sService.scala)
 
+**Groovy**
+* Groovy with Java Net -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/GroovyJavaNetClientService.groovy)
+* [Hyper Poet](https://github.com/tambapps/hyperpoet) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/HyperPoetService.groovy)
+
 **Other**
 
 This tutorial does not provide examples for the clients listed below, however it is proven to be working with the server provided in this tutorial. To guide you in the right direction you can convert the created java keystore files into pem files which in return can be used with one of the clients listed below. The following Gist page contains the commands to convert a Java keystore to a pem file: [Gist - Curl with Java KeyStore](https://gist.github.com/Hakky54/049299f0874fd4b870257c6458e0dcbd)

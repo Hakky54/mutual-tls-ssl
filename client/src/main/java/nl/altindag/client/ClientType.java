@@ -67,6 +67,8 @@ public enum ClientType {
     KTOR_CIO_HTTP_CLIENT("ktor cio httpclient"),
     KTOR_JAVA_HTTP_CLIENT("ktor java httpclient"),
     VERTX("vertx webclient"),
+    GROOVY_JAVA_NET_CLIENT("groovy java net client"),
+    HYPER_POET_CLIENT("hyperpoet client"),
     NONE("none");
 
     private final String value;
