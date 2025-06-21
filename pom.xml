@@ -651,6 +651,7 @@
                 <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy-test</artifactId>
                 <version>${version.groovy}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
