@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest ]
-        java: [ '17', '21', '23']
+        java: [ '21', '23']
 
     steps:
       - uses: actions/checkout@v2
@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ windows-latest ]
-        java: [ '17', '21', '23']
+        java: [ '21', '23']
 
     steps:
       - uses: actions/checkout@v2
@@ -72,7 +72,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'adopt'
-          java-version: '17'
+          java-version: '21'
           cache: 'maven'
 
       - name: Build, test and quality scan
