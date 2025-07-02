@@ -65,7 +65,7 @@ Also [GitHub - SSLContext Kickstart](https://github.com/Hakky54/sslcontext-kicks
 ## Starting the server
 **Minimum requirements:**
 1. Java 21
-2. Maven 3.5.0
+2. Maven 3.9.10
 3. Eclipse, Intellij IDEA (or any other text editor like VIM)
 4. A terminal
 
