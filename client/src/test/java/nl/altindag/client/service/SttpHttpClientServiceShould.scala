@@ -23,14 +23,14 @@ import org.assertj.core.api.Assertions.{assertThat, assertThatThrownBy}
 import org.mockito.ArgumentCaptor
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.funspec.AnyFunSpec
-import sttp.client4.{GenericRequest, Identity, Response, SyncBackend, basicRequest}
+import sttp.client4.{GenericRequest, Response, SyncBackend, basicRequest}
 import sttp.model.{Header, StatusCode, Uri}
 
 class SttpHttpClientServiceShould extends AnyFunSpec with MockitoSugar {
 
   describe("execute request") {
     val mockedBackend = mock[SyncBackend]
-    val mockedResponse = mock[Identity[Response[Either[String, String]]]]
+    val mockedResponse = mock[Response[Either[String, String]]]
     val mockedBody = mock[Either[String, String]]
 
     when(mockedBackend.send(any[GenericRequest[Any, Any]])).thenReturn(mockedResponse)
