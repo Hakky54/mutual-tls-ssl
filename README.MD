@@ -2,7 +2,7 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nl.altindag%3Amutual-tls-ssl&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nl.altindag%3Amutual-tls-ssl)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nl.altindag%3Amutual-tls-ssl&metric=alert_status)](https://sonarcloud.io/dashboard?id=nl.altindag%3Amutual-tls-ssl)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=nl.altindag%3Amutual-tls-ssl&metric=coverage)](https://sonarcloud.io/dashboard?id=nl.altindag%3Amutual-tls-ssl)
-[![JDK compatibility: 8+](https://img.shields.io/badge/JDK_compatibility-8+-blue.svg)](#)
+[![JDK compatibility: 21](https://img.shields.io/badge/JDK_compatibility-21-blue.svg)](#)
 [![Apache2 license](https://img.shields.io/badge/license-Aache2.0-blue.svg)](https://github.com/Hakky54/mutual-tls-ssl/blob/master/LICENSE)
 [![GitHub stars chart](https://img.shields.io/badge/github%20stars-chart-blue.svg)](https://seladb.github.io/StarTrack-js/#/preload?r=hakky54,mutual-tls-ssl)
 [![Join the chat at https://gitter.im/hakky54/mutual-tls-ssl](https://badges.gitter.im/hakky54/mutual-tls-ssl.svg)](https://gitter.im/hakky54/mutual-tls-ssl?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
