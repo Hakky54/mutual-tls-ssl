@@ -27,11 +27,11 @@ import org.springframework.stereotype.Component;
  * convenient methods to easily construct the ssl material with
  * different kinds of input to configure over 40+ http clients.
  *
- * @see <a href="https://github.com/Hakky54/sslcontext-kickstart">
- *      https://github.com/Hakky54/sslcontext-kickstart
+ * @see <a href="https://github.com/Hakky54/ayza">
+ *      https://github.com/Hakky54/ayza
  *      </a>
- * @see <a href="https://github.com/Hakky54/sslcontext-kickstart#tested-http-clients">
- *      https://github.com/Hakky54/sslcontext-kickstart#tested-http-clients
+ * @see <a href="https://github.com/Hakky54/ayza#tested-http-clients">
+ *      https://github.com/Hakky54/ayza#tested-http-clients
  *      </a>
  */
 @Component

@@ -330,23 +330,23 @@
 
         <dependency>
             <groupId>io.github.hakky54</groupId>
-            <artifactId>sslcontext-kickstart</artifactId>
+            <artifactId>ayza</artifactId>
         </dependency>
         <dependency>
             <groupId>io.github.hakky54</groupId>
-            <artifactId>sslcontext-kickstart-for-apache4</artifactId>
+            <artifactId>ayza-for-apache4</artifactId>
         </dependency>
         <dependency>
             <groupId>io.github.hakky54</groupId>
-            <artifactId>sslcontext-kickstart-for-apache5</artifactId>
+            <artifactId>ayza-for-apache5</artifactId>
         </dependency>
         <dependency>
             <groupId>io.github.hakky54</groupId>
-            <artifactId>sslcontext-kickstart-for-netty</artifactId>
+            <artifactId>ayza-for-netty</artifactId>
         </dependency>
         <dependency>
             <groupId>io.github.hakky54</groupId>
-            <artifactId>sslcontext-kickstart-for-jetty</artifactId>
+            <artifactId>ayza-for-jetty</artifactId>
         </dependency>
     </dependencies>
 
