@@ -87,14 +87,6 @@
             <artifactId>jackson-module-scala_${version.scala}</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-http_${version.scala}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-stream_${version.scala}</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.dispatchhttp</groupId>
             <artifactId>dispatch-core_${version.scala}</artifactId>
         </dependency>
@@ -501,11 +493,6 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>${main-class-client}</mainClass>
-                                </transformer>
-
-                                <!-- required adding the reference.conf file for akka client -->
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                    <resource>reference.conf</resource>
                                 </transformer>
 
                                 <!-- required adding the bus-extensions.txt file for apache cxf client -->

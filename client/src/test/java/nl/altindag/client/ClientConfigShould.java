@@ -15,8 +15,6 @@
  */
 package nl.altindag.client;
 
-import akka.actor.ActorSystem;
-import akka.http.javadsl.Http;
 import com.github.mizosoft.methanol.Methanol;
 import com.google.api.client.http.HttpTransport;
 import feign.Feign;
@@ -302,24 +300,6 @@ class ClientConfigShould {
         assertThat(retrofit).isNotNull();
         assertThat(retrofit.baseUrl().toString()).has(SUBSTRING_OF_HTTP_OR_HTTPS_SERVER_URL);
         assertThat(retrofit.converterFactories()).has(GSON_CONVERTER_FACTORY);
-    }
-
-    @Test
-    void createAkkaHttpClient() {
-        SSLFactory sslFactory = createSSLFactory(false, true);
-
-        Http http = victim.akkaHttpClient(sslFactory, ActorSystem.create());
-
-        assertThat(http).isNotNull();
-        verify(sslFactory, times(1)).getSslContext();
-    }
-
-    @Test
-    void createActorSystem() {
-        ActorSystem actorSystem = victim.actorSystem();
-
-        assertThat(actorSystem).isNotNull();
-        assertThat(actorSystem.name()).isEqualTo("ClientConfig");
     }
 
     @Test

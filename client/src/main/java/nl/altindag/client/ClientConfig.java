@@ -15,15 +15,12 @@
  */
 package nl.altindag.client;
 
-import akka.actor.ActorSystem;
-import akka.http.javadsl.ConnectionContext;
 import com.github.mizosoft.methanol.Methanol;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
-import com.typesafe.config.ConfigFactory;
 import feign.Feign;
 import feign.googlehttpclient.GoogleHttpClient;
 import feign.hc5.ApacheHttp5Client;
@@ -235,23 +232,6 @@ public class ClientConfig {
                 .baseUrl(Constants.getServerUrl())
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
                 .build();
-    }
-
-    @Bean
-    public ActorSystem actorSystem() {
-        return ActorSystem.create(
-                ClientConfig.class.getSimpleName(),
-                ConfigFactory.defaultApplication(ClientConfig.class.getClassLoader())
-        );
-    }
-
-    @Bean
-    public akka.http.javadsl.Http akkaHttpClient(SSLFactory sslFactory,
-                                                 ActorSystem actorSystem) {
-        var http = akka.http.javadsl.Http.get(actorSystem);
-        var httpsContext = ConnectionContext.httpsClient(sslFactory.getSslContext());
-        http.setDefaultClientHttpsContext(httpsContext);
-        return http;
     }
 
     @Bean

@@ -45,9 +45,6 @@
         <version.unirest>3.14.5</version.unirest>
         <version.retrofit>3.0.0</version.retrofit>
         <version.finagle>24.2.0</version.finagle>
-        <version.akka-http>10.7.1</version.akka-http>
-        <version.akka-stream>2.10.7</version.akka-stream>
-        <version.akka-pki>2.10.7</version.akka-pki>
         <version.dispatch-core>2.0.0</version.dispatch-core>
         <version.scalaj-http>2.4.2</version.scalaj-http>
         <version.async-http-client>3.0.2</version.async-http-client>
@@ -212,21 +209,6 @@
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
                 <version>${version.okhttp}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.typesafe.akka</groupId>
-                <artifactId>akka-http_${version.scala}</artifactId>
-                <version>${version.akka-http}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.typesafe.akka</groupId>
-                <artifactId>akka-stream_${version.scala}</artifactId>
-                <version>${version.akka-stream}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.typesafe.akka</groupId>
-                <artifactId>akka-pki_${version.scala}</artifactId>
-                <version>${version.akka-pki}</version>
             </dependency>
             <dependency>
                 <groupId>org.dispatchhttp</groupId>
@@ -1103,11 +1085,6 @@ limitations under the License.
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>akka-repository</id>
-            <name>Akka library repository</name>
-            <url>https://repo.akka.io/maven</url>
         </repository>
     </repositories>
 
