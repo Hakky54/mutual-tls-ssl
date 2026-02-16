@@ -66,7 +66,7 @@ There are two ways to have mutual authentication and that is based on trusting t
   - The server does not have control anymore for which applications are allowed to call him. The server gives permission to any application who has a signed certificate by the Certificate Authority.
 
 ### Exercise 4
-Now you will try to connect to the server which is running on the Raspberry Pi. The Pi has two way TLS enabled so only clients with a valid certificate, which is signed by the Certificate Authority, can communicate with it. The url of the server is" `https://raspberrypi.local:8443` 
+Now you will try to connect to the server which is running on the Raspberry Pi. The Pi has two way TLS enabled so only clients with a valid certificate, which is signed by the Certificate Authority, can communicate with it. The url of the server is" `https://raspberrypi:8443` 
 
 Create a certificate for the client, in the same way you created in the previous exercise, and ensure the client is using that by changing the application properties file of the client. Make sure that the client certificate has a private key and a public key (certificate) and that the output file is a jks (Java Keystore). After that you need the create a Certificate Signing Request based on the newly created client certificate.
 
