@@ -416,9 +416,12 @@ All client examples use the same base ssl configuration created within the [SSLC
 * [Hyper Poet](https://github.com/tambapps/hyperpoet) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/HyperPoetService.groovy)
 
 **Clojure**
-* [clj-http](https://github.com/dakrone/clj-http) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ClojureCljHttpClientService.clj)
+* [clj-http](https://github.com/dakrone/clj-http) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/CljHttpClientService.clj)
 * JDK Http Client -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ClojureJdkHttpClientService.clj)
 * Old JDK Http Client -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ClojureHttpClientService.clj)
+* [Hato](https://github.com/gnarroway/hato) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/HatoHttpClientService.clj)
+* [Aleph](https://github.com/clj-commons/aleph) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/AlephHttpClientService.clj)
+* [Http-Kit](https://github.com/http-kit/http-kit) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/HttpKitService.clj)
 
 **Other**
 

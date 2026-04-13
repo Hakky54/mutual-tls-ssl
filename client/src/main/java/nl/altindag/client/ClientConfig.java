@@ -324,8 +324,23 @@ public class ClientConfig {
     }
 
     @Bean
-    public RequestService clojureCljHttpClientService(SSLFactory sslFactory) {
-        return instantiateClojureRequestService("nl.altindag.client.service.ClojureCljHttpClientService", sslFactory);
+    public RequestService cljHttpClientService(SSLFactory sslFactory) {
+        return instantiateClojureRequestService("nl.altindag.client.service.CljHttpClientService", sslFactory);
+    }
+
+    @Bean
+    public RequestService hatoHttpClientService(SSLFactory sslFactory) {
+        return instantiateClojureRequestService("nl.altindag.client.service.HatoHttpClientService", sslFactory);
+    }
+
+    @Bean
+    public RequestService alephHttpClientService(SSLFactory sslFactory) {
+        return instantiateClojureRequestService("nl.altindag.client.service.AlephHttpClientService", sslFactory);
+    }
+
+    @Bean
+    public RequestService httpKitService(SSLFactory sslFactory) {
+        return instantiateClojureRequestService("nl.altindag.client.service.HttpKitService", sslFactory);
     }
 
     private RequestService instantiateClojureRequestService(String namespace, SSLFactory sslFactory) {

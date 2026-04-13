@@ -13,31 +13,25 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 ;
-
-(ns nl.altindag.client.service.ClojureCljHttpClientService
+(ns nl.altindag.client.service.HatoHttpClientService
   (:gen-class)
-  (:require [clj-http.client :as http])
+  (:require [hato.client :as hc])
   (:import
     [nl.altindag.client.service RequestService]
     [nl.altindag.client.model ClientResponse]
     [nl.altindag.client ClientType Constants]
-    [nl.altindag.ssl SSLFactory]
-    [nl.altindag.ssl.apache4.util Apache4SslUtils]
-    [org.apache.http.impl.client HttpClients]))
+    [nl.altindag.ssl SSLFactory]))
 
 (defn reify-request-service
   [^SSLFactory ssl-factory]
-  (reify
-    RequestService
-    (executeRequest [this url]
-      (let [http-client (-> (HttpClients/custom)
-                            (.setSSLSocketFactory (Apache4SslUtils/toSocketFactory ssl-factory))
-                            (.build))
-            response (http/get url {:headers          {Constants/HEADER_KEY_CLIENT_TYPE (.getValue (.getClientType this))}
-                                    :http-client      http-client
+  (let [http-client (hc/build-http-client {:ssl-context (.getSslContext ssl-factory)})]
+    (reify
+     RequestService
+     (executeRequest [this url]
+        (let [response (hc/get url {:http-client      http-client
+                                    :headers          {Constants/HEADER_KEY_CLIENT_TYPE (.getValue (.getClientType this))}
                                     :as               :string
                                     :throw-exceptions false})]
-        (ClientResponse. (:body response) (:status response))))
-    (getClientType [this]
-      ClientType/CLOJURE_CLJ_HTTP_CLIENT)))
-
+          (ClientResponse. (:body response) (:status response))))
+     (getClientType [this]
+                    ClientType/HATO_HTTP_CLIENT))))

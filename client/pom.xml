@@ -228,6 +228,18 @@
             <groupId>clj-http</groupId>
             <artifactId>clj-http</artifactId>
         </dependency>
+        <dependency>
+            <groupId>hato</groupId>
+            <artifactId>hato</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>aleph</groupId>
+            <artifactId>aleph</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>http-kit</groupId>
+            <artifactId>http-kit</artifactId>
+        </dependency>
 
         <!--     Utilities       -->
         <dependency>

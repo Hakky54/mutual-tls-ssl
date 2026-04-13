@@ -63,4 +63,8 @@ Feature: Securing the connection between you and the world
       | HyperPoet Client                  |
       | Clojure HttpClient                |
       | Clojure Jdk HttpClient            |
-      | Clojure clj-http Client           |
+      | Clj-http Client                   |
+      | Hato client                       |
+      | Aleph client                      |
+      | Http-kit client                   |
+

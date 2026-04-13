@@ -70,7 +70,10 @@ public enum ClientType {
     HYPER_POET_CLIENT("hyperpoet client"),
     CLOJURE_HTTP_CLIENT("clojure httpclient"),
     CLOJURE_JDK_HTTP_CLIENT("clojure jdk httpclient"),
-    CLOJURE_CLJ_HTTP_CLIENT("clojure clj-http client"),
+    CLOJURE_CLJ_HTTP_CLIENT("clj-http client"),
+    HATO_HTTP_CLIENT("hato client"),
+    ALEPH_HTTP_CLIENT("aleph client"),
+    HTTP_KIT_CLIENT("http-kit client"),
     NONE("none");
 
     private final String value;

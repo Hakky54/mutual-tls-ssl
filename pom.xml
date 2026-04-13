@@ -23,6 +23,9 @@
         <version.groovy>4.0.27</version.groovy>
         <version.clojure>1.12.4</version.clojure>
         <version.clj-http>3.13.1</version.clj-http>
+        <version.hato>1.0.0</version.hato>
+        <version.aleph>0.8.3</version.aleph>
+        <version.http-kit>2.8.0</version.http-kit>
         <version.ayza>10.0.0</version.ayza>
         <version.spring>3.5.3</version.spring>
         <version.slf4j>2.0.17</version.slf4j>
@@ -500,6 +503,21 @@
                 <groupId>clj-http</groupId>
                 <artifactId>clj-http</artifactId>
                 <version>${version.clj-http}</version>
+            </dependency>
+            <dependency>
+                <groupId>hato</groupId>
+                <artifactId>hato</artifactId>
+                <version>${version.hato}</version>
+            </dependency>
+            <dependency>
+                <groupId>aleph</groupId>
+                <artifactId>aleph</artifactId>
+                <version>${version.aleph}</version>
+            </dependency>
+            <dependency>
+                <groupId>http-kit</groupId>
+                <artifactId>http-kit</artifactId>
+                <version>${version.http-kit}</version>
             </dependency>
 
             <!--     temporally added to fix javax/jakarta imports       -->

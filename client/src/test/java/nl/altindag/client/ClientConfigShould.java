@@ -400,9 +400,9 @@ class ClientConfigShould {
     }
 
     @Test
-    void createClojureCljClient() {
+    void createCljClient() {
         SSLFactory sslFactory = createSSLFactory(true, true);
-        RequestService requestService = victim.clojureCljHttpClientService(sslFactory);
+        RequestService requestService = victim.cljHttpClientService(sslFactory);
         assertThat(requestService).isNotNull();
         assertThat(requestService.getClientType()).isEqualTo(ClientType.CLOJURE_CLJ_HTTP_CLIENT);
     }
@@ -421,6 +421,30 @@ class ClientConfigShould {
         RequestService requestService = victim.clojureHttpClientService(sslFactory);
         assertThat(requestService).isNotNull();
         assertThat(requestService.getClientType()).isEqualTo(ClientType.CLOJURE_HTTP_CLIENT);
+    }
+
+    @Test
+    void createAlephHttpClient() {
+        SSLFactory sslFactory = createSSLFactory(true, true);
+        RequestService requestService = victim.alephHttpClientService(sslFactory);
+        assertThat(requestService).isNotNull();
+        assertThat(requestService.getClientType()).isEqualTo(ClientType.ALEPH_HTTP_CLIENT);
+    }
+
+    @Test
+    void createHttpKitClient() {
+        SSLFactory sslFactory = createSSLFactory(true, true);
+        RequestService requestService = victim.httpKitService(sslFactory);
+        assertThat(requestService).isNotNull();
+        assertThat(requestService.getClientType()).isEqualTo(ClientType.HTTP_KIT_CLIENT);
+    }
+
+    @Test
+    void createHatoHttpClient() {
+        SSLFactory sslFactory = createSSLFactory(true, true);
+        RequestService requestService = victim.hatoHttpClientService(sslFactory);
+        assertThat(requestService).isNotNull();
+        assertThat(requestService.getClientType()).isEqualTo(ClientType.HATO_HTTP_CLIENT);
     }
 
 }
