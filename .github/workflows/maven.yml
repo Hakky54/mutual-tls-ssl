@@ -79,4 +79,4 @@ jobs:
       - name: Build, test and quality scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login="$SONAR_TOKEN" --no-transfer-progress
+        run: mvn clean verify -Pjacoco org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=hakky54 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login="$SONAR_TOKEN" --no-transfer-progress
