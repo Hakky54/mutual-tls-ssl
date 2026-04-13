@@ -20,6 +20,7 @@ import com.google.api.client.http.HttpTransport;
 import feign.Feign;
 import jakarta.ws.rs.client.Client;
 import kong.unirest.Unirest;
+import nl.altindag.client.service.RequestService;
 import nl.altindag.ssl.SSLFactory;
 import okhttp3.OkHttpClient;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -396,6 +397,30 @@ class ClientConfigShould {
         verify(sslFactory, times(1)).getProtocols();
 
         System.clearProperty("url");
+    }
+
+    @Test
+    void createClojureCijClient() {
+        SSLFactory sslFactory = createSSLFactory(true, true);
+        RequestService requestService = victim.clojureCijHttpClientService(sslFactory);
+        assertThat(requestService).isNotNull();
+        assertThat(requestService.getClientType()).isEqualTo(ClientType.CLOJURE_CLJ_HTTP_CLIENT);
+    }
+
+    @Test
+    void createClojureJdkClient() {
+        SSLFactory sslFactory = createSSLFactory(true, true);
+        RequestService requestService = victim.clojureJdkHttpClientService(sslFactory);
+        assertThat(requestService).isNotNull();
+        assertThat(requestService.getClientType()).isEqualTo(ClientType.CLOJURE_JDK_HTTP_CLIENT);
+    }
+
+    @Test
+    void createClojureHttpClient() {
+        SSLFactory sslFactory = createSSLFactory(true, true);
+        RequestService requestService = victim.clojureHttpClientService(sslFactory);
+        assertThat(requestService).isNotNull();
+        assertThat(requestService.getClientType()).isEqualTo(ClientType.CLOJURE_HTTP_CLIENT);
     }
 
 }

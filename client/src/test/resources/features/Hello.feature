@@ -61,3 +61,6 @@ Feature: Securing the connection between you and the world
       | Vertx WebClient                   |
       | Groovy Java Net Client            |
       | HyperPoet Client                  |
+      | Clojure HttpClient                |
+      | Clojure Jdk HttpClient            |
+      | Clojure clj-http Client           |

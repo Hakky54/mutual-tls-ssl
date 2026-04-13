@@ -68,6 +68,9 @@ public enum ClientType {
     VERTX("vertx webclient"),
     GROOVY_JAVA_NET_CLIENT("groovy java net client"),
     HYPER_POET_CLIENT("hyperpoet client"),
+    CLOJURE_HTTP_CLIENT("clojure httpclient"),
+    CLOJURE_JDK_HTTP_CLIENT("clojure jdk httpclient"),
+    CLOJURE_CLJ_HTTP_CLIENT("clojure clj-http client"),
     NONE("none");
 
     private final String value;

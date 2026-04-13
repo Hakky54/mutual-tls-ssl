@@ -220,6 +220,15 @@
             <artifactId>hyperpoet-groovy</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.clojure</groupId>
+            <artifactId>clojure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>clj-http</groupId>
+            <artifactId>clj-http</artifactId>
+        </dependency>
+
         <!--     Utilities       -->
         <dependency>
             <groupId>org.awaitility</groupId>
@@ -360,6 +369,12 @@
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
                 <version>${version.gmavenplus-plugin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>com.theoryinpractise</groupId>
+                <artifactId>clojure-maven-plugin</artifactId>
+                <version>${version.clojure-maven-plugin}</version>
             </plugin>
 
             <plugin>
@@ -552,5 +567,24 @@
         </profile>
 
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>maven-central</id>
+            <name>Maven Central Repository</name>
+            <url>https://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>clojars-central</id>
+            <name>Clojars Repository</name>
+            <url>https://repo.clojars.org/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>
