@@ -21,15 +21,20 @@
     [nl.altindag.client.service RequestService]
     [nl.altindag.client.model ClientResponse]
     [nl.altindag.client ClientType Constants]
-    [nl.altindag.ssl SSLFactory]))
+    [nl.altindag.ssl SSLFactory]
+    [nl.altindag.ssl.apache4.util Apache4SslUtils]
+    [org.apache.http.impl.client HttpClients]))
 
 (defn reify-request-service
   [^SSLFactory ssl-factory]
   (reify
     RequestService
     (executeRequest [this url]
-      (let [response (http/get url {:headers          {Constants/HEADER_KEY_CLIENT_TYPE (.getValue (.getClientType this))}
-                                    :ssl-context      (.getSslContext ssl-factory)
+      (let [http-client (-> (HttpClients/custom)
+                            (.setSSLSocketFactory (Apache4SslUtils/toSocketFactory ssl-factory))
+                            (.build))
+            response (http/get url {:headers          {Constants/HEADER_KEY_CLIENT_TYPE (.getValue (.getClientType this))}
+                                    :http-client      http-client
                                     :as               :string
                                     :throw-exceptions false})]
         (ClientResponse. (:body response) (:status response))))
