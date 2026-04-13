@@ -315,26 +315,24 @@ public class ClientConfig {
 
     @Bean
     public RequestService clojureHttpClientService(SSLFactory sslFactory) {
-        IFn require = Clojure.var("clojure.core", "require");
-        require.invoke(Clojure.read("nl.altindag.client.service.ClojureHttpClientService"));
-        IFn clojureHttpClientService = Clojure.var("nl.altindag.client.service.ClojureHttpClientService", "reify-request-service");
-        return (RequestService) clojureHttpClientService.invoke(sslFactory);
+        return instantiateClojureRequestService("nl.altindag.client.service.ClojureHttpClientService", sslFactory);
     }
 
     @Bean
     public RequestService clojureJdkHttpClientService(SSLFactory sslFactory) {
-        IFn require = Clojure.var("clojure.core", "require");
-        require.invoke(Clojure.read("nl.altindag.client.service.ClojureJdkHttpClientService"));
-        IFn clojureJdkHttpClientService = Clojure.var("nl.altindag.client.service.ClojureJdkHttpClientService", "reify-request-service");
-        return (RequestService) clojureJdkHttpClientService.invoke(sslFactory);
+        return instantiateClojureRequestService("nl.altindag.client.service.ClojureJdkHttpClientService", sslFactory);
     }
 
     @Bean
-    public RequestService clojureCljHttpClientService(SSLFactory sslFactory) {
+    public RequestService clojureCijHttpClientService(SSLFactory sslFactory) {
+        return instantiateClojureRequestService("nl.altindag.client.service.ClojureCijHttpClientService", sslFactory);
+    }
+
+    private RequestService instantiateClojureRequestService(String namespace, SSLFactory sslFactory) {
         IFn require = Clojure.var("clojure.core", "require");
-        require.invoke(Clojure.read("nl.altindag.client.service.ClojureCljHttpClientService"));
-        IFn clojureJdkHttpClientService = Clojure.var("nl.altindag.client.service.ClojureCljHttpClientService", "reify-request-service");
-        return (RequestService) clojureJdkHttpClientService.invoke(sslFactory);
+        require.invoke(Clojure.read(namespace));
+        IFn clojureHttpClientService = Clojure.var(namespace, "reify-request-service");
+        return (RequestService) clojureHttpClientService.invoke(sslFactory);
     }
 
 }
