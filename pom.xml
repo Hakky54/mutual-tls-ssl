@@ -21,6 +21,8 @@
         <version.kotlin>2.2.0</version.kotlin>
         <version.kotlinx-coroutines-core>1.10.2</version.kotlinx-coroutines-core>
         <version.groovy>4.0.27</version.groovy>
+        <version.clojure>1.12.4</version.clojure>
+        <version.clj-http>3.13.1</version.clj-http>
         <version.ayza>10.0.0</version.ayza>
         <version.spring>3.5.3</version.spring>
         <version.slf4j>2.0.17</version.slf4j>
@@ -85,6 +87,7 @@
         <version.maven-shade-plugin>3.6.0</version.maven-shade-plugin>
         <version.scala-maven-plugin>4.9.5</version.scala-maven-plugin>
         <version.gmavenplus-plugin>4.2.0</version.gmavenplus-plugin>
+        <version.clojure-maven-plugin>1.9.3</version.clojure-maven-plugin>
         <version.license-maven-plugin>5.0.0</version.license-maven-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <license.git.copyrightYears>2018</license.git.copyrightYears>
@@ -487,6 +490,18 @@
                 <version>${version.hyperpoet-groovy}</version>
             </dependency>
 
+            <!--     Clojure       -->
+            <dependency>
+                <groupId>org.clojure</groupId>
+                <artifactId>clojure</artifactId>
+                <version>${version.clojure}</version>
+            </dependency>
+            <dependency>
+                <groupId>clj-http</groupId>
+                <artifactId>clj-http</artifactId>
+                <version>${version.clj-http}</version>
+            </dependency>
+
             <!--     temporally added to fix javax/jakarta imports       -->
             <dependency>
                 <groupId>jakarta.xml.bind</groupId>
@@ -757,6 +772,28 @@ limitations under the License.
                             <goals>
                                 <goal>compile</goal>
                                 <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.theoryinpractise</groupId>
+                    <artifactId>clojure-maven-plugin</artifactId>
+                    <version>${version.clojure-maven-plugin}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <sourceDirectories>
+                            <sourceDirectory>src/main/java</sourceDirectory>
+                        </sourceDirectories>
+                        <temporaryOutputDirectory>true</temporaryOutputDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>compile-clojure</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -1082,6 +1119,14 @@ limitations under the License.
             <id>maven-central</id>
             <name>Maven Central Repository</name>
             <url>https://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>clojars-central</id>
+            <name>Clojars Repository</name>
+            <url>https://repo.clojars.org/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>

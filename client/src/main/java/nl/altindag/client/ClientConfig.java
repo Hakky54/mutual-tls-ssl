@@ -15,6 +15,8 @@
  */
 package nl.altindag.client;
 
+import clojure.java.api.Clojure;
+import clojure.lang.IFn;
 import com.github.mizosoft.methanol.Methanol;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -33,6 +35,7 @@ import io.vertx.ext.web.client.WebClientOptions;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import kong.unirest.Unirest;
+import nl.altindag.client.service.RequestService;
 import nl.altindag.ssl.SSLFactory;
 import nl.altindag.ssl.apache4.util.Apache4SslUtils;
 import nl.altindag.ssl.apache5.util.Apache5SslUtils;
@@ -308,6 +311,30 @@ public class ClientConfig {
         }
 
         return io.vertx.ext.web.client.WebClient.create(Vertx.vertx(), clientOptions);
+    }
+
+    @Bean
+    public RequestService clojureHttpClientService(SSLFactory sslFactory) {
+        IFn require = Clojure.var("clojure.core", "require");
+        require.invoke(Clojure.read("nl.altindag.client.service.ClojureHttpClientService"));
+        IFn clojureHttpClientService = Clojure.var("nl.altindag.client.service.ClojureHttpClientService", "reify-request-service");
+        return (RequestService) clojureHttpClientService.invoke(sslFactory);
+    }
+
+    @Bean
+    public RequestService clojureJdkHttpClientService(SSLFactory sslFactory) {
+        IFn require = Clojure.var("clojure.core", "require");
+        require.invoke(Clojure.read("nl.altindag.client.service.ClojureJdkHttpClientService"));
+        IFn clojureJdkHttpClientService = Clojure.var("nl.altindag.client.service.ClojureJdkHttpClientService", "reify-request-service");
+        return (RequestService) clojureJdkHttpClientService.invoke(sslFactory);
+    }
+
+    @Bean
+    public RequestService clojureCljHttpClientService(SSLFactory sslFactory) {
+        IFn require = Clojure.var("clojure.core", "require");
+        require.invoke(Clojure.read("nl.altindag.client.service.ClojureCljHttpClientService"));
+        IFn clojureJdkHttpClientService = Clojure.var("nl.altindag.client.service.ClojureCljHttpClientService", "reify-request-service");
+        return (RequestService) clojureJdkHttpClientService.invoke(sslFactory);
     }
 
 }
