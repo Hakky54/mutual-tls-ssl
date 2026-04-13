@@ -72,7 +72,7 @@
         <version.hyperpoet-groovy>1.4.0</version.hyperpoet-groovy>
         <version.awaitility>4.3.0</version.awaitility>
         <version.jackson-module-scala>2.19.1</version.jackson-module-scala>
-        <version.jacoco-maven-plugin>0.8.13</version.jacoco-maven-plugin>
+        <version.jacoco-maven-plugin>0.8.14</version.jacoco-maven-plugin>
         <version.junit-jupiter>5.13.2</version.junit-jupiter>
         <version.mockito>5.18.0</version.mockito>
         <version.assertj-core>3.27.7</version.assertj-core>
