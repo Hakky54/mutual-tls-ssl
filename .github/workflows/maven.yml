@@ -8,6 +8,7 @@ on:
   schedule:
 #    At 12:00 AM, on day 1 of the month, every 2 months
     - cron: '0 0 1 */2 *'
+  workflow_dispatch:
 
 jobs:
   build:
