@@ -14,7 +14,7 @@
 ; limitations under the License.
 ;
 
-(ns nl.altindag.client.service.ClojureCijHttpClientService
+(ns nl.altindag.client.service.ClojureCljHttpClientService
   (:gen-class)
   (:require [clj-http.client :as http])
   (:import

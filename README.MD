@@ -416,7 +416,7 @@ All client examples use the same base ssl configuration created within the [SSLC
 * [Hyper Poet](https://github.com/tambapps/hyperpoet) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/HyperPoetService.groovy)
 
 **Clojure**
-* [cj-http](https://github.com/dakrone/clj-http) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ClojureCljHttpClientService.clj)
+* [clj-http](https://github.com/dakrone/clj-http) -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ClojureCijHttpClientService.clj)
 * JDK Http Client -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ClojureJdkHttpClientService.clj)
 * Old JDK Http Client -> [Client Configuration & Example request](https://github.com/Hakky54/mutual-tls-ssl/blob/master/client/src/main/java/nl/altindag/client/service/ClojureHttpClientService.clj)
 

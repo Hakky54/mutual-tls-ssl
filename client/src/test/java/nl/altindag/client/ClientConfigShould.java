@@ -400,9 +400,9 @@ class ClientConfigShould {
     }
 
     @Test
-    void createClojureCijClient() {
+    void createClojureCljClient() {
         SSLFactory sslFactory = createSSLFactory(true, true);
-        RequestService requestService = victim.clojureCijHttpClientService(sslFactory);
+        RequestService requestService = victim.clojureCljHttpClientService(sslFactory);
         assertThat(requestService).isNotNull();
         assertThat(requestService.getClientType()).isEqualTo(ClientType.CLOJURE_CLJ_HTTP_CLIENT);
     }

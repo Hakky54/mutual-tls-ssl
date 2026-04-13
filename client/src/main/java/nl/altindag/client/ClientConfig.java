@@ -324,8 +324,8 @@ public class ClientConfig {
     }
 
     @Bean
-    public RequestService clojureCijHttpClientService(SSLFactory sslFactory) {
-        return instantiateClojureRequestService("nl.altindag.client.service.ClojureCijHttpClientService", sslFactory);
+    public RequestService clojureCljHttpClientService(SSLFactory sslFactory) {
+        return instantiateClojureRequestService("nl.altindag.client.service.ClojureCljHttpClientService", sslFactory);
     }
 
     private RequestService instantiateClojureRequestService(String namespace, SSLFactory sslFactory) {
