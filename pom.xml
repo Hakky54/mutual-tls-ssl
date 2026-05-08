@@ -27,7 +27,7 @@
         <version.aleph>0.8.3</version.aleph>
         <version.http-kit>2.8.0</version.http-kit>
         <version.ayza>10.0.0</version.ayza>
-        <version.spring>3.5.3</version.spring>
+        <version.spring>3.5.14</version.spring>
         <version.slf4j>2.0.17</version.slf4j>
         <version.logback>1.5.18</version.logback>
         <version.apache.httpclient>4.5.14</version.apache.httpclient>
